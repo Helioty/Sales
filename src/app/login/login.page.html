@@ -50,7 +50,8 @@
 
           <ion-col size="10" class="textContainer ion-text-start">
             <ion-input color="light" placeholder="Senha" class="ion-no-padding ion-text-uppercase"
-              [(ngModel)]="loginData.senha" type="password" (ionFocus)="inFoco()" (ionBlur)="inFoco()"></ion-input>
+              [(ngModel)]="loginData.senha" type="password" (ionFocus)="inFoco()" (ionBlur)="inFoco()"
+              (keyup.enter)="entrar()"></ion-input>
           </ion-col>
         </ion-row>
         <ion-row class="ovalrow">

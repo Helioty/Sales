@@ -35,7 +35,12 @@ export class AppComponent {
     {
       title: 'New TMS',
       url: '/new-tms',
-      icon: 'log-out'
+      icon: 'cube'
+    },
+    {
+      title: 'Desempenho',
+      url: '/indicador-vendedor',
+      icon: 'stats'
     },
     {
       title: 'Logout',
@@ -83,24 +88,9 @@ export class AppComponent {
         this.showAlertLogout()
       } break;
 
-      case ("Home"): {
-        this.router.navigateByUrl(page.url)
-      } break;
-
-      case ("List"): {
-        this.router.navigateByUrl(page.url)
-      } break;
-
-      case ("Pedido Rapido"): {
-        this.router.navigateByUrl(page.url)
-      } break;
-
-      case ("New TMS"): {
-        this.router.navigateByUrl(page.url)
-      } break;
-
       default: {
         console.log("default of button Action!")
+        this.router.navigateByUrl(page.url)
       }
     }
   }

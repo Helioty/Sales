@@ -6,7 +6,7 @@ import { AuthGuard } from './../guards/auth.guard';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'login',
+    redirectTo: '/login',
     pathMatch: 'full'
   },
   {
@@ -33,7 +33,12 @@ const routes: Routes = [
   { 
     path: 'new-tms', 
     loadChildren: './new-tms/new-tms.module#NewTMSPageModule' 
+  },
+  { 
+    path: 'indicador-vendedor', 
+    loadChildren: './indicador-vendedor/indicador-vendedor.module#IndicadorVendedorPageModule' 
   }
+
 
 ];
 
