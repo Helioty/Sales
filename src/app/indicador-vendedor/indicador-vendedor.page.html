@@ -10,57 +10,43 @@
 
 <ion-content>
 
-  <ion-slides class="walkthrough-slides" pager="true" [options]="slidesOptions">
+  <ion-slides class="" style="width: 100%; height: 100%;" pager="true" [options]="slidesOptions">
     <ion-slide class="first-slide illustration-and-decoration-slide">
-      <ion-row class="slide-inner-row">
+      <ion-row class="slide-inner-row" style="width: 100%; height: 100%;">
         <ion-col class="illustration-col">
         </ion-col>
-        <ion-col class="decoration-col">
-          <!-- http://jxnblk.com/paths/?d=M0%200%20V5%20H5%20C25%205%2025%2020%2045%2020%20S65%205%2085%205%20H90%20V0%20Z -->
-          <svg class="vector-decoration" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" height="100px" width="100%" viewBox="0 0 90 20" style="enable-background:new 0 0 90 20;" xml:space="preserve" preserveAspectRatio="none">
-            <path d="M0 0 V5 H5 C25 5 25 20 45 20 S65 5 85 5 H90 V0 Z"/>
-          </svg>
-        </ion-col>
-        <ion-col class="info-col">
-          <div class="info-wrapper">
-            <h3 class="info-title">This App is built with Ionic 4</h3>
-            <p class="info-paragraph">
-              It was created by the <b>IonicThemes</b> team to help you jump start your Ionic app development.
-            </p>
-            <p class="info-paragraph">
-              <b>You will love Ionic 4, and if you get lost, remember we have lots of tutorials to help you.</b>
-            </p>
-          </div>
-        </ion-col>
+        <div style="width: 100%; padding: 6px;">
+          <ion-card>
+            <ion-card-header>
+              Bar Chart
+            </ion-card-header>
+            <ion-card-content>
+              <canvas #barCanvas></canvas>
+            </ion-card-content>
+          </ion-card>
+        </div>
       </ion-row>
     </ion-slide>
 
     <ion-slide class="second-slide illustration-and-decoration-slide">
-      <ion-row class="slide-inner-row">
+      <ion-row class="slide-inner-row" style="width: 100%; height: 100%;">
         <ion-col class="illustration-col">
         </ion-col>
-        <ion-col class="decoration-col">
-          <!-- http://jxnblk.com/paths/?d=M0%200%20L64%200%20L64%2024%20Q56%2024%2048%2016%20Q34%200%2022%2010%20Q10%2022%200%208%20Z -->
-          <svg class="vector-decoration" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" height="100px" width="100%" viewBox="0 0 64 24" style="enable-background:new 0 0 64 24;" xml:space="preserve" preserveAspectRatio="none">
-            <path d="M0 0 L64 0 L64 24 Q56 24 48 16 Q34 0 22 10 Q10 22 0 8 Z"/>
-          </svg>
-        </ion-col>
-        <ion-col class="info-col">
-          <div class="info-wrapper">
-            <h3 class="info-title">How to use this template?</h3>
-            <p class="info-paragraph">
-              We want to help you build better and faster Ionic apps. We have put a lot of effort building and styling each component of this template.
-            </p>
-            <p class="info-paragraph">
-              You are free to reuse and modify every component of this template.
-            </p>
-          </div>
-        </ion-col>
+        <div style="width: 100%;" class="ion-padding">
+          <ion-card>
+            <ion-card-header>
+              Doughnut Chart
+            </ion-card-header>
+            <ion-card-content>
+              <canvas #doughnutCanvas></canvas>
+            </ion-card-content>
+          </ion-card>
+        </div>
       </ion-row>
     </ion-slide>
 
     <ion-slide class="third-slide illustration-and-decoration-slide">
-      <ion-row class="slide-inner-row">
+      <ion-row class="slide-inner-row" style="width: 100%; height: 100%;">
         <ion-col class="illustration-col">
         </ion-col>
         <ion-col class="decoration-col">
@@ -70,11 +56,15 @@
           </svg>
         </ion-col>
         <ion-col class="info-col">
-          <div class="info-wrapper">
-            <h3 class="info-title">Which components are available in this Ionic 4 app?</h3>
-            <p class="info-paragraph">
-              Tabs, Notifications, Profile, SideMenu, Authentication, Getting Started, Walkthrough, Forms and Validations, Categories, <b>Travel</b>, <b>Fashion</b>, <b>Food</b>, <b>Deals</b> and <b>Real Estate</b> listings and details page and many more!
-            </p>
+          <div style="width: 100%;" class="ion-padding">
+            <ion-card>
+              <ion-card-header>
+                Line Chart
+              </ion-card-header>
+              <ion-card-content>
+                <canvas #lineCanvas></canvas>
+              </ion-card-content>
+            </ion-card>
           </div>
         </ion-col>
       </ion-row>
