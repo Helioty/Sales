@@ -11,10 +11,12 @@ export class IndicadorVendedorPage implements OnInit {
   @ViewChild("barCanvas", { static: false }) barCanvas: ElementRef;
   @ViewChild("doughnutCanvas", { static: false }) doughnutCanvas: ElementRef;
   @ViewChild("lineCanvas", { static: false }) lineCanvas: ElementRef;
+  @ViewChild("mixedCanvas", { static: false }) mixedCanvas: ElementRef;
 
   public barChart: Chart;
   public doughnutChart: Chart;
   public lineChart: Chart;
+  public mixedChart: Chart;
 
   constructor() { }
 
@@ -118,6 +120,28 @@ export class IndicadorVendedorPage implements OnInit {
           ]
         }
       });
+
+      this.mixedChart = new Chart(this.mixedCanvas.nativeElement, {
+        type: 'bar',
+        data: {
+          datasets: [{
+            label: 'Bar Dataset',
+            data: [10, 20, 30, 40]
+          }, {
+            label: 'Line Dataset',
+            data: [50, 50, 50, 50],
+
+            // Changes this dataset to become a line
+            type: 'line'
+          }],
+          labels: ['January', 'February', 'March', 'April']
+        },
+        options: {
+          legend: {
+            display: true
+          }
+        }
+      })
     }, 300);
 
   }
