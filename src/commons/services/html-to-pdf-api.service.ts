@@ -1,14 +1,32 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { BaseCommon } from '../base-common';
 
-// import { require } from 'request';
+import {
+  HttpEvent,
+  HttpInterceptor,
+  HttpHandler,
+  HttpRequest,
+} from '@angular/common/http';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+
+// import { request } from 'require';
 
 @Injectable({
   providedIn: 'root'
 })
 
-export class HTMLToPDFAPIService {
+export class HTMLToPDFAPIService implements HttpInterceptor {
+  intercept(
+    req: HttpRequest<any>,
+    next: HttpHandler
+  ): import("rxjs").Observable<HttpEvent<any>> {
+    const dupReq = req.clone({
+      headers: req.headers.set('Authorization', 'Token: ' + this.ApiKey),
+    });
+    return next.handle(dupReq);
+    // throw new Error("Method not implemented.");
+  }
 
   private ApiKey = "api_9472C6123CEC4DD2BF4123D75FF9A9AF";
 
@@ -16,38 +34,39 @@ export class HTMLToPDFAPIService {
     public http: HttpClient,
     public common: BaseCommon
   ) {
-    
+
   }
 
-  api() {
-    // const request = require('request');
-    // const fs = require('fs');
-
+  async api() {
     // let opts = {
-    //   uri: 'https://api.sejda.com/v2/html-pdf',
-    //   headers: {
-    //     'Authorization': 'Token: ' + this.ApiKey,
-    //   },
-    //   json: {
-    //     'url': 'https://example.com',
-    //     'viewportWidth': 1200
-    //   }
+    let url = 'https://api.sejda.com/v2/html-pdf';
+    // let headers = {
+    //   'Authorization': 'Token: ' + this.ApiKey,
     // };
+    const headers = new HttpHeaders({'Content-Type':  'application/json', 'Authorization': 'Token: ' + this.ApiKey})
+    let json: {
+      'url': 'google.com',
+      'viewportWidth': 1200
+    }
+    // };
+    // return 
+    // new Promise((resolve, reject) => {
+      let result;
+      await this.http.post("https://api.sejda.com/v2/html-pdf", { "url":"https://airtable.com" }, { headers }).subscribe(res => {
+        result = res;
+        console.log(result)
+      })
 
-    // request.post(opts)
-    //   .on('error', function (err) {
-    //     return console.error(err);
-    //   })
-    //   .on('response', function (response) {
-    //     if (response.statusCode === 200) {
-    //       response.pipe(fs.createWriteStream('/tmp/out.pdf'))
-    //         .on('finish', function () {
-    //           console.log('PDF saved to disk');
-    //         });
-    //     } else {
-    //       return console.error('Got code: ' + response.statusCode);
-    //     }
-    //   });
+      // console.log(result)
+      // .subscribe(result => {
+      //   resolve(result);
+      //   console.log(result);
+      // }, (error) => {
+      //   reject(error);
+      //   console.log(error);
+      // });
+    // });
 
   }
+
 }
