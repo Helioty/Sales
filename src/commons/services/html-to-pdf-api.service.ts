@@ -43,29 +43,17 @@ export class HTMLToPDFAPIService implements HttpInterceptor {
     // let headers = {
     //   'Authorization': 'Token: ' + this.ApiKey,
     // };
-    const headers = new HttpHeaders({'Content-Type':  'application/json', 'Authorization': 'Token: ' + this.ApiKey})
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': 'Token: ' + this.ApiKey })
     let json: {
       'url': 'google.com',
       'viewportWidth': 1200
     }
-    // };
-    // return 
-    // new Promise((resolve, reject) => {
-      let result;
-      await this.http.post("https://api.sejda.com/v2/html-pdf", { "url":"https://airtable.com" }, { headers }).subscribe(res => {
-        result = res;
-        console.log(result)
-      })
 
-      // console.log(result)
-      // .subscribe(result => {
-      //   resolve(result);
-      //   console.log(result);
-      // }, (error) => {
-      //   reject(error);
-      //   console.log(error);
-      // });
-    // });
+    let result;
+    this.http.post("https://api.sejda.com/v2/html-pdf", { "url": "https://airtable.com" }, { headers }).subscribe(res => {
+      result = res;
+      console.log(result)
+    })
 
   }
 
