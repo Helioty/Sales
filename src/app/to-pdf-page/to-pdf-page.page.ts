@@ -3,6 +3,7 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { HTMLToPDFAPIService } from '../../commons/services/html-to-pdf-api.service';
 
 import html2canvas from 'html2canvas';
+import { BaseCommon } from 'src/commons/base-common';
 
 @Component({
   selector: 'app-to-pdf-page',
@@ -11,13 +12,22 @@ import html2canvas from 'html2canvas';
 })
 export class ToPDFPagePage implements OnInit {
 
-  constructor(public toPDF: HTMLToPDFAPIService) { }
+  public resultOfPDF: any;
+
+  constructor(
+    public toPDF: HTMLToPDFAPIService,
+    public common: BaseCommon, 
+    ) { }
 
   ngOnInit() {
-    let result = this.toPDF.api()
-    console.log(result)
+    // this.common.showLoader()
+    // let result = this.toPDF.api()
+    // console.log(result)
   }
 
+  async clickToGenerate() {
+    this.resultOfPDF = await this.toPDF.api()
+  }
   // @ViewChild('screen', {static: false}) screen: ElementRef;
   // @ViewChild('canvas', {static: false}) canvas: ElementRef;
   // @ViewChild('downloadLink', {static: false}) downloadLink: ElementRef;
@@ -30,6 +40,6 @@ export class ToPDFPagePage implements OnInit {
   //     this.downloadLink.nativeElement.click();
   //   });
   // }
-  
+
 
 }
