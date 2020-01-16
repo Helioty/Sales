@@ -43,7 +43,6 @@ import { HTTP } from '@ionic-native/http/ngx';
     BaseCommon,
     BaseService,
     Network,
-    HTTP,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

@@ -13,78 +13,72 @@ import { promise } from 'protractor';
 
 // import { request } from 'require';
 
-import { HTTP } from '@ionic-native/http/ngx';
 
 @Injectable({
   providedIn: 'root'
 })
 
-export class HTMLToPDFAPIService implements HttpInterceptor {
-  intercept(
-    req: HttpRequest<any>,
-    next: HttpHandler
-  ): import("rxjs").Observable<HttpEvent<any>> {
-    const dupReq = req.clone({
-      headers: req.headers.set('Authorization', 'Token: ' + this.ApiKey),
-    });
-    return next.handle(dupReq);
-    // throw new Error("Method not implemented.");
-  }
+export class HTMLToPDFAPIService {
 
   private ApiKey = "api_9472C6123CEC4DD2BF4123D75FF9A9AF";
 
+  public resultOfPDF: any;
+
   constructor(
     public http: HttpClient,
-    private ionhttp: HTTP,
     public common: BaseCommon,
   ) {
 
   }
 
-  async api() {
+  async api(json: any) {
     this.common.showLoader()
     let url = 'http://10.131.9.81:8080/pdf';
 
-    let json: any = {
-      // rejectUnauthorized: false,
-      // publishableKey: 'api_public_d82d653e17014ad59e6c5d0f560782a7',
-      uri: 'https://api.sejda.com/v2/html-pdf',
-      headers: {
-        'Authorization': 'Token: ' + 'api_9472C6123CEC4DD2BF4123D75FF9A9AF',
-      },
-      json: {
-        'url': 'https://ionicframework.com/',
-        'viewportWidth': 2560
-      }
-    }
-
-    
     const headers = new HttpHeaders().set('Content-type', 'application/json')
 
-    this.http.post<JSON>(url, json, { headers: headers }).subscribe(res => {
-      console.log(res);
-      let s: any = res;
+    this.http.post<JSON>(url, json, { headers: headers }).subscribe(result => {
+      console.log(result);
+      this.resultOfPDF = result;
       this.common.loading.dismiss();
-      if (s.status == 200) {
-        this.common.showAlert(s.title, s.text)
+      if (this.resultOfPDF.status == 200) {
+        this.common.showAlert(this.resultOfPDF.title, this.resultOfPDF.text)
       }
-      return res
     }, (error) => {
       console.log(error)
       this.common.loading.dismiss();
       alert(error.message)
     });
+    // let result: any = await this.callServer(url, json)
+    // return result
+  }
 
-    // await new Promise((resolve, reject) => { 
-    //   this.http.post<any>(url, {}).subscribe(res => {
-    //     resolve(result = res);
-    //     console.log(result)
-    //   }, (error) => {
-    //     reject(console.log(error))
-    //   })
-    // });
+  async callServer(url: string, json: any) {
+    const headers = new HttpHeaders().set('Content-type', 'application/json')
 
-    // this.ionhttp.get('http://ionic.io', {}, {})
+    this.http.post<JSON>(url, json, { headers: headers }).subscribe(result => {
+      console.log(result);
+      let s: any = result;
+      this.common.loading.dismiss();
+      if (s.status == 200) {
+        this.common.showAlert(s.title, s.text)
+      }
+      return result
+    }, (error) => {
+      console.log(error)
+      this.common.loading.dismiss();
+      alert(error.message)
+    });
+  }
+
+}
+
+
+
+
+
+
+// this.ionhttp.get('http://ionic.io', {}, {})
     //   .then(data => {
     //     console.log(data)
     //     // console.log(data.status);
@@ -115,7 +109,3 @@ export class HTMLToPDFAPIService implements HttpInterceptor {
     //   }
     // }
     // http.send();
-
-  }
-
-}

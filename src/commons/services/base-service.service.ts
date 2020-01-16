@@ -89,19 +89,20 @@ export class BaseService {
       const headers = new HttpHeaders().set("x-auth-token", localStorage.getItem("token"));
 
       return this.http.get<JSON>(link, { headers }).subscribe((result: any) => {
-          console.log(result);
-        }, (err) => {
-          try {
-            this.common.loading.dismiss();
-          } catch (err) { }
-          this.handleError(err);
+        console.log(result);
+      }, (error) => {
+        try {
+          this.common.loading.dismiss();
         }
+        catch (err) { }
+        this.handleError(error);
+      }
       );
     }
   }
 
   post(link: string, body: {}) {
-    
+
     if (!this.checkNetwork()) {
       this.common.showToast("Sem conexão!");
     } else {

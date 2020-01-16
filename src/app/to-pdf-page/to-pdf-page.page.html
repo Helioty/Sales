@@ -5,9 +5,58 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-  <ion-button (click)="clickToGenerate()">
-    Click to PDF
-  </ion-button>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-input [(ngModel)]="siteUrl" class="inputs"> </ion-input>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+        <ion-input [(ngModel)]="renderWidth" type="number" min="1280" max="15360" class="inputs"> </ion-input>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+        <ion-item>
+          <ion-label>Formato de Impressão</ion-label>
+          <ion-select [(ngModel)]="formato" cancelText="" interface="action-sheet" [interfaceOptions]="customActionSheetOptions" (ionChange)="consol()">
+            <ion-select-option *ngFor="let opcs of opcsFormato" [value]="opcs">{{opcs}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+        <ion-item>
+          <ion-label>Eixo</ion-label>
+          <ion-select [(ngModel)]="pageOrientation" [interfaceOptions]="customAlertOptions" interface="alert" placeholder="Select One">
+            <ion-select-option *ngFor="let opcs of opcsOrientation" [value]="opcs">{{opcs}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+        <ion-button (click)="clickToGenerate()">
+          Click to PDF
+        </ion-button>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+        <ion-button (click)="consol()">
+          Log of Result
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  
   <!-- <div class="btn btn-primary" (click)="downloadImage()">DL</div>
 
   <ion-grid #screen id="table">
