@@ -10,6 +10,11 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   {
+    path: 'pedido-lista',
+    loadChildren: './pedido-lista/pedido-lista.module#PedidoListaPageModule',
+    canActivate: [AuthGuard]
+  },
+  {
     path: 'home',
     loadChildren: () => import('./home/home.module').then(m => m.HomePageModule),
     canActivate: [AuthGuard]
@@ -30,15 +35,14 @@ const routes: Routes = [
     path: 'to-pdf-page',
     loadChildren: './to-pdf-page/to-pdf-page.module#ToPDFPagePageModule'
   },
-  { 
-    path: 'new-tms', 
-    loadChildren: './new-tms/new-tms.module#NewTMSPageModule' 
+  {
+    path: 'new-tms',
+    loadChildren: './new-tms/new-tms.module#NewTMSPageModule'
   },
-  { 
-    path: 'indicador-vendedor', 
-    loadChildren: './indicador-vendedor/indicador-vendedor.module#IndicadorVendedorPageModule' 
+  {
+    path: 'indicador-vendedor',
+    loadChildren: './indicador-vendedor/indicador-vendedor.module#IndicadorVendedorPageModule'
   }
-
 
 ];
 

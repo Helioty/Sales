@@ -1,0 +1,62 @@
+<ion-content>
+
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Solte para Recarregar!" refreshingSpinner="circles">
+    </ion-refresher-content>
+  </ion-refresher>
+
+  <ion-list *ngIf="pedidos != []" class="pedido-list">
+    <!-- Sliding item with text options on both sides -->
+    <ion-item-sliding *ngFor="let pedido of pedidos; let i = index" #slidingItem class="pedido">
+
+      <ion-item lines="none" class="pedido-item">
+        <ion-grid (click)="openSlide(slidingItem)">
+          <ion-row class="pedido-rows">
+            <ion-col style="font-weight: bold;">
+              Pedido <span>{{pedido.numpedido}}-{{pedido.digito}}</span>
+            </ion-col>
+          </ion-row>
+
+          <ion-row class="pedido-rows">
+            <ion-col style="font-size: 12px; padding-left: 5px;" class="ion-no-padding">
+              {{pedido.dataEmissao}} às {{pedido.hora}}h
+            </ion-col>
+          </ion-row>
+
+          <ion-row class="pedido-rows">
+            <p class="pedido-info">
+              <img src="../../../assets/imagens/05-pedidos_lista/shopping cart.png" />
+              <span class="padding-peso">{{pedido.numitens}}</span>
+            </p>
+
+            <p class="pedido-info">
+              <img src="../../../assets/imagens/05-pedidos_lista/ic_person_black_24px.png" /> 
+              <span>{{pedido.nome_cliente}}</span>
+            </p>
+
+            <p class="pedido-info">
+              <img src="../../../assets/imagens/05-pedidos_lista/ic_retirada.png" /> {{pedido.tipoEntrega}}
+              <!-- <span class="valor"><span class="cifra">R$</span>{{pedido.totpedido}}</span> -->
+            </p>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+
+      <ion-item-options side="end" (click)="closeSlide(slidingItem)">
+        <ion-item-option (click)="unread(pedido)" color="fc-button-green">
+          <ion-icon slot="top" name="eye" size="large"></ion-icon>
+          <span style="font-weight: bold;">VER</span>
+        </ion-item-option>
+        <ion-item-option (click)="favorite(pedido)" color="danger">
+          <ion-icon slot="top" name="trash" size="large"></ion-icon>
+          <span style="font-weight: bold;">APAGAR</span>
+        </ion-item-option>
+        <ion-item-option (click)="share(pedido)">
+          <ion-icon slot="top" name="create" size="large"></ion-icon>
+          <span style="font-weight: bold;">ALTERAR</span>
+        </ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+
+</ion-content>

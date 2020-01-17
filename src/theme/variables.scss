@@ -90,6 +90,14 @@
   --ion-color-fc-button-contrast-rgb: 255, 255, 255;
   --ion-color-fc-button-shade: #a90b0c;
   --ion-color-fc-button-tint: #c62526;
+
+  //** fc button green ** 
+  --ion-color-fc-button-green: #32A651;
+  --ion-color-fc-button-green-rgb: 50,166,81;
+  --ion-color-fc-button-green-contrast: #ffffff;
+  --ion-color-fc-button-green-contrast-rgb: 255,255,255;
+  --ion-color-fc-button-green-shade: #2c9247;
+  --ion-color-fc-button-green-tint: #47af62;
 }
 
 .ion-color-fc {
@@ -108,6 +116,15 @@
   --ion-color-contrast-rgb: var(--ion-color-fc-button-contrast-rgb);
   --ion-color-shade: var(--ion-color-fc-button-shade);
   --ion-color-tint: var(--ion-color-fc-button-tint);
+}
+
+.ion-color-fc-button-green {
+  --ion-color-base: var(--ion-color-fc-button-green);
+  --ion-color-base-rgb: var(--ion-color-fc-button-green-rgb);
+  --ion-color-contrast: var(--ion-color-fc-button-green-contrast);
+  --ion-color-contrast-rgb: var(--ion-color-fc-button-green-contrast-rgb);
+  --ion-color-shade: var(--ion-color-fc-button-green-shade);
+  --ion-color-tint: var(--ion-color-fc-button-green-tint);
 }
 
 ion-header {

@@ -1,0 +1,31 @@
+<ion-header>
+  <ion-toolbar color="fc">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+
+    <ion-title>Pedidos</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-tabs>
+    <ion-tab-bar slot="top" color="fc" class="tabs-shadow">
+      <ion-tab-button tab="pedido-aberto">
+        <ion-label>Em aberto</ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button tab="pedido-finalizado">
+        <ion-label>Finalizados</ion-label>
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button color="fc-button-green" edge>
+      <ion-icon name="add" size="large"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+</ion-content>

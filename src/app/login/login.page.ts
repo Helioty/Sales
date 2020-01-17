@@ -135,7 +135,7 @@ export class LoginPage implements OnInit {
 
         this.appComponent.getStatus()
 
-        this.router.navigate(['home'])
+        this.router.navigateByUrl('/pedido-lista')
         this.common.loading.dismiss()
 
       }

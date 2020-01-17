@@ -68,6 +68,6 @@ export class HomePage implements OnInit {
   }
 
   toPDF() {
-    this.router.navigate(['to-pdf-page'])
+    this.router.navigate(['pedido-lista'])
   }
 }
