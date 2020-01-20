@@ -8,6 +8,7 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { AppVersion } from '@ionic-native/app-version/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { BaseCommon } from '../commons/base-common';
+import { DataService } from '../commons/services/data.service';
 import { BaseService } from '../commons/services/base-service.service';
 import { AuthService } from '../commons/services/auth-service.service';
 import { AppConfig } from '../config/app.config';
@@ -38,6 +39,7 @@ import { HTTP } from '@ionic-native/http/ngx';
     AppVersion,
     AuthService,
     BarcodeScanner,
+    DataService,
     StatusBar,
     SplashScreen,
     BaseCommon,
