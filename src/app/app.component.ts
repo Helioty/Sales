@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { Platform, MenuController, AlertController } from '@ionic/angular';
+import { Platform, MenuController, AlertController, NavController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { Router } from '@angular/router';
@@ -68,6 +68,7 @@ export class AppComponent {
     public common: BaseCommon,
     private menu: MenuController,
     private platform: Platform,
+    private navControl: NavController,
     private router: Router,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar
@@ -95,7 +96,8 @@ export class AppComponent {
 
       default: {
         console.log("default of button Action!")
-        this.router.navigateByUrl(page.url)
+        this.navControl.navigateRoot([page.url])
+        // this.router.navigateByUrl(page.url)
       }
     }
   }
@@ -108,7 +110,7 @@ export class AppComponent {
         text: 'SIM',
         handler: () => {
           this.authGuard.logged = false;
-          this.router.navigate(['login'])
+          this.navControl.navigateRoot(['login'])
         }
       }]
     });

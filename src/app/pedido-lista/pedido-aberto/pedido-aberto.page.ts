@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { IonItem, IonItemSliding } from '@ionic/angular';
+import { IonItem, IonItemSliding, AlertController } from '@ionic/angular';
 import { ENV } from 'src/environments/environment';
 import { API_URL } from 'src/config/app.config';
 
@@ -22,7 +22,9 @@ export class PedidoAbertoPage implements OnInit {
   public taskFlag: boolean;
 
   constructor(
-    public baseService: BaseService
+    public baseService: BaseService,
+    public common: BaseCommon,
+    private alertCtrl: AlertController
   ) { }
 
   ngOnInit() {
@@ -55,7 +57,9 @@ export class PedidoAbertoPage implements OnInit {
       console.log(result)
       this.pedidos = result.content;
       console.log(this.pedidos)
-    })
+    }), (error: any) => {
+      console.log(error)
+    }
 
   }
 
@@ -66,5 +70,58 @@ export class PedidoAbertoPage implements OnInit {
   closeSlide(itemSlide: IonItemSliding) {
     itemSlide.close()
   }
+
+
+  verProdutosPedido(pedido: any) {
+
+  }
+
+  async apagarPedido(pedido: any) {
+    const alert = await this.alertCtrl.create({
+      header: "ATENÇÃO!",
+      message: "Tem certeza? Apagando um pedido, os dados inseridos não poderão ser recuperados.",
+      buttons: [
+        {
+          text: "Voltar",
+          handler: () => {
+            console.log("Cancelado");
+          }
+        },
+        {
+          text: "APAGAR",
+          handler: () => {
+            console.log("Cancelado");
+          }
+        }
+      ]
+    })
+    await alert.present();
+  }
+
+  async removePedido(pedidoId: any) {
+    this.common.showLoader()
+    let link: string = ENV.WS_VENDAS + API_URL + "PedidoVenda/" + localStorage.getItem("empresa") + "/" + pedidoId;
+
+    this.baseService.post(link, {})
+      .then((result: any) => {
+        console.log(result)
+        this.getPedidosEmAberto(1)
+      })
+      .catch(error => {
+        this.common.loading.dismiss()
+        try {
+          this.common.showAlert(error.json().title, error.json().detail)
+        } catch (err) {
+          console.log(err);
+        }
+      })
+  }
+
+  alterarPedido(pedido: any) {
+
+  }
+
+
+
 
 }

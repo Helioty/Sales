@@ -22,7 +22,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { ENV } from '../environments/environment';
 console.log(ENV.mode);
 
-import { HTTP } from '@ionic-native/http/ngx';
 
 @NgModule({
   declarations: [AppComponent],

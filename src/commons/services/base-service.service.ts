@@ -97,7 +97,7 @@ export class BaseService {
           reject(error);
         });
       });
-      
+
     }
   }
 
@@ -109,16 +109,14 @@ export class BaseService {
 
       const headers = new HttpHeaders().set("x-auth-token", localStorage.getItem("token"));
 
-      this.http.post(link, body, { headers }).subscribe(
-        (result: any) => {
-          console.log(result);
-        }, (err) => {
-          try {
-            this.common.loading.dismiss();
-          } catch (err) { }
-          this.handleError(err);
-        }
-      );
+      return new Promise((resolve, reject) => {
+        this.http.post(link, body, { headers }).subscribe((result: any) => {
+          resolve(result);
+        }, (error) => {
+          reject(error)
+        });
+      })
+
     }
   }
 

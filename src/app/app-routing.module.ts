@@ -42,7 +42,14 @@ const routes: Routes = [
   {
     path: 'indicador-vendedor',
     loadChildren: './indicador-vendedor/indicador-vendedor.module#IndicadorVendedorPageModule'
-  }
+  },
+  { 
+    path: 'produto', 
+    loadChildren: './produto/produto.module#ProdutoPageModule' 
+  },
+  { path: 'produto-imagens', loadChildren: './produto/produto-imagens/produto-imagens.module#ProdutoImagensPageModule' },
+  { path: 'produto-detalhes', loadChildren: './produto/produto-detalhes/produto-detalhes.module#ProdutoDetalhesPageModule' }
+
 
 ];
 

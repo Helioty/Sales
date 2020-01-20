@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MenuController } from '@ionic/angular';
+import { MenuController, NavController } from '@ionic/angular';
 import { AndroidFullScreen } from '@ionic-native/android-full-screen/ngx';
 
 @Component({
@@ -11,7 +11,8 @@ export class PedidoListaPage implements OnInit {
 
   constructor(
     private androidFullScreen: AndroidFullScreen,
-    private menu: MenuController
+    private menu: MenuController,
+    private navControl: NavController,
   ) { }
 
   ngOnInit() {
@@ -24,6 +25,11 @@ export class PedidoListaPage implements OnInit {
     this.androidFullScreen.isImmersiveModeSupported()
       .then(() => this.androidFullScreen.immersiveMode())
       .catch(err => console.log(err));
+  }
+
+
+  novoPedido() {
+    this.navControl.navigateForward('/produto')
   }
 
 }

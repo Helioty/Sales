@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MenuController, Platform } from '@ionic/angular';
+import { MenuController, Platform, NavController } from '@ionic/angular';
 import { Router } from '@angular/router';
 
 import { BaseCommon } from './../../commons/base-common';
@@ -37,6 +37,7 @@ export class LoginPage implements OnInit {
     public common: BaseCommon,
     private menu: MenuController,
     private platform: Platform,
+    private navControl: NavController,
     private router: Router
   ) {
 
@@ -44,8 +45,8 @@ export class LoginPage implements OnInit {
       this.loginData.login = '';
       this.loginData.senha = '';
     } else {
-      // this.loginData.login = 'R6543MRM';
-      // this.loginData.senha = 'japa1966';
+      this.loginData.login = 'R6543MRM';
+      this.loginData.senha = 'japa1966';
     }
 
     if (this.platform.is('ios') || this.platform.is('android')) {
@@ -135,7 +136,8 @@ export class LoginPage implements OnInit {
 
         this.appComponent.getStatus()
 
-        this.router.navigateByUrl('/pedido-lista')
+        this.navControl.navigateRoot('/pedido-lista')
+        // this.router.navigateByUrl('/pedido-lista')
         this.common.loading.dismiss()
 
       }

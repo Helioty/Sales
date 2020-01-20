@@ -11,8 +11,31 @@
     .pedido-item {
         width: 100% !important;
 
+        .grid-pedido {
+            padding: 5px 0 10px !important;
+        }
+
         .pedido-rows {
             width: 100% !important;
+            font-size: 12px;
+
+            .pedido-valor {
+                width: 100%;
+                margin-top: 7px;
+                margin-bottom: 0 !important;
+                font-size: 22px;
+                font-weight: bold;
+                text-align: right;
+                float: right;
+            }
+
+            .pedido-peso {
+                width: 100%;
+                font-size: 14px;
+                font-weight: 500;
+                text-align: right;
+                float: right;
+            }
         }
     }
 }
