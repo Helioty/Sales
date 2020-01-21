@@ -6,6 +6,24 @@
     </ion-refresher-content>
   </ion-refresher>
 
+  <ion-grid *ngIf="pedidos == []" class="noPedidos">
+    <ion-row class="topHeading">
+      <ion-col>
+        <h3>Seus pedidos em andamento vão ficar aqui... Inicie um novo pedido</h3>
+      </ion-col>
+    </ion-row>
+    <ion-row class="noImg">
+      <ion-col>
+        <img src="assets/images/08-catalogo/parachute.png" />
+      </ion-col>
+    </ion-row>
+    <ion-row class="bottomHeading">
+      <ion-col>
+        <h3>Sem resultados para exibir…</h3>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
   <ion-list *ngIf="pedidos != []" class="pedido-list">
     <!-- Sliding item with text options on both sides -->
     <ion-item-sliding *ngFor="let pedido of pedidos; let i = index" #slidingItem class="pedido">
