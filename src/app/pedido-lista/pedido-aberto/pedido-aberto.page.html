@@ -6,7 +6,7 @@
     </ion-refresher-content>
   </ion-refresher>
 
-  <ion-grid *ngIf="pedidos == []" class="noPedidos">
+  <ion-grid *ngIf="!showSkeleton && pedidos == []" class="noPedidos">
     <ion-row class="topHeading">
       <ion-col>
         <h3>Seus pedidos em andamento vão ficar aqui... Inicie um novo pedido</h3>
@@ -24,19 +24,51 @@
     </ion-row>
   </ion-grid>
 
-  <ion-list *ngIf="pedidos != []" class="pedido-list">
-    <!-- Sliding item with text options on both sides -->
+  <!-- Skeleton da Lista de pedidos -->
+  <ion-list *ngIf="showSkeleton">
+    <ion-item lines="none" class="pedido pedido-item">
+      <ion-grid class="grid-pedido">
+        <ion-row class="pedido-rows">
+
+          <p class="pedido-info">
+            <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+          </p>
+
+          <p class="pedido-info">
+            <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+          </p>
+
+          <p class="pedido-info">
+            <ion-skeleton-text animated style="width: 40%"></ion-skeleton-text>
+          </p>
+
+          <p class="pedido-info">
+            <ion-skeleton-text animated style="width: 70%"></ion-skeleton-text>
+          </p>
+
+          <p class="pedido-info">
+            <ion-skeleton-text animated style="width: 30%"></ion-skeleton-text>
+          </p>
+
+        </ion-row>
+      </ion-grid>
+    </ion-item>
+  </ion-list>
+
+
+  <!-- Lista de pedidos -->
+  <ion-list *ngIf="!showSkeleton && pedidos != []" class="pedido-list">
     <ion-item-sliding *ngFor="let pedido of pedidos; let i = index" #slidingItem class="pedido">
 
       <ion-item lines="none" class="pedido-item">
         <ion-grid (click)="openSlide(slidingItem)" class="grid-pedido">
           <ion-row class="pedido-rows">
             <ion-col style="margin: auto;">
-              <ion-row style="font-weight: bold; font-size: 18px;">
+              <ion-row style="font-weight: bold; font-size: 18px; color: #212121">
                 Pedido {{ pedido.numpedido }}-{{ pedido.digito }}
               </ion-row>
 
-              <ion-row class="pedido-rows">
+              <ion-row class="pedido-rows" style="color:#AFAFAF">
                 {{ pedido.dataEmissao }} às {{ pedido.hora }}h
               </ion-row>
             </ion-col>
@@ -52,7 +84,7 @@
             <ion-row style="width: 100%;">
               <p class="pedido-info">
                 <img src="../../../assets/imagens/05-pedidos_lista/shopping cart.png" />
-                <span class="padding-peso">{{ pedido.numitens | formatarString: 'FORMAT':'2' }}</span>
+                <span>{{ pedido.numitens | formatarString: 'FORMAT':'2' }}</span>
               </p>
 
               <p class="pedido-info">

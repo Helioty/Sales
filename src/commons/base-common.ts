@@ -60,7 +60,7 @@ export class BaseCommon {
     async showToast(msg: string) {
         let toast = await this.toastCtrl.create({
             message: msg,
-            duration: 3000,
+            duration: 2000,
             position: 'bottom'
         });
         toast.present();

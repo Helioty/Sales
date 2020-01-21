@@ -1,9 +1,135 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>pedido-finalizado</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content>
+
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Solte para Recarregar!"
+      refreshingSpinner="circles">
+    </ion-refresher-content>
+  </ion-refresher>
+
+  <ion-grid *ngIf="!showSkeleton && pedidos == []" class="noPedidos">
+    <ion-row class="topHeading">
+      <ion-col>
+        <h3>Seus pedidos em andamento vão ficar aqui... Inicie um novo pedido</h3>
+      </ion-col>
+    </ion-row>
+    <ion-row class="noImg">
+      <ion-col>
+        <img src="assets/images/08-catalogo/parachute.png" />
+      </ion-col>
+    </ion-row>
+    <ion-row class="bottomHeading">
+      <ion-col>
+        <h3>Sem resultados para exibir…</h3>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <!-- Skeleton da Lista de pedidos -->
+  <ion-list *ngIf="showSkeleton">
+    <ion-item lines="none" class="pedido-item">
+      <ion-grid class="grid-pedido">
+        <ion-row class="pedido-rows">
+
+          <p class="pedido-info">
+            <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+          </p>
+
+          <p class="pedido-info">
+            <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+          </p>
+
+          <p class="pedido-info">
+            <ion-skeleton-text animated style="width: 40%"></ion-skeleton-text>
+          </p>
+
+          <p class="pedido-info">
+            <ion-skeleton-text animated style="width: 70%"></ion-skeleton-text>
+          </p>
+
+          <p class="pedido-info">
+            <ion-skeleton-text animated style="width: 30%"></ion-skeleton-text>
+          </p>
+
+        </ion-row>
+      </ion-grid>
+    </ion-item>
+  </ion-list>
+
+
+  <!-- Lista de pedidos -->
+  <ion-list *ngIf="pedidos != []" class="pedido-list">
+    <ion-item-sliding *ngFor="let pedido of pedidos; let i = index" #slidingItem class="pedido">
+
+      <ion-item lines="none" class="pedido-item">
+        <ion-grid (click)="openSlide(slidingItem)" class="grid-pedido">
+          <ion-row class="pedido-rows">
+            <ion-col style="margin: auto;">
+              <ion-row style="font-weight: bold; font-size: 18px; color: #212121">
+                Pedido {{ pedido.numpedido }}-{{ pedido.digito }}
+              </ion-row>
+
+              <ion-row class="pedido-rows" style="color:#AFAFAF">
+                {{ pedido.dataEmissao }} às {{ pedido.hora }}h
+              </ion-row>
+            </ion-col>
+
+            <ion-col size="4" class="ion-no-padding" style="text-align: end;">
+              <ion-chip color="danger">
+                <ion-label color="danger">Bloqueado</ion-label>
+              </ion-chip>
+            </ion-col>
+          </ion-row>
+
+          <ion-row class="pedido-rows">
+            <ion-row style="width: 100%;">
+              <p class="pedido-info">
+                <img src="../../../assets/imagens/05-pedidos_lista/shopping cart.png" />
+                <span>{{ pedido.numitens | formatarString: 'FORMAT':'2' }}</span>
+              </p>
+
+              <p class="pedido-info">
+                <img src="../../../assets/imagens/05-pedidos_lista/ic_person_black_24px.png" />
+                <span>{{ pedido.nome_cliente }}</span>
+              </p>
+            </ion-row>
+
+            <ion-row style="width: 100%;">
+              <ion-col size="5" class="ion-no-padding">
+                <p class="pedido-info">
+                  <img src="../../../assets/imagens/05-pedidos_lista/ic_retirada.png" />
+                  <span>{{ pedido.tipoEntrega }}</span>
+                </p>
+              </ion-col>
+
+              <ion-col size="7" class="ion-no-padding">
+                <ion-label color="fc" class="pedido-valor">
+                  R$ {{ pedido.totpedido | formatarString: 'VALOR-PADRAO' }}
+                </ion-label>
+
+                <ion-label class="pedido-peso">
+                  {{ pedido.pesoTotal }} kg
+                </ion-label>
+              </ion-col>
+            </ion-row>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+
+      <ion-item-options side="end" (click)="closeSlide(slidingItem)">
+        <ion-item-option (click)="verProdutosPedido(pedido)" color="fc-button-green" style="width: 90px;">
+          <ion-icon slot="top" name="eye" size="large"></ion-icon>
+          <span style="font-weight: bold;">VER</span>
+        </ion-item-option>
+        <ion-item-option (click)="apagarPedido(pedido)" color="danger" style="width: 90px;">
+          <ion-icon slot="top" name="trash" size="large"></ion-icon>
+          <span style="font-weight: bold;">APAGAR</span>
+        </ion-item-option>
+        <ion-item-option (click)="alterarPedido(pedido)" style="width: 90px;">
+          <ion-icon slot="top" name="create" size="large"></ion-icon>
+          <span style="font-weight: bold;">ALTERAR</span>
+        </ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
 
 </ion-content>

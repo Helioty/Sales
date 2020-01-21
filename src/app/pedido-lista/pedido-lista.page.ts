@@ -29,7 +29,7 @@ export class PedidoListaPage implements OnInit {
 
 
   novoPedido() {
-    this.navControl.navigateForward('/produto')
+    this.navControl.navigateForward('/pedido-sacola')
   }
 
 }

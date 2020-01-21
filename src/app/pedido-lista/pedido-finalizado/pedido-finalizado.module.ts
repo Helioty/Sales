@@ -5,6 +5,8 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
 
+import { PipesModule } from '../../../commons/pipes/pipes.module';
+
 import { PedidoFinalizadoPage } from './pedido-finalizado.page';
 
 const routes: Routes = [
@@ -19,6 +21,7 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     IonicModule,
+    PipesModule,
     RouterModule.forChild(routes)
   ],
   declarations: [PedidoFinalizadoPage]

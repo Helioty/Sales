@@ -22,6 +22,10 @@ const routes: Routes = [
     path: 'pedido-resumo',
     loadChildren: './pedido-lista/pedido-resumo/pedido-resumo.module#PedidoResumoPageModule'
   },
+  { 
+    path: 'pedido-sacola', 
+    loadChildren: './pedido-sacola/pedido-sacola.module#PedidoSacolaPageModule' 
+  },
   {
     path: 'produto',
     loadChildren: './produto/produto.module#ProdutoPageModule'
@@ -30,10 +34,6 @@ const routes: Routes = [
     path: 'home',
     loadChildren: () => import('./home/home.module').then(m => m.HomePageModule),
     canActivate: [AuthGuard]
-  },
-  {
-    path: 'list',
-    loadChildren: () => import('./list/list.module').then(m => m.ListPageModule)
   },
   {
     path: 'pedido-rapido',
@@ -54,6 +54,8 @@ const routes: Routes = [
 
   { path: 'produto-imagens', loadChildren: './produto/produto-imagens/produto-imagens.module#ProdutoImagensPageModule' },
   { path: 'produto-detalhes', loadChildren: './produto/produto-detalhes/produto-detalhes.module#ProdutoDetalhesPageModule' },
+  
+
 
 
 

@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { IonItem, IonItemSliding, AlertController } from '@ionic/angular';
+import { IonItemSliding, AlertController, NavController } from '@ionic/angular';
+import { Router, NavigationExtras } from '@angular/router';
+
 import { ENV } from 'src/environments/environment';
 import { API_URL } from 'src/config/app.config';
 
@@ -14,17 +16,17 @@ import { BaseService } from '../../../commons/services/base-service.service';
 })
 export class PedidoAbertoPage implements OnInit {
 
-  public pedidos: any[];
+  public resultGetPedidos: any;
+  public pedidos: any[] = [];
 
-  public itemSlidingAberto: any;
-  public itemAberto: any;
-  public task: any;
-  public taskFlag: boolean;
+  public showSkeleton: boolean = false;
 
   constructor(
     public baseService: BaseService,
     public common: BaseCommon,
-    private alertCtrl: AlertController
+    private alertCtrl: AlertController,
+    private navControl: NavController,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -52,11 +54,13 @@ export class PedidoAbertoPage implements OnInit {
   }
 
   async getPedidosEmAberto(page: number) {
+    this.showSkeleton = true;
     let link: string = ENV.WS_VENDAS + API_URL + "PedidoVenda/list/" + localStorage.getItem("empresa") + "/abertos?page=" + page;
     await this.baseService.get(link).then((result: any) => {
       console.log(result)
       this.pedidos = result.content;
       console.log(this.pedidos)
+      this.showSkeleton = false;
     }), (error: any) => {
       console.log(error)
     }
@@ -73,7 +77,12 @@ export class PedidoAbertoPage implements OnInit {
 
 
   verProdutosPedido(pedido: any) {
-
+    let navigationExtras: NavigationExtras = {
+      queryParams: {
+        pedido: JSON.stringify(pedido)
+      }
+    };
+    this.navControl.navigateForward(["/pedido-resumo"], navigationExtras)
   }
 
   async apagarPedido(pedido: any) {
@@ -90,7 +99,8 @@ export class PedidoAbertoPage implements OnInit {
         {
           text: "APAGAR",
           handler: () => {
-            console.log("Cancelado");
+            this.removePedido(pedido.numpedido);
+            this.getPedidosEmAberto(1)
           }
         }
       ]
@@ -99,12 +109,13 @@ export class PedidoAbertoPage implements OnInit {
   }
 
   async removePedido(pedidoId: any) {
-    this.common.showLoader()
+    // this.common.showLoader()
     let link: string = ENV.WS_VENDAS + API_URL + "PedidoVenda/" + localStorage.getItem("empresa") + "/" + pedidoId;
 
     this.baseService.post(link, {})
       .then((result: any) => {
         console.log(result)
+        this.common.showToast(result.msg)
         this.getPedidosEmAberto(1)
       })
       .catch(error => {

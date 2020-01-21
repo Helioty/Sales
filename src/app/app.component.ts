@@ -18,14 +18,9 @@ import { BaseCommon } from './../commons/base-common';
 export class AppComponent {
   public appPages = [
     {
-      title: 'Home',
-      url: '/home',
-      icon: 'home'
-    },
-    {
-      title: 'List',
-      url: '/list',
-      icon: 'list'
+      title: 'Pedidos',
+      url: '/pedido-lista',
+      icon: 'clipboard'
     },
     {
       title: 'Pedido Rapido',

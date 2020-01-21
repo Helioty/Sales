@@ -1,0 +1,81 @@
+
+.lista-produtos {
+    padding: 10px !important;
+
+    .list-header-label {
+        width: 100%;
+        text-align: center;
+        font-size: 16px;
+        color: #222222;
+    }
+
+    .produto-item-card {
+        border-radius: 6px;
+        border: 1px solid rgba(0, 0, 0, 0.2);
+        box-shadow: 1px 2px 5px 0  rgba(0, 0, 0, 0.4);
+        margin-bottom: 10px;
+        // min-height: 85px !important;
+        --inner-padding-end: 0 !important;
+        --padding-start: 0 !important;
+
+        .produtoNome {
+            ion-col {                  
+                padding: 5px 0;
+                p {
+                    margin: 0px;
+                    color: #808080;
+                    font-size: 13px;
+                    font-weight: 400;
+                    white-space: normal;
+                }
+            }
+        }
+        .produtoPreco {
+            font-size: 15px;
+            color: red;
+            font-weight: bold;
+            padding: 0;
+        }
+        .produtoPrecoUnidade {
+            padding: 5px 0 0;
+            color: #4d4d4d;
+            font-size: 13px;
+            text-align: left;
+            align-self: center;
+            padding-bottom: none;
+        }
+        .produtoQuantidade {
+            background-color: #f4f4f4;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: bold;
+            span {
+                text-align: center !important;
+                width: 100%;
+                padding: 4px 0;
+            }
+        }
+        div.btnDelete {
+            height: 50%;
+            text-align: center;                
+            align-items: flex-end;
+            display: flex;
+            div {
+                width: 100%;
+                flex-direction: column;
+                align-items: flex-end;
+                align-content: flex-end;
+            }           
+        }
+        .divQtde {
+            height: 50%;
+        }
+
+        .label-depositos {
+            width: 100%;
+            font-size: 14px;
+            padding: 3px 0 !important;
+        }
+    }
+}
