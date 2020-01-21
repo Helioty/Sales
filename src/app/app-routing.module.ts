@@ -10,9 +10,21 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   {
+    path: 'login',
+    loadChildren: './login/login.module#LoginPageModule'
+  },
+  {
     path: 'pedido-lista',
     loadChildren: './pedido-lista/pedido-lista.module#PedidoListaPageModule',
     canActivate: [AuthGuard]
+  },
+  {
+    path: 'pedido-resumo',
+    loadChildren: './pedido-lista/pedido-resumo/pedido-resumo.module#PedidoResumoPageModule'
+  },
+  {
+    path: 'produto',
+    loadChildren: './produto/produto.module#ProdutoPageModule'
   },
   {
     path: 'home',
@@ -22,10 +34,6 @@ const routes: Routes = [
   {
     path: 'list',
     loadChildren: () => import('./list/list.module').then(m => m.ListPageModule)
-  },
-  {
-    path: 'login',
-    loadChildren: './login/login.module#LoginPageModule'
   },
   {
     path: 'pedido-rapido',
@@ -43,12 +51,10 @@ const routes: Routes = [
     path: 'indicador-vendedor',
     loadChildren: './indicador-vendedor/indicador-vendedor.module#IndicadorVendedorPageModule'
   },
-  { 
-    path: 'produto', 
-    loadChildren: './produto/produto.module#ProdutoPageModule' 
-  },
+
   { path: 'produto-imagens', loadChildren: './produto/produto-imagens/produto-imagens.module#ProdutoImagensPageModule' },
-  { path: 'produto-detalhes', loadChildren: './produto/produto-detalhes/produto-detalhes.module#ProdutoDetalhesPageModule' }
+  { path: 'produto-detalhes', loadChildren: './produto/produto-detalhes/produto-detalhes.module#ProdutoDetalhesPageModule' },
+
 
 
 ];

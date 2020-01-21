@@ -40,15 +40,14 @@ export class BaseService {
       states[Connection.CELL] = "Cell generic connection";
       states[Connection.NONE] = "No network connection";
 
-      if (
-        // networkState == Connection.UNKNOWN ||
-        networkState == Connection.NONE
-      ) {
+      if (networkState == Connection.NONE) {
         return false;
-      } else {
+      }
+      else {
         return true;
       }
-    } else {
+    }
+    else {
       return true;
     }
   }
@@ -86,8 +85,8 @@ export class BaseService {
 
     if (!this.checkNetwork()) {
       this.common.showToast("Sem conexão!");
-    } else {
-
+    }
+    else {
       const headers = new HttpHeaders().set("x-auth-token", localStorage.getItem("token"));
 
       return new Promise((resolve, reject) => {
@@ -105,8 +104,8 @@ export class BaseService {
 
     if (!this.checkNetwork()) {
       this.common.showToast("Sem conexão!");
-    } else {
-
+    }
+    else {
       const headers = new HttpHeaders().set("x-auth-token", localStorage.getItem("token"));
 
       return new Promise((resolve, reject) => {
