@@ -54,6 +54,7 @@ const routes: Routes = [
 
   { path: 'produto-imagens', loadChildren: './produto/produto-imagens/produto-imagens.module#ProdutoImagensPageModule' },
   { path: 'produto-detalhes', loadChildren: './produto/produto-detalhes/produto-detalhes.module#ProdutoDetalhesPageModule' },
+  { path: 'pedido-finalizacao', loadChildren: './pedido-finalizacao/pedido-finalizacao.module#PedidoFinalizacaoPageModule' },
   
 
 
