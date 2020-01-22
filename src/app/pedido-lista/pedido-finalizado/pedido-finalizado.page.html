@@ -6,15 +6,16 @@
     </ion-refresher-content>
   </ion-refresher>
 
-  <ion-grid *ngIf="!showSkeleton && pedidos == []" class="noPedidos">
+  <!-- Nenhum pedido na lista -->
+  <ion-grid *ngIf="!showSkeleton && pedidos == null" class="noPedidos">
     <ion-row class="topHeading">
       <ion-col>
-        <h3>Seus pedidos em andamento vão ficar aqui... Inicie um novo pedido</h3>
+        <h3>Seus pedidos finalizados vâo ficar aqui...</h3>
       </ion-col>
     </ion-row>
     <ion-row class="noImg">
       <ion-col>
-        <img src="assets/images/08-catalogo/parachute.png" />
+        <img src="../../../assets/images/08-catalogo/parachute.png" />
       </ion-col>
     </ion-row>
     <ion-row class="bottomHeading">
@@ -57,7 +58,7 @@
 
 
   <!-- Lista de pedidos -->
-  <ion-list *ngIf="pedidos != []" class="pedido-list">
+  <ion-list *ngIf="!showSkeleton && pedidos != []" class="pedido-list">
     <ion-item-sliding *ngFor="let pedido of pedidos; let i = index" #slidingItem class="pedido">
 
       <ion-item lines="none" class="pedido-item">
@@ -131,5 +132,10 @@
       </ion-item-options>
     </ion-item-sliding>
   </ion-list>
+
+  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
+    <ion-infinite-scroll-content loadingSpinner="circles" loadingText="Loading more data...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 
 </ion-content>

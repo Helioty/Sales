@@ -2,25 +2,26 @@
 .noPedidos {
     position: fixed;
     height: 100%;
+    width: 100%;
     
     .topHeading {
         h3 {
             text-align: center;
-            font-size: 1.8rem;
+            font-size: 18px;
             color: #3f3f3f;
         }
     }
     .noImg {
         text-align: center;
         img {
-            width: 20rem;
-            height: 20rem;
+            width: 200px;
+            height: auto;
         }
     }
     .bottomHeading {
         h3 {
             text-align: center;
-            font-size: 1.8rem;
+            font-size: 18px;
             color: #8f8f8f;
             font-weight: normal;
         }

@@ -58,7 +58,12 @@ export class PedidoAbertoPage implements OnInit {
     let link: string = ENV.WS_VENDAS + API_URL + "PedidoVenda/list/" + localStorage.getItem("empresa") + "/abertos?page=" + page;
     await this.baseService.get(link).then((result: any) => {
       console.log(result)
+      this.resultGetPedidos = result;
       this.pedidos = result.content;
+      if (this.pedidos.length == 0) {
+        console.log("Nenhum pedido em aberto")
+        this.pedidos = null;
+      }
       console.log(this.pedidos)
       this.showSkeleton = false;
     }), (error: any) => {

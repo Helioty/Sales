@@ -19,7 +19,8 @@ import { Network } from "@ionic-native/network/ngx";
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 
-import { ENV } from '../environments/environment';
+import { ENV, environment } from '../environments/environment';
+import { ServiceWorkerModule } from '@angular/service-worker';
 console.log(ENV.mode);
 
 
@@ -31,6 +32,7 @@ console.log(ENV.mode);
     HttpClientModule,
     IonicModule.forRoot(),
     AppRoutingModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
   ],
   providers: [
     AndroidFullScreen,

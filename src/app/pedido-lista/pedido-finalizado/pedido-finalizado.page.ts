@@ -49,15 +49,29 @@ export class PedidoFinalizadoPage implements OnInit {
     } catch (error) {
       console.log(error)
     }
+  }
 
+  async doInfinite(event: any) {
+    try {
+      await this.getPedidosEmAberto(1).then(res => {
+        event.target.complete();
+      })
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   async getPedidosEmAberto(page: number) {
     this.showSkeleton = true;
-    let link: string = ENV.WS_VENDAS + API_URL + "PedidoVenda/list/" + localStorage.getItem("empresa") + "/abertos?page=" + page;
+    let link: string = ENV.WS_VENDAS + API_URL + "PedidoVenda/list/" + localStorage.getItem("empresa") + "/faturados?page=" + page;
     await this.baseService.get(link).then((result: any) => {
       console.log(result)
+      this.resultGetPedidos = result;
       this.pedidos = result.content;
+      if (this.pedidos.length == 0) {
+        console.log("Nenhum pedido em aberto")
+        this.pedidos = null;
+      }
       console.log(this.pedidos)
       this.showSkeleton = false;
     }), (error: any) => {

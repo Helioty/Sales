@@ -6,7 +6,8 @@
     </ion-refresher-content>
   </ion-refresher>
 
-  <ion-grid *ngIf="!showSkeleton && pedidos == []" class="noPedidos">
+  <!-- Nenhum pedido na lista -->
+  <ion-grid *ngIf="!showSkeleton && pedidos == null" class="noPedidos">
     <ion-row class="topHeading">
       <ion-col>
         <h3>Seus pedidos em andamento vão ficar aqui... Inicie um novo pedido</h3>
@@ -14,7 +15,7 @@
     </ion-row>
     <ion-row class="noImg">
       <ion-col>
-        <img src="assets/images/08-catalogo/parachute.png" />
+        <img src="../../../assets/imagens/08-catalogo/parachute.png" />
       </ion-col>
     </ion-row>
     <ion-row class="bottomHeading">
