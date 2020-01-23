@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpClient, HttpParams, HttpErrorResponse } from "@angular/common/http";
-import { AuthGuard } from './../../guards/auth.guard';
-import { BaseCommon } from '../base-common';
+import { AuthGuard } from '../guards/auth.guard';
+import { BaseCommon } from '../../commons/base-common';
 import { BaseService } from './base-service.service';
 
 import { API_URL } from '../../config/app.config';

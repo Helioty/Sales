@@ -4,8 +4,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { ENV } from 'src/environments/environment';
 import { API_URL } from 'src/config/app.config';
 
-import { BaseCommon } from './../../../commons/base-common';
-import { BaseService } from '../../../commons/services/base-service.service';
+import { BaseCommon } from '../../../../commons/base-common';
+import { BaseService } from '../../../services/base-service.service';
 
 
 @Component({

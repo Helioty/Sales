@@ -2,13 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { MenuController, Platform, NavController } from '@ionic/angular';
 import { Router } from '@angular/router';
 
-import { BaseCommon } from './../../commons/base-common';
+import { BaseCommon } from '../../../commons/base-common';
 import { AndroidFullScreen } from '@ionic-native/android-full-screen/ngx';
-import { AuthService } from '../../commons/services/auth-service.service';
+import { AuthService } from '../../services/auth-service.service';
 
-import { ENV } from '../../environments/environment';
+import { ENV } from '../../../environments/environment';
 import { AppConfig, getHTTP } from 'src/config/app.config';
-import { AppComponent } from '../app.component';
+import { AppComponent } from '../../app.component';
 
 @Component({
   selector: 'app-login',

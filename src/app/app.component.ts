@@ -6,7 +6,7 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { Router } from '@angular/router';
 import { AndroidFullScreen } from '@ionic-native/android-full-screen/ngx';
 
-import { AuthGuard } from './../guards/auth.guard';
+import { AuthGuard } from './guards/auth.guard';
 import { BaseCommon } from './../commons/base-common';
 
 @Component({

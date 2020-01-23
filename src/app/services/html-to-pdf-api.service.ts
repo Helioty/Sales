@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { BaseCommon } from '../base-common';
+import { BaseCommon } from '../../commons/base-common';
 
 import {
   HttpEvent,

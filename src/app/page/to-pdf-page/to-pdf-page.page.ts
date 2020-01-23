@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { AlertController } from '@ionic/angular';
 
-import { HTMLToPDFAPIService } from '../../commons/services/html-to-pdf-api.service';
+import { HTMLToPDFAPIService } from '../../services/html-to-pdf-api.service';
 
 import html2canvas from 'html2canvas';
 import { BaseCommon } from 'src/commons/base-common';

@@ -5,14 +5,14 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
 
-import { PipesModule } from '../../../commons/pipes/pipes.module';
+import { PipesModule } from '../../../pipes/pipes.module';
 
-import { PedidoFinalizadoPage } from './pedido-finalizado.page';
+import { PedidoResumoPage } from './pedido-resumo.page';
 
 const routes: Routes = [
   {
     path: '',
-    component: PedidoFinalizadoPage
+    component: PedidoResumoPage
   }
 ];
 
@@ -24,6 +24,6 @@ const routes: Routes = [
     PipesModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [PedidoFinalizadoPage]
+  declarations: [PedidoResumoPage]
 })
-export class PedidoFinalizadoPageModule {}
+export class PedidoResumoPageModule {}
