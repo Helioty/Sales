@@ -38,11 +38,6 @@ export class AppComponent {
       icon: 'stats'
     },
     {
-      title: 'ToPDF',
-      url: '/to-pdf-page',
-      icon: 'stats'
-    },
-    {
       title: 'Logout',
       url: '/login',
       icon: 'log-out'

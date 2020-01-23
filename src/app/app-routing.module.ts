@@ -45,7 +45,7 @@ const routes: Routes = [
     loadChildren: './page/produto/produto-detalhes/produto-detalhes.module#ProdutoDetalhesPageModule'
   },
   
-  
+
   {
     path: 'new-tms',
     loadChildren: './page/new-tms/new-tms.module#NewTMSPageModule'
@@ -61,6 +61,11 @@ const routes: Routes = [
     path: 'pedido-finalizacao',
     loadChildren: './page/pedido-finalizacao/pedido-finalizacao.module#PedidoFinalizacaoPageModule'
   },
+  { 
+    path: 'consulta-cep', 
+    loadChildren: './page/consulta-cep/consulta-cep.module#ConsultaCepPageModule' 
+  },
+
 
 
 
