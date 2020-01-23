@@ -15,25 +15,37 @@ const routes: Routes = [
   },
   {
     path: 'pedido-lista',
-    loadChildren: './page/pedido-lista/pedido-lista.module#PedidoListaPageModule',
+    loadChildren: () => import('./page/pedido-lista/pedido-lista.module').then(m => m.PedidoListaPageModule),
     canActivate: [AuthGuard]
   },
   {
     path: 'pedido-resumo',
     loadChildren: './page/pedido-lista/pedido-resumo/pedido-resumo.module#PedidoResumoPageModule'
   },
-  { 
-    path: 'pedido-sacola', 
-    loadChildren: './page/pedido-sacola/pedido-sacola.module#PedidoSacolaPageModule' 
-  },
   {
-    path: 'produto',
-    loadChildren: './page/produto/produto.module#ProdutoPageModule'
+    path: 'pedido-sacola',
+    loadChildren: './page/pedido-sacola/pedido-sacola.module#PedidoSacolaPageModule'
   },
   {
     path: 'pedido-rapido',
     loadChildren: './page/pedido-rapido/pedido-rapido.module#PedidoRapidoPageModule'
   },
+
+
+  {
+    path: 'produto',
+    loadChildren: './page/produto/produto.module#ProdutoPageModule'
+  },
+  {
+    path: 'produto-imagens',
+    loadChildren: './page/produto/produto-imagens/produto-imagens.module#ProdutoImagensPageModule'
+  },
+  {
+    path: 'produto-detalhes',
+    loadChildren: './page/produto/produto-detalhes/produto-detalhes.module#ProdutoDetalhesPageModule'
+  },
+  
+  
   {
     path: 'new-tms',
     loadChildren: './page/new-tms/new-tms.module#NewTMSPageModule'
@@ -43,10 +55,13 @@ const routes: Routes = [
     loadChildren: './page/indicador-vendedor/indicador-vendedor.module#IndicadorVendedorPageModule'
   },
 
-  { path: 'produto-imagens', loadChildren: './produto/produto-imagens/produto-imagens.module#ProdutoImagensPageModule' },
-  { path: 'produto-detalhes', loadChildren: './produto/produto-detalhes/produto-detalhes.module#ProdutoDetalhesPageModule' },
-  { path: 'pedido-finalizacao', loadChildren: './pedido-finalizacao/pedido-finalizacao.module#PedidoFinalizacaoPageModule' },
   
+  
+  {
+    path: 'pedido-finalizacao',
+    loadChildren: './page/pedido-finalizacao/pedido-finalizacao.module#PedidoFinalizacaoPageModule'
+  },
+
 
 
 
