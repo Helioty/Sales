@@ -15,7 +15,7 @@
     </ion-row>
     <ion-row class="noImg">
       <ion-col>
-        <img src="../../../assets/images/08-catalogo/parachute.png" />
+        <img src="../../../assets/imagens/08-catalogo/parachute.png" />
       </ion-col>
     </ion-row>
     <ion-row class="bottomHeading">
@@ -58,7 +58,7 @@
 
 
   <!-- Lista de pedidos -->
-  <ion-list *ngIf="!showSkeleton && pedidos != []" class="pedido-list">
+  <ion-list *ngIf="!showSkeleton && pedidos != [] && pedidos != null" class="pedido-list">
     <ion-item-sliding *ngFor="let pedido of pedidos; let i = index" #slidingItem class="pedido">
 
       <ion-item lines="none" class="pedido-item">

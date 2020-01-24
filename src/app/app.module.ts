@@ -11,10 +11,11 @@ import { BaseCommon } from '../commons/base-common';
 import { DataService } from './services/data.service';
 import { BaseService } from './services/base-service.service';
 import { AuthService } from './services/auth-service.service';
-import { AppConfig } from '../config/app.config';
+import { AppConfig } from 'src/config/app.config';
 import { AndroidFullScreen } from '@ionic-native/android-full-screen/ngx';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import { Network } from "@ionic-native/network/ngx";
+import { Geolocation } from '@ionic-native/geolocation/ngx';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -46,6 +47,7 @@ console.log(ENV.mode);
     BaseCommon,
     BaseService,
     Network,
+    Geolocation,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

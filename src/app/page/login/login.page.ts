@@ -41,6 +41,7 @@ export class LoginPage implements OnInit {
     private router: Router
   ) {
 
+    // this.common.showToast(ENV.mode)
     if (ENV.mode == 'Production') {
       this.loginData.login = '';
       this.loginData.senha = '';

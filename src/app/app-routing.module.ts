@@ -62,9 +62,10 @@ const routes: Routes = [
     loadChildren: './page/pedido-finalizacao/pedido-finalizacao.module#PedidoFinalizacaoPageModule'
   },
   { 
-    path: 'consulta-cep', 
+    path: 'consulta-cep/:mode', 
     loadChildren: './page/consulta-cep/consulta-cep.module#ConsultaCepPageModule' 
-  },
+  },  { path: 'cliente', loadChildren: './page/cliente/cliente.module#ClientePageModule' },
+
 
 
 

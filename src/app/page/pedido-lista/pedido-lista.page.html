@@ -8,7 +8,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content #fabB id="fabB">
 
   <ion-tabs>
     <ion-tab-bar slot="top" color="fc" class="tabs-shadow">
@@ -22,10 +22,28 @@
     </ion-tab-bar>
   </ion-tabs>
 
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button color="fc-button-green" edge (click)="novoPedido()">
+  <ion-fab vertical="bottom" horizontal="center" slot="fixed">
+    <ion-fab-button id="fabA" color="fc-button-green" edge (click)="checaAtivo('fabA', 'fabB')">
       <ion-icon name="add" size="large"></ion-icon>
     </ion-fab-button>
+
+    <ion-fab-list side="top">
+      <ion-fab-button data-desc="Entrega" class="btn-fab">
+        <ion-icon src="../../assets/imagens/07-formas_de_retirada/entrega@1x.svg"></ion-icon>
+      </ion-fab-button>
+    </ion-fab-list>
+
+    <ion-fab-list side="start">
+      <ion-fab-button data-desc="Posterior" class="btn-fab">
+        <ion-icon src="../../assets/imagens/07-formas_de_retirada/posterior@1x.svg"></ion-icon>
+      </ion-fab-button>
+    </ion-fab-list>
+
+    <ion-fab-list side="end">
+      <ion-fab-button data-desc="Levar Agora" class="btn-fab">
+        <ion-icon src="../../assets/imagens/07-formas_de_retirada/imediata@1x.svg"></ion-icon>
+      </ion-fab-button>
+    </ion-fab-list>
   </ion-fab>
 
 </ion-content>

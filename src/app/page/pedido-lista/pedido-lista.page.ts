@@ -32,4 +32,24 @@ export class PedidoListaPage implements OnInit {
     this.navControl.navigateForward('/pedido-sacola')
   }
 
+  checaAtivo(id: string, id2: string) {
+    // console.log("A")
+    // let elemento = document.getElementById(id);
+    // let classes = elemento.className.split(' ');
+    // let getIndex = classes.indexOf("fab-button-close-active");
+
+    // let elemento2 = document.getElementById(id2);
+    // let classes2 = elemento2.className.split(' ');
+    // let getIndex2 = classes2.indexOf("contentOpaco");
+
+    // if (getIndex === -1) {
+    //   classes.push("contentOpaco");
+    //   elemento2.className = classes.join(' ');
+    // }
+    // else {
+    //   classes2.splice(getIndex2, 1);
+    //   elemento2.className = classes.join(' ');
+    // }
+  }
+
 }

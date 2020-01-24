@@ -8,6 +8,7 @@ import { AndroidFullScreen } from '@ionic-native/android-full-screen/ngx';
 
 import { AuthGuard } from './guards/auth.guard';
 import { BaseCommon } from './../commons/base-common';
+import { AppConfig } from 'src/config/app.config';
 
 @Component({
   selector: 'app-root',
@@ -21,6 +22,11 @@ export class AppComponent {
       title: 'Pedidos',
       url: '/pedido-lista',
       icon: 'clipboard'
+    },
+    {
+      title: 'Consulta Cep',
+      url: '/consulta-cep/consulta',
+      icon: 'pin'
     },
     {
       title: 'Pedido Rapido',
@@ -52,6 +58,7 @@ export class AppComponent {
   public noPhoto: boolean = false;
 
   constructor(
+    private app: AppConfig,
     private authGuard: AuthGuard,
     private androidFullScreen: AndroidFullScreen,
     public alertCtrl: AlertController,
@@ -67,6 +74,8 @@ export class AppComponent {
     this.androidFullScreen.isImmersiveModeSupported()
       .then(() => this.androidFullScreen.immersiveMode())
       .catch(err => console.log(err));
+
+    this.app.getURL()
   }
 
   initializeApp() {
