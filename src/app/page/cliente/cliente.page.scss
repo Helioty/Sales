@@ -1,0 +1,89 @@
+.header-md:after {
+    height: 0 !important;
+    background-image: none !important;
+}
+
+
+
+.bg-white {
+    --background: white;
+    --bg-cor: white;
+    --card-cor: #59B3D9;
+    --font-cor: #353535;
+    --text-cor: #353535;
+    --line-cor: #A7A4A5;
+    --icon-cor: black;
+    --input-text: #59B3D9;
+}
+.bg-blue {
+    --background: white;
+    --bg-cor: #59B3D9;
+    --font-cor: #353535;
+    --card-cor: #59B3D9;
+    --text-cor: white;
+    --line-cor: #A7A4A5;
+    --icon-cor: black;
+    --input-text: #59B3D9;
+}
+.bg-orange {
+    --background: #EF6F38;
+    --bg-cor: #EF6F38;
+    --font-cor: white;
+    --text-cor: #EF6F38;
+    --card-cor: white;
+    --card-text: #EF6F38;
+    --line-cor: #F3915F;
+    --icon-cor: white;
+    --input-text: white;
+}
+.bg-green {
+    --background: #19A852;
+    --bg-cor: #19A852;
+    --card-cor: white;
+    --font-cor: white;
+    --text-cor: #19A852;
+    --line-cor: #6CB876;
+    --icon-cor: white;
+    --input-text: white;
+    --bg-button: #EF6F38;
+}
+.bg-glight {
+    --background: #C6EBD7;
+    --bg-cor: #EF6F38;
+    --card-cor: white;
+    --font-cor: white;
+    --text-cor: #19A852;
+    --line-cor: #6CB876;
+    --icon-cor: white;
+    --bg-button: #EF6F38;
+    --input-text: #19A852;
+}
+
+
+.card-blue {
+    --background: #59B3D9 !important;
+}
+
+.clie-card {
+    width: 100%;
+    border-radius: 8px;
+}
+.clie-icon {
+    font-size: 64px;
+    margin-right: 5px;
+}
+
+.clie-input {
+    width: 280px !important;
+    margin: auto !important;
+    text-align: center;
+
+    .has-focus {
+        border-bottom: 1px solid #59B3D9;
+        margin-bottom: 0 !important;
+    }
+    .has-value {
+        border-bottom: 1px solid #59B3D9;
+        margin-bottom: 0 !important;
+    }
+}

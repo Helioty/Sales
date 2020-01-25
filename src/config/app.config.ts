@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { HttpHeaders, HttpClient, HttpParams, HttpErrorResponse } from "@angular/common/http";
+import { HttpClient, HttpParams, HttpErrorResponse } from "@angular/common/http";
 import { ENV } from '../environments/environment';
 
 export let API_URL: any;

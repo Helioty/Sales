@@ -95,27 +95,79 @@ export class BaseCommon {
         });
         await alert.present();
     }
-
-    // showAlert3(titulo, msg) {
-    //     if (msg != null) {
-    //         let alert = this.alertCtrl.create({
-    //             title: titulo,
-    //             subTitle: msg,
-    //             buttons: [
-    //                 {
-    //                     text: 'ok',
-    //                     handler: () => {
-    //                         // this.exibeSkeletonLoading = true;
-    //                     }
-    //                 }
-    //             ]
-    //             // cssClass: 'alertCustomCss2'
-    //         });
-    //         alert.present();
-    //     }
-
-    // }
+ 
 
 
+    // formatação de string -------------------------------------------------------------------------------------------
+    public formata(value: string, filter: string) {
+        value = value.toString();
+
+        if (filter == 'CEP') {
+            value = value.replace(/\D/g, '');
+            value = value.replace(/^(\d{2})(\d{3})(\d)/, "$1.$2-$3");
+            return value;
+        }
+
+        if (filter === 'CPFCGC') {
+
+            value = value.toString();
+
+            if (value.length === 11) {
+                value = value.replace(/\D/g, ''); //Remove tudo o que não é dígito
+                value = value.replace(/(\d{3})(\d)/, '$1.$2');
+                value = value.replace(/(\d{3})(\d)/, '$1.$2');
+                value = value.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+                return value;
+            } else if (value.length > 11) {
+                value = value.replace(/\D/g, ''); //Remove tudo o que não é dígito
+                value = value.replace(/^(\d{2})(\d)/, '$1.$2');
+                value = value.replace(/^(\d{2})\.(\d{3})(\d)/, '$1.$2.$3');
+                value = value.replace(/\.(\d{3})(\d)/, '.$1/$2');
+                value = value.replace(/(\d{4})(\d)/, '$1-$2');
+                return value;
+            }
+            else if (value.length < 11 && value.length > 9) {
+                value = value.replace(/\D/g, ''); //Remove tudo o que não é dígito
+                value = value.replace(/(\d{3})(\d)/, '$1.$2');
+                value = value.replace(/(\d{3})(\d)/, '$1.$2');
+                value = value.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+                return value;
+            }
+            else if (value.length > 6 && value.length <= 9) {
+                value = value.replace(/\D/g, ''); //Remove tudo o que não é dígito
+                value = value.replace(/(\d{3})(\d)/, '$1.$2');
+                value = value.replace(/(\d{3})(\d)/, '$1.$2');
+                return value;
+            }
+            else if (value.length > 3 && value.length <= 6) {
+                value = value.replace(/\D/g, ''); //Remove tudo o que não é dígito
+                value = value.replace(/^(\d{3})(\d)/, '$1.$2');
+                return value;
+            }
+            else if (value.length <= 3 && value.length > 0) {
+                value = value.replace(/\D/g, ''); //Remove tudo o que não é dígito
+                return value;
+            }
+        }
+
+        if (filter === 'FONE') {
+
+            if (value.length === 11) {
+                value = value.replace(/^(\d{2})(\d{5})(\d{4})/, '($1) $2-$3');
+            }
+            else if (value.length < 11 && value.length > 6) {
+                value = value.replace(/^(\d{2})(\d{4})/, '($1) $2-');
+            }
+            else if (value.length <= 6 && value.length > 2) {
+                value = value.replace(/^(\d{2})/, '($1) ');
+            }
+            else {
+                value = value.replace(/^(\d{2})(\d{4})(\d{4})/, '($1) $2-$3');
+            }
+            return value;
+
+        }
+
+    }
 
 }
