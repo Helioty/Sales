@@ -100,7 +100,6 @@ export class BaseCommon {
 
     // formatação de string -------------------------------------------------------------------------------------------
     public formata(value: string, filter: string) {
-        value = value.toString();
 
         if (filter == 'CEP') {
             value = value.replace(/\D/g, '');
@@ -109,17 +108,14 @@ export class BaseCommon {
         }
 
         if (filter === 'CPFCGC') {
-
-            value = value.toString();
+            value = value.replace(/\D/g, ''); //Remove tudo o que não é dígito
 
             if (value.length === 11) {
-                value = value.replace(/\D/g, ''); //Remove tudo o que não é dígito
                 value = value.replace(/(\d{3})(\d)/, '$1.$2');
                 value = value.replace(/(\d{3})(\d)/, '$1.$2');
                 value = value.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
                 return value;
             } else if (value.length > 11) {
-                value = value.replace(/\D/g, ''); //Remove tudo o que não é dígito
                 value = value.replace(/^(\d{2})(\d)/, '$1.$2');
                 value = value.replace(/^(\d{2})\.(\d{3})(\d)/, '$1.$2.$3');
                 value = value.replace(/\.(\d{3})(\d)/, '.$1/$2');
@@ -127,25 +123,21 @@ export class BaseCommon {
                 return value;
             }
             else if (value.length < 11 && value.length > 9) {
-                value = value.replace(/\D/g, ''); //Remove tudo o que não é dígito
                 value = value.replace(/(\d{3})(\d)/, '$1.$2');
                 value = value.replace(/(\d{3})(\d)/, '$1.$2');
                 value = value.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
                 return value;
             }
             else if (value.length > 6 && value.length <= 9) {
-                value = value.replace(/\D/g, ''); //Remove tudo o que não é dígito
                 value = value.replace(/(\d{3})(\d)/, '$1.$2');
                 value = value.replace(/(\d{3})(\d)/, '$1.$2');
                 return value;
             }
             else if (value.length > 3 && value.length <= 6) {
-                value = value.replace(/\D/g, ''); //Remove tudo o que não é dígito
                 value = value.replace(/^(\d{3})(\d)/, '$1.$2');
                 return value;
             }
-            else if (value.length <= 3 && value.length > 0) {
-                value = value.replace(/\D/g, ''); //Remove tudo o que não é dígito
+            else {
                 return value;
             }
         }

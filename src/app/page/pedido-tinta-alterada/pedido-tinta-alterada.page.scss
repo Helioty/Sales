@@ -1,0 +1,13 @@
+.icon-size {
+    font-size: 42px;
+}
+@media only screen and (min-width: 600px) {
+    .icon-size {
+        font-size: 64px;
+    }
+}
+
+.slide-grid {
+    width: 100% !important;
+    height: 100% !important;
+}

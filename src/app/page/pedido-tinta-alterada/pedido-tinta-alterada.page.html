@@ -1,0 +1,86 @@
+<ion-header>
+  <ion-toolbar color="fc">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>pedido-tinta-alterada</ion-title>
+  </ion-toolbar>
+  <ion-toolbar color="fc">
+    <ion-segment color="light" value="0" (ionChange)="console($event)">
+      <ion-segment-button checked value="0">
+        <ion-icon class="icon-size" src="..\..\..\assets\imagens\tintas\paint-bucket.svg"></ion-icon>
+        <ion-badge color="success" style="margin-left: 50px; margin-bottom: 5px; margin-top: -25px;">OK</ion-badge>
+      </ion-segment-button>
+      <ion-segment-button value="1">
+        <ion-icon class="icon-size" src="..\..\..\assets\imagens\tintas\canned-food.svg"></ion-icon>
+        <ion-badge color="success" style="margin-left: 50px; margin-bottom: 5px; margin-top: -25px;">OK</ion-badge>
+      </ion-segment-button>
+      <ion-segment-button value="2">
+        <ion-icon class="icon-size" src="..\..\..\assets\imagens\tintas\paint3.svg"></ion-icon>
+        <ion-badge color="success" style="margin-left: 50px; margin-bottom: 5px; margin-top: -25px;">OK</ion-badge>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-slides style="width: 100%; height: 100%;">
+    <ion-slide>
+      <ion-grid class="slide-grid">
+        <ion-row>
+          <ion-col size="6">
+            ion-col [size="6"]
+          </ion-col>
+          <ion-col>
+            ion-col
+          </ion-col>
+          <ion-col>
+            ion-col
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-slide>
+
+    <ion-slide>
+      <ion-grid class="slide-grid">
+        <ion-row>
+          <ion-col>
+            ion-col [start]
+          </ion-col>
+          <ion-col>
+            ion-col [center]
+          </ion-col>
+          <ion-col>
+            ion-col [end]
+          </ion-col>
+          <ion-col>
+            ion-col
+            <br>#
+            <br>#
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-slide>
+
+    <ion-slide>
+      <ion-grid class="slide-grid">
+        <ion-row>
+          <ion-col size="12" size-sm>
+            ion-col [size="12"] [size-sm]
+          </ion-col>
+          <ion-col size="12" size-sm>
+            ion-col [size="12"] [size-sm]
+          </ion-col>
+          <ion-col size="12" size-sm>
+            ion-col [size="12"] [size-sm]
+          </ion-col>
+          <ion-col size="12" size-sm>
+            ion-col [size="12"] [size-sm]
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-slide>
+  </ion-slides>
+
+</ion-content>

@@ -20,11 +20,11 @@
     --card-cor: white;
     --card-text: #EF6F38;
     --background: rgba(255,175,75,1);
-    --background: -moz-linear-gradient(left, rgba(255,175,75,1) 0%, rgba(239,111,10,1) 100%);
+    --background: -moz-linear-gradient(left, rgba(255,175,75,1) 0%, rgba(239,111,56,1) 100%);
     --background: -webkit-gradient(left top, right top, color-stop(0%, rgba(255,175,75,1)), color-stop(100%, rgba(239,111,56,1)));
     --background: -webkit-linear-gradient(left, rgba(255,175,75,1) 0%, rgba(239,111,56,1) 100%);
     --background: -o-linear-gradient(left, rgba(255,175,75,1) 0%, rgba(239,111,56,1) 100%);
-    --background: -ms-linear-gradient(left, rgba(255,175,75,1) 0%, rgba(239,111,59,1) 100%);
+    --background: -ms-linear-gradient(left, rgba(255,175,75,1) 0%, rgba(239,111,56,1) 100%);
     --background: linear-gradient(to right, rgba(255,175,75,1) 0%, rgba(239,111,56,1) 100%);
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffaf4b', endColorstr='#EF6F38', GradientType=1 );
 }
@@ -35,14 +35,14 @@
     --font-cor: white;
     --text-cor: #19A852;
     --bg-button: #EF6F38;
-    --background: rgb(122, 255, 82);
-    --background: -moz-linear-gradient(left, rgba(122,255,82,1) 0%, rgba(25,168,82,1) 100%);
-    --background: -webkit-gradient(left top, right top, color-stop(0%, rgba(122,255,82,1)), color-stop(100%, rgba(25,168,82,1)));
-    --background: -webkit-linear-gradient(left, rgba(122,255,82,1) 0%, rgba(25,168,82,1) 100%);
-    --background: -o-linear-gradient(left, rgba(122,255,82,1) 0%, rgba(25,168,82,1) 100%);
-    --background: -ms-linear-gradient(left, rgba(122,255,82,1) 0%, rgba(25,168,82,1) 100%);
-    --background: linear-gradient(to right, rgba(122,255,82,1) 0%, rgba(25,168,82,1) 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d2ff52', endColorstr='#19a852', GradientType=1 );
+    --background: rgb(122,255,82);
+    --background: -moz-linear-gradient(left, rgba(44,216,113,1) 0%, rgba(25,168,82,1) 100%);
+    --background: -webkit-gradient(left top, right top, color-stop(0%, rgba(44,216,113,1)), color-stop(100%, rgba(25,168,82,1)));
+    --background: -webkit-linear-gradient(left, rgba(44,216,113,1) 0%, rgba(25,168,82,1) 100%);
+    --background: -o-linear-gradient(left, rgba(44,216,113,1) 0%, rgba(25,168,82,1) 100%);
+    --background: -ms-linear-gradient(left, rgba(44,216,113,1) 0%, rgba(25,168,82,1) 100%);
+    --background: linear-gradient(to right, rgba(44,216,113,1) 0%, rgba(25,168,82,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#2cd871', endColorstr='#19a852', GradientType=1 );
 }
 
 
@@ -60,6 +60,22 @@
 .card-green {
     --padding-bottom: 10px;
     --padding-top: 10px;
+}
+
+@media only screen and (min-width: 600px) {
+    .card-blue {
+        --background: #59B3D9 !important;
+        --padding-bottom: 40px;
+        --padding-top: 40px;
+    }
+    .card-orange {
+        --padding-bottom: 40px;
+        --padding-top: 40px;
+    }
+    .card-green {
+        --padding-bottom: 40px;
+        --padding-top: 40px;
+    }
 }
 
 .clie-card {

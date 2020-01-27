@@ -84,8 +84,8 @@ export class ClientePage implements OnInit {
     if (this.valorDigitado.length > 2) {
       if (inputName == "cli") {
         if (this.valorDigitado != "" || this.valorDigitado != undefined) {
-          let valorDigitado = this.valorDigitado.replace(/\D/g, '');
-          this.valorDigitado = this.common.formata(valorDigitado, "CPFCGC")
+          // let valorDigitado = this.valorDigitado.replace(/\D/g, '');
+          this.valorDigitado = this.common.formata(this.valorDigitado, "CPFCGC")
         }
       }
     }
