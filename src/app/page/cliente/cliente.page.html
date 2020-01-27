@@ -7,8 +7,8 @@
     <!-- <ion-title>cliente</ion-title> -->
 
     <ion-buttons slot="end">
-      <ion-button>
-        <ion-icon name="create" style="font-size: 24px;"></ion-icon>
+      <ion-button *ngIf="!isBlue">
+        <ion-icon name="create" style="font-size: 24px; color: white;"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
@@ -20,9 +20,10 @@
     <ion-row style="width: 100%; max-width: 600px; margin: auto;">
       <ion-card class="clie-card" (click)="mudarCor()">
         <ion-card-content class="ion-no-padding">
-          <ion-item lines="none"
-            [ngClass]="{'card-blue': isBlue, 'card-orange': isOrange, 'card-green': isGreen }">
-            <ion-icon slot="start" src="../../../assets/imagens/10-cliente/cliente.svg" class="clie-icon"></ion-icon>
+          <ion-item lines="none" [ngClass]="{'card-blue': isBlue, 'card-orange': isOrange, 'card-green': isGreen }">
+            <ion-icon slot="start" src="../../../assets/imagens/10-cliente/cliente.svg" class="clie-icon"
+              [ngClass]="{'clie-icon-blue': isBlue, 'clie-icon-orange': isOrange, 'clie-icon-green': isGreen }">
+            </ion-icon>
             <ion-grid>
               <ion-row>
                 <ion-col size="12">
@@ -49,10 +50,14 @@
       </ion-card>
     </ion-row>
 
-    <ion-row class="clie-input">
+    <ion-row class="clie-input" *ngIf="isBlue">
       <ion-input placeholder="CPF ou CNPJ do cliente" (keyup)="dynamicMask('cli')" [(ngModel)]="valorDigitado"
         style="margin-bottom: 1px; font-size: 20px;" autofocus="true">
       </ion-input>
+    </ion-row>
+
+    <ion-row class="clie-btn-row" *ngIf="isGreen">
+      <ion-button class="clie-btn-confirme" color="light">Confirmar</ion-button>
     </ion-row>
   </ion-grid>
 

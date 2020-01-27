@@ -10,7 +10,7 @@ import { BaseCommon } from '../../../commons/base-common';
 export class ClientePage implements OnInit {
 
   // Valor digitado no input de CPF/CNPJ
-  public valorDigitado: any;
+  public valorDigitado: any = "";
 
   // Controle da cor do background // by Ryuge
   public isBlue: boolean = false;

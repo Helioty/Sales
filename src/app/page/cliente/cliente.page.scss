@@ -5,25 +5,12 @@
 
 
 
-.bg-white {
-    --background: white;
-    --bg-cor: white;
-    --card-cor: #59B3D9;
-    --font-cor: #353535;
-    --text-cor: #353535;
-    --line-cor: #A7A4A5;
-    --icon-cor: black;
-    --input-text: #59B3D9;
-}
 .bg-blue {
     --background: white;
     --bg-cor: #59B3D9;
     --font-cor: #353535;
     --card-cor: #59B3D9;
     --text-cor: white;
-    --line-cor: #A7A4A5;
-    --icon-cor: black;
-    --input-text: #59B3D9;
 }
 .bg-orange {
     --background: #EF6F38;
@@ -32,36 +19,47 @@
     --text-cor: #EF6F38;
     --card-cor: white;
     --card-text: #EF6F38;
-    --line-cor: #F3915F;
-    --icon-cor: white;
-    --input-text: white;
+    --background: rgba(255,175,75,1);
+    --background: -moz-linear-gradient(left, rgba(255,175,75,1) 0%, rgba(239,111,10,1) 100%);
+    --background: -webkit-gradient(left top, right top, color-stop(0%, rgba(255,175,75,1)), color-stop(100%, rgba(239,111,56,1)));
+    --background: -webkit-linear-gradient(left, rgba(255,175,75,1) 0%, rgba(239,111,56,1) 100%);
+    --background: -o-linear-gradient(left, rgba(255,175,75,1) 0%, rgba(239,111,56,1) 100%);
+    --background: -ms-linear-gradient(left, rgba(255,175,75,1) 0%, rgba(239,111,59,1) 100%);
+    --background: linear-gradient(to right, rgba(255,175,75,1) 0%, rgba(239,111,56,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffaf4b', endColorstr='#EF6F38', GradientType=1 );
 }
 .bg-green {
-    --background: #19A852;
+    // --background: #19A852;
     --bg-cor: #19A852;
     --card-cor: white;
     --font-cor: white;
     --text-cor: #19A852;
-    --line-cor: #6CB876;
-    --icon-cor: white;
-    --input-text: white;
     --bg-button: #EF6F38;
+    --background: rgba(210,255,82,1);
+    --background: -moz-linear-gradient(left, rgba(210,255,82,1) 0%, rgba(25,168,82,1) 100%);
+    --background: -webkit-gradient(left top, right top, color-stop(0%, rgba(210,255,82,1)), color-stop(100%, rgba(25,168,82,1)));
+    --background: -webkit-linear-gradient(left, rgba(210,255,82,1) 0%, rgba(25,168,82,1) 100%);
+    --background: -o-linear-gradient(left, rgba(210,255,82,1) 0%, rgba(25,168,82,1) 100%);
+    --background: -ms-linear-gradient(left, rgba(210,255,82,1) 0%, rgba(25,168,82,1) 100%);
+    --background: linear-gradient(to right, rgba(210,255,82,1) 0%, rgba(25,168,82,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d2ff52', endColorstr='#19a852', GradientType=1 );
 }
-.bg-glight {
-    --background: #C6EBD7;
-    --bg-cor: #EF6F38;
-    --card-cor: white;
-    --font-cor: white;
-    --text-cor: #19A852;
-    --line-cor: #6CB876;
-    --icon-cor: white;
-    --bg-button: #EF6F38;
-    --input-text: #19A852;
-}
+
+
 
 
 .card-blue {
     --background: #59B3D9 !important;
+    --padding-bottom: 10px;
+    --padding-top: 10px;
+}
+.card-orange {
+    --padding-bottom: 10px;
+    --padding-top: 10px;
+}
+.card-green {
+    --padding-bottom: 10px;
+    --padding-top: 10px;
 }
 
 .clie-card {
@@ -72,11 +70,21 @@
     font-size: 64px;
     margin-right: 5px;
 }
+.clie-icon-blue {
+    color: white !important;
+}
+.clie-icon-orange {
+    color: rgba(255,175,75,1);
+}
+.clie-icon-green {
+    color: rgba(025,168,82,1);
+}
 
 .clie-input {
     width: 280px !important;
     margin: auto !important;
     text-align: center;
+    // background: #e8eef0ff; noise: #626262; density:15; opacity:15;
 
     .has-focus {
         border-bottom: 1px solid #59B3D9;
@@ -85,5 +93,16 @@
     .has-value {
         border-bottom: 1px solid #59B3D9;
         margin-bottom: 0 !important;
+    }
+}
+
+.clie-btn-row {
+    padding: 0 10px !important;
+
+    .clie-btn-confirme {
+        margin: auto !important;
+        --border-radius: 8px;
+        width: 100%;
+        max-width: 350px;
     }
 }
