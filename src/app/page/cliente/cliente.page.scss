@@ -13,7 +13,7 @@
     --text-cor: white;
 }
 .bg-orange {
-    --background: #EF6F38;
+    // --background: #EF6F38;
     --bg-cor: #EF6F38;
     --font-cor: white;
     --text-cor: #EF6F38;
@@ -35,13 +35,13 @@
     --font-cor: white;
     --text-cor: #19A852;
     --bg-button: #EF6F38;
-    --background: rgba(210,255,82,1);
-    --background: -moz-linear-gradient(left, rgba(210,255,82,1) 0%, rgba(25,168,82,1) 100%);
-    --background: -webkit-gradient(left top, right top, color-stop(0%, rgba(210,255,82,1)), color-stop(100%, rgba(25,168,82,1)));
-    --background: -webkit-linear-gradient(left, rgba(210,255,82,1) 0%, rgba(25,168,82,1) 100%);
-    --background: -o-linear-gradient(left, rgba(210,255,82,1) 0%, rgba(25,168,82,1) 100%);
-    --background: -ms-linear-gradient(left, rgba(210,255,82,1) 0%, rgba(25,168,82,1) 100%);
-    --background: linear-gradient(to right, rgba(210,255,82,1) 0%, rgba(25,168,82,1) 100%);
+    --background: rgb(122, 255, 82);
+    --background: -moz-linear-gradient(left, rgba(122,255,82,1) 0%, rgba(25,168,82,1) 100%);
+    --background: -webkit-gradient(left top, right top, color-stop(0%, rgba(122,255,82,1)), color-stop(100%, rgba(25,168,82,1)));
+    --background: -webkit-linear-gradient(left, rgba(122,255,82,1) 0%, rgba(25,168,82,1) 100%);
+    --background: -o-linear-gradient(left, rgba(122,255,82,1) 0%, rgba(25,168,82,1) 100%);
+    --background: -ms-linear-gradient(left, rgba(122,255,82,1) 0%, rgba(25,168,82,1) 100%);
+    --background: linear-gradient(to right, rgba(122,255,82,1) 0%, rgba(25,168,82,1) 100%);
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d2ff52', endColorstr='#19a852', GradientType=1 );
 }
 
@@ -84,7 +84,6 @@
     width: 280px !important;
     margin: auto !important;
     text-align: center;
-    // background: #e8eef0ff; noise: #626262; density:15; opacity:15;
 
     .has-focus {
         border-bottom: 1px solid #59B3D9;
@@ -98,8 +97,16 @@
 
 .clie-btn-row {
     padding: 0 10px !important;
+    margin-top: 15px !important;
 
     .clie-btn-confirme {
+        margin: auto !important;
+        --border-radius: 8px;
+        width: 100%;
+        max-width: 350px;
+    }
+
+    .clie-btn-busca {
         margin: auto !important;
         --border-radius: 8px;
         width: 100%;
