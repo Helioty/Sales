@@ -167,3 +167,9 @@ ion-header {
     --min-height: 45px !important;
   }
 }
+
+ion-searchbar[no-shadow] {
+	& input {
+		box-shadow: none !important;
+	}
+}

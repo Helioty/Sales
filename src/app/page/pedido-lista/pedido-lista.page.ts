@@ -2,6 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { MenuController, NavController } from '@ionic/angular';
 import { AndroidFullScreen } from '@ionic-native/android-full-screen/ngx';
 
+import { ENV } from 'src/environments/environment';
+import { API_URL } from 'src/config/app.config';
+
+import { BaseService } from 'src/app/services/base-service.service';
+
 @Component({
   selector: 'app-pedido-lista',
   templateUrl: './pedido-lista.page.html',
@@ -9,14 +14,18 @@ import { AndroidFullScreen } from '@ionic-native/android-full-screen/ngx';
 })
 export class PedidoListaPage implements OnInit {
 
+  public totalEmAberto: number = 0;
+  public totalFinalizados: number = 0;
+
   constructor(
     private androidFullScreen: AndroidFullScreen,
     private menu: MenuController,
     private navControl: NavController,
+    public baseService: BaseService,
   ) { }
 
   ngOnInit() {
-    
+
   }
 
   ionViewWillEnter() {
@@ -51,5 +60,28 @@ export class PedidoListaPage implements OnInit {
     //   elemento2.className = classes.join(' ');
     // }
   }
+
+  async getPedidosEmAberto(page: number) {
+    if (page > 1) {
+      let link: string = ENV.WS_VENDAS + API_URL + "PedidoVenda/list/" + localStorage.getItem("empresa") + "/abertos";
+      return await this.baseService.get(link)
+    }
+    else {
+      let link: string = ENV.WS_VENDAS + API_URL + "PedidoVenda/list/" + localStorage.getItem("empresa") + "/abertos?page=" + page;
+      return await this.baseService.get(link)
+    }
+  }
+
+  async getPedidosFinalizados(page: number) {
+    if (page > 1) {
+      let link: string = ENV.WS_VENDAS + API_URL + "PedidoVenda/list/" + localStorage.getItem("empresa") + "/faturados";
+      return await this.baseService.get(link)
+    }
+    else {
+      let link: string = ENV.WS_VENDAS + API_URL + "PedidoVenda/list/" + localStorage.getItem("empresa") + "/faturados?page=" + page;
+      return await this.baseService.get(link)
+    }
+  }
+
 
 }

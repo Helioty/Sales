@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { IonItemSliding, AlertController, NavController } from '@ionic/angular';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { IonItemSliding, AlertController, NavController, IonInfiniteScroll } from '@ionic/angular';
 import { Router, NavigationExtras } from '@angular/router';
 
 import { ENV } from 'src/environments/environment';
@@ -7,6 +7,8 @@ import { API_URL } from 'src/config/app.config';
 
 import { BaseCommon } from '../../../../commons/base-common';
 import { BaseService } from '../../../services/base-service.service';
+
+import { PedidoListaPage } from '../pedido-lista.page';
 
 
 @Component({
@@ -16,17 +18,22 @@ import { BaseService } from '../../../services/base-service.service';
 })
 export class PedidoAbertoPage implements OnInit {
 
+  @ViewChild(IonInfiniteScroll, { static: true }) infiniteScroll: IonInfiniteScroll;
+
   public resultGetPedidos: any;
   public pedidos: any[] = [];
 
   public showSkeleton: boolean = false;
+
+  public paginaAtual: number = 1;
+  public totalPagina: number = 0;
 
   constructor(
     public baseService: BaseService,
     public common: BaseCommon,
     private alertCtrl: AlertController,
     private navControl: NavController,
-    private router: Router
+    private pedidoLista: PedidoListaPage,
   ) { }
 
   ngOnInit() {
@@ -39,27 +46,42 @@ export class PedidoAbertoPage implements OnInit {
 
   ionViewDidEnter() {
     console.log("ionViewDidEnter")
+
+    this.showSkeleton = true;
     this.getPedidosEmAberto(1)
   }
 
   async doRefresh(event: any) {
     try {
-      await this.getPedidosEmAberto(1).then(res => {
+      this.paginaAtual = 1;
+      await this.getPedidosEmAberto(this.paginaAtual).then(res => {
         event.target.complete();
       })
     } catch (error) {
       console.log(error)
     }
+  }
 
+  async doInfinite(event: any) {
+    try {
+      await this.getPedidosEmAberto(this.paginaAtual).then(res => {
+        event.target.complete();
+
+        if (this.paginaAtual >= this.totalPagina) {
+          this.infiniteScroll.disabled = true;
+        }
+      })
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   async getPedidosEmAberto(page: number) {
-    this.showSkeleton = true;
-    let link: string = ENV.WS_VENDAS + API_URL + "PedidoVenda/list/" + localStorage.getItem("empresa") + "/abertos?page=" + page;
-    await this.baseService.get(link).then((result: any) => {
+    this.pedidoLista.getPedidosEmAberto(page).then((result: any) => {
       console.log(result)
       this.resultGetPedidos = result;
       this.pedidos = result.content;
+      this.totalPagina = this.resultGetPedidos.totalPages;
       if (this.pedidos.length == 0) {
         console.log("Nenhum pedido em aberto")
         this.pedidos = null;
@@ -69,7 +91,6 @@ export class PedidoAbertoPage implements OnInit {
     }), (error: any) => {
       console.log(error)
     }
-
   }
 
   openSlide(itemSlide: IonItemSliding) {

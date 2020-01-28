@@ -10,6 +10,10 @@ export class PedidoTintaAlteradaPage implements OnInit {
 
   @ViewChild(IonSlides, { static: true }) slides: IonSlides;
 
+  fors: any = [{a: 'cA', b: 'cA'}, {a: 'cB', b: 'cB'}, {a: 'cC', b: 'cC'}, {a: 'cA', b: 'cA'}, {a: 'cB', b: 'cB'}, {a: 'cC', b: 'cC'}, {a: 'cA', b: 'cA'}]
+
+  showFooter: boolean = false;
+
   constructor() { }
 
   ngOnInit() {
