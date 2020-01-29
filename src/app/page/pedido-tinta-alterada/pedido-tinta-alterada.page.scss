@@ -45,15 +45,38 @@
     margin-bottom: 5px !important;
 }
 
+
+
+.tinta-em-foco {
+    width: 100%;
+    position: fixed;
+    bottom: 70px !important;
+    z-index: 1 !important;
+
+    ion-item {
+        width: 90% !important;
+        margin: auto;
+
+        ion-button {
+            margin-left: 2px !important;
+            ion-icon {
+                font-size: 36px !important;
+            }
+        }
+    }
+}
+
+
+
+
+
+
+
 ion-footer {
     background: whitesmoke;
     border-top: 1px solid rgb(200,200,200);
 
-    .footer-grid {
-    
-    }
 }
-
 
 .footer-margin-top {
     height: 100%;
