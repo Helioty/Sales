@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { IonSlides } from '@ionic/angular';
+import { IonContent, IonSlides } from '@ionic/angular';
 
 @Component({
   selector: 'app-pedido-tinta-alterada',
@@ -8,6 +8,7 @@ import { IonSlides } from '@ionic/angular';
 })
 export class PedidoTintaAlteradaPage implements OnInit {
 
+  @ViewChild(IonContent, { static: true }) content: IonContent;
   @ViewChild(IonSlides, { static: true }) slides: IonSlides;
 
   fors: any = [{a: 'cA', b: 'cA'}, {a: 'cB', b: 'cB'}, {a: 'cC', b: 'cC'}, {a: 'cA', b: 'cA'}, {a: 'cB', b: 'cB'}, {a: 'cC', b: 'cC'}, {a: 'cA', b: 'cA'}]
@@ -27,4 +28,10 @@ export class PedidoTintaAlteradaPage implements OnInit {
     this.slides.slideTo(event.detail.value)
     this.slides.lockSwipes(true)
   }
+
+  scrollOnFocus() {
+    console.log("scroll")
+    this.content.scrollToTop()
+  }
+
 }
