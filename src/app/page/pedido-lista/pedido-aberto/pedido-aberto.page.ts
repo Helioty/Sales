@@ -106,7 +106,8 @@ export class PedidoAbertoPage implements OnInit {
     let navigationExtras: NavigationExtras = {
       queryParams: {
         pedido: JSON.stringify(pedido)
-      }
+      },
+      skipLocationChange: true
     };
     this.navControl.navigateForward(["/pedido-resumo"], navigationExtras)
   }
