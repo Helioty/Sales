@@ -1,11 +1,11 @@
 {
-  "name": "app",
-  "short_name": "app",
-  "theme_color": "#1976d2",
+  "name": "Vendas",
+  "short_name": "Vendas",
+  "theme_color": "#C40318",
   "background_color": "#fafafa",
-  "display": "standalone",
+  "display": "fullscreen",
   "scope": "/",
-  "start_url": "/",
+  "start_url": "http://localhost:8101/index.html",
   "icons": [
     {
       "src": "assets/icons/icon-72x72.png",

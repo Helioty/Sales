@@ -16,6 +16,7 @@ import { AndroidFullScreen } from '@ionic-native/android-full-screen/ngx';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import { Network } from "@ionic-native/network/ngx";
 import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { HTTP } from '@ionic-native/http/ngx';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -47,6 +48,7 @@ console.log(ENV.mode);
     BaseCommon,
     BaseService,
     Network,
+    HTTP,
     Geolocation,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],

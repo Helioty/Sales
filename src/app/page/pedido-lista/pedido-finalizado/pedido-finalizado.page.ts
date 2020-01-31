@@ -147,4 +147,8 @@ export class PedidoFinalizadoPage implements OnInit {
       })
   }
 
+  alterarPedido(pedido: any) {
+
+  }
+  
 }
