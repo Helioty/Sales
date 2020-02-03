@@ -1,16 +1,35 @@
-.icon-size {
-    font-size: 42px;
-}
-@media only screen and (min-width: 600px) {
+
+ion-header {
     .icon-size {
-        font-size: 64px;
+        font-size: 42px;
+    }
+    @media only screen and (min-width: 600px) {
+        .icon-size {
+            font-size: 64px;
+        }
+    }
+
+    .badge-position {
+        margin-left: 50px; 
+        margin-bottom: 5px; 
+        margin-top: -25px;
     }
 }
+
 
 .slide-grid {
     width: 100% !important;
     height: 100% !important;
-    // overflow-y: scroll !important;   
+    max-width: 800px;
+    overflow-y: scroll !important;
+    padding-bottom: 90px !important;  
+}
+// Esconde a barra de rolagem do grid
+.slide-grid::-webkit-scrollbar { 
+    width: 0 !important;
+    // Outras opcões caso haja algum problema com o scroll
+    // -ms-overflow-style: none;
+    // overflow: -moz-scrollbars-none;
 }
 
 .item-cor {
@@ -46,15 +65,15 @@
 }
 
 
-
 .tinta-em-foco {
     width: 100%;
     position: fixed;
-    bottom: 70px !important;
+    bottom: 55px !important;
     z-index: 1 !important;
 
     ion-item {
         width: 90% !important;
+        max-width: 600px !important;
         margin: auto;
         border: 1px solid rgba(0, 0, 0, 0.2);
         border-radius: 6px;
@@ -88,6 +107,26 @@ ion-footer {
     ion-toolbar {
         --min-height: 50px;
         --background: whitesmoke;
+    }
+
+    ion-grid {
+        ion-row {
+            max-width: 840px;
+            margin: auto;
+
+            ion-item {
+                width: 90%;
+            }
+        }
+
+        ion-button {
+            margin-left: 2px !important;
+            margin-right: -5px !important;
+            height: 90% !important;
+            ion-icon {
+                font-size: 32px !important;
+            }
+        }
     }
 }
 
