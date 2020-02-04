@@ -122,17 +122,14 @@ export class AppComponent {
     if (localStorage.getItem("token")) {
       if (localStorage.getItem("foto")) {
         this.foto = localStorage.getItem("foto");
-        // console.log(this.foto)
       }
 
       if (localStorage.getItem("nome")) {
         this.nome = localStorage.getItem("nome");
-        // console.log(this.nome)
       }
 
       if (localStorage.getItem("foto") != 'null' && localStorage.getItem("foto") != undefined) {
         this.noPhoto = true;
-        // console.log(this.noPhoto)
       }
 
     }

@@ -8,7 +8,7 @@
   </ion-toolbar>
 
   <ion-toolbar color="fc">
-    <ion-segment color="light" value="0" (ionChange)="console($event)">
+    <ion-segment color="light" value="0" (ionChange)="mudaSlide($event)">
       <ion-segment-button checked value="0">
         <ion-icon class="icon-size" src="..\..\..\assets\imagens\tintas\paint-bucket.svg"></ion-icon>
         <ion-badge color="success" class="badge-position">OK</ion-badge>
@@ -36,7 +36,7 @@
           <ion-searchbar no-shadow class="search" showCancelButton="never" animated="true" placeholder="Pesquisar Bases"
             (ionFocus)="scrollOnFocus()"></ion-searchbar>
         </ion-row>
-        <ion-row style="max-width: 1000px; margin: auto;">
+        <ion-row>
           <ion-col size="12" size-xs *ngFor="let for of fors; let i of index">
             <ion-item class="item-cor">
               ion-col [size="12"] [size-sm]
@@ -68,10 +68,13 @@
           <ion-searchbar no-shadow class="search" showCancelButton="never" animated="true" placeholder="Pesquisar cores"
             (ionFocus)="scrollOnFocus()"></ion-searchbar>
         </ion-row>
-        <ion-row style="max-width: 1000px; margin: auto;">
+        <ion-row>
           <ion-col size="12" size-xs *ngFor="let for of fors; let i of index">
             <ion-item class="item-cor">
               ion-col [size="12"] [size-sm]
+              <ion-button slot="end" fill="clear">
+                <ion-icon slot="icon-only" name="add"></ion-icon>
+              </ion-button>
             </ion-item>
           </ion-col>
         </ion-row>
@@ -115,7 +118,7 @@
 
   <ion-grid class="footer-grid" *ngIf="showFooter">
     <ion-row>
-      <ion-item lines="none" class="item-cor2" *ngFor="let for of fors; let i of index">
+      <ion-item lines="none" class="item-footer" *ngFor="let for of fors; let i of index">
         <ion-grid>
           <ion-row>
             <ion-col size="12" style="padding-right: 0 !important;">

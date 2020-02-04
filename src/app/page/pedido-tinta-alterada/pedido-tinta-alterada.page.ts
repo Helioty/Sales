@@ -21,9 +21,7 @@ export class PedidoTintaAlteradaPage implements OnInit {
     this.slides.lockSwipes(true)
   }
 
-  console(event: any) {
-    console.log(event)
-    console.log(event.detail.value)
+  mudaSlide(event: any) {
     this.slides.lockSwipes(false)
     this.slides.slideTo(event.detail.value)
     this.slides.lockSwipes(true)
