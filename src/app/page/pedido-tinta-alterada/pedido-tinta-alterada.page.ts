@@ -4,7 +4,10 @@ import { IonContent, IonSlides } from '@ionic/angular';
 @Component({
   selector: 'app-pedido-tinta-alterada',
   templateUrl: './pedido-tinta-alterada.page.html',
-  styleUrls: ['./pedido-tinta-alterada.page.scss'],
+  styleUrls: [
+    './styles/pedido-tinta-alterada.page.scss',
+    './styles/pedido-tinta-alterada-desktop.page.scss'
+  ],
 })
 export class PedidoTintaAlteradaPage implements OnInit {
 
