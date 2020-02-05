@@ -2,14 +2,14 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { IonContent, IonSlides } from '@ionic/angular';
 
 @Component({
-  selector: 'app-pedido-tinta-alterada',
-  templateUrl: './pedido-tinta-alterada.page.html',
+  selector: 'app-tinta-alterada',
+  templateUrl: './tinta-alterada.page.html',
   styleUrls: [
-    './styles/pedido-tinta-alterada.page.scss',
-    './styles/pedido-tinta-alterada-desktop.page.scss'
+    './styles/tinta-alterada.page.scss',
+    './styles/tinta-alterada-desktop.page.scss'
   ],
 })
-export class PedidoTintaAlteradaPage implements OnInit {
+export class TintaAlteradaPage implements OnInit {
 
   @ViewChild(IonContent, { static: true }) content: IonContent;
   @ViewChild(IonSlides, { static: true }) slides: IonSlides;

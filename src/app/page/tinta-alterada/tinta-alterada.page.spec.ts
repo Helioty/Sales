@@ -1,22 +1,22 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PedidoTintaAlteradaPage } from './pedido-tinta-alterada.page';
+import { TintaAlteradaPage } from './tinta-alterada.page';
 
-describe('PedidoTintaAlteradaPage', () => {
-  let component: PedidoTintaAlteradaPage;
-  let fixture: ComponentFixture<PedidoTintaAlteradaPage>;
+describe('TintaAlteradaPage', () => {
+  let component: TintaAlteradaPage;
+  let fixture: ComponentFixture<TintaAlteradaPage>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PedidoTintaAlteradaPage ],
+      declarations: [ TintaAlteradaPage ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(PedidoTintaAlteradaPage);
+    fixture = TestBed.createComponent(TintaAlteradaPage);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
