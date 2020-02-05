@@ -23,7 +23,6 @@ ion-header {
     height: 100% !important;
     max-width: 1000px;
     overflow-y: scroll !important;
-    // padding-bottom: 90px !important;
 }
 // Esconde a barra de rolagem do grid
 .slide-grid::-webkit-scrollbar { 
@@ -34,15 +33,34 @@ ion-header {
 }
 
 .item-cor {
-    // width: fit-content;
+    width: fit-content;
     min-width: 300px !important; 
-    // max-width: 300px !important;
     border: 1px solid rgba(0, 0, 0, 0.2);
     border-radius: 6px;
     box-shadow: 1px 2px 5px 0  rgba(0, 0, 0, 0.4);
-    margin-bottom: 10px;
+    margin: auto;
     height: 100% !important;
-    min-height: 75px !important;
+    min-height: 60px !important;
+
+    --padding-start: 0 !important;
+    --inner-padding-end: 10px !important;
+
+    ion-grid {
+        width: 100% !important;
+        height: 100% !important;
+
+        ion-row {
+
+            ion-col {
+                .div-cor {
+                    // width: func(height + 'px') !important;
+                    height: 100% !important;
+                    border-radius: 5px;
+                    transform: scaleX(1);
+                }
+            }
+        }
+    }
 
     ion-button {
         margin-left: 2px !important;
@@ -63,31 +81,24 @@ ion-header {
 
 
 .tinta-em-foco {
-    // width: 100%;
-    // position: fixed;
-    // bottom: 55px !important;
-    // z-index: 1 !important;
+    width: 95% !important;
+    max-width: 500px !important;
+    margin: 7px auto;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 6px;
+    box-shadow: 1px 2px 5px 0  rgba(0, 0, 0, 0.4);
+    min-height: 50px !important;
+    --padding-start: 0 !important;
+    --inner-padding-end: 10px !important;
 
-    // ion-item {
-        width: 90% !important;
-        max-width: 500px !important;
-        margin: 10px auto;
-        border: 1px solid rgba(0, 0, 0, 0.2);
-        border-radius: 6px;
-        box-shadow: 1px 2px 5px 0  rgba(0, 0, 0, 0.4);
-        min-height: 50px !important;
-        --padding-start: 0 !important;
-        --inner-padding-end: 10px !important;
-
-        ion-button {
-            margin-left: 2px !important;
-            margin-right: -5px !important;
-            height: 90% !important;
-            ion-icon {
-                font-size: 36px !important;
-            }
+    ion-button {
+        margin-left: 2px !important;
+        margin-right: -5px !important;
+        height: 90% !important;
+        ion-icon {
+            font-size: 36px !important;
         }
-    // }
+    }
 }
 
 
@@ -106,6 +117,20 @@ ion-footer {
 
         max-width: 1000px !important;
         margin: auto !important;
+
+        ion-item {
+            --padding-start: 0 !important;
+            --inner-padding-end: 7px !important;
+
+            ion-buttons {
+                margin-left: 0 !important;
+                margin-right: 0 !important;
+                height: 90% !important;
+                ion-icon {
+                    font-size: 32px !important;
+                }
+            }
+        }
     }
 
     ion-grid {

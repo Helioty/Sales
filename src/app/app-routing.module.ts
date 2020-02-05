@@ -66,7 +66,19 @@ const routes: Routes = [
     loadChildren: './page/consulta-cep/consulta-cep.module#ConsultaCepPageModule' 
   },
   { path: 'cliente', loadChildren: './page/cliente/cliente.module#ClientePageModule' },
-  { path: 'tinta-alterada', loadChildren: './page/tinta-alterada/tinta-alterada.module#TintaAlteradaPageModule' },
+
+
+
+
+  { 
+    path: 'tinta-alterada', 
+    loadChildren: './page/tinta-alterada/tinta-alterada.module#TintaAlteradaPageModule' 
+  },
+  { 
+    path: 'lista-tintas', 
+    loadChildren: './page/tinta-alterada/lista-tintas/lista-tintas.module#ListaTintasPageModule' 
+  },
+
 
 
 

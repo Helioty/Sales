@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { IonContent, IonSlides } from '@ionic/angular';
+import { IonContent, IonSlides, NavController } from '@ionic/angular';
+import { NavigationExtras } from '@angular/router';
 
 @Component({
   selector: 'app-tinta-alterada',
@@ -16,9 +17,9 @@ export class TintaAlteradaPage implements OnInit {
 
   fors: any = [{a: 'cA', b: 'cA'}, {a: 'cB', b: 'cB'}, {a: 'cC', b: 'cC'}, {a: 'cA', b: 'cA'}, {a: 'cB', b: 'cB'}, {a: 'cC', b: 'cC'}, {a: 'cA', b: 'cA'}]
 
-  showFooter: boolean = false;
-
-  constructor() { }
+  constructor(
+    private navControl: NavController,
+  ) { }
 
   ngOnInit() {
     this.slides.lockSwipes(true)
@@ -33,6 +34,16 @@ export class TintaAlteradaPage implements OnInit {
   scrollOnFocus() {
     console.log("scroll")
     this.content.scrollToTop()
+  }
+
+  listaTintas(list: any) {
+    let navigationExtras: NavigationExtras = {
+      queryParams: {
+        tintas: JSON.stringify(list)
+      },
+      skipLocationChange: true
+    };
+    this.navControl.navigateForward(["/lista-tintas"], navigationExtras)
   }
 
 }
