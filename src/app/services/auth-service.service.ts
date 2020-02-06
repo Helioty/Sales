@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpHeaders, HttpClient, HttpParams, HttpErrorResponse } from "@angular/common/http";
+import { HttpHeaders, HttpClient } from "@angular/common/http";
 import { AuthGuard } from '../guards/auth.guard';
 import { BaseCommon } from '../../commons/base-common';
 import { BaseService } from './base-service.service';
@@ -18,7 +18,6 @@ export class AuthService {
     public common: BaseCommon,
     public service: BaseService
   ) { }
-
 
   login(login: string, senha: string) {
 
@@ -46,6 +45,5 @@ export class AuthService {
 
     }
   }
-
 
 }

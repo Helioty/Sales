@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AlertController, LoadingController, ToastController } from '@ionic/angular';
 import { AppVersion } from '@ionic-native/app-version/ngx';
+import { AndroidFullScreen } from '@ionic-native/android-full-screen/ngx';
 
 @Injectable({
     providedIn: 'root'
@@ -11,11 +12,20 @@ export class BaseCommon {
     public loading: any;
 
     constructor(
+        private androidFullScreen: AndroidFullScreen,
         private appVersion: AppVersion,
         private toastCtrl: ToastController,
         public loadingCtrl: LoadingController,
         private alertCtrl: AlertController,
     ) { }
+
+
+    // Funções comuns --------------------------------------------------------------------------------------------------
+    goToFullScreen() {
+        this.androidFullScreen.isImmersiveModeSupported()
+            .then(() => this.androidFullScreen.immersiveMode())
+            .catch(err => console.log(err));
+    }
 
     // Version --------------------------------------------------------------------------------------------------------
     async getAppName() {
@@ -95,7 +105,7 @@ export class BaseCommon {
         });
         await alert.present();
     }
- 
+
 
 
     // formatação de string -------------------------------------------------------------------------------------------

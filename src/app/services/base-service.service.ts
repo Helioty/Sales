@@ -26,7 +26,7 @@ export class BaseService {
     public platform: Platform
   ) { }
 
-  public checkNetwork() {
+  checkNetwork(): boolean {
     if (this.platform.is("cordova")) {
       let networkState = navigator.connection.type;
 

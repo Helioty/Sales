@@ -78,6 +78,7 @@ const routes: Routes = [
     path: 'lista-tintas', 
     loadChildren: './page/tinta-alterada/lista-tintas/lista-tintas.module#ListaTintasPageModule' 
   },
+  { path: 'cliente-cadastro-edicao', loadChildren: './page/cliente/cliente-cadastro-edicao/cliente-cadastro-edicao.module#ClienteCadastroEdicaoPageModule' },
 
 
 

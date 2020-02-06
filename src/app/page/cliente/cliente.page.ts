@@ -27,6 +27,24 @@ export class ClientePage implements OnInit {
     this.setCor('blue')
   }
 
+  ionViewWillEnter() {
+    console.log("ionViewWillEnter")
+    this.common.goToFullScreen()
+  }
+
+  ionViewDidEnter() {
+    console.log("ionViewDidEnter")
+    this.common.goToFullScreen()
+  }
+
+  ionViewWillLeave() {
+    console.log("ionViewWillLeave")
+  }
+
+  ionViewDidLeave() {
+    console.log("ionViewDidLeave")
+  }
+
   testes() {
     this.skeletonAni = !this.skeletonAni;
     console.log(this.isBlue)

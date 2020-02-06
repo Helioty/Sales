@@ -111,6 +111,13 @@
     padding: 0 10px !important;
     margin-top: 15px !important;
 
+    .clie-btn-busca {
+        margin: auto !important;
+        --border-radius: 8px;
+        width: 100%;
+        max-width: 350px;
+    }
+
     .clie-btn-confirme {
         margin: auto !important;
         --border-radius: 8px;
@@ -118,10 +125,11 @@
         max-width: 350px;
     }
 
-    .clie-btn-busca {
+    .clie-btn-atualiza {
         margin: auto !important;
         --border-radius: 8px;
         width: 100%;
         max-width: 350px;
     }
+
 }

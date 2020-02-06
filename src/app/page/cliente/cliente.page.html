@@ -66,13 +66,17 @@
       </ion-button>
     </ion-row>
 
-    <ion-row class="clie-btn-row" *ngIf="isGreen">
+    <ion-row class="clie-btn-row" *ngIf="isOrange">
+      <ion-button class="clie-btn-atualiza" color="light">Atualizar Cadastro
+        <ion-icon name="checkmark" slot="start"></ion-icon>
+      </ion-button>
+    </ion-row>
+
+    <ion-row class="clie-btn-row" *ngIf="isGreen || isOrange">
       <ion-button class="clie-btn-confirme" color="fc-orange">Não é seu cliente?
         <ion-icon name="person" slot="start"></ion-icon>
       </ion-button>
     </ion-row>
-
-
   </ion-grid>
 
   <ion-button (click)="testes()" color="fc-button-green">
