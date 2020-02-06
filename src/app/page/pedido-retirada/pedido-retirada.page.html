@@ -1,0 +1,67 @@
+<ion-header>
+  <ion-toolbar color="fc">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+
+  <ion-toolbar color="fc">
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <h4>Opção de Retirada</h4>
+          <p>Selecione a forma de retirada para o novo pedido. Só é permitida 1 retirada por pedido.</p>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content color="cinza">
+  <ion-grid>
+    <ion-row>
+      <ion-col size="12">
+        <ion-item lines="none" button="true" [disabled]="disableButton" (click)="openPesquisaProduto('0')">
+          <ion-thumbnail slot="start">
+            <ion-img src="..\..\..\assets\imagens\07-formas_de_retirada\imediata.png"></ion-img>
+          </ion-thumbnail>
+
+          <ion-label>
+            <span>Imediata</span>
+            <p>Retirada imediata dos produtos pelo cliente.</p>
+          </ion-label>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col size="12">
+        <ion-item lines="none" button="true" [disabled]="disableButton" (click)="openPesquisaProduto('1')">
+          <ion-thumbnail slot="start">
+            <ion-img src="..\..\..\assets\imagens\07-formas_de_retirada\posterior.png"></ion-img>
+          </ion-thumbnail>
+
+          <ion-label>
+            <span>Posterior</span>
+            <p>Retirada posterior dos produtos pelo cliente.</p>
+          </ion-label>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col size="12">
+        <ion-item lines="none" button="true" [disabled]="disableButton" (click)="openPesquisaProduto('2')">
+          <ion-thumbnail slot="start">
+            <ion-img src="..\..\..\assets\imagens\07-formas_de_retirada\entrega.png"></ion-img>
+          </ion-thumbnail>
+
+          <ion-label>
+            <span>Entrega</span>
+            <p>Entrega posterior dos produtos no endereço do cliente.</p>
+          </ion-label>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

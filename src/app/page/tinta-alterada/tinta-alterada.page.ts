@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { IonContent, IonSlides, NavController } from '@ionic/angular';
 import { NavigationExtras } from '@angular/router';
+import { BaseCommon } from '../../../commons/base-common';
 
 @Component({
   selector: 'app-tinta-alterada',
@@ -18,11 +19,22 @@ export class TintaAlteradaPage implements OnInit {
   fors: any = [{a: 'cA', b: 'cA'}, {a: 'cB', b: 'cB'}, {a: 'cC', b: 'cC'}, {a: 'cA', b: 'cA'}, {a: 'cB', b: 'cB'}, {a: 'cC', b: 'cC'}, {a: 'cA', b: 'cA'}]
 
   constructor(
+    public common: BaseCommon,
     private navControl: NavController,
   ) { }
 
   ngOnInit() {
     this.slides.lockSwipes(true)
+  }
+
+  ionViewWillEnter() {
+    console.log("ionViewWillEnter")
+    this.common.goToFullScreen()
+  }
+
+  ionViewDidEnter() {
+    console.log("ionViewDidEnter")
+    this.common.goToFullScreen()
   }
 
   mudaSlide(event: any) {

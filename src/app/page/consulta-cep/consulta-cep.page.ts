@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { BaseCommon } from '../../../commons/base-common';
 
 declare var google: any;
 
@@ -23,6 +24,7 @@ export class ConsultaCepPage implements OnInit {
   public latLng: any;
 
   constructor(
+    public common: BaseCommon,
     public geolocation: Geolocation,
   ) { 
     this.GoogleAutocomplete = new google.maps.places.AutocompleteService();
@@ -35,6 +37,16 @@ export class ConsultaCepPage implements OnInit {
       center: this.latLng,
       disableDefaultUI: true
     });
+  }
+
+  ionViewWillEnter() {
+    console.log("ionViewWillEnter")
+    this.common.goToFullScreen()
+  }
+
+  ionViewDidEnter() {
+    console.log("ionViewDidEnter")
+    this.common.goToFullScreen()
   }
 
 }

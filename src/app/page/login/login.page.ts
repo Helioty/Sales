@@ -51,7 +51,6 @@ export class LoginPage implements OnInit {
     }
 
     if (this.platform.is('ios') || this.platform.is('android')) {
-      this.goToFullScreen()
       this.versao = '';
     }
 
@@ -75,11 +74,12 @@ export class LoginPage implements OnInit {
   ionViewWillEnter() {
     console.log("ionViewWillEnter")
     this.menu.enable(false);
-    this.goToFullScreen()
+    this.common.goToFullScreen()
   }
 
   ionViewDidEnter() {
     console.log("ionViewDidEnter")
+    this.common.goToFullScreen()
   }
 
   ionViewWillLeave() {
@@ -88,12 +88,6 @@ export class LoginPage implements OnInit {
 
   ionViewDidLeave() {
     console.log("ionViewDidLeave")
-  }
-
-  goToFullScreen() {
-    this.androidFullScreen.isImmersiveModeSupported()
-      .then(() => this.androidFullScreen.immersiveMode())
-      .catch(err => console.log(err));
   }
 
   showVersion() {

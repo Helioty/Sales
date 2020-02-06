@@ -89,6 +89,7 @@ export class PedidoAbertoPage implements OnInit {
       console.log(this.pedidos)
       this.showSkeleton = false;
     }), (error: any) => {
+      this.common.showAlert(error.title, error.detail);
       console.log(error)
     }
   }

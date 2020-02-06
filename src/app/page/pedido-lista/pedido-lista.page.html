@@ -22,7 +22,7 @@
     </ion-tab-bar>
   </ion-tabs>
 
-  <ion-fab vertical="bottom" horizontal="center" slot="fixed">
+  <!-- <ion-fab vertical="bottom" horizontal="center" slot="fixed">
     <ion-fab-button id="fabA" color="fc-button-green" edge (click)="checaAtivo('fabA', 'fabB')">
       <ion-icon name="add" size="large"></ion-icon>
     </ion-fab-button>
@@ -44,6 +44,12 @@
         <ion-icon src="../../assets/imagens/07-formas_de_retirada/imediata@1x.svg"></ion-icon>
       </ion-fab-button>
     </ion-fab-list>
+  </ion-fab> -->
+
+  <ion-fab vertical="bottom" horizontal="end">
+    <ion-fab-button color="fc-button-green" [disabled]="disableButton" (click)="addNovoPedido()">
+      <ion-icon name="add" size="large"></ion-icon>
+    </ion-fab-button>
   </ion-fab>
 
 </ion-content>

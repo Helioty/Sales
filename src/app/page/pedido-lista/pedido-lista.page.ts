@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { MenuController, NavController } from '@ionic/angular';
-import { AndroidFullScreen } from '@ionic-native/android-full-screen/ngx';
+import { MenuController, NavController, Platform } from '@ionic/angular';
+import { BaseCommon } from '../../../commons/base-common';
 
 import { ENV } from 'src/environments/environment';
 import { API_URL } from 'src/config/app.config';
 
 import { BaseService } from 'src/app/services/base-service.service';
+import { PedidoService } from 'src/app/services/pedido-service.service';
 
 @Component({
   selector: 'app-pedido-lista',
@@ -17,11 +18,15 @@ export class PedidoListaPage implements OnInit {
   public totalEmAberto: number = 0;
   public totalFinalizados: number = 0;
 
+  public disableButton: boolean = false;
+
   constructor(
-    private androidFullScreen: AndroidFullScreen,
+    public common: BaseCommon,
     private menu: MenuController,
     private navControl: NavController,
     public baseService: BaseService,
+    public pedidoService: PedidoService,
+    public platform: Platform,
   ) { }
 
   ngOnInit() {
@@ -31,15 +36,32 @@ export class PedidoListaPage implements OnInit {
   ionViewWillEnter() {
     console.log("ionViewWillEnter")
     this.menu.enable(true);
-    this.androidFullScreen.isImmersiveModeSupported()
-      .then(() => this.androidFullScreen.immersiveMode())
-      .catch(err => console.log(err));
+    this.disableButton = false;
+    this.common.goToFullScreen()
   }
 
-
-  novoPedido() {
-    this.navControl.navigateForward('/pedido-sacola')
+  ionViewDidEnter() {
+    console.log("ionViewDidEnter")
+    this.common.goToFullScreen()
   }
+
+  async addNovoPedido() {
+    try {
+      this.disableButton = true;
+      if (this.platform.is("ios") || this.platform.is("android")) {
+        // by Ryuge 03/09/2019
+        this.pedidoService.limpaDadosPedido();
+        this.navControl.navigateForward('/pedido-retirada')
+      } else {
+        this.pedidoService.limpaDadosPedido();
+        this.navControl.navigateForward('/pedido-retirada')
+      }
+
+    } catch (error) {
+      this.disableButton = false;
+    }
+  }
+
 
   checaAtivo(id: string, id2: string) {
     // console.log("A")

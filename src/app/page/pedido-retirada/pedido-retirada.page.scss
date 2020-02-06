@@ -1,0 +1,40 @@
+ion-header {
+
+    ion-toolbar {
+
+        ion-grid {
+            padding: 0 10px !important;
+
+            h4 {
+                color: #fff;
+                font-size: 18px;
+                font-weight: normal;
+                margin-top: 0px;
+            }
+            p {
+                color: #fff;
+                font-size: 14px;
+                margin-bottom: 5px;
+            }
+        }
+    }
+}
+
+ion-content {
+
+    ion-grid {
+        padding: 20px 5px;
+        ion-row {
+
+            ion-col {
+
+                ion-item {
+                    width: 100% !important;
+                    max-width: 600px !important;
+                    border-radius: 10px !important;
+                    margin: 15px auto !important;
+                }
+            }
+        }
+    }
+}

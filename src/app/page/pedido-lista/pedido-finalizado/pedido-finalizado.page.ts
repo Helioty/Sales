@@ -101,7 +101,13 @@ export class PedidoFinalizadoPage implements OnInit {
   }
 
   verProdutosPedido(pedido: any) {
-    this.navControl.navigateForward("/pedido-resumo", pedido)
+    let navigationExtras: NavigationExtras = {
+      queryParams: {
+        pedido: JSON.stringify(pedido)
+      },
+      skipLocationChange: true
+    };
+    this.navControl.navigateForward(["/pedido-resumo"], navigationExtras)
   }
 
   async apagarPedido(pedido: any) {

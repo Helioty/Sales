@@ -20,7 +20,13 @@ const routes: Routes = [
   },
   {
     path: 'pedido-resumo',
-    loadChildren: './page/pedido-lista/pedido-resumo/pedido-resumo.module#PedidoResumoPageModule'
+    loadChildren: './page/pedido-lista/pedido-resumo/pedido-resumo.module#PedidoResumoPageModule',
+    canActivate: [AuthGuard]
+  },
+  { 
+    path: 'pedido-retirada', 
+    loadChildren: './page/pedido-retirada/pedido-retirada.module#PedidoRetiradaPageModule',
+    canActivate: [AuthGuard]
   },
   {
     path: 'pedido-sacola',
@@ -32,6 +38,10 @@ const routes: Routes = [
   },
 
 
+  { 
+    path: 'produto-pesquisa', 
+    loadChildren: './page/produto-pesquisa/produto-pesquisa.module#ProdutoPesquisaPageModule'
+  },
   {
     path: 'produto',
     loadChildren: './page/produto/produto.module#ProdutoPageModule'
@@ -65,9 +75,16 @@ const routes: Routes = [
     path: 'consulta-cep/:mode', 
     loadChildren: './page/consulta-cep/consulta-cep.module#ConsultaCepPageModule' 
   },
-  { path: 'cliente', loadChildren: './page/cliente/cliente.module#ClientePageModule' },
 
 
+  { 
+    path: 'cliente', 
+    loadChildren: './page/cliente/cliente.module#ClientePageModule' 
+  },
+  { 
+    path: 'cliente-cadastro-edicao', 
+    loadChildren: './page/cliente/cliente-cadastro-edicao/cliente-cadastro-edicao.module#ClienteCadastroEdicaoPageModule' 
+  },
 
 
   { 
@@ -78,11 +95,6 @@ const routes: Routes = [
     path: 'lista-tintas', 
     loadChildren: './page/tinta-alterada/lista-tintas/lista-tintas.module#ListaTintasPageModule' 
   },
-  { path: 'cliente-cadastro-edicao', loadChildren: './page/cliente/cliente-cadastro-edicao/cliente-cadastro-edicao.module#ClienteCadastroEdicaoPageModule' },
-
-
-
-
 
 
 
