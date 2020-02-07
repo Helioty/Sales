@@ -3,7 +3,6 @@ import { MenuController, Platform, NavController } from '@ionic/angular';
 import { Router } from '@angular/router';
 
 import { BaseCommon } from '../../../commons/base-common';
-import { AndroidFullScreen } from '@ionic-native/android-full-screen/ngx';
 import { AuthService } from '../../services/auth-service.service';
 
 import { ENV } from '../../../environments/environment';
@@ -32,7 +31,6 @@ export class LoginPage implements OnInit {
   constructor(
     public appComponent: AppComponent,
     public appConfig: AppConfig,
-    private androidFullScreen: AndroidFullScreen,
     public authService: AuthService,
     public common: BaseCommon,
     private menu: MenuController,
