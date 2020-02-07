@@ -17,7 +17,10 @@ export class AuthGuard implements CanActivate {
       this.common.showAlertInfo("Login necessário!")
       return this.router.navigateByUrl("/login")
     }
-    return true
+    else {
+      return true
+    }
+    
   }
 
 }

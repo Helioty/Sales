@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpHeaders, HttpClient, HttpParams, HttpErrorResponse } from "@angular/common/http";
+import { HttpHeaders, HttpClient } from "@angular/common/http";
 import { Network } from "@ionic-native/network/ngx";
 import { Platform } from "@ionic/angular";
 import { BaseCommon } from '../../commons/base-common';

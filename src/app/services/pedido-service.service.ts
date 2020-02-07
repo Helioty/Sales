@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { NavController } from '@ionic/angular';
 import { BaseService } from './base-service.service';
 import { BaseCommon } from 'src/commons/base-common';
 import { ENV } from 'src/environments/environment';
@@ -52,7 +53,8 @@ export class PedidoService {
 
   constructor(
     public baseService: BaseService,
-    public common: BaseCommon
+    public common: BaseCommon,
+    public navControl: NavController
   ) { }
 
 
@@ -89,6 +91,7 @@ export class PedidoService {
       this.digitoPedido = this.pedidoHeader.digito;
     }, (err) => {
       this.common.showToast(err.detail);
+      this.navControl.back()
     })
 
   }
