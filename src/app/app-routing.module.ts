@@ -66,7 +66,10 @@ const routes: Routes = [
   },
 
   
-  
+  { 
+    path: 'endereco-entrega', 
+    loadChildren: './page/endereco-entrega/endereco-entrega.module#EnderecoEntregaPageModule' 
+  },
   {
     path: 'pedido-finalizacao',
     loadChildren: './page/pedido-finalizacao/pedido-finalizacao.module#PedidoFinalizacaoPageModule'
@@ -95,8 +98,6 @@ const routes: Routes = [
     path: 'lista-tintas', 
     loadChildren: './page/tinta-alterada/lista-tintas/lista-tintas.module#ListaTintasPageModule' 
   },
-
-
 
 
 ];

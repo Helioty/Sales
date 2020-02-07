@@ -66,7 +66,7 @@ export class PedidoService {
 
     this.clientSelected = false;
     this.alteracaoItemPedido = false;
-    // this.digitoPedido = '';
+    this.digitoPedido = '';
     this.sistuacaoPedido = 'N';
     this.tipoDocumento = '';
     this.qtdBasketItens = 0;

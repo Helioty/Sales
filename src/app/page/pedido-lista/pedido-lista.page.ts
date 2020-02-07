@@ -34,14 +34,12 @@ export class PedidoListaPage implements OnInit {
   }
 
   ionViewWillEnter() {
-    console.log("ionViewWillEnter")
     this.menu.enable(true);
     this.disableButton = false;
     this.common.goToFullScreen()
   }
 
   ionViewDidEnter() {
-    console.log("ionViewDidEnter")
     this.common.goToFullScreen()
   }
 

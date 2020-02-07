@@ -82,6 +82,12 @@
     font-size: 64px;
     margin-right: 5px;
 }
+@media only screen and (min-width: 600px) {
+    .clie-icon {
+        font-size: 96px;
+        margin-right: 5px;
+    }
+}
 .clie-icon-blue {
     color: white !important;
 }

@@ -1,7 +1,3 @@
-export class Pedido {
-    
-}
-
 export class PedidoCab {
     id: number;
     empresa: string;
@@ -62,7 +58,6 @@ export class AtualizaPedido {
     valor_entrada: number;
     basket: number;
 }
-
 
 export class PedidoTable  {
     name: string; // Atributo do objeto AtualizaPedido
