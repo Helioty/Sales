@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Platform } from '@ionic/angular';
-// import { Keyboard } from '@ionic-native/keyboard/ngx';
 import { BaseCommon } from 'src/commons/base-common';
 
 @Component({
@@ -10,28 +9,34 @@ import { BaseCommon } from 'src/commons/base-common';
 })
 export class ProdutoPesquisaPage implements OnInit {
 
-  @ViewChild("scanner", { static: true }) scanned: any;
+  @ViewChild("scanner", { static: false }) scanned: any;
   public taskScanner: any;
 
   public valorScanner: string;
 
   constructor(
     public common: BaseCommon,
-    // private keyboard: Keyboard,
     private platform: Platform
   ) { }
 
   ngOnInit() {
+    
+  }
+
+  ionViewWillEnter() {
     this.focusOn()
+    this.common.goToFullScreen()
+  }
+
+  ionViewDidEnter() {
+    this.common.goToFullScreen()
   }
 
   focusOn() {
     // if (this.platform.is("cordova")) {
       this.taskScanner = setInterval(() => {
         try {
-          this.scanned.value = "";
           this.scanned.setFocus();
-          // this.keyboard.hide();
         } catch (error) { }
       }, 300);
     // }
@@ -40,6 +45,7 @@ export class ProdutoPesquisaPage implements OnInit {
   scaneado(evento: any) {
     console.log(evento)
     this.common.showAlertInfo(evento.target.value)
+    this.valorScanner = ""
   }
 
 }

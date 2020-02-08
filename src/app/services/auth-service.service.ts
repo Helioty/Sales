@@ -37,7 +37,6 @@ export class AuthService {
           resolve(result);
           console.log(result);
         }, (error) => {
-          this.common.showAlertError(JSON.stringify(error))
           reject(error);
           console.log(error);
         });
