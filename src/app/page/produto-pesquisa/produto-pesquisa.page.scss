@@ -3,3 +3,23 @@
     top: 0 !important;
     height: 0.1px !important;
 }
+
+ion-header {
+
+    ion-toolbar {
+
+        ion-title {
+            display: none;
+        }
+
+        ion-buttons {
+
+            ion-button {
+
+                ion-icon {
+                    font-size: 200%;
+                }
+            }
+        }
+    }
+}

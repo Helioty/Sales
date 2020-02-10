@@ -6,7 +6,7 @@ import { BaseCommon } from '../../../commons/base-common';
 import { AuthService } from '../../services/auth-service.service';
 
 import { ENV } from '../../../environments/environment';
-import { AppConfig, getHTTP } from 'src/config/app.config';
+import { AppConfig } from 'src/config/app.config';
 import { AppComponent } from '../../app.component';
 
 @Component({
@@ -66,7 +66,6 @@ export class LoginPage implements OnInit {
 
   ngOnInit() {
     console.log("ngOnInit")
-    console.log(getHTTP());
   }
 
   ionViewWillEnter() {
@@ -120,9 +119,6 @@ export class LoginPage implements OnInit {
         localStorage.setItem('nome', this.data.nomeDisplay);
         localStorage.setItem('isLoggedIn', 'true');
 
-        // comentado por Helio 26/12/2019
-        // this.authService.menuAcesso = 'Logout';
-
         if (localStorage.getItem("foto") === 'null') {
           this.noPhoto = true;
         }
@@ -130,7 +126,6 @@ export class LoginPage implements OnInit {
         this.appComponent.getStatus()
 
         this.navControl.navigateRoot('/pedido-lista')
-        // this.router.navigateByUrl('/pedido-lista')
         this.common.loading.dismiss()
 
       }

@@ -58,7 +58,6 @@ export class AppComponent {
   public noPhoto: boolean = false;
 
   constructor(
-    private app: AppConfig,
     private authGuard: AuthGuard,
     private androidFullScreen: AndroidFullScreen,
     public alertCtrl: AlertController,
@@ -74,15 +73,14 @@ export class AppComponent {
     this.androidFullScreen.isImmersiveModeSupported()
       .then(() => this.androidFullScreen.immersiveMode())
       .catch(err => console.log(err));
-
-    this.app.getURL()
   }
 
   initializeApp() {
     console.log(this.platform)
     this.platform.ready().then(() => {
-      this.statusBar.styleDefault();
+      // this.statusBar.styleDefault();
       this.splashScreen.hide();
+      this.statusBar.backgroundColorByHexString('#C40318');
       this.menu.enable(false);
     });
   }

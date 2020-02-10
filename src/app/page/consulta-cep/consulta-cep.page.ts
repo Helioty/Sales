@@ -14,6 +14,7 @@ export class ConsultaCepPage implements OnInit {
   @ViewChild("map", { static: false }) mapElement;
 
   public GoogleAutocomplete: any;
+  public geocoder: any;
 
   public map: any;
   public start: string;
@@ -26,8 +27,9 @@ export class ConsultaCepPage implements OnInit {
   constructor(
     public common: BaseCommon,
     public geolocation: Geolocation,
-  ) { 
+  ) {
     this.GoogleAutocomplete = new google.maps.places.AutocompleteService();
+    this.geocoder = new google.maps.Geocoder();
   }
 
   ngOnInit() {

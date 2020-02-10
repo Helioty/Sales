@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { BaseCommon } from '../../../commons/base-common';
+import { BaseCommon } from 'src/commons/base-common';
+import { BaseService } from 'src/app/services/base-service.service';
+import { PedidoService } from 'src/app/services/pedido-service.service';
 
+import { ENV } from 'src/environments/environment';
+import { API_URL } from 'src/config/app.config';
 
 @Component({
   selector: 'app-cliente',
@@ -10,17 +14,29 @@ import { BaseCommon } from '../../../commons/base-common';
 export class ClientePage implements OnInit {
 
   // Valor digitado no input de CPF/CNPJ
-  public valorDigitado: any = "";
+  private valorDigitado: any = "";
+
+  // Controle da animação do skeleton
+  public skeletonAni: boolean = false;
 
   // Controle da cor do background // by Ryuge
   public isBlue: boolean = false;
   public isGreen: boolean = false;
   public isOrange: boolean = false;
 
-  public skeletonAni: boolean = false;
+  // Controle da pesquisa de CPF/CNPJ
+  public isCNPJ: boolean = false;
+  public atualizaCadastro: boolean = false;
+  public novoCadastro: boolean = false;
+
+  // Dados do cliente.
+  private dados: any;
+  public mensagem: string;
 
   constructor(
-    public common: BaseCommon
+    public common: BaseCommon,
+    public baseService: BaseService,
+    public pedidoService: PedidoService,
   ) { }
 
   ngOnInit() {
@@ -28,21 +44,19 @@ export class ClientePage implements OnInit {
   }
 
   ionViewWillEnter() {
-    console.log("ionViewWillEnter")
     this.common.goToFullScreen()
   }
 
   ionViewDidEnter() {
-    console.log("ionViewDidEnter")
     this.common.goToFullScreen()
   }
 
   ionViewWillLeave() {
-    console.log("ionViewWillLeave")
+
   }
 
   ionViewDidLeave() {
-    console.log("ionViewDidLeave")
+
   }
 
   testes() {
@@ -76,25 +90,6 @@ export class ClientePage implements OnInit {
         break;
     }
   }
-  
-  mudarCor() {
-    if (this.isBlue) {
-      this.isBlue = false;
-      this.isGreen = true;
-      this.isOrange = false;
-    }
-    else if (this.isGreen) {
-      this.isBlue = false;
-      this.isGreen = false;
-      this.isOrange = true;
-    }
-    else if (this.isOrange) {
-      this.isBlue = true;
-      this.isGreen = false;
-      this.isOrange = false;
-    }
-  }
-
 
   // by Helio 08/10/2019
   // mascara dinamica
@@ -106,6 +101,50 @@ export class ClientePage implements OnInit {
         }
       }
     }
+  }
+
+  setEstado(estado: string) {
+    switch (estado) {
+      case 'atualizacao':
+        this.setCor('green');
+        break;
+
+      case 'confirmacao':
+        this.setCor('green');
+        break;
+
+      case 'novo':
+        this.setCor('orange');
+        break;
+
+      case 'reset':
+        this.setCor('blue');
+        break;
+
+      default:
+        break;
+    }
+  }
+
+  async getCliente(doc: string) {
+    let clieDoc: string = doc.replace(/\D/g, '');
+    let link: string = ENV.WS_CRM + API_URL + "cliente/" + clieDoc;
+    this.baseService.get(link).then((result: any) => {
+      this.dados = result;
+
+      if (this.dados != undefined || this.dados != [] || this.dados != '') {
+        this.pedidoService.dadosCliente = this.dados;
+        this.isCNPJ = this.dados.natureza != "FISICA";
+      }
+    }, (error: any) => {
+      if (error.json().detail) {
+        this.mensagem = "Não encontramos o cadastro do cliente!";
+        this.setEstado('novo');
+      }
+      else {
+        this.common.showAlert("Atenção!", "Falha de processamento, tente novamente !!");
+      }
+    });
   }
 
 }
