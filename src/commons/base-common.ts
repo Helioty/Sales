@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AlertController, LoadingController, ToastController } from '@ionic/angular';
+import { AlertController, LoadingController, ToastController, Platform } from '@ionic/angular';
 import { AppVersion } from '@ionic-native/app-version/ngx';
 import { AndroidFullScreen } from '@ionic-native/android-full-screen/ngx';
 
@@ -17,14 +17,17 @@ export class BaseCommon {
         private toastCtrl: ToastController,
         public loadingCtrl: LoadingController,
         private alertCtrl: AlertController,
+        public platform: Platform
     ) { }
 
 
     // Funções comuns --------------------------------------------------------------------------------------------------
     goToFullScreen() {
-        this.androidFullScreen.isImmersiveModeSupported()
+        if (this.platform.is("cordova")) {
+            this.androidFullScreen.isImmersiveModeSupported()
             .then(() => this.androidFullScreen.immersiveMode())
             .catch(err => console.log(err));
+        }
     }
 
     // Version --------------------------------------------------------------------------------------------------------

@@ -1,14 +1,11 @@
 import { Component } from '@angular/core';
-
 import { Platform, MenuController, AlertController, NavController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { Router } from '@angular/router';
-import { AndroidFullScreen } from '@ionic-native/android-full-screen/ngx';
 
-import { AuthGuard } from './guards/auth.guard';
-import { BaseCommon } from './../commons/base-common';
-import { AppConfig } from 'src/config/app.config';
+import { AuthGuard } from 'src/app/guards/auth.guard';
+import { BaseCommon } from 'src/commons/base-common';
 
 @Component({
   selector: 'app-root',
@@ -59,7 +56,6 @@ export class AppComponent {
 
   constructor(
     private authGuard: AuthGuard,
-    private androidFullScreen: AndroidFullScreen,
     public alertCtrl: AlertController,
     public common: BaseCommon,
     private menu: MenuController,
@@ -70,13 +66,9 @@ export class AppComponent {
     private statusBar: StatusBar
   ) {
     this.initializeApp();
-    this.androidFullScreen.isImmersiveModeSupported()
-      .then(() => this.androidFullScreen.immersiveMode())
-      .catch(err => console.log(err));
   }
 
   initializeApp() {
-    console.log(this.platform)
     this.platform.ready().then(() => {
       // this.statusBar.styleDefault();
       this.splashScreen.hide();
@@ -88,13 +80,12 @@ export class AppComponent {
   buttonAction(page: any) {
     switch (page.title) {
       case ("Logout"): {
-        this.showAlertLogout()
+        this.showAlertLogout();
       } break;
 
       default: {
-        console.log("default of button Action!")
-        this.navControl.navigateRoot([page.url])
-        // this.router.navigateByUrl(page.url)
+        console.log("default of button Action!");
+        this.navControl.navigateRoot([page.url]);
       }
     }
   }
@@ -107,7 +98,7 @@ export class AppComponent {
         text: 'SIM',
         handler: () => {
           this.authGuard.logged = false;
-          this.navControl.navigateRoot(['login'])
+          this.navControl.navigateRoot(['login']);
         }
       }]
     });

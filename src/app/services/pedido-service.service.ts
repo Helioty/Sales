@@ -111,7 +111,7 @@ export class PedidoService {
         console.log('Pedido Atualizado!');
         this.pedidoHeader = result;
       }).catch((erro: any) => {
-        this.common.showAlert(erro.json().title, erro.json().detail);
+        this.common.showAlert(erro.error.title, erro.error.detail);
       })
 
     } catch (error) {
@@ -136,12 +136,32 @@ export class PedidoService {
       console.log('Pedido Atualizado!');
       this.dadosCliente = result;
       this.cardSelected = true;
+      this.common.showToast("Cartão Pedido Adicionado com sucesso!");
     }).catch((erro: any) => {
       this.cardSelected = false;
       this.codigoCartaoPedido = null;
-      this.common.showAlert(erro.json().title, erro.json().detail);
+      this.common.showAlert(erro.error.title, erro.error.detail);
     })
 
+  }
+
+  // by Hélio 11/02/2020
+  public async adicionarCliente(cgccpf: string, dadosCli: any) {
+    let aResult = [];
+    let table: PedidoTable = new PedidoTable();
+    table.name = "cliente";
+    table.value = cgccpf;
+    aResult.push(table);
+
+    let link: string = ENV.WS_VENDAS + API_URL + "PedidoVenda/update/" + localStorage.getItem("empresa") + "/" + this.numPedido;
+    await this.baseService.post(link, aResult).then((result: any) => {
+      this.clientSelected = true;
+      this.docCliente = cgccpf;
+      this.dadosCliente = dadosCli;
+      return result;
+    }, (error: any) => {
+      return error;
+    });
   }
 
 }

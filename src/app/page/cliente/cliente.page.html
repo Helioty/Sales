@@ -26,7 +26,7 @@
             </ion-icon>
             <ion-grid>
               <ion-row>
-                <ion-col size="12">
+                <ion-col size="12" *ngIf="dados == undefined">
                   <ion-row>
                     <ion-skeleton-text [animated]="skeletonAni" style="width: 100%"></ion-skeleton-text>
                   </ion-row>
@@ -43,6 +43,29 @@
                     <ion-skeleton-text [animated]="skeletonAni" style="width: 65%"></ion-skeleton-text>
                   </ion-row>
                 </ion-col>
+
+                <ion-col size="12" *ngIf="dados != undefined">
+                  <ion-row>
+                    <ion-label>
+                      {{ dadosShow.nome }}
+                    </ion-label>
+                  </ion-row>
+                  <ion-row>
+                    <ion-label>
+                      {{ dadosShow.endereco }}
+                    </ion-label>
+                  </ion-row>
+                  <ion-row>
+                    <ion-label>
+                      {{ dadosShow.celular }}
+                    </ion-label>
+                  </ion-row>
+                  <ion-row>
+                    <ion-label>
+                      {{ dadosShow.email }}
+                    </ion-label>
+                  </ion-row>
+                </ion-col>
               </ion-row>
             </ion-grid>
           </ion-item>
@@ -51,8 +74,9 @@
     </ion-row>
 
     <ion-row class="clie-input" *ngIf="isBlue">
-      <ion-input placeholder="CPF ou CNPJ do cliente" (ionChange)="dynamicMask('cli')" [(ngModel)]="valorDigitado"
-        style="margin-bottom: 1px; font-size: 20px;" autofocus="true" inputmode="numeric">
+      <ion-input #input id="input" placeholder="CPF ou CNPJ do cliente" (ionChange)="dynamicMask('cli')"
+        [(ngModel)]="valorDigitado" style="margin-bottom: 1px; font-size: 20px;" inputmode="numeric"
+        (ionBlur)="checaMinimo(valorDigitado)" (keyup.enter)="blur($event)">
       </ion-input>
     </ion-row>
 
@@ -61,25 +85,38 @@
     </ion-row>
 
     <ion-row class="clie-btn-row" *ngIf="isGreen">
-      <ion-button class="clie-btn-confirme" color="light">Confirmar
+      <ion-button class="clie-btn-confirme" color="light" [disabled]="isActive == 'N'">Confirmar
         <ion-icon name="checkmark" slot="start"></ion-icon>
       </ion-button>
     </ion-row>
 
-    <ion-row class="clie-btn-row" *ngIf="isOrange">
+    <ion-row class="clie-btn-row" *ngIf="isGreen && atualizaCadastro">
       <ion-button class="clie-btn-atualiza" color="white-red">Atualizar Cadastro
         <ion-icon name="checkmark" slot="start"></ion-icon>
       </ion-button>
     </ion-row>
 
-    <ion-row class="clie-btn-row" *ngIf="isGreen || isOrange">
-      <ion-button class="clie-btn-confirme" color="fc-orange">Não é seu cliente?
+    <ion-row class="clie-btn-row" *ngIf="isGreen">
+      <ion-button class="clie-btn-confirme" color="fc-orange" (click)="setEstado('reset')">Não é seu cliente?
+        <ion-icon name="person" slot="start"></ion-icon>
+      </ion-button>
+    </ion-row>
+
+    <ion-row class="clie-btn-row" *ngIf="isOrange">
+      <ion-label>{{ mensagem }}</ion-label>
+    </ion-row>
+
+    <ion-row class="clie-btn-row" *ngIf="isOrange">
+      <ion-button class="clie-btn-confirme" color="fc-orange">Cadastrar novo Cliente!
+        <ion-icon name="person" slot="start"></ion-icon>
+      </ion-button>
+    </ion-row>
+
+    <ion-row class="clie-btn-row" *ngIf="isOrange">
+      <ion-button class="clie-btn-confirme" color="white-red" (click)="setEstado('reset')">Digitar novamente.
         <ion-icon name="person" slot="start"></ion-icon>
       </ion-button>
     </ion-row>
   </ion-grid>
 
-  <ion-button (click)="testes()" color="fc-button-green">
-    <ion-icon name="eye" slot="icon-only"></ion-icon>
-  </ion-button>
 </ion-content>

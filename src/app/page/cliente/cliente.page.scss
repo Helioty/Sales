@@ -77,6 +77,20 @@
 .clie-card {
     width: 100%;
     border-radius: 8px;
+    margin: 5px !important;
+
+    ion-label {
+        word-break: break-word;
+        white-space: normal;
+        font-size: 14px;
+    }
+    @media only screen and (min-width: 600px) {
+        ion-label {
+            word-break: break-word;
+            white-space: normal;
+            font-size: 16px;
+        }
+    }
 }
 .clie-icon {
     font-size: 64px;
@@ -140,6 +154,10 @@
         button {
             color: red !important;
         }
+    }
+
+    ion-label {
+        margin: auto !important;
     }
 
 }

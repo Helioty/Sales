@@ -26,16 +26,16 @@ export class ProdutoPesquisaPage implements OnInit {
   }
 
   ionViewWillEnter() {
-    this.focusOn()
-    this.common.goToFullScreen()
+    this.focusOn();
+    this.common.goToFullScreen();
   }
 
   ionViewDidEnter() {
-    this.common.goToFullScreen()
+    this.common.goToFullScreen();
   }
 
   ionViewWillLeave() {
-    this.focusOff()
+    this.focusOff();
   }
 
   ionViewDidLeave() {
@@ -89,8 +89,8 @@ export class ProdutoPesquisaPage implements OnInit {
       buttons: ['NÃO', {
         text: 'SIM',
         handler: () => {
-          this.pedidoService.limpaDadosPedido()
-          this.navControl.navigateRoot('/pedido-lista')
+          this.pedidoService.limpaDadosPedido();
+          this.navControl.navigateRoot('/pedido-lista');
         }
       }]
     });

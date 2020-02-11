@@ -100,7 +100,7 @@ export class BaseService {
     }
   }
 
-  post(link: string, body: {}) {
+  post(link: string, body: any) {
 
     if (!this.checkNetwork()) {
       this.common.showToast("Sem conexão!");
