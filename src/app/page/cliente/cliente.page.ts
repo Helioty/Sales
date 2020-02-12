@@ -1,8 +1,9 @@
 import { Component, OnInit, ViewChild, Renderer } from '@angular/core';
-import { IonInput } from '@ionic/angular';
+import { IonInput, NavController } from '@ionic/angular';
 import { BaseCommon } from 'src/commons/base-common';
 import { BaseService } from 'src/app/services/base-service.service';
 import { PedidoService } from 'src/app/services/pedido-service.service';
+import { ActivatedRoute, NavigationExtras } from '@angular/router';
 
 import { ENV } from 'src/environments/environment';
 import { API_URL } from 'src/config/app.config';
@@ -39,27 +40,32 @@ export class ClientePage implements OnInit {
   private dadosShow: any = { nome: "", endereco: "", celular: "", email: "" };
 
   constructor(
+    private activatedRoute: ActivatedRoute,
     private common: BaseCommon,
     private baseService: BaseService,
+    private navControl: NavController,
     private pedidoService: PedidoService,
     private renderer: Renderer
   ) { }
 
   ngOnInit() {
-    if (this.pedidoService.clientSelected && this.pedidoService.docCliente != '') {
 
+  }
+
+  ionViewWillEnter() {
+    this.common.goToFullScreen();
+    if (this.pedidoService.clientSelected && this.pedidoService.docCliente != '') {
+      this.getClienteAntesSelecionado();
     } else {
       this.setEstado('reset');
     }
   }
 
-  ionViewWillEnter() {
-    this.common.goToFullScreen();
-  }
-
   ionViewDidEnter() {
     this.common.goToFullScreen();
-    this.foco();
+    if (this.isBlue) {
+      this.foco();
+    }
   }
 
   ionViewWillLeave() {
@@ -78,6 +84,21 @@ export class ClientePage implements OnInit {
 
   blur(evento: any) {
     this.renderer.invokeElementMethod(evento.target, "blur");
+  }
+
+  // by Helio 12/02/2020
+  async getClienteAntesSelecionado() {
+    this.dados = await this.pedidoService.retornaDadosCliente();
+    this.valorDigitado = this.common.formata(this.pedidoService.docCliente, "CPFCGC")
+    this.isCNPJ = this.dados.natureza != "FISICA";
+    this.isActive = this.dados.ativo;
+    this.atualizaCadastro = this.dados.atualizaCadastro;
+    this.showDados(this.dados);
+    if (this.atualizaCadastro) {
+      this.setEstado('atualizacao');
+    } else {
+      this.setEstado('confirmacao');
+    }
   }
 
   // by Hélio
@@ -239,19 +260,56 @@ export class ClientePage implements OnInit {
     }
   }
 
-  async confirmaCliente() {
-    this.common.showLoader();
-    let doc: string = this.valorDigitado.replace(/\D/g, '');
-    this.pedidoService.adicionarCliente(doc, this.dados).then((resposta: any) => {
-      if (resposta) {
-        this.prosseguir();
-        this.common.loading.dismiss();
-      }
-    });
+  async naoCliente() {
+    if (this.pedidoService.clientSelected) {
+      let alert = await this.common.alertCtrl.create({
+        header: 'Remover cliente?',
+        message: 'Deseja remover o cliente do pedido atual?',
+      });
+      await alert.present();
+    }
+    else {
+      console.log("aqui?")
+      this.setEstado('reset');
+    }
   }
 
-  prosseguir() {
+  async confirmaCliente() {
+    await this.common.showLoader();
+    let doc: string = this.valorDigitado.replace(/\D/g, '');
+    if (doc == this.pedidoService.docCliente) {
+      this.prosseguir();
+      this.common.loading.dismiss();
+    } else {
+      this.pedidoService.adicionarCliente(doc, this.dados).then((resposta: any) => {
+        this.prosseguir();
+        this.common.loading.dismiss();
+      }, (error: any) => {
+        if (error.error.detail) {
+          this.common.showAlert(error.error.title, error.error.detail);
+        }
+        this.common.loading.dismiss();
+      });
+    }
+  }
 
+  async prosseguir() {
+    let paginaSeguinte: any;
+    this.activatedRoute.queryParams.subscribe(params => {
+      paginaSeguinte = params["paginaSeguinte"];
+    });
+    switch (paginaSeguinte) {
+      case 'back':
+        this.navControl.back();
+        break;
+
+      case 'produto-pesquisa':
+        this.navControl.navigateRoot(["/produto-pesquisa"]);
+        break;
+
+      default:
+        break;
+    }
   }
 
 }

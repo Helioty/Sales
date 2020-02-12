@@ -48,20 +48,20 @@ export class PedidoRetiradaPage implements OnInit {
     if (this.pedidoService.tipoRetirada == "ENTREGA") {
       let navigationExtras: NavigationExtras = {
         queryParams: {
-          paginaSeguinte: ''
-        },
-        skipLocationChange: true
+          paginaSeguinte: 'produto-pesquisa',
+          paginaAnterior: 'pedido-retirada'
+        }
       };
-      this.navControl.navigateForward(["/cliente"], navigationExtras)
+      this.navControl.navigateForward(["/cliente"], navigationExtras);
     }
     else {
       let navigationExtras: NavigationExtras = {
         queryParams: {
-          paginaSeguinte: ''
-        },
-        skipLocationChange: true
+          paginaSeguinte: 'back',
+          paginaAnterior: ''
+        }
       };
-      this.navControl.navigateRoot(["/produto-pesquisa"], navigationExtras)
+      this.navControl.navigateRoot(["/produto-pesquisa"], navigationExtras);
     }
   }
 

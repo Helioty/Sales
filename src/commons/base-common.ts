@@ -14,9 +14,9 @@ export class BaseCommon {
     constructor(
         private androidFullScreen: AndroidFullScreen,
         private appVersion: AppVersion,
-        private toastCtrl: ToastController,
+        public toastCtrl: ToastController,
         public loadingCtrl: LoadingController,
-        private alertCtrl: AlertController,
+        public alertCtrl: AlertController,
         public platform: Platform
     ) { }
 

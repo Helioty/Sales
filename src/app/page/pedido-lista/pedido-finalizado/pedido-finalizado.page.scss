@@ -36,6 +36,8 @@
 
 .pedido {
     width: 100%;
+    max-width: 600px;
+    margin: auto;
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 
     .pedido-item {

@@ -38,9 +38,7 @@ export class PedidoResumoPage implements OnInit {
   }
 
   async ionViewWillEnter() {
-    console.log("ionViewWillEnter")
     this.common.goToFullScreen()
-
     this.activatedRoute.queryParams.subscribe(params => {
       this.pedido = JSON.parse(params["pedido"]);
     });
@@ -49,7 +47,6 @@ export class PedidoResumoPage implements OnInit {
   }
 
   ionViewDidEnter() {
-    console.log("ionViewDidEnter")
     this.common.goToFullScreen()
   }
 

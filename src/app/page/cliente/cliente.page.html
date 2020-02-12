@@ -85,7 +85,8 @@
     </ion-row>
 
     <ion-row class="clie-btn-row" *ngIf="isGreen">
-      <ion-button class="clie-btn-confirme" color="light" [disabled]="isActive == 'N'">Confirmar
+      <ion-button class="clie-btn-confirme" color="light" [disabled]="isActive == 'N'" (click)="confirmaCliente()">
+        Confirmar
         <ion-icon name="checkmark" slot="start"></ion-icon>
       </ion-button>
     </ion-row>
@@ -97,7 +98,7 @@
     </ion-row>
 
     <ion-row class="clie-btn-row" *ngIf="isGreen">
-      <ion-button class="clie-btn-confirme" color="fc-orange" (click)="setEstado('reset')">Não é seu cliente?
+      <ion-button class="clie-btn-confirme" color="fc-orange" (click)="naoCliente()">Não é seu cliente?
         <ion-icon name="person" slot="start"></ion-icon>
       </ion-button>
     </ion-row>

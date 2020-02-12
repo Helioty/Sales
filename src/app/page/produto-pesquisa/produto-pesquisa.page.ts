@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Platform, AlertController, NavController } from '@ionic/angular';
 import { BaseCommon } from 'src/commons/base-common';
 import { PedidoService } from 'src/app/services/pedido-service.service';
+import { NavigationExtras } from '@angular/router';
 
 @Component({
   selector: 'app-produto-pesquisa',
@@ -43,6 +44,7 @@ export class ProdutoPesquisaPage implements OnInit {
 
   }
 
+  // Cria o loop que da foco no input
   focusOn() {
     if (this.platform.is("cordova")) {
       this.taskScanner = setInterval(() => {
@@ -64,6 +66,7 @@ export class ProdutoPesquisaPage implements OnInit {
     this.focusStatus = false;
   }
 
+  // Encerra o loop de foco no input
   focusOff() {
     setTimeout(() => {
       clearInterval(this.taskScanner);
@@ -107,15 +110,24 @@ export class ProdutoPesquisaPage implements OnInit {
       ],
       buttons: ['CANCELAR', {
         text: 'ADICIONAR',
+        cssClass: 'danger',
         handler: (data: any) => {
           this.pedidoService.setCardPedido(data.codigo);
-          // this.focusOn();
         }
       }]
     });
-    alert.onDidDismiss().finally(() => { this.common.showToast("finally"); this.focusPlay() });
+    alert.onDidDismiss().finally(() => { this.focusPlay() });
     await alert.present();
   }
 
+  async openClientePage() {
+    let navigationExtras: NavigationExtras = {
+      queryParams: {
+        paginaSeguinte: 'back',
+        paginaAnterior: 'produto-pesquisa'
+      }
+    };
+    this.navControl.navigateForward(["/cliente"], navigationExtras);
+  }
 
 }

@@ -41,7 +41,7 @@ export class PedidoService {
   public pedidoHeader: any;
   public tipoRetirada: any;
   public tipoDocumento: any;
-  public qtdBasketItens: number = 0;
+  public qtdItensSacola: number = 0;
 
   public clientSelected: boolean = false;
   public docCliente: string = '';
@@ -70,7 +70,7 @@ export class PedidoService {
     this.digitoPedido = '';
     this.sistuacaoPedido = 'N';
     this.tipoDocumento = '';
-    this.qtdBasketItens = 0;
+    this.qtdItensSacola = 0;
     this.numPedido = '0';
     this.pedidoHeader = {};
     this.statusPedido = '';
@@ -125,19 +125,18 @@ export class PedidoService {
 
   // alterado por Nicollas Bastos em 25/09/2018
   // alterado por Hélio 06/02/2020
-  public async setCardPedido(codCard: any) {
-    this.codigoCartaoPedido = codCard;
-
+  public async setCardPedido(codCard: string) {
     let aResult = [];
     let table: PedidoTable = new PedidoTable();
     table.name = "cartao_pedido";
-    table.value = this.codigoCartaoPedido;
+    table.value = codCard;
     aResult.push(table);
 
     let link: string = ENV.WS_VENDAS + API_URL + "PedidoVenda/update/" + localStorage.getItem("empresa") + "/" + this.numPedido;
     await this.baseService.post(link, aResult).then((result: any) => {
-      this.dadosCliente = result;
+      this.pedidoHeader = result;
       this.cardSelected = true;
+      this.codigoCartaoPedido = codCard;
       this.common.showToast("Cartão Pedido Adicionado com sucesso!");
     }, (erro: any) => {
       this.cardSelected = false;
@@ -162,8 +161,13 @@ export class PedidoService {
       this.dadosCliente = dadosCli;
       return result;
     }, (error: any) => {
+      console.log(error);
       return error;
     });
+  }
+
+  public retornaDadosCliente() {
+    return this.dadosCliente;
   }
 
   // by Hélio 12/02/2020
@@ -181,5 +185,5 @@ export class PedidoService {
     });
     await alert.present();
   }
-  
+
 }

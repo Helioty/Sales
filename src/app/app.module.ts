@@ -50,7 +50,6 @@ console.log(ENV.mode);
     BaseService,
     Network,
     Geolocation,
-    
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

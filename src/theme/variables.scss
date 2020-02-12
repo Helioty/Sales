@@ -225,3 +225,12 @@ ion-searchbar[no-shadow] {
 		box-shadow: none !important;
 	}
 }
+
+// Custom Alert
+.ion-alert-custom {
+  --background: var(--ion-color-fc-orange);
+
+  .alert-button {
+    color: var(--ion-color-fc);
+  }
+}

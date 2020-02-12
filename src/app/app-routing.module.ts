@@ -82,7 +82,8 @@ const routes: Routes = [
 
   { 
     path: 'cliente', 
-    loadChildren: './page/cliente/cliente.module#ClientePageModule' 
+    loadChildren: './page/cliente/cliente.module#ClientePageModule',
+    canActivate: [AuthGuard]
   },
   { 
     path: 'cliente-cadastro-edicao', 
