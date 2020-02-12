@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
 
-      <ion-button (click)="sairPedido()">
+      <ion-button (click)="pedidoService.                                                                                                                                 sairPedido()">
         <ion-icon name="log-out"></ion-icon>
       </ion-button>
     </ion-buttons>
@@ -15,7 +15,7 @@
         <ion-icon name="search"></ion-icon>
       </ion-button>
 
-      <ion-button>
+      <ion-button (click)="adicionarCartaoPedido()">
         <ion-icon name="card"></ion-icon>
         <ion-badge color="success" class="badge-position" *ngIf="pedidoService.cardSelected">✔</ion-badge>
       </ion-button>

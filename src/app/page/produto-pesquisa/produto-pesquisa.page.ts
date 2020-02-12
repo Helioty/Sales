@@ -53,10 +53,10 @@ export class ProdutoPesquisaPage implements OnInit {
     }
   }
 
-  focusOff() {
+  async focusOff() {
     setTimeout(() => {
       clearInterval(this.taskScanner);
-    }, 500);
+    }, 300);
   }
 
   testeScanner(evento: any) {
@@ -82,19 +82,28 @@ export class ProdutoPesquisaPage implements OnInit {
     }
   }
 
-  async sairPedido() {
+  async adicionarCartaoPedido() {
+    await this.focusOff();
     const alert = await this.alertCtrl.create({
-      // header: "Logout",
-      subHeader: "Deseja sair do pedido?",
-      buttons: ['NÃO', {
-        text: 'SIM',
-        handler: () => {
-          this.pedidoService.limpaDadosPedido();
-          this.navControl.navigateRoot('/pedido-lista');
+      header: "Cartão Pedido.",
+      // subHeader: "Deseja sair do pedido?",
+      inputs: [
+        {
+          name: 'codigo',
+          type: 'text',
+          placeholder: 'Digite o codigo do cartão!'
+        }
+      ],
+      buttons: ['CANCELAR', {
+        text: 'ADICIONAR',
+        handler: (data: any) => {
+          this.pedidoService.setCardPedido(data.codigo);
+          this.focusOn();
         }
       }]
     });
     await alert.present();
   }
+
 
 }

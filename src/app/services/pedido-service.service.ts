@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { NavController } from '@ionic/angular';
+import { NavController, AlertController } from '@ionic/angular';
 import { BaseService } from './base-service.service';
 import { BaseCommon } from 'src/commons/base-common';
 import { ENV } from 'src/environments/environment';
@@ -48,10 +48,11 @@ export class PedidoService {
   public dadosCliente: any;
 
   public cardSelected: boolean = false;
-  public codigoCartaoPedido: any;
+  public codigoCartaoPedido: string = '';
   public codigoBarraCartaoPedido: any;
 
   constructor(
+    public alertCtrl: AlertController,
     public baseService: BaseService,
     public common: BaseCommon,
     public navControl: NavController
@@ -61,7 +62,7 @@ export class PedidoService {
   public limpaDadosPedido() {
     this.valorFrete = 0;
     this.enderecoSelected = false;
-    this.codigoCartaoPedido = 0;
+    this.codigoCartaoPedido = '';
     this.cardSelected = false;
 
     this.clientSelected = false;
@@ -84,7 +85,7 @@ export class PedidoService {
     let link: string = ENV.WS_VENDAS + API_URL + 'PedidoVenda/' + localStorage.getItem('empresa') + '/criar';
     await this.baseService.post(link, {}).then((result: any) => {
       this.pedidoHeader = result;
-      console.log('PEDIDO NOVO');
+      console.log('NOVO PEDIDO');
       console.log(this.pedidoHeader);
 
       this.numPedido = this.pedidoHeader.numpedido;
@@ -110,9 +111,11 @@ export class PedidoService {
       await this.baseService.post(link, aResult).then((result: any) => {
         console.log('Pedido Atualizado!');
         this.pedidoHeader = result;
-      }).catch((erro: any) => {
-        this.common.showAlert(erro.error.title, erro.error.detail);
-      })
+      }, (erro: any) => {
+        if (erro.error.title) {
+          this.common.showAlert(erro.error.title, erro.error.detail);
+        }
+      });
 
     } catch (error) {
       console.log(error);
@@ -133,15 +136,14 @@ export class PedidoService {
 
     let link: string = ENV.WS_VENDAS + API_URL + "PedidoVenda/update/" + localStorage.getItem("empresa") + "/" + this.numPedido;
     await this.baseService.post(link, aResult).then((result: any) => {
-      console.log('Pedido Atualizado!');
       this.dadosCliente = result;
       this.cardSelected = true;
       this.common.showToast("Cartão Pedido Adicionado com sucesso!");
-    }).catch((erro: any) => {
+    }, (erro: any) => {
       this.cardSelected = false;
-      this.codigoCartaoPedido = null;
+      this.codigoCartaoPedido = '';
       this.common.showAlert(erro.error.title, erro.error.detail);
-    })
+    });
 
   }
 
@@ -164,4 +166,20 @@ export class PedidoService {
     });
   }
 
+  // by Hélio 12/02/2020
+  async sairPedido() {
+    const alert = await this.alertCtrl.create({
+      // header: "Logout",
+      subHeader: "Deseja sair do pedido?",
+      buttons: ['NÃO', {
+        text: 'SIM',
+        handler: () => {
+          this.limpaDadosPedido();
+          this.navControl.navigateRoot('/pedido-lista');
+        }
+      }]
+    });
+    await alert.present();
+  }
+  
 }
