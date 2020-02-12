@@ -4,6 +4,7 @@ import { BaseCommon } from 'src/commons/base-common';
 import { PedidoService } from 'src/app/services/pedido-service.service';
 import { NavigationExtras } from '@angular/router';
 
+
 @Component({
   selector: 'app-produto-pesquisa',
   templateUrl: './produto-pesquisa.page.html',
@@ -20,7 +21,8 @@ export class ProdutoPesquisaPage implements OnInit {
     public common: BaseCommon,
     private navControl: NavController,
     public pedidoService: PedidoService,
-    private platform: Platform
+    private platform: Platform,
+    
   ) { }
 
   ngOnInit() {
@@ -97,10 +99,10 @@ export class ProdutoPesquisaPage implements OnInit {
   }
 
   async adicionarCartaoPedido() {
-    this.focusPause();
     const alert = await this.alertCtrl.create({
       header: "Cartão Pedido.",
       // subHeader: "Deseja sair do pedido?",
+      cssClass: 'ion-alert-input',
       inputs: [
         {
           name: 'codigo',
@@ -110,14 +112,15 @@ export class ProdutoPesquisaPage implements OnInit {
       ],
       buttons: ['CANCELAR', {
         text: 'ADICIONAR',
-        cssClass: 'danger',
         handler: (data: any) => {
           this.pedidoService.setCardPedido(data.codigo);
         }
       }]
     });
     alert.onDidDismiss().finally(() => { this.focusPlay() });
-    await alert.present();
+    await alert.present().then(()=>{
+      this.focusPause();
+    });
   }
 
   async openClientePage() {

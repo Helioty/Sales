@@ -201,7 +201,6 @@ export class ClientePage implements OnInit {
       this.dados = result;
       console.log(this.dados);
       if (this.dados != undefined || this.dados != [] || this.dados != '') {
-        this.pedidoService.dadosCliente = this.dados;
         this.isCNPJ = this.dados.natureza != "FISICA";
         this.isActive = this.dados.ativo;
         this.atualizaCadastro = this.dados.atualizaCadastro;
@@ -276,21 +275,16 @@ export class ClientePage implements OnInit {
 
   async confirmaCliente() {
     await this.common.showLoader();
-    let doc: string = this.valorDigitado.replace(/\D/g, '');
-    if (doc == this.pedidoService.docCliente) {
+    let doc: string = await this.valorDigitado.replace(/\D/g, '');
+    this.pedidoService.adicionarCliente(doc, this.dados).then((resposta: any) => {
       this.prosseguir();
       this.common.loading.dismiss();
-    } else {
-      this.pedidoService.adicionarCliente(doc, this.dados).then((resposta: any) => {
-        this.prosseguir();
-        this.common.loading.dismiss();
-      }, (error: any) => {
-        if (error.error.detail) {
-          this.common.showAlert(error.error.title, error.error.detail);
-        }
-        this.common.loading.dismiss();
-      });
-    }
+    }, (error: any) => {
+      if (error.error.detail) {
+        this.common.showAlert(error.error.title, error.error.detail);
+      }
+      this.common.loading.dismiss();
+    });
   }
 
   async prosseguir() {

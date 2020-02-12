@@ -37,6 +37,9 @@
                 "input": "src/theme/variables.scss"
               },
               {
+                "input": "src/theme/alerts.scss"
+              },
+              {
                 "input": "src/global.scss"
               }
             ],
