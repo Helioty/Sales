@@ -18,17 +18,17 @@ export class AppComponent {
     {
       title: 'Pedidos',
       url: '/pedido-lista',
-      icon: 'clipboard'
+      icon: 'clipboard-outline'
     },
     {
       title: 'Consulta Cep',
       url: '/consulta-cep/consulta',
-      icon: 'pin'
+      icon: 'location-outline'
     },
     {
       title: 'Pedido Rapido',
       url: '/pedido-rapido',
-      icon: 'speedometer'
+      icon: 'speedometer-outline'
     },
     {
       title: 'New TMS',
@@ -38,12 +38,12 @@ export class AppComponent {
     {
       title: 'Desempenho',
       url: '/indicador-vendedor',
-      icon: 'stats'
+      icon: 'stats-chart'
     },
     {
       title: 'Logout',
       url: '/login',
-      icon: 'log-out'
+      icon: 'log-out-outline'
     }
   ];
 

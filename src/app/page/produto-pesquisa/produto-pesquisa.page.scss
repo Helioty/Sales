@@ -13,9 +13,10 @@ ion-header {
         }
 
         ion-buttons {
+            min-height: 40px !important;
 
             ion-button {
-                height: 100%;
+                min-height: 40px !important;
                 --overflow: visible !important;
 
                 ion-icon {
@@ -24,7 +25,7 @@ ion-header {
 
                 .badge-position {
                     margin-left: 10px;
-                    margin-top: 7px;
+                    margin-top: 4px;
                     border-radius: 50%;
                     position: absolute;
                 }

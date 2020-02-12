@@ -12,6 +12,7 @@ export class ProdutoPesquisaPage implements OnInit {
 
   public taskScanner: any;
   public valorScanner: string;
+  public focusStatus: boolean = true;
 
   constructor(
     public alertCtrl: AlertController,
@@ -47,13 +48,23 @@ export class ProdutoPesquisaPage implements OnInit {
       this.taskScanner = setInterval(() => {
         try {
           this.valorScanner = "";
-          document.getElementById("scanner").focus();
+          if (this.focusStatus) {
+            document.getElementById("scanner").focus();
+          }
         } catch (error) { }
       }, 300);
     }
   }
 
-  async focusOff() {
+  focusPlay() {
+    this.focusStatus = true;
+  }
+
+  focusPause() {
+    this.focusStatus = false;
+  }
+
+  focusOff() {
     setTimeout(() => {
       clearInterval(this.taskScanner);
     }, 300);
@@ -67,23 +78,23 @@ export class ProdutoPesquisaPage implements OnInit {
   async scaneado(evento: any) {
     try {
       if (evento.target && evento.target.value.length >= 2) {
-        this.focusOff();
+        this.focusPause();
         let codigo: string = evento.target.value;
 
         if (codigo.substring(0, 1) == "P") {
           this.pedidoService.setCardPedido(codigo);
-          this.focusOn();
+          this.focusPlay();
         } else {
 
         }
       }
     } catch (error) {
-      this.focusOn();
+      this.focusPlay();
     }
   }
 
   async adicionarCartaoPedido() {
-    await this.focusOff();
+    this.focusPause();
     const alert = await this.alertCtrl.create({
       header: "Cartão Pedido.",
       // subHeader: "Deseja sair do pedido?",
@@ -98,10 +109,11 @@ export class ProdutoPesquisaPage implements OnInit {
         text: 'ADICIONAR',
         handler: (data: any) => {
           this.pedidoService.setCardPedido(data.codigo);
-          this.focusOn();
+          // this.focusOn();
         }
       }]
     });
+    alert.onDidDismiss().finally(() => { this.common.showToast("finally"); this.focusPlay() });
     await alert.present();
   }
 
