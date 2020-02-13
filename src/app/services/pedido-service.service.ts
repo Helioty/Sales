@@ -138,10 +138,14 @@ export class PedidoService {
       this.cardSelected = true;
       this.codigoCartaoPedido = codCard;
       this.common.showToast("Cartão Pedido Adicionado com sucesso!");
-    }, (erro: any) => {
+    }, (error: any) => {
       this.cardSelected = false;
       this.codigoCartaoPedido = '';
-      this.common.showAlert(erro.error.title, erro.error.detail);
+      if (error.error.detail) {
+        this.common.showAlert(error.error.title, error.error.detail);
+      } else {
+        this.common.showAlertError(JSON.stringify(error));
+      }
     });
 
   }
@@ -149,20 +153,24 @@ export class PedidoService {
   // by Hélio 11/02/2020
   public async adicionarCliente(cgccpf: string, dadosCli: any) {
     let aResult = [];
-    let table: PedidoTable = new PedidoTable();
-    table.name = "cliente";
-    table.value = cgccpf;
-    aResult.push(table);
+    let tableCli: PedidoTable = new PedidoTable();
+    tableCli.name = "cliente";
+    tableCli.value = cgccpf;
+    aResult.push(tableCli);
 
     let link: string = ENV.WS_VENDAS + API_URL + "PedidoVenda/update/" + localStorage.getItem("empresa") + "/" + this.numPedido;
     await this.baseService.post(link, aResult).then((result: any) => {
+      this.pedidoHeader = result;
       this.clientSelected = true;
       this.docCliente = cgccpf;
       this.dadosCliente = dadosCli;
-      return result;
     }, (error: any) => {
       console.log(error);
-      return error;
+      if (error.error.detail) {
+        this.common.showAlert(error.error.title, error.error.detail);
+      } else {
+        this.common.showAlertError(JSON.stringify(error));
+      }
     });
   }
 

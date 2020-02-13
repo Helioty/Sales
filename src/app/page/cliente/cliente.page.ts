@@ -268,20 +268,53 @@ export class ClientePage implements OnInit {
       await alert.present();
     }
     else {
-      console.log("aqui?")
       this.setEstado('reset');
     }
+  }
+
+  async cadastrarNovo() {
+    let navParams: any;
+    this.activatedRoute.queryParams.subscribe(params => {
+      navParams = params;
+    });
+    let navigationExtras: NavigationExtras = {
+      queryParams: {
+        paginaSeguinte: 'produto-pesquisa',
+        paginaAnterior: 'pedido-retirada',
+        situacao: 'novo',
+        cliente: this.valorDigitado
+      }
+    };
+    console.log(navParams)
+    switch (navParams.paginaAnterior) {
+      case 'pedido-retirada':
+        navigationExtras. queryParams.paginaSeguinte = 'produto-pesquisa';
+        navigationExtras. queryParams.paginaAnterior = 'pedido-retirada';
+        this.navControl.navigateForward(["/cliente-cadastro-edicao"], navigationExtras);
+        break;
+
+      case 'produto-pesquisa':
+        navigationExtras. queryParams.paginaSeguinte = 'produto-pesquisa';
+        navigationExtras. queryParams.paginaAnterior = 'pedido-retirada';
+        this.navControl.navigateForward(["/cliente-cadastro-edicao"], navigationExtras);
+        break;
+
+      default:
+        break;
+    }
+
+  }
+
+  async editarCadastro() {
+
   }
 
   async confirmaCliente() {
     await this.common.showLoader();
     let doc: string = await this.valorDigitado.replace(/\D/g, '');
-    this.pedidoService.adicionarCliente(doc, this.dados).then((resposta: any) => {
-      this.prosseguir();
-      this.common.loading.dismiss();
-    }, (error: any) => {
-      if (error.error.detail) {
-        this.common.showAlert(error.error.title, error.error.detail);
+    this.pedidoService.adicionarCliente(doc, this.dados).then(() => {
+      if (this.pedidoService.clientSelected) {
+        this.prosseguir();
       }
       this.common.loading.dismiss();
     });

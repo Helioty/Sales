@@ -24,7 +24,7 @@ export class TintaAlteradaPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.slides.lockSwipes(true)
+    this.slides.lockSwipes(true);
   }
 
   ionViewWillEnter() {

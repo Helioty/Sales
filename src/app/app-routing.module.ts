@@ -23,8 +23,8 @@ const routes: Routes = [
     loadChildren: './page/pedido-lista/pedido-resumo/pedido-resumo.module#PedidoResumoPageModule',
     canActivate: [AuthGuard]
   },
-  { 
-    path: 'pedido-retirada', 
+  {
+    path: 'pedido-retirada',
     loadChildren: './page/pedido-retirada/pedido-retirada.module#PedidoRetiradaPageModule',
     canActivate: [AuthGuard]
   },
@@ -38,9 +38,10 @@ const routes: Routes = [
   },
 
 
-  { 
-    path: 'produto-pesquisa', 
-    loadChildren: './page/produto-pesquisa/produto-pesquisa.module#ProdutoPesquisaPageModule'
+  {
+    path: 'produto-pesquisa',
+    loadChildren: './page/produto-pesquisa/produto-pesquisa.module#ProdutoPesquisaPageModule',
+    canActivate: [AuthGuard]
   },
   {
     path: 'produto',
@@ -54,7 +55,7 @@ const routes: Routes = [
     path: 'produto-detalhes',
     loadChildren: './page/produto/produto-detalhes/produto-detalhes.module#ProdutoDetalhesPageModule'
   },
-  
+
 
   {
     path: 'new-tms',
@@ -65,39 +66,40 @@ const routes: Routes = [
     loadChildren: './page/indicador-vendedor/indicador-vendedor.module#IndicadorVendedorPageModule'
   },
 
-  
-  { 
-    path: 'endereco-entrega', 
-    loadChildren: './page/endereco-entrega/endereco-entrega.module#EnderecoEntregaPageModule' 
+
+  {
+    path: 'endereco-entrega',
+    loadChildren: './page/endereco-entrega/endereco-entrega.module#EnderecoEntregaPageModule'
   },
   {
     path: 'pedido-finalizacao',
     loadChildren: './page/pedido-finalizacao/pedido-finalizacao.module#PedidoFinalizacaoPageModule'
   },
-  { 
-    path: 'consulta-cep/:mode', 
-    loadChildren: './page/consulta-cep/consulta-cep.module#ConsultaCepPageModule' 
+  {
+    path: 'consulta-cep/:mode',
+    loadChildren: './page/consulta-cep/consulta-cep.module#ConsultaCepPageModule'
   },
 
 
-  { 
-    path: 'cliente', 
+  {
+    path: 'cliente',
     loadChildren: './page/cliente/cliente.module#ClientePageModule',
     canActivate: [AuthGuard]
   },
-  { 
-    path: 'cliente-cadastro-edicao', 
-    loadChildren: './page/cliente/cliente-cadastro-edicao/cliente-cadastro-edicao.module#ClienteCadastroEdicaoPageModule' 
+  {
+    path: 'cliente-cadastro-edicao',
+    loadChildren: './page/cliente/cliente-cadastro-edicao/cliente-cadastro-edicao.module#ClienteCadastroEdicaoPageModule',
+    canActivate: [AuthGuard]
   },
 
 
-  { 
-    path: 'tinta-alterada', 
-    loadChildren: './page/tinta-alterada/tinta-alterada.module#TintaAlteradaPageModule' 
+  {
+    path: 'tinta-alterada',
+    loadChildren: './page/tinta-alterada/tinta-alterada.module#TintaAlteradaPageModule'
   },
-  { 
-    path: 'lista-tintas', 
-    loadChildren: './page/tinta-alterada/lista-tintas/lista-tintas.module#ListaTintasPageModule' 
+  {
+    path: 'lista-tintas',
+    loadChildren: './page/tinta-alterada/lista-tintas/lista-tintas.module#ListaTintasPageModule'
   },
 
 

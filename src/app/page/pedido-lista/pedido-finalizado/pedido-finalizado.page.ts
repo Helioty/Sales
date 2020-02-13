@@ -41,13 +41,12 @@ export class PedidoFinalizadoPage implements OnInit {
   }
 
   ionViewWillEnter() {
-    console.log("ionViewWillEnter")
+
   }
 
   ionViewDidEnter() {
-    console.log("ionViewDidEnter")
     this.showSkeleton = true;
-    this.getPedidosFinalizados(this.paginaAtual)
+    this.getPedidosFinalizados(1)
   }
 
   async doRefresh(event: any) {

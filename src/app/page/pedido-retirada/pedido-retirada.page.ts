@@ -24,19 +24,17 @@ export class PedidoRetiradaPage implements OnInit {
   ) { }
 
   async ngOnInit() {
-    await this.pedidoService.criarPedido()
+    await this.pedidoService.criarPedido();
   }
 
   ionViewWillEnter() {
-    console.log("ionViewWillEnter")
     this.menu.enable(false);
     this.disableButton = false;
-    this.common.goToFullScreen()
+    this.common.goToFullScreen();
   }
 
   ionViewDidEnter() {
-    console.log("ionViewDidEnter")
-    this.common.goToFullScreen()
+    this.common.goToFullScreen();
   }
 
   async openPesquisaProduto(tipoRetirada: string) {

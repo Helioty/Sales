@@ -69,22 +69,20 @@ export class LoginPage implements OnInit {
   }
 
   ionViewWillEnter() {
-    console.log("ionViewWillEnter")
     this.menu.enable(false);
     this.common.goToFullScreen()
   }
 
   ionViewDidEnter() {
-    console.log("ionViewDidEnter")
     this.common.goToFullScreen()
   }
 
   ionViewWillLeave() {
-    console.log("ionViewWillLeave")
+
   }
 
   ionViewDidLeave() {
-    console.log("ionViewDidLeave")
+
   }
 
   showVersion() {

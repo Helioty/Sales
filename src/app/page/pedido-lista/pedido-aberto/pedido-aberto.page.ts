@@ -41,12 +41,10 @@ export class PedidoAbertoPage implements OnInit {
   }
 
   ionViewWillEnter() {
-    console.log("ionViewWillEnter")
+    
   }
 
   ionViewDidEnter() {
-    console.log("ionViewDidEnter")
-
     this.showSkeleton = true;
     this.getPedidosEmAberto(1)
   }

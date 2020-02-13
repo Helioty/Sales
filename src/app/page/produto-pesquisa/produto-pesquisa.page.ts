@@ -72,7 +72,7 @@ export class ProdutoPesquisaPage implements OnInit {
   focusOff() {
     setTimeout(() => {
       clearInterval(this.taskScanner);
-    }, 300);
+    }, 150);
   }
 
   testeScanner(evento: any) {

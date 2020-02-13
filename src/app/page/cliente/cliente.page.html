@@ -4,8 +4,6 @@
       <ion-back-button></ion-back-button>
     </ion-buttons>
 
-    <!-- <ion-title>cliente</ion-title> -->
-
     <ion-buttons slot="end">
       <ion-button *ngIf="!isBlue">
         <ion-icon name="create" style="font-size: 24px; color: white;"></ion-icon>
@@ -76,7 +74,7 @@
     <ion-row class="clie-input" *ngIf="isBlue">
       <ion-input #input id="input" placeholder="CPF ou CNPJ do cliente" (ionChange)="dynamicMask('cli')"
         [(ngModel)]="valorDigitado" style="margin-bottom: 1px; font-size: 20px;" inputmode="numeric"
-        (ionBlur)="checaMinimo(valorDigitado)" (keyup.enter)="blur($event)">
+        (ionBlur)="checaMinimo(valorDigitado); common.goToFullScreen()" (keyup.enter)="blur($event)">
       </ion-input>
     </ion-row>
 
@@ -108,7 +106,7 @@
     </ion-row>
 
     <ion-row class="clie-btn-row" *ngIf="isOrange">
-      <ion-button class="clie-btn-confirme" color="fc-orange">Cadastrar novo Cliente!
+      <ion-button class="clie-btn-confirme" color="fc-orange" (click)="cadastrarNovo()">Cadastrar novo Cliente!
         <ion-icon name="person" slot="start"></ion-icon>
       </ion-button>
     </ion-row>

@@ -17,6 +17,7 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import { Network } from "@ionic-native/network/ngx";
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { HideKeyboardModule } from 'hide-keyboard';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -35,6 +36,7 @@ console.log(ENV.mode);
     IonicModule.forRoot(),
     AppRoutingModule,
     HideKeyboardModule,
+    ReactiveFormsModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
   ],
   providers: [
