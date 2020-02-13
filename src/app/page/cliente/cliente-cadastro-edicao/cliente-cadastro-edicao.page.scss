@@ -1,5 +1,15 @@
 ion-header {
 
+    ion-toobar {
+
+        ion-buttons {
+
+            ion-button {
+                min-width: 48px;
+                min-height: 48px;
+            }
+        }
+    }
 }
 
 ion-content {
