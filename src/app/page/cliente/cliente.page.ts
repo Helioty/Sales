@@ -199,6 +199,7 @@ export class ClientePage implements OnInit {
     let link: string = ENV.WS_CRM + API_URL + "cliente/" + doc;
     await this.baseService.get(link).then((result: any) => {
       this.dados = result;
+      console.log("DADOS DO CLIENTE")
       console.log(this.dados);
       if (this.dados != undefined || this.dados != [] || this.dados != '') {
         this.isCNPJ = this.dados.natureza != "FISICA";
@@ -264,6 +265,16 @@ export class ClientePage implements OnInit {
       let alert = await this.common.alertCtrl.create({
         header: 'Remover cliente?',
         message: 'Deseja remover o cliente do pedido atual?',
+        buttons: ["NÃO", {
+          text: "SIM",
+          handler: () => {
+            this.common.showLoader();
+            this.pedidoService.removerCliente().then(() => {
+              this.setEstado('reset');
+              this.common.loading.dismiss();
+            });
+          }
+        }]
       });
       await alert.present();
     }
@@ -288,14 +299,20 @@ export class ClientePage implements OnInit {
     console.log(navParams)
     switch (navParams.paginaAnterior) {
       case 'pedido-retirada':
-        navigationExtras. queryParams.paginaSeguinte = 'produto-pesquisa';
-        navigationExtras. queryParams.paginaAnterior = 'pedido-retirada';
+        navigationExtras.queryParams.paginaSeguinte = 'produto-pesquisa';
+        navigationExtras.queryParams.paginaAnterior = 'pedido-retirada';
         this.navControl.navigateForward(["/cliente-cadastro-edicao"], navigationExtras);
         break;
 
       case 'produto-pesquisa':
-        navigationExtras. queryParams.paginaSeguinte = 'produto-pesquisa';
-        navigationExtras. queryParams.paginaAnterior = 'pedido-retirada';
+        navigationExtras.queryParams.paginaSeguinte = 'produto-pesquisa';
+        navigationExtras.queryParams.paginaAnterior = 'back';
+        this.navControl.navigateForward(["/cliente-cadastro-edicao"], navigationExtras);
+        break;
+
+      case 'produto':
+        navigationExtras.queryParams.paginaSeguinte = 'produto';
+        navigationExtras.queryParams.paginaAnterior = 'back';
         this.navControl.navigateForward(["/cliente-cadastro-edicao"], navigationExtras);
         break;
 
@@ -306,7 +323,42 @@ export class ClientePage implements OnInit {
   }
 
   async editarCadastro() {
+    let navParams: any;
+    this.activatedRoute.queryParams.subscribe(params => {
+      navParams = params;
+    });
+    let navigationExtras: NavigationExtras = {
+      queryParams: {
+        paginaSeguinte: 'produto-pesquisa',
+        paginaAnterior: 'pedido-retirada',
+        situacao: 'novo',
+        cliente: this.valorDigitado,
+        dados: this.dados
+      }
+    };
+    console.log(navParams)
+    switch (navParams.paginaAnterior) {
+      case 'pedido-retirada':
+        navigationExtras.queryParams.paginaSeguinte = 'produto-pesquisa';
+        navigationExtras.queryParams.paginaAnterior = 'pedido-retirada';
+        this.navControl.navigateForward(["/cliente-cadastro-edicao"], navigationExtras);
+        break;
 
+      case 'produto-pesquisa':
+        navigationExtras.queryParams.paginaSeguinte = 'produto-pesquisa';
+        navigationExtras.queryParams.paginaAnterior = 'back';
+        this.navControl.navigateForward(["/cliente-cadastro-edicao"], navigationExtras);
+        break;
+
+      case 'produto':
+        navigationExtras.queryParams.paginaSeguinte = 'produto';
+        navigationExtras.queryParams.paginaAnterior = 'back';
+        this.navControl.navigateForward(["/cliente-cadastro-edicao"], navigationExtras);
+        break;
+
+      default:
+        break;
+    }
   }
 
   async confirmaCliente() {

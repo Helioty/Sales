@@ -53,9 +53,53 @@
       <ion-grid>
         <ion-row>
           <ion-col size="12">
-            <form>
+            <form [formGroup]="formEndereco">
               <ion-row>
-
+                <ion-col size="8">
+                  <ion-item class="cep-item">
+                    <ion-label position="stacked">CEP</ion-label>
+                    <ion-input formControlName="cep" type="text"></ion-input>
+                    <ion-button slot="end" color="fc-button-green">
+                      <ion-icon name="search"></ion-icon>
+                    </ion-button>
+                  </ion-item>
+                </ion-col>
+                <ion-col size="4">
+                  <ion-item>
+                    <ion-label position="stacked">UF</ion-label>
+                    <ion-input formControlName="uf" type="text"></ion-input>
+                  </ion-item>
+                </ion-col>
+                <ion-col size="12" size-lg="6">
+                  <ion-item>
+                    <ion-label position="stacked">Cidade</ion-label>
+                    <ion-input formControlName="cidade" type="text"></ion-input>
+                  </ion-item>
+                </ion-col>
+                <ion-col size="12" size-lg="6">
+                  <ion-item>
+                    <ion-label position="stacked">Bairro</ion-label>
+                    <ion-input formControlName="bairro" type="text"></ion-input>
+                  </ion-item>
+                </ion-col>
+                <ion-col size="12" size-lg="6">
+                  <ion-item>
+                    <ion-label position="stacked">Rua ou Avenida</ion-label>
+                    <ion-input formControlName="endereco" type="text"></ion-input>
+                  </ion-item>
+                </ion-col>
+                <ion-col size="12" size-lg="6">
+                  <ion-item>
+                    <ion-label position="stacked">Número</ion-label>
+                    <ion-input formControlName="numero" type="text"></ion-input>
+                  </ion-item>
+                </ion-col>
+                <ion-col size="12" size-lg="6">
+                  <ion-item>
+                    <ion-label position="stacked">Complemento (opcional)</ion-label>
+                    <ion-input formControlName="comple" type="text"></ion-input>
+                  </ion-item>
+                </ion-col>
               </ion-row>
             </form>
           </ion-col>

@@ -17,6 +17,7 @@ export class ClienteCadastroEdicaoPage implements OnInit {
 
   // Controle do formulario
   public formCliente: FormGroup;
+  public formEndereco: FormGroup;
 
   // Controle do Loading
   public loading: boolean = false;
@@ -35,6 +36,15 @@ export class ClienteCadastroEdicaoPage implements OnInit {
       email: ['', Validators.email],
       celular: [''],
       telefone: [''],
+    });
+    this.formEndereco = this.formBuilder.group({
+      cep: ['', Validators.required],
+      uf: ['', Validators.required],
+      cidade: ['', Validators.required],
+      bairro: ['', Validators.required],
+      endereco: ['', Validators.required],
+      numero: ['', Validators.required],
+      comple: ['']
     });
   }
 

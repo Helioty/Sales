@@ -61,6 +61,13 @@
   <ion-list *ngIf="!showSkeleton && pedidos != [] && pedidos != null" class="pedido-list">
     <ion-item-sliding *ngFor="let pedido of pedidos; let i = index" #slidingItem class="pedido">
 
+      <ion-item-options side="start" (click)="closeSlide(slidingItem)">
+        <ion-item-option color="medium" style="width: 90px;">
+          <ion-icon slot="top" name="build-outline" size="large"></ion-icon>
+          <span style="font-weight: bold;">AJUSTES</span>
+        </ion-item-option>
+      </ion-item-options>
+
       <ion-item lines="none" class="pedido-item">
         <ion-grid (click)="openSlide(slidingItem)" class="grid-pedido">
           <ion-row class="pedido-rows">

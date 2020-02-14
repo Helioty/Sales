@@ -4,7 +4,6 @@ import { BaseCommon } from 'src/commons/base-common';
 import { PedidoService } from 'src/app/services/pedido-service.service';
 import { NavigationExtras } from '@angular/router';
 
-
 @Component({
   selector: 'app-produto-pesquisa',
   templateUrl: './produto-pesquisa.page.html',
@@ -19,10 +18,9 @@ export class ProdutoPesquisaPage implements OnInit {
   constructor(
     public alertCtrl: AlertController,
     public common: BaseCommon,
-    private navControl: NavController,
     public pedidoService: PedidoService,
+    private navControl: NavController,
     private platform: Platform,
-    
   ) { }
 
   ngOnInit() {
@@ -75,11 +73,6 @@ export class ProdutoPesquisaPage implements OnInit {
     }, 150);
   }
 
-  testeScanner(evento: any) {
-    console.log(evento);
-    this.common.showAlertInfo(evento.target.value);
-  }
-
   async scaneado(evento: any) {
     try {
       if (evento.target && evento.target.value.length >= 2) {
@@ -100,8 +93,7 @@ export class ProdutoPesquisaPage implements OnInit {
 
   async adicionarCartaoPedido() {
     const alert = await this.alertCtrl.create({
-      header: "Cartão Pedido.",
-      // subHeader: "Deseja sair do pedido?",
+      header: "Cartão Pedido",
       cssClass: 'ion-alert-input',
       inputs: [
         {

@@ -49,7 +49,6 @@ export class PedidoService {
 
   public cardSelected: boolean = false;
   public codigoCartaoPedido: string = '';
-  public codigoBarraCartaoPedido: any;
 
   constructor(
     public alertCtrl: AlertController,
@@ -62,10 +61,16 @@ export class PedidoService {
   public limpaDadosPedido() {
     this.valorFrete = 0;
     this.enderecoSelected = false;
-    this.codigoCartaoPedido = '';
-    this.cardSelected = false;
 
+    // Limpando cliente do pedido
     this.clientSelected = false;
+    this.docCliente = '';
+    this.dadosCliente = undefined;
+
+    // Limpando cartão do pedido
+    this.cardSelected = false;
+    this.codigoCartaoPedido = '';
+
     this.alteracaoItemPedido = false;
     this.digitoPedido = '';
     this.sistuacaoPedido = 'N';
@@ -90,47 +95,27 @@ export class PedidoService {
 
       this.numPedido = this.pedidoHeader.numpedido;
       this.digitoPedido = this.pedidoHeader.digito;
-    }, (err) => {
-      this.common.showToast(err.detail);
+    }, (error) => {
+      this.common.showToast(error.detail);
       this.navControl.back()
     })
 
   }
 
   // by Hélio 06/02/2020
-  public async atualizaPedido(name: any, valor: any) {
-    try {
-      let aResult = [];
-      let table: PedidoTable = new PedidoTable();
-      table.name = name;
-      table.value = valor;
-      aResult.push(table);
-
-      // by Hélio 06/02/2020
-      let link: string = ENV.WS_VENDAS + API_URL + "PedidoVenda/update/" + localStorage.getItem("empresa") + "/" + this.numPedido;
-      await this.baseService.post(link, aResult).then((result: any) => {
-        console.log('Pedido Atualizado!');
-        this.pedidoHeader = result;
-      }, (erro: any) => {
-        if (erro.error.title) {
-          this.common.showAlert(erro.error.title, erro.error.detail);
-        }
-      });
-
-    } catch (error) {
-      console.log(error);
-    }
-
+  private async atualizaPedido(tableName: any, tableValor: any) {
+    let aResult = [];
+    let table: PedidoTable = new PedidoTable();
+    table.name = tableName;
+    table.value = tableValor;
+    aResult.push(table);
+    return aResult
   }
 
   // alterado por Nicollas Bastos em 25/09/2018
   // alterado por Hélio 06/02/2020
   public async setCardPedido(codCard: string) {
-    let aResult = [];
-    let table: PedidoTable = new PedidoTable();
-    table.name = "cartao_pedido";
-    table.value = codCard;
-    aResult.push(table);
+    let aResult: any = await this.atualizaPedido("cartao_pedido", codCard);
 
     let link: string = ENV.WS_VENDAS + API_URL + "PedidoVenda/update/" + localStorage.getItem("empresa") + "/" + this.numPedido;
     await this.baseService.post(link, aResult).then((result: any) => {
@@ -152,11 +137,7 @@ export class PedidoService {
 
   // by Hélio 11/02/2020
   public async adicionarCliente(cgccpf: string, dadosCli: any) {
-    let aResult = [];
-    let tableCli: PedidoTable = new PedidoTable();
-    tableCli.name = "cliente";
-    tableCli.value = cgccpf;
-    aResult.push(tableCli);
+    let aResult: any = await this.atualizaPedido("cliente", cgccpf);
 
     let link: string = ENV.WS_VENDAS + API_URL + "PedidoVenda/update/" + localStorage.getItem("empresa") + "/" + this.numPedido;
     await this.baseService.post(link, aResult).then((result: any) => {
@@ -172,26 +153,72 @@ export class PedidoService {
         this.common.showAlertError(JSON.stringify(error));
       }
     });
+
   }
 
   public retornaDadosCliente() {
     return this.dadosCliente;
   }
 
+  // by Hélio 14/02/2020
+  public async removerCliente() {
+    let aResult: any = await this.atualizaPedido("cliente", "");
+
+    let link: string = ENV.WS_VENDAS + API_URL + "PedidoVenda/update/" + localStorage.getItem("empresa") + "/" + this.numPedido;
+    await this.baseService.post(link, aResult).then((result: any) => {
+      this.pedidoHeader = result;
+      this.clientSelected = false;
+      this.docCliente = "";
+      this.dadosCliente = undefined;
+    }, (error: any) => {
+      console.log(error);
+      if (error.error.detail) {
+        this.common.showAlert(error.error.title, error.error.detail);
+      } else {
+        this.common.showAlertError(JSON.stringify(error));
+      }
+    });
+
+  }
+
   // by Hélio 12/02/2020
-  async sairPedido() {
+  public async sairPedido() {
+    const mensagem = this.qtdItensSacola == 0 ? "Pedidos sem itens serão removidos permanentemente!" : "";
     const alert = await this.alertCtrl.create({
-      // header: "Logout",
-      subHeader: "Deseja sair do pedido?",
+      header: "Deseja realmente sair do pedido?",
+      // subHeader: "Deseja sair do pedido?",
+      message: mensagem,
       buttons: ['NÃO', {
         text: 'SIM',
         handler: () => {
-          this.limpaDadosPedido();
-          this.navControl.navigateRoot('/pedido-lista');
+          if (this.qtdItensSacola == 0) {
+            this.apagarPedido(this.numPedido).then(() => {
+              this.navControl.navigateRoot('/pedido-lista');
+            });
+          } else {
+            this.limpaDadosPedido();
+            this.navControl.navigateRoot('/pedido-lista');
+          }
         }
       }]
     });
     await alert.present();
+  }
+
+  // Apagar pedido, alterado por Hélio 14/02/2020
+  public async apagarPedido(pedidoId: any) {
+    let link: string = ENV.WS_VENDAS + API_URL + "PedidoVenda/" + localStorage.getItem("empresa") + "/" + pedidoId;
+    await this.baseService.post(link, {}).then(() => {
+      this.limpaDadosPedido();
+      this.common.showToast("Pedido apagado!");
+    }, (error: any) => {
+      if (error.error.detail) {
+        this.common.showAlert(error.error.title, error.error.detail);
+      } else {
+        this.common.showAlertError(JSON.stringify(error));
+      }
+    });
+
   }
 
 }

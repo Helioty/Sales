@@ -2,14 +2,10 @@ import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpClient } from "@angular/common/http";
 import { Network } from "@ionic-native/network/ngx";
 import { Platform } from "@ionic/angular";
-import { BaseCommon } from '../../commons/base-common';
+import { BaseCommon } from 'src/commons/base-common';
 
 import { Observable, Subject, asapScheduler, pipe, of, from, interval, merge, fromEvent } from 'rxjs';
 import { map, filter, scan } from 'rxjs/operators';
-import { resolve } from 'url';
-import { ENV } from 'src/environments/environment';
-import { API_URL } from 'src/config/app.config';
-
 
 declare let navigator: any;
 declare let Connection: any;
@@ -52,36 +48,7 @@ export class BaseService {
     }
   }
 
-
-  // metodo especifio para cadastro cliente
-  // getNoAlert(parameters: string) {
-  //   if (!this.checkNetwork()) {
-  //     this.common.showToast("Sem conexão!");
-  //   } else {
-  //     return new Promise((resolve, reject) => {
-  //       let Headers = new HttpHeaders();
-  //       // headers
-  //       Headers.append("x-auth-token", localStorage.getItem("token"));
-  //       let options = new HttpRequest({ headers: Headers, reportProgress: true });
-  //       let result = this.http
-  //         .get(parameters, options)
-  //         .subscribe(
-  //           (result: any) => {
-  //             resolve(result);
-  //           },
-  //           error => {
-  //             reject(error);
-  //             try {
-  //               this.common.loading.dismiss();
-  //             } catch (err) { }
-  //           }
-  //         );
-  //     });
-  //   }
-  // }
-
-
-  get(link: string) {
+  get(link: string): Promise<any> {
 
     if (!this.checkNetwork()) {
       this.common.showToast("Sem conexão!");
@@ -100,7 +67,7 @@ export class BaseService {
     }
   }
 
-  post(link: string, body: any) {
+  post(link: string, body: any): Promise<any> {
 
     if (!this.checkNetwork()) {
       this.common.showToast("Sem conexão!");
@@ -118,14 +85,5 @@ export class BaseService {
 
     }
   }
-
-
-  private handleError(error: any) {
-    try {
-      this.common.loading.dismiss();
-    } catch (err) { }
-    this.common.showAlert(error.json().title, error.json().detail);
-  }
-
 
 }
