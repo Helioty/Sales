@@ -19,7 +19,7 @@ export class AuthService {
     public service: BaseService
   ) { }
 
-  login(login: string, senha: string) {
+  login(login: string, senha: string): Promise<any> {
 
     if (!this.service.checkNetwork()) {
       this.common.loading.dismiss();
