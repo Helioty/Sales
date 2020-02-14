@@ -296,30 +296,7 @@ export class ClientePage implements OnInit {
         cliente: this.valorDigitado
       }
     };
-    console.log(navParams)
-    switch (navParams.paginaAnterior) {
-      case 'pedido-retirada':
-        navigationExtras.queryParams.paginaSeguinte = 'produto-pesquisa';
-        navigationExtras.queryParams.paginaAnterior = 'pedido-retirada';
-        this.navControl.navigateForward(["/cliente-cadastro-edicao"], navigationExtras);
-        break;
-
-      case 'produto-pesquisa':
-        navigationExtras.queryParams.paginaSeguinte = 'produto-pesquisa';
-        navigationExtras.queryParams.paginaAnterior = 'back';
-        this.navControl.navigateForward(["/cliente-cadastro-edicao"], navigationExtras);
-        break;
-
-      case 'produto':
-        navigationExtras.queryParams.paginaSeguinte = 'produto';
-        navigationExtras.queryParams.paginaAnterior = 'back';
-        this.navControl.navigateForward(["/cliente-cadastro-edicao"], navigationExtras);
-        break;
-
-      default:
-        break;
-    }
-
+    this.toCadastroEdicao(navParams, navigationExtras);
   }
 
   async editarCadastro() {
@@ -331,12 +308,16 @@ export class ClientePage implements OnInit {
       queryParams: {
         paginaSeguinte: 'produto-pesquisa',
         paginaAnterior: 'pedido-retirada',
-        situacao: 'novo',
+        situacao: 'edicao',
         cliente: this.valorDigitado,
-        dados: this.dados
+        dados: JSON.stringify(this.dados)
       }
     };
-    console.log(navParams)
+    this.toCadastroEdicao(navParams, navigationExtras);
+  }
+
+  // by Hélio 14/02/2020, controla a navegação para a tela de cadastro/edição
+  async toCadastroEdicao(navParams: any, navigationExtras: any) {
     switch (navParams.paginaAnterior) {
       case 'pedido-retirada':
         navigationExtras.queryParams.paginaSeguinte = 'produto-pesquisa';

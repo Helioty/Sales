@@ -5,8 +5,8 @@
     </ion-buttons>
 
     <ion-buttons slot="end">
-      <ion-button *ngIf="isGreen">
-        <ion-icon name="create" style="font-size: 24px; color: white;"></ion-icon>
+      <ion-button *ngIf="isGreen" (click)="editarCadastro()">
+        <ion-icon name="create" style="color: white;"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>

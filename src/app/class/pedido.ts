@@ -44,8 +44,7 @@ export class Retiradas {
     qtd: number;
     precoUnitario: number;
 
-    constructor(
-    ) { }
+    constructor() { }
 }
 
 export class AtualizaPedido {
@@ -59,7 +58,7 @@ export class AtualizaPedido {
     basket: number;
 }
 
-export class PedidoTable  {
+export class PedidoTable {
     name: string; // Atributo do objeto AtualizaPedido
     value: string; // Valor do atributo
 }

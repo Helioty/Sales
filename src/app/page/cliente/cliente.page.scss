@@ -3,6 +3,23 @@
     background-image: none !important;
 }
 
+ion-header {
+
+    ion-toolbar {
+
+        ion-buttons {
+
+            ion-button {
+                min-width: 48px !important;
+                min-height: 48px !important;
+
+                ion-icon {
+                    font-size: 200%;
+                }
+            }
+        }
+    }
+}
 
 
 .bg-blue {

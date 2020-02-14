@@ -22,7 +22,7 @@ export class PedidoService {
 
 
 
-  public condicao;
+  public condicao: any;
 
 
   public statusPedido: string;  // controla pedido; 'I' INCLUSÃO , 'M' MANUTENCAO
@@ -95,7 +95,7 @@ export class PedidoService {
 
       this.numPedido = this.pedidoHeader.numpedido;
       this.digitoPedido = this.pedidoHeader.digito;
-    }, (error) => {
+    }, (error: any) => {
       this.common.showToast(error.detail);
       this.navControl.back()
     })
@@ -186,7 +186,6 @@ export class PedidoService {
     const mensagem = this.qtdItensSacola == 0 ? "Pedidos sem itens serão removidos permanentemente!" : "";
     const alert = await this.alertCtrl.create({
       header: "Deseja realmente sair do pedido?",
-      // subHeader: "Deseja sair do pedido?",
       message: mensagem,
       buttons: ['NÃO', {
         text: 'SIM',

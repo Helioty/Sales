@@ -26,6 +26,9 @@ export class ClienteCadastroEdicaoPage implements OnInit {
   public situacao: string = "";
   public cliente: string = "";
 
+  // Dados do cliente
+  private clienteDadosOld: any;
+
   constructor(
     public common: BaseCommon,
     private activatedRoute: ActivatedRoute,
@@ -39,7 +42,7 @@ export class ClienteCadastroEdicaoPage implements OnInit {
     });
     this.formEndereco = this.formBuilder.group({
       cep: ['', Validators.required],
-      uf: ['', Validators.required],
+      uf: ['', [Validators.required, Validators.maxLength(2)]],
       cidade: ['', Validators.required],
       bairro: ['', Validators.required],
       endereco: ['', Validators.required],
@@ -58,6 +61,14 @@ export class ClienteCadastroEdicaoPage implements OnInit {
 
   ionViewWillEnter() {
     this.common.goToFullScreen();
+    if (this.situacao == "edicao") {
+      this.activatedRoute.queryParams.subscribe(params => {
+        this.clienteDadosOld = JSON.parse(params["dados"]);
+      });
+      console.log(this.clienteDadosOld);
+    } else {
+      
+    }
   }
 
   ionViewDidEnter() {
