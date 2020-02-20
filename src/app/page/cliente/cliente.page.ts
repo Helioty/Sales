@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, Renderer } from '@angular/core';
 import { IonInput, NavController } from '@ionic/angular';
 import { BaseCommon } from 'src/commons/base-common';
 import { BaseService } from 'src/app/services/base-service.service';
-import { PedidoService } from 'src/app/services/pedido-service.service';
+import { PedidoService } from 'src/app/services/pedido.service';
 import { ActivatedRoute, NavigationExtras } from '@angular/router';
 
 import { ENV } from 'src/environments/environment';

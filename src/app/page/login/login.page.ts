@@ -3,7 +3,7 @@ import { MenuController, Platform, NavController } from '@ionic/angular';
 import { Router } from '@angular/router';
 
 import { BaseCommon } from '../../../commons/base-common';
-import { AuthService } from '../../services/auth-service.service';
+import { AuthService } from '../../services/auth.service';
 
 import { ENV } from '../../../environments/environment';
 import { AppConfig } from 'src/config/app.config';

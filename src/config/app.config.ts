@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
-import { ENV } from '../environments/environment';
+import { ENV } from 'src/environments/environment';
 
 export let API_URL: any;
 export let API_URL_NODE: any;

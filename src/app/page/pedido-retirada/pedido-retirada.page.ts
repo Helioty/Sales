@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuController, NavController, Platform } from '@ionic/angular';
 import { BaseCommon } from 'src/commons/base-common';
-import { PedidoService } from 'src/app/services/pedido-service.service';
+import { PedidoService } from 'src/app/services/pedido.service';
 import { BaseService } from 'src/app/services/base-service.service';
 import { NavigationExtras } from '@angular/router';
 

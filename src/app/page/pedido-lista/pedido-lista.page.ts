@@ -6,7 +6,7 @@ import { ENV } from 'src/environments/environment';
 import { API_URL } from 'src/config/app.config';
 
 import { BaseService } from 'src/app/services/base-service.service';
-import { PedidoService } from 'src/app/services/pedido-service.service';
+import { PedidoService } from 'src/app/services/pedido.service';
 
 @Component({
   selector: 'app-pedido-lista',

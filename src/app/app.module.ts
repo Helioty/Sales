@@ -10,7 +10,7 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { BaseCommon } from '../commons/base-common';
 import { DataService } from './services/data.service';
 import { BaseService } from './services/base-service.service';
-import { AuthService } from './services/auth-service.service';
+import { AuthService } from './services/auth.service';
 import { AppConfig } from 'src/config/app.config';
 import { AndroidFullScreen } from '@ionic-native/android-full-screen/ngx';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';

@@ -18,7 +18,7 @@ export class DataService {
   }
 
   resetData() {
-    this.data = []
+    this.data = [];
   }
 
 }
