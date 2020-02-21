@@ -38,16 +38,16 @@ export class PedidoResumoPage implements OnInit {
   }
 
   async ionViewWillEnter() {
-    this.common.goToFullScreen()
+    this.common.goToFullScreen();
     this.activatedRoute.queryParams.subscribe(params => {
       this.pedido = JSON.parse(params["pedido"]);
     });
-    await this.separaDadosPedido()
+    await this.separaDadosPedido();
     console.log(this.pedido)
   }
 
   ionViewDidEnter() {
-    this.common.goToFullScreen()
+    this.common.goToFullScreen();
   }
 
   async separaDadosPedido() {
@@ -68,7 +68,7 @@ export class PedidoResumoPage implements OnInit {
     }
     this.showPedido = true;
 
-    this.getItensMaisEndereco(this.pedido.numpedido)
+    this.getItensMaisEndereco(this.pedido.numpedido);
   }
 
   // Modificado por Nicollas Bastos em 10-09-2018
