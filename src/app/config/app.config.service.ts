@@ -15,7 +15,6 @@ export function getHTTPNode(): any {
 @Injectable({
     providedIn: 'root'
 })
-
 export class AppConfig {
 
     private getApiUrl: string = '';

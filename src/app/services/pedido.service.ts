@@ -3,7 +3,7 @@ import { NavController, AlertController } from '@ionic/angular';
 import { BaseService } from './base-service.service';
 import { BaseCommon } from 'src/commons/base-common';
 import { ENV } from 'src/environments/environment';
-import { API_URL } from 'src/config/app.config';
+import { API_URL } from 'src/app/config/app.config.service';
 import { PedidoTable } from '../class/pedido';
 
 @Injectable({

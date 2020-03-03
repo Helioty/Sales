@@ -3,10 +3,10 @@ import { MenuController, Platform, NavController } from '@ionic/angular';
 import { Router } from '@angular/router';
 
 import { BaseCommon } from '../../../commons/base-common';
-import { AuthService } from '../../services/auth.service';
+import { AuthService } from 'src/app/services/auth.service';
 
-import { ENV } from '../../../environments/environment';
-import { AppConfig } from 'src/config/app.config';
+import { ENV } from 'src/environments/environment';
+import { AppConfig } from 'src/app/config/app.config.service';
 import { AppComponent } from '../../app.component';
 
 @Component({
@@ -16,11 +16,9 @@ import { AppComponent } from '../../app.component';
 })
 export class LoginPage implements OnInit {
 
-  public appVer: string = '';
-  public versao: string = '';
   public isLoggedIn: boolean;
   public foto: any;
-  public usuarioLogado;
+  public usuarioLogado: any;
   public noPhoto: boolean = false;
 
   loginData = { login: '', senha: '' };
@@ -48,10 +46,6 @@ export class LoginPage implements OnInit {
       this.loginData.senha = 'japa1966';
     }
 
-    if (this.platform.is('ios') || this.platform.is('android')) {
-      this.versao = '';
-    }
-
     if (localStorage.getItem("token")) {
       this.isLoggedIn = JSON.parse(localStorage.getItem("isLoggedIn"));
       this.foto = localStorage.getItem("foto");
@@ -65,16 +59,16 @@ export class LoginPage implements OnInit {
   }
 
   ngOnInit() {
-    console.log("ngOnInit")
+    console.log("ngOnInit");
   }
 
   ionViewWillEnter() {
     this.menu.enable(false);
-    this.common.goToFullScreen()
+    this.common.goToFullScreen();
   }
 
   ionViewDidEnter() {
-    this.common.goToFullScreen()
+    this.common.goToFullScreen();
   }
 
   ionViewWillLeave() {
@@ -87,7 +81,7 @@ export class LoginPage implements OnInit {
 
   showVersion() {
     if (this.platform.is('ios') || this.platform.is('android')) {
-      console.log("Versão")
+      console.log("Versão");
       this.getVersionCode();
     }
   }
@@ -108,7 +102,7 @@ export class LoginPage implements OnInit {
       console.log("entrou aqui");
 
       if (this.data.status == 'OK') {
-        this.common.showAlert(this.data.json().title, this.data.json().detail);
+        this.common.showAlert(this.data.title, this.data.detail);
       } else {
 
         localStorage.setItem('token', this.data.authorization);
@@ -122,10 +116,9 @@ export class LoginPage implements OnInit {
           this.noPhoto = true;
         }
 
-        this.appComponent.getStatus()
-
-        this.navControl.navigateRoot('/pedido-lista')
-        this.common.loading.dismiss()
+        this.appComponent.getStatus();
+        this.navControl.navigateRoot('/pedido-lista');
+        this.common.loading.dismiss();
 
       }
 

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { ENV } from 'src/environments/environment';
-import { API_URL } from 'src/config/app.config';
+import { API_URL } from 'src/app/config/app.config.service';
 
 import { BaseCommon } from '../../../../commons/base-common';
 import { BaseService } from '../../../services/base-service.service';

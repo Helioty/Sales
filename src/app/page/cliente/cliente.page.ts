@@ -6,7 +6,7 @@ import { PedidoService } from 'src/app/services/pedido.service';
 import { ActivatedRoute, NavigationExtras } from '@angular/router';
 
 import { ENV } from 'src/environments/environment';
-import { API_URL } from 'src/config/app.config';
+import { API_URL } from 'src/app/config/app.config.service';
 
 @Component({
   selector: 'app-cliente',

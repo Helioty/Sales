@@ -11,7 +11,7 @@ import { BaseCommon } from '../commons/base-common';
 import { DataService } from './services/data.service';
 import { BaseService } from './services/base-service.service';
 import { AuthService } from './services/auth.service';
-import { AppConfig } from 'src/config/app.config';
+import { AppConfig } from 'src/app/config/app.config.service';
 import { AndroidFullScreen } from '@ionic-native/android-full-screen/ngx';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import { Network } from "@ionic-native/network/ngx";

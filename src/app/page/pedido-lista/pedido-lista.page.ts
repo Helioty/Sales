@@ -3,7 +3,7 @@ import { MenuController, NavController, Platform } from '@ionic/angular';
 import { BaseCommon } from '../../../commons/base-common';
 
 import { ENV } from 'src/environments/environment';
-import { API_URL } from 'src/config/app.config';
+import { API_URL } from 'src/app/config/app.config.service';
 
 import { BaseService } from 'src/app/services/base-service.service';
 import { PedidoService } from 'src/app/services/pedido.service';
