@@ -350,6 +350,9 @@ export class ClientePage implements OnInit {
         this.prosseguir();
       }
       this.common.loading.dismiss();
+    }, (error) => {
+      console.log(error);
+      this.common.loading.dismiss();
     });
   }
 
@@ -360,7 +363,7 @@ export class ClientePage implements OnInit {
     });
     switch (paginaSeguinte) {
       case 'back':
-        this.navControl.back();
+        this.navControl.pop();
         break;
 
       case 'produto-pesquisa':
