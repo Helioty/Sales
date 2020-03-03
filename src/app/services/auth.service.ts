@@ -33,11 +33,11 @@ export class AuthService {
       return new Promise((resolve, reject) => {
         this.http.get<JSON>(link, { headers }).subscribe(result => {
           this.authGuard.logged = true;
-          resolve(result);
           console.log(result);
+          resolve(result);
         }, (error) => {
-          reject(error);
           console.log(error);
+          reject(error);
         });
       });
 

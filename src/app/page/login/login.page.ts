@@ -105,6 +105,7 @@ export class LoginPage implements OnInit {
     this.authService.login(this.loginData.login.toUpperCase(), this.loginData.senha).then((result) => {
       this.common.loading.dismiss();
       this.data = result;
+      console.log("entrou aqui");
 
       if (this.data.status == 'OK') {
         this.common.showAlert(this.data.json().title, this.data.json().detail);
@@ -128,17 +129,17 @@ export class LoginPage implements OnInit {
 
       }
 
-    }, (error) => {
+    }, (error: any) => {
       this.isLoggedIn = false;
       this.common.loading.dismiss();
       this.loginData.senha = '';
+      console.log("Erro!");
+      console.log(error.error);
 
-      let erro = error.error;
-
-      if (erro.tittle != "" && erro.detail != "") {
-        this.common.showAlert(erro.title, erro.detail);
+      if (error.error.tittle != "" && error.error.detail != "") {
+        this.common.showAlert(error.error.title, error.error.detail);
       } else {
-        this.common.showAlert("Ops!", error);
+        this.common.showAlert("Ops!", JSON.stringify(error));
       }
     });
 
