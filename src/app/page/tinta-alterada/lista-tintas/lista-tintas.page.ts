@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { BaseCommon } from '../../../../commons/base-common';
+import { CommonService } from 'src/app/services/common.service';
 
 @Component({
   selector: 'app-lista-tintas',
@@ -13,7 +13,7 @@ export class ListaTintasPage implements OnInit {
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    public common: BaseCommon,
+    public common: CommonService,
     public router: Router
   ) { }
 

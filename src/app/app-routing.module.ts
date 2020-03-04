@@ -29,6 +29,10 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
+    path: 'pedido-atalhos',
+    loadChildren: './page/pedido-atalhos/pedido-atalhos.module#PedidoAtalhosPageModule'
+  },
+  {
     path: 'pedido-sacola',
     loadChildren: './page/pedido-sacola/pedido-sacola.module#PedidoSacolaPageModule'
   },

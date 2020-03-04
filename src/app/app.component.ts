@@ -2,10 +2,9 @@ import { Component } from '@angular/core';
 import { Platform, MenuController, AlertController, NavController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
-import { Router } from '@angular/router';
 
 import { AuthGuard } from 'src/app/guards/auth.guard';
-import { BaseCommon } from 'src/commons/base-common';
+import { CommonService } from 'src/app/services/common.service';
 
 @Component({
   selector: 'app-root',
@@ -49,19 +48,16 @@ export class AppComponent {
 
 
   public foto: any;
-
   public nome: any;
-
   public noPhoto: boolean = false;
 
   constructor(
     private authGuard: AuthGuard,
     public alertCtrl: AlertController,
-    public common: BaseCommon,
+    public common: CommonService,
     private menu: MenuController,
     private platform: Platform,
     private navControl: NavController,
-    private router: Router,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar
   ) {

@@ -81,7 +81,7 @@ export class PedidoFinalizadoPage implements OnInit {
       this.pedidos = result.content;
       this.totalPagina = this.resultGetPedidos.totalPages;
       if (this.pedidos.length == 0) {
-        console.log("Nenhum pedido em aberto")
+        console.log("Nenhum pedido em finalizado")
         this.pedidos = null;
       }
       console.log(this.pedidos)

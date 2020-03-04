@@ -57,7 +57,8 @@ export class ClientePage implements OnInit {
     this.common.goToFullScreen();
     if (this.pedidoService.clientSelected && this.pedidoService.docCliente != '') {
       this.getClienteAntesSelecionado();
-    } else {
+    }
+    else if (this.valorDigitado == '') {
       this.setEstado('reset');
     }
   }
@@ -346,15 +347,21 @@ export class ClientePage implements OnInit {
   async confirmaCliente() {
     await this.common.showLoader();
     let doc: string = await this.valorDigitado.replace(/\D/g, '');
-    this.pedidoService.adicionarCliente(doc, this.dados).then(() => {
-      if (this.pedidoService.clientSelected) {
-        this.prosseguir();
-      }
+    if (doc != this.pedidoService.docCliente) {
+      this.pedidoService.adicionarCliente(doc, this.dados).then(() => {
+        if (this.pedidoService.clientSelected) {
+          this.prosseguir();
+        }
+        this.common.loading.dismiss();
+      }, (error) => {
+        console.log(error);
+        this.common.loading.dismiss();
+      });
+    } else {
+      await this.prosseguir();
       this.common.loading.dismiss();
-    }, (error) => {
-      console.log(error);
-      this.common.loading.dismiss();
-    });
+    }
+
   }
 
   async prosseguir() {
