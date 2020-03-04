@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuController, NavController, Platform } from '@ionic/angular';
-import { BaseCommon } from 'src/commons/base-common';
+import { CommonService } from 'src/app/services/common.service';
 import { PedidoService } from 'src/app/services/pedido.service';
 import { BaseService } from 'src/app/services/base-service.service';
 import { NavigationExtras } from '@angular/router';
@@ -15,7 +15,7 @@ export class PedidoRetiradaPage implements OnInit {
   public disableButton: boolean = false;
 
   constructor(
-    public common: BaseCommon,
+    public common: CommonService,
     private menu: MenuController,
     private navControl: NavController,
     public baseService: BaseService,

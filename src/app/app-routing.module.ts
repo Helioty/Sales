@@ -103,6 +103,13 @@ const routes: Routes = [
   },
 
 
+  {
+    path: 'forma-pagamento',
+    loadChildren: './page/forma-pagamento/forma-pagamento.module#FormaPagamentoPageModule'
+  },
+
+
+
 ];
 
 @NgModule({

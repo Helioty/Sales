@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { IonContent, IonSlides, NavController } from '@ionic/angular';
 import { NavigationExtras } from '@angular/router';
-import { BaseCommon } from 'src/commons/base-common';
+import { CommonService } from 'src/app/services/common.service';
 
 @Component({
   selector: 'app-tinta-alterada',
@@ -19,7 +19,7 @@ export class TintaAlteradaPage implements OnInit {
   fors: any = [{a: 'cA', b: 'cA'}, {a: 'cB', b: 'cB'}, {a: 'cC', b: 'cC'}, {a: 'cA', b: 'cA'}, {a: 'cB', b: 'cB'}, {a: 'cC', b: 'cC'}, {a: 'cA', b: 'cA'}]
 
   constructor(
-    public common: BaseCommon,
+    public common: CommonService,
     private navControl: NavController,
   ) { }
 

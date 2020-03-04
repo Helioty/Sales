@@ -5,7 +5,7 @@ import { Router, NavigationExtras } from '@angular/router';
 import { ENV } from 'src/environments/environment';
 import { API_URL } from 'src/app/config/app.config.service';
 
-import { BaseCommon } from '../../../../commons/base-common';
+import { CommonService } from 'src/app/services/common.service';
 import { BaseService } from '../../../services/base-service.service';
 
 import { PedidoListaPage } from '../pedido-lista.page';
@@ -30,7 +30,7 @@ export class PedidoAbertoPage implements OnInit {
 
   constructor(
     public baseService: BaseService,
-    public common: BaseCommon,
+    public common: CommonService,
     private alertCtrl: AlertController,
     private navControl: NavController,
     private pedidoLista: PedidoListaPage,

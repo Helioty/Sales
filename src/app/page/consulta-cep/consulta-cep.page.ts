@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
-import { BaseCommon } from '../../../commons/base-common';
+import { CommonService } from 'src/app/services/common.service';
 
 declare var google: any;
 
@@ -25,7 +25,7 @@ export class ConsultaCepPage implements OnInit {
   public latLng: any;
 
   constructor(
-    public common: BaseCommon,
+    public common: CommonService,
     public geolocation: Geolocation,
   ) {
     this.GoogleAutocomplete = new google.maps.places.AutocompleteService();

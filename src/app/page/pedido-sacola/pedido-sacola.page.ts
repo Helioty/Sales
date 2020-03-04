@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AlertController, NavController, Platform } from '@ionic/angular';
-import { BaseCommon } from 'src/commons/base-common';
+import { CommonService } from 'src/app/services/common.service';
 import { PedidoService } from 'src/app/services/pedido.service';
 import { NavigationExtras } from '@angular/router';
 
@@ -17,7 +17,7 @@ export class PedidoSacolaPage implements OnInit {
 
   constructor(
     public alertCtrl: AlertController,
-    public common: BaseCommon,
+    public common: CommonService,
     public pedidoService: PedidoService,
     private navControl: NavController,
     private platform: Platform,

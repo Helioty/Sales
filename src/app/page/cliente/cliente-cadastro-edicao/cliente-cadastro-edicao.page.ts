@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { BaseCommon } from 'src/commons/base-common';
+import { CommonService } from 'src/app/services/common.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IonContent, IonSlides } from '@ionic/angular';
 import { ActivatedRoute } from '@angular/router';
@@ -30,7 +30,7 @@ export class ClienteCadastroEdicaoPage implements OnInit {
   private clienteDadosOld: any;
 
   constructor(
-    public common: BaseCommon,
+    public common: CommonService,
     private activatedRoute: ActivatedRoute,
     private formBuilder: FormBuilder
   ) {

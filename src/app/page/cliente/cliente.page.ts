@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, Renderer } from '@angular/core';
-import { IonInput, NavController } from '@ionic/angular';
-import { BaseCommon } from 'src/commons/base-common';
+import { IonInput, NavController, AlertController } from '@ionic/angular';
+import { CommonService } from 'src/app/services/common.service';
 import { BaseService } from 'src/app/services/base-service.service';
 import { PedidoService } from 'src/app/services/pedido.service';
 import { ActivatedRoute, NavigationExtras } from '@angular/router';
@@ -41,7 +41,8 @@ export class ClientePage implements OnInit {
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private common: BaseCommon,
+    private alertCtrl: AlertController,
+    private common: CommonService,
     private baseService: BaseService,
     private navControl: NavController,
     private pedidoService: PedidoService,
@@ -89,7 +90,7 @@ export class ClientePage implements OnInit {
   // by Helio 12/02/2020
   async getClienteAntesSelecionado() {
     this.dados = await this.pedidoService.retornaDadosCliente();
-    this.valorDigitado = this.common.formata(this.pedidoService.docCliente, "CPFCGC")
+    this.valorDigitado = this.common.formataCPFNPJ(this.pedidoService.docCliente);
     this.isCNPJ = this.dados.natureza != "FISICA";
     this.isActive = this.dados.ativo;
     this.atualizaCadastro = this.dados.atualizaCadastro;
@@ -133,7 +134,7 @@ export class ClientePage implements OnInit {
     if (this.valorDigitado.length > 2) {
       if (inputName == "cli") {
         if (this.valorDigitado != "" || this.valorDigitado != undefined) {
-          this.valorDigitado = this.common.formata(this.valorDigitado, "CPFCGC")
+          this.valorDigitado = this.common.formataCPFNPJ(this.valorDigitado);
         }
       }
     }
@@ -253,7 +254,7 @@ export class ClientePage implements OnInit {
       let valor1: any = String(dados.celulares[0].numero);
 
       if (valor1.length > 8) {
-        this.dadosShow.celular = this.common.formata(dados.celulares[0].ddd + dados.celulares[0].numero, "FONE");
+        this.dadosShow.celular = this.common.formataFONE(dados.celulares[0].ddd + dados.celulares[0].numero);
       } else {
         this.dadosShow.celular = "";
       }
@@ -262,7 +263,7 @@ export class ClientePage implements OnInit {
 
   async naoCliente() {
     if (this.pedidoService.clientSelected) {
-      let alert = await this.common.alertCtrl.create({
+      let alert = await this.alertCtrl.create({
         header: 'Remover cliente?',
         message: 'Deseja remover o cliente do pedido atual?',
         buttons: ["NÃO", {

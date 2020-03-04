@@ -1,72 +1,55 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from "@angular/common/http";
+import { HttpClient } from '@angular/common/http';
 import { ENV } from 'src/environments/environment';
+import { CommonService } from 'src/app/services/common.service';
 
-export let API_URL: any;
-export let API_URL_NODE: any;
+export let API_URL: string = '';
 
 export function getHTTP(): any {
-    return API_URL;
-}
-export function getHTTPNode(): any {
-    return API_URL_NODE;
+  return API_URL;
 }
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root'
 })
-export class AppConfig {
+export class AppConfigService {
 
-    private getApiUrl: string = '';
-    private getApiUrlNode: string = '';
+  private getApiUrl: string = '';
 
-    constructor(
-        public http: HttpClient,
-    ) {
+  constructor(
+    private http: HttpClient,
+    private common: CommonService,
+  ) {
 
-        if (ENV.mode == 'Production') {
+    if (ENV.mode == 'Production') {
 
-            this.getApiUrl = 'https://publico.api.imb/getUrlServiceOKD?apl=pv';
-            this.getURL();
-            getHTTP();
+      this.getApiUrl = 'https://publico.api.imb/getUrlServiceOKD';
+      this.getURL();
+      getHTTP();
 
-        } else {
+    } else {
 
-            this.getApiUrl = 'https://publico.staging.imb/getUrlServiceOKD';
-            this.getURL();
-            getHTTP();
-
-        }
+      this.getApiUrl = 'https://publico.staging.imb/getUrlServiceOKD';
+      this.getURL();
+      getHTTP();
 
     }
 
+  }
 
-    public getURL() {
-        let apiUrl = this.getApiUrl;
-        return new Promise(resolve => {
-            this.http.get(apiUrl).subscribe(data => {
-                console.log(data);
-                let link: any = data;
-                API_URL = link.server + '/';
-                resolve(data);
-            }, error => {
-                console.log(error);
-            });
-        });
-    }
-
-    public getURLNode() {
-        let apiUrl = this.getApiUrlNode;
-        return new Promise(resolve => {
-            this.http.get(apiUrl).subscribe(data => {
-                console.log(data);
-                let link: any = data;
-                API_URL_NODE = link.server + '/';
-                resolve(data);
-            }, error => {
-                console.log(error);
-            });
-        });
-    }
+  public getURL() {
+    let apiUrl = this.getApiUrl;
+    return new Promise((resolve, reject) => {
+      this.http.get(apiUrl).subscribe((link: any) => {
+        console.log(link);
+        API_URL = link.server + '/';
+        resolve(link);
+      }, error => {
+        console.log(error);
+        this.common.showAlertError(JSON.stringify(error));
+        reject(error);
+      });
+    });
+  }
 
 }

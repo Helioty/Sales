@@ -10,6 +10,7 @@ export class EnderecoEntregaPage implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    
   }
 
 }

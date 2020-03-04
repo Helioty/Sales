@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { MenuController, Platform, NavController } from '@ionic/angular';
 import { Router } from '@angular/router';
 
-import { BaseCommon } from '../../../commons/base-common';
+import { CommonService } from 'src/app/services/common.service';
 import { AuthService } from 'src/app/services/auth.service';
 
 import { ENV } from 'src/environments/environment';
-import { AppConfig } from 'src/app/config/app.config.service';
+import { AppConfigService } from 'src/app/config/app.config.service';
 import { AppComponent } from '../../app.component';
 
 @Component({
@@ -28,9 +28,9 @@ export class LoginPage implements OnInit {
 
   constructor(
     public appComponent: AppComponent,
-    public appConfig: AppConfig,
+    public appConfig: AppConfigService,
     public authService: AuthService,
-    public common: BaseCommon,
+    public common: CommonService,
     private menu: MenuController,
     private platform: Platform,
     private navControl: NavController,
@@ -80,17 +80,7 @@ export class LoginPage implements OnInit {
   }
 
   showVersion() {
-    if (this.platform.is('ios') || this.platform.is('android')) {
-      console.log("Versão");
-      this.getVersionCode();
-    }
-  }
-
-  async getVersionCode() {
-    let versionCode = await this.common.getVersionCode()
-    let versionNumber = await this.common.getVersionNumber()
-    let V = 'Versão: ' + versionNumber + '<br> Version Code: ' + versionCode;
-    this.common.showAlert(await this.common.getAppName(), V);
+    this.common.showVersion();
   }
 
   async entrar() {

@@ -4,7 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { ENV } from 'src/environments/environment';
 import { API_URL } from 'src/app/config/app.config.service';
 
-import { BaseCommon } from '../../../../commons/base-common';
+import { CommonService } from 'src/app/services/common.service';
 import { BaseService } from '../../../services/base-service.service';
 
 
@@ -28,7 +28,7 @@ export class PedidoResumoPage implements OnInit {
 
   constructor(
     public baseService: BaseService,
-    public common: BaseCommon,
+    public common: CommonService,
     private activatedRoute: ActivatedRoute,
     public router: Router
   ) { }
