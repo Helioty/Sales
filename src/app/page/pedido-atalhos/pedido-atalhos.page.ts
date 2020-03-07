@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { AlertController, NavController, Platform } from '@ionic/angular';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { AlertController, NavController, Platform, IonSlides } from '@ionic/angular';
 import { CommonService } from 'src/app/services/common.service';
 import { PedidoService } from 'src/app/services/pedido.service';
 import { NavigationExtras } from '@angular/router';
@@ -10,6 +10,8 @@ import { NavigationExtras } from '@angular/router';
   styleUrls: ['./pedido-atalhos.page.scss'],
 })
 export class PedidoAtalhosPage implements OnInit {
+
+  @ViewChild(IonSlides, { static: true }) slides: IonSlides;
 
   public taskScanner: any;
   public valorScanner: string;
@@ -24,7 +26,7 @@ export class PedidoAtalhosPage implements OnInit {
   ) { }
 
   ngOnInit() {
-
+    this.slides.lockSwipes(true);
   }
 
   ionViewWillEnter() {
@@ -119,7 +121,7 @@ export class PedidoAtalhosPage implements OnInit {
     let navigationExtras: NavigationExtras = {
       queryParams: {
         paginaSeguinte: 'back',
-        paginaAnterior: 'produto-pesquisa'
+        paginaAnterior: 'produto-atalhos'
       }
     };
     this.navControl.navigateForward(["/cliente"], navigationExtras);

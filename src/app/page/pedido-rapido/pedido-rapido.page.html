@@ -1,13 +1,14 @@
 <ion-header>
   <ion-toolbar color="fc">
     <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
+      <ion-back-button></ion-back-button>
     </ion-buttons>
     <ion-title>Pedido Rapido</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <input id="scanner" hideKeyboard class="scanner" [(ngModel)]="valorScanner" (keyup.enter)="scaneado($event)">
 
   <ion-list lines="none" class="listaProdutos">
     <ion-item-sliding class="produto ion-no-padding ion-align-items-stretch" *ngFor="let item of itens; let i = index">

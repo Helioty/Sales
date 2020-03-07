@@ -88,7 +88,7 @@ export class PedidoService {
   // by Hélio 06/02/2020
   public async criarPedido() {
     let link: string = ENV.WS_VENDAS + API_URL + 'PedidoVenda/' + localStorage.getItem('empresa') + '/criar';
-    await this.baseService.post(link, {}).then((result: any) => {
+    return await this.baseService.post(link, {}).then((result: any) => {
       this.pedidoHeader = result;
       console.log('NOVO PEDIDO');
       console.log(this.pedidoHeader);

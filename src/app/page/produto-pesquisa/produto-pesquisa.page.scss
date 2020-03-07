@@ -43,21 +43,3 @@ ion-header {
         }
     }
 }
-
-ion-content {
-    --padding-bottom: 50px !important;
-
-    ion-grid {
-        display: none;
-    }
-
-    ion-card {
-        ion-card-header {
-            ion-button {
-                opacity: 1 !important;
-                font-size: 135%;
-                width: 100%;
-            }
-        }
-    }
-}

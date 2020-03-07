@@ -89,7 +89,12 @@ export class CommonService {
     let toast = await this.toastCtrl.create({
       message: msg,
       duration: 2000,
-      position: 'bottom'
+      position: 'bottom',
+      buttons: [{
+        side: 'end',
+        icon: 'close',
+        role: 'cancel'
+      }]
     });
     toast.present();
   }

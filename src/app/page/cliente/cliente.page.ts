@@ -179,7 +179,7 @@ export class ClientePage implements OnInit {
         this.setCor('blue');
         setTimeout(() => {
           this.foco();
-        }, 200);
+        }, 250);
         break;
 
       default:
@@ -290,15 +290,7 @@ export class ClientePage implements OnInit {
     this.activatedRoute.queryParams.subscribe(params => {
       navParams = params;
     });
-    let navigationExtras: NavigationExtras = {
-      queryParams: {
-        paginaSeguinte: 'produto-pesquisa',
-        paginaAnterior: 'pedido-retirada',
-        situacao: 'novo',
-        cliente: this.valorDigitado
-      }
-    };
-    this.toCadastroEdicao(navParams, navigationExtras);
+    this.toCadastroEdicao(navParams, 'novo');
   }
 
   async editarCadastro() {
@@ -306,20 +298,23 @@ export class ClientePage implements OnInit {
     this.activatedRoute.queryParams.subscribe(params => {
       navParams = params;
     });
-    let navigationExtras: NavigationExtras = {
-      queryParams: {
-        paginaSeguinte: 'produto-pesquisa',
-        paginaAnterior: 'pedido-retirada',
-        situacao: 'edicao',
-        cliente: this.valorDigitado,
-        dados: JSON.stringify(this.dados)
-      }
-    };
-    this.toCadastroEdicao(navParams, navigationExtras);
+    this.toCadastroEdicao(navParams, 'edicao');
   }
 
   // by Hélio 14/02/2020, controla a navegação para a tela de cadastro/edição
-  async toCadastroEdicao(navParams: any, navigationExtras: any) {
+  async toCadastroEdicao(navParams: any, situacao: string) {
+    let navigationExtras: NavigationExtras = {
+      queryParams: {
+        paginaSeguinte: '',
+        paginaAnterior: '',
+        situacao: situacao,
+        cliente: this.valorDigitado,
+        dados: ''
+      }
+    };
+    if (situacao = 'edicao') {
+      navigationExtras.queryParams.dados = JSON.stringify(this.dados);
+    }
     switch (navParams.paginaAnterior) {
       case 'pedido-retirada':
         navigationExtras.queryParams.paginaSeguinte = 'produto-pesquisa';
@@ -374,11 +369,8 @@ export class ClientePage implements OnInit {
         this.navControl.pop();
         break;
 
-      case 'produto-pesquisa':
-        this.navControl.navigateRoot(["/produto-pesquisa"]);
-        break;
-
       default:
+        this.navControl.navigateRoot(["/" + paginaSeguinte]);
         break;
     }
   }

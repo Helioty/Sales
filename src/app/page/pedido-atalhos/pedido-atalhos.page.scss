@@ -46,12 +46,27 @@ ion-header {
 
 ion-content {
 
-    ion-card {
-        ion-card-header {
-            ion-button {
-                opacity: 1 !important;
-                font-size: 135%;
-                width: 100%;
+    ion-slides {
+
+        ion-slide {
+            background: #f4f4f4;
+        
+            ion-grid {
+                max-width: 500px;
+
+                ion-card {
+                    ion-card-header {
+                        ion-button {
+                            opacity: 1 !important;
+                            font-size: 135%;
+                            width: 100%;
+                        }
+                    }
+
+                    ion-card-content {
+                        padding: 0 0 13px 0;
+                    }
+                }
             }
         }
     }

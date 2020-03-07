@@ -46,7 +46,7 @@ export class PedidoRetiradaPage implements OnInit {
     if (this.pedidoService.tipoRetirada == "ENTREGA") {
       let navigationExtras: NavigationExtras = {
         queryParams: {
-          paginaSeguinte: 'produto-pesquisa',
+          paginaSeguinte: 'pedido-atalhos',
           paginaAnterior: 'pedido-retirada'
         }
       };
@@ -55,11 +55,11 @@ export class PedidoRetiradaPage implements OnInit {
     else {
       let navigationExtras: NavigationExtras = {
         queryParams: {
-          paginaSeguinte: 'back',
-          paginaAnterior: ''
+          paginaSeguinte: '',
+          paginaAnterior: 'pedido-retirada'
         }
       };
-      this.navControl.navigateRoot(["/produto-pesquisa"], navigationExtras);
+      this.navControl.navigateRoot(["/pedido-atalhos"], navigationExtras);
     }
   }
 
