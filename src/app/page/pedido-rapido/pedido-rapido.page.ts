@@ -44,7 +44,7 @@ export class PedidoRapidoPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    console.log(this.itens);
+
   }
 
   ionViewWillEnter() {

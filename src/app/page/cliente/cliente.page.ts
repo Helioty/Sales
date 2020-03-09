@@ -322,19 +322,10 @@ export class ClientePage implements OnInit {
         this.navControl.navigateForward(["/cliente-cadastro-edicao"], navigationExtras);
         break;
 
-      case 'produto-pesquisa':
-        navigationExtras.queryParams.paginaSeguinte = 'produto-pesquisa';
-        navigationExtras.queryParams.paginaAnterior = 'back';
-        this.navControl.navigateForward(["/cliente-cadastro-edicao"], navigationExtras);
-        break;
-
-      case 'produto':
-        navigationExtras.queryParams.paginaSeguinte = 'produto';
-        navigationExtras.queryParams.paginaAnterior = 'back';
-        this.navControl.navigateForward(["/cliente-cadastro-edicao"], navigationExtras);
-        break;
-
       default:
+        navigationExtras.queryParams.paginaSeguinte = navParams.paginaAnterior;
+        navigationExtras.queryParams.paginaAnterior = 'back';
+        this.navControl.navigateForward(["/cliente-cadastro-edicao"], navigationExtras);
         break;
     }
   }

@@ -215,7 +215,30 @@
 ion-header {
   height: auto;
   ion-toolbar {
-    --min-height: 45px !important;
+    --min-height: 52px !important;
+
+    ion-buttons {
+      min-height: 40px !important;
+
+      ion-button {
+        min-width: 48px !important;
+        min-height: 48px !important;
+        --overflow: visible !important;
+        --border-radius: 50% !important;
+        margin: 2px 4px;
+
+        ion-icon {
+          font-size: 200%;
+        }
+
+        .badge-position {
+          margin-left: 10px;
+          margin-top: 8px;
+          border-radius: 50%;
+          position: absolute;
+        }
+      }
+    }
   }
 }
 
