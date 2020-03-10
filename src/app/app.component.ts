@@ -25,11 +25,6 @@ export class AppComponent {
       icon: 'location-outline'
     },
     {
-      title: 'Pedido Rapido',
-      url: '/pedido-rapido',
-      icon: 'speedometer-outline'
-    },
-    {
       title: 'New TMS',
       url: '/new-tms',
       icon: 'cube'

@@ -4,7 +4,7 @@ import { BaseService } from './base-service.service';
 import { CommonService } from 'src/app/services/common.service';
 import { ENV } from 'src/environments/environment';
 import { API_URL } from 'src/app/config/app.config.service';
-import { PedidoTable } from '../class/pedido';
+import { PedidoTable, PedidoItens } from 'src/app/class/pedido';
 
 @Injectable({
   providedIn: 'root'
@@ -96,10 +96,22 @@ export class PedidoService {
       this.numPedido = this.pedidoHeader.numpedido;
       this.digitoPedido = this.pedidoHeader.digito;
     }, (error: any) => {
-      this.common.showToast(error.detail);
-      this.navControl.back()
+      this.navControl.pop();
+      this.showError(error);
     })
 
+  }
+
+  // edit by Helio 10/03/2020
+  public async getPedido(idPedido: string) {
+    const link: string = ENV.WS_VENDAS + API_URL + "PedidoVenda/" + localStorage.getItem("empresa") + "/" + idPedido;
+    try {
+      await this.baseService.get(link).then((result: any) => {
+        return result;
+      });
+    } catch (error) {
+      this.showError(error);
+    }
   }
 
   // by Hélio 06/02/2020
@@ -117,7 +129,7 @@ export class PedidoService {
   public async setCardPedido(codCard: string) {
     let aResult: any = await this.atualizaPedido("cartao_pedido", codCard);
 
-    let link: string = ENV.WS_VENDAS + API_URL + "PedidoVenda/update/" + localStorage.getItem("empresa") + "/" + this.numPedido;
+    const link: string = ENV.WS_VENDAS + API_URL + "PedidoVenda/update/" + localStorage.getItem("empresa") + "/" + this.numPedido;
     await this.baseService.post(link, aResult).then((result: any) => {
       this.pedidoHeader = result;
       this.cardSelected = true;
@@ -126,34 +138,23 @@ export class PedidoService {
     }, (error: any) => {
       this.cardSelected = false;
       this.codigoCartaoPedido = '';
-      if (error.error.detail) {
-        this.common.showAlert(error.error.title, error.error.detail);
-      } else {
-        this.common.showAlertError(JSON.stringify(error));
-      }
+      this.showError(error);
     });
-
   }
 
   // by Hélio 11/02/2020
   public async adicionarCliente(cgccpf: string, dadosCli: any) {
     let aResult: any = await this.atualizaPedido("cliente", cgccpf);
 
-    let link: string = ENV.WS_VENDAS + API_URL + "PedidoVenda/update/" + localStorage.getItem("empresa") + "/" + this.numPedido;
+    const link: string = ENV.WS_VENDAS + API_URL + "PedidoVenda/update/" + localStorage.getItem("empresa") + "/" + this.numPedido;
     await this.baseService.post(link, aResult).then((result: any) => {
       this.pedidoHeader = result;
       this.clientSelected = true;
       this.docCliente = cgccpf;
       this.dadosCliente = dadosCli;
     }, (error: any) => {
-      console.log(error);
-      if (error.error.detail) {
-        this.common.showAlert(error.error.title, error.error.detail);
-      } else {
-        this.common.showAlertError(JSON.stringify(error));
-      }
+      this.showError(error);
     });
-
   }
 
   public retornaDadosCliente() {
@@ -164,21 +165,15 @@ export class PedidoService {
   public async removerCliente() {
     let aResult: any = await this.atualizaPedido("cliente", "");
 
-    let link: string = ENV.WS_VENDAS + API_URL + "PedidoVenda/update/" + localStorage.getItem("empresa") + "/" + this.numPedido;
+    const link: string = ENV.WS_VENDAS + API_URL + "PedidoVenda/update/" + localStorage.getItem("empresa") + "/" + this.numPedido;
     await this.baseService.post(link, aResult).then((result: any) => {
       this.pedidoHeader = result;
       this.clientSelected = false;
       this.docCliente = "";
       this.dadosCliente = undefined;
     }, (error: any) => {
-      console.log(error);
-      if (error.error.detail) {
-        this.common.showAlert(error.error.title, error.error.detail);
-      } else {
-        this.common.showAlertError(JSON.stringify(error));
-      }
+      this.showError(error);
     });
-
   }
 
   // by Hélio 12/02/2020
@@ -206,18 +201,67 @@ export class PedidoService {
 
   // Apagar pedido, alterado por Hélio 14/02/2020
   public async apagarPedido(pedidoId: any) {
-    let link: string = ENV.WS_VENDAS + API_URL + "PedidoVenda/" + localStorage.getItem("empresa") + "/" + pedidoId;
+    const link: string = ENV.WS_VENDAS + API_URL + "PedidoVenda/" + localStorage.getItem("empresa") + "/" + pedidoId;
     await this.baseService.post(link, {}).then(() => {
       this.limpaDadosPedido();
       this.common.showToast("Pedido apagado!");
     }, (error: any) => {
+      this.showError(error);
+    });
+  }
+
+  // edit by Helio 10/03/2020
+  public async getItemPedido() {
+    const link: string = ENV.WS_VENDAS + API_URL + 'PedidoVendaItem/' + localStorage.getItem('empresa') + '/' + this.numPedido + '/itens';
+
+    return new Promise((resolve) => {
+      this.baseService.get(link).then((result: any) => {
+        resolve(result);
+      }, (error: any) => {
+        this.showError(error);
+      });
+    });
+  }
+
+  // by Helio 10/03/2020
+  async addFast(body: PedidoItens) {
+    const link: string = ENV.WS_VENDAS + API_URL + 'PedidoVendaItem/' + localStorage.getItem('empresa') + '/' + this.numPedido + '/addfast';
+
+    return new Promise((resolve, reject) => {
+      this.baseService.post(link, body).then((result: any) => {
+        this.pedidoHeader = result.pedido;
+        this.qtdItensSacola = result.items.content.length;
+        resolve(result.items);
+      }, (error) => {
+        this.showError(error);
+        reject(error);
+      });
+    });
+  }
+
+  // by Helio 10/03/2020
+  showError(error: any) {
+    // by Ryuge 28/11/2019
+    if (error.status == 400) {
+      console.log(error)
+      // await this.showMessage(error.json().title, error.json().detail);
       if (error.error.detail) {
         this.common.showAlert(error.error.title, error.error.detail);
       } else {
-        this.common.showAlertError(JSON.stringify(error));
+        this.common.showAlert("Atenção!", JSON.stringify(error));
       }
-    });
-
+    }
+    else if (error.status == 503) {
+      this.common.showAlert('Atenção!', 'Sem serviço, entrar em contato com suporte.');
+    }
+    else {
+      if (error.error.detail) {
+        this.common.showAlert(error.error.title, error.error.detail);
+      } else {
+        this.common.showAlert("Atenção!", JSON.stringify(error));
+      }
+    }
   }
+
 
 }

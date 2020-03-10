@@ -38,7 +38,8 @@ const routes: Routes = [
   },
   {
     path: 'pedido-rapido',
-    loadChildren: './page/pedido-rapido/pedido-rapido.module#PedidoRapidoPageModule'
+    loadChildren: './page/pedido-rapido/pedido-rapido.module#PedidoRapidoPageModule',
+    canActivate: [AuthGuard]
   },
 
 

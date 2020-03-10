@@ -27,6 +27,7 @@ export class PedidoAbertoPage implements OnInit {
 
   public paginaAtual: number = 1;
   public totalPagina: number = 0;
+  public lastPage: boolean = false;
 
   constructor(
     public baseService: BaseService,
@@ -41,12 +42,12 @@ export class PedidoAbertoPage implements OnInit {
   }
 
   ionViewWillEnter() {
-    
+
   }
 
   ionViewDidEnter() {
     this.showSkeleton = true;
-    this.getPedidosEmAberto(1)
+    this.getPedidosEmAberto(1);
   }
 
   async doRefresh(event: any) {
@@ -56,39 +57,49 @@ export class PedidoAbertoPage implements OnInit {
         event.target.complete();
       })
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   }
 
   async doInfinite(event: any) {
     try {
-      await this.getPedidosEmAberto(this.paginaAtual).then(res => {
+      if (!this.lastPage) {
+        await this.getPedidosEmAberto(this.paginaAtual).then(res => {
+          event.target.complete();
+          if (this.paginaAtual >= this.totalPagina) {
+            this.infiniteScroll.disabled = true;
+          }
+        });
+      } else {
         event.target.complete();
-
         if (this.paginaAtual >= this.totalPagina) {
           this.infiniteScroll.disabled = true;
         }
-      })
+      }
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   }
 
   async getPedidosEmAberto(page: number) {
-    this.pedidoLista.getPedidosEmAberto(page).then((result: any) => {
-      console.log(result)
+    if (page == 1) {
+      this.lastPage = false;
+    }
+    await this.pedidoLista.getPedidosEmAberto(page).then((result: any) => {
+      console.log(result);
       this.resultGetPedidos = result;
       this.pedidos = result.content;
       this.totalPagina = this.resultGetPedidos.totalPages;
+      this.paginaAtual = page + 1;
+      this.lastPage = this.resultGetPedidos.last;
       if (this.pedidos.length == 0) {
         console.log("Nenhum pedido em aberto")
         this.pedidos = null;
       }
-      console.log(this.pedidos)
+      console.log(this.pedidos);
       this.showSkeleton = false;
     }), (error: any) => {
-      this.common.showAlert(error.title, error.detail);
-      console.log(error)
+      this.pedidoLista.showError(error);
     }
   }
 
@@ -97,9 +108,8 @@ export class PedidoAbertoPage implements OnInit {
   }
 
   closeSlide(itemSlide: IonItemSliding) {
-    itemSlide.close()
+    itemSlide.close();
   }
-
 
   verProdutosPedido(pedido: any) {
     let navigationExtras: NavigationExtras = {
@@ -108,7 +118,7 @@ export class PedidoAbertoPage implements OnInit {
       },
       skipLocationChange: true
     };
-    this.navControl.navigateForward(["/pedido-resumo"], navigationExtras)
+    this.navControl.navigateForward(["/pedido-resumo"], navigationExtras);
   }
 
   async apagarPedido(pedido: any) {
@@ -126,7 +136,6 @@ export class PedidoAbertoPage implements OnInit {
           text: "APAGAR",
           handler: () => {
             this.removePedido(pedido.numpedido);
-            this.getPedidosEmAberto(1)
           }
         }
       ]
@@ -138,27 +147,18 @@ export class PedidoAbertoPage implements OnInit {
     // this.common.showLoader()
     let link: string = ENV.WS_VENDAS + API_URL + "PedidoVenda/" + localStorage.getItem("empresa") + "/" + pedidoId;
 
-    this.baseService.post(link, {})
-      .then((result: any) => {
-        console.log(result)
-        this.common.showToast(result.msg)
-        this.getPedidosEmAberto(1)
-      })
-      .catch(error => {
-        this.common.loading.dismiss()
-        try {
-          this.common.showAlert(error.json().title, error.json().detail)
-        } catch (err) {
-          console.log(err);
-        }
-      })
+    this.baseService.post(link, {}).then((result: any) => {
+      console.log(result);
+      this.common.showToast(result.msg);
+      this.getPedidosEmAberto(1);
+    }, (error) => {
+      this.common.loading.dismiss();
+      this.pedidoLista.showError(error);
+    });
   }
 
   alterarPedido(pedido: any) {
 
   }
-
-
-
 
 }

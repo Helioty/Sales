@@ -27,6 +27,7 @@ export class PedidoFinalizadoPage implements OnInit {
 
   public paginaAtual: number = 1;
   public totalPagina: number = 0;
+  public lastPage: boolean = false;
 
   constructor(
     public baseService: BaseService,
@@ -46,7 +47,7 @@ export class PedidoFinalizadoPage implements OnInit {
 
   ionViewDidEnter() {
     this.showSkeleton = true;
-    this.getPedidosFinalizados(1)
+    this.getPedidosFinalizados(1);
   }
 
   async doRefresh(event: any) {
@@ -62,32 +63,44 @@ export class PedidoFinalizadoPage implements OnInit {
 
   async doInfinite(event: any) {
     try {
-      await this.getPedidosFinalizados(this.paginaAtual).then(res => {
+      if (!this.lastPage) {
+        await this.getPedidosFinalizados(this.paginaAtual).then(res => {
+          event.target.complete();
+          if (this.paginaAtual >= this.totalPagina) {
+            this.infiniteScroll.disabled = true;
+          }
+        });
+      }
+      else {
         event.target.complete();
-
         if (this.paginaAtual >= this.totalPagina) {
           this.infiniteScroll.disabled = true;
         }
-      })
+      }
     } catch (error) {
       console.log(error)
     }
   }
 
   async getPedidosFinalizados(page: number) {
-    this.pedidoLista.getPedidosFinalizados(page).then((result: any) => {
-      console.log(result)
+    if (page == 1) {
+      this.lastPage = false;
+    }
+    await this.pedidoLista.getPedidosFinalizados(page).then((result: any) => {
+      console.log(result);
       this.resultGetPedidos = result;
       this.pedidos = result.content;
       this.totalPagina = this.resultGetPedidos.totalPages;
+      this.paginaAtual = page + 1;
+      this.lastPage = this.resultGetPedidos.last;
       if (this.pedidos.length == 0) {
         console.log("Nenhum pedido em finalizado")
         this.pedidos = null;
       }
-      console.log(this.pedidos)
+      console.log(this.pedidos);
       this.showSkeleton = false;
     }), (error: any) => {
-      console.log(error)
+      this.pedidoLista.showError(error);
     }
   }
 
@@ -96,7 +109,7 @@ export class PedidoFinalizadoPage implements OnInit {
   }
 
   closeSlide(itemSlide: IonItemSliding) {
-    itemSlide.close()
+    itemSlide.close();
   }
 
   verProdutosPedido(pedido: any) {
@@ -106,7 +119,7 @@ export class PedidoFinalizadoPage implements OnInit {
       },
       skipLocationChange: true
     };
-    this.navControl.navigateForward(["/pedido-resumo"], navigationExtras)
+    this.navControl.navigateForward(["/pedido-resumo"], navigationExtras);
   }
 
   async apagarPedido(pedido: any) {
@@ -124,7 +137,6 @@ export class PedidoFinalizadoPage implements OnInit {
           text: "APAGAR",
           handler: () => {
             this.removePedido(pedido.numpedido);
-            this.getPedidosFinalizados(1)
           }
         }
       ]
@@ -136,24 +148,18 @@ export class PedidoFinalizadoPage implements OnInit {
     // this.common.showLoader()
     let link: string = ENV.WS_VENDAS + API_URL + "PedidoVenda/" + localStorage.getItem("empresa") + "/" + pedidoId;
 
-    this.baseService.post(link, {})
-      .then((result: any) => {
-        console.log(result)
-        this.common.showToast(result.msg)
-        this.getPedidosFinalizados(1)
-      })
-      .catch(error => {
-        this.common.loading.dismiss()
-        try {
-          this.common.showAlert(error.json().title, error.json().detail)
-        } catch (err) {
-          console.log(err);
-        }
-      })
+    this.baseService.post(link, {}).then((result: any) => {
+      console.log(result);
+      this.common.showToast(result.msg);
+      this.getPedidosFinalizados(1);
+    }, (error) => {
+      this.common.loading.dismiss();
+      this.pedidoLista.showError(error);
+    });
   }
 
   alterarPedido(pedido: any) {
 
   }
-  
+
 }

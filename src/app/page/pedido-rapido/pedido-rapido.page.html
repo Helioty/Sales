@@ -1,8 +1,9 @@
 <ion-header>
-  <ion-toolbar color="fc">
+  <ion-toolbar color="primary">
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
+
     <ion-title>Pedido Rapido</ion-title>
   </ion-toolbar>
 </ion-header>
@@ -10,63 +11,49 @@
 <ion-content>
   <input id="scanner" hideKeyboard class="scanner" [(ngModel)]="valorScanner" (keyup.enter)="scaneado($event)">
 
-  <ion-list lines="none" class="listaProdutos">
-    <ion-item-sliding class="produto ion-no-padding ion-align-items-stretch" *ngFor="let item of itens; let i = index">
-      <!-- <ion-item-options side="start">
-        <ion-item-option color="warning">
-          <ion-icon slot="top" name="information-circle" size="large"></ion-icon>
-          DETALHES
-        </ion-item-option>
-      </ion-item-options> -->
+  <ion-button (click)="addItem('20111070')"> teste do pedido rapido</ion-button>
+  <ion-list lines="none" class="listaProdutos" *ngIf="itens.length > 0">
+    <ion-item lines="none" class="produto" *ngFor="let item of itens; let i = index">
+      <ion-thumbnail slot="start">
+        <ion-img src="data:image/jpeg;base64,{{item?.imagem}}"></ion-img>
+      </ion-thumbnail>
 
-      <ion-item lines="none" class="ion-no-padding">
+      <ion-grid>
         <ion-row class="produtoRow">
-          <ion-col size="2.5" class="produtoImage ion-align-items-center">
-            <img src="assets/imagens/02-login/idcliente.png" />
-          </ion-col>
-
-          <ion-col size="6.5" class="produtoInformacao">
+          <ion-col size="8" class="produtoInformacao">
             <ion-row class="produtoDescri">
-              {{ item.nome }}
+              {{ item.idProduto }} - {{ item.descricao }}
             </ion-row>
 
             <ion-row class="produtoPreco">
-              R$ {{ item.preco*item.qtd }}
+            {{ item.prcTotal | formatarString: 'VALOR' }}
             </ion-row>
 
-            <ion-row class="produtoPrecoUnidade" *ngIf="item.qtd > 1">
-              R$ {{ item.preco }} cada
+            <ion-row class="produtoPrecoUnidade" *ngIf="item.qtdTotal > 1">
+              {{ item.prcUnitario | formatarString: 'VALOR' }} cada
             </ion-row>
-
           </ion-col>
 
-          <ion-col size="3" class="produtoQuantidade">
+          <ion-col size="4" class="produtoQuantidade">
             <ion-row class="quantidadeTop ion-justify-content-center ion-align-items-center">
-              <ion-button expand="full" fill="clear" color="dark" class="ion-no-margin" (click)="add(i)">
-                <ion-icon name="arrow-up" mode="ios" size="large"></ion-icon>
+              <ion-button expand="full" fill="clear" color="dark" class="ion-no-margin">
+                <ion-icon slot="icon-only" size="large" name="arrow-up"></ion-icon>
               </ion-button>
             </ion-row>
 
             <ion-row class="quantidadeCenter ion-justify-content-center ion-align-items-center">
-              {{ item.qtd }}
+              {{ item.qtdTotal }}
             </ion-row>
 
             <ion-row class="quantidadeBottom ion-justify-content-center ion-align-items-center">
-              <ion-button expand="full" fill="clear" color="dark" class="ion-no-margin" (click)="rm(i)">
-                <ion-icon name="trash-bin" mode="ios" size="large" slot="icon-only"></ion-icon>
+              <ion-button expand="full" fill="clear" color="dark" class="ion-no-margin">
+                <ion-icon slot="icon-only" size="large" name="trash-bin-outline"></ion-icon>
               </ion-button>
             </ion-row>
           </ion-col>
         </ion-row>
-      </ion-item>
-
-      <!-- <ion-item-options side="end">
-        <ion-item-option color="danger">
-          <ion-icon slot="top" name="trash" size="large"></ion-icon>
-          REMOVER
-        </ion-item-option>
-      </ion-item-options> -->
-    </ion-item-sliding>
+      </ion-grid>
+    </ion-item>
   </ion-list>
 
 </ion-content>
