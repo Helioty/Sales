@@ -11,7 +11,24 @@
 <ion-content>
   <input id="scanner" hideKeyboard class="scanner" [(ngModel)]="valorScanner" (keyup.enter)="scaneado($event)">
 
-  <ion-button (click)="addItem('20111070')"> teste do pedido rapido</ion-button>
+  <ion-grid *ngIf="itens.length == 0" class="noItens">
+    <ion-row class="topHeading">
+      <ion-col>
+        <h3>Seus produtos selecionados vão ficar aqui...</h3>
+      </ion-col>
+    </ion-row>
+    <ion-row class="noImg">
+      <ion-col>
+        <img src="assets/images/13-pedido_rapido/pedido-rapido.png" />
+      </ion-col>
+    </ion-row>
+    <ion-row class="bottomHeading">
+      <ion-col>
+        <h3>Sem resultados para exibir...</h3>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
   <ion-list lines="none" class="listaProdutos" *ngIf="itens.length > 0">
     <ion-item lines="none" class="produto" *ngFor="let item of itens; let i = index">
       <ion-thumbnail slot="start">
@@ -26,7 +43,7 @@
             </ion-row>
 
             <ion-row class="produtoPreco">
-            {{ item.prcTotal | formatarString: 'VALOR' }}
+              {{ item.prcTotal | formatarString: 'VALOR' }}
             </ion-row>
 
             <ion-row class="produtoPrecoUnidade" *ngIf="item.qtdTotal > 1">

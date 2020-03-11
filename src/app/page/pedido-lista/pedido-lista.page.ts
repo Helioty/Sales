@@ -44,20 +44,28 @@ export class PedidoListaPage implements OnInit {
   }
 
   async addNovoPedido() {
-    try {
-      this.disableButton = true;
-      if (this.platform.is("ios") || this.platform.is("android")) {
-        // by Ryuge 03/09/2019
-        this.pedidoService.limpaDadosPedido();
-        this.navControl.navigateForward('/pedido-retirada')
-      } else {
-        this.pedidoService.limpaDadosPedido();
-        this.navControl.navigateForward('/pedido-retirada')
-      }
-
-    } catch (error) {
-      this.disableButton = false;
-    }
+    this.pedidoService.limpaDadosPedido();
+    await this.common.showLoaderCustom('Criando Pedido!');
+    await this.pedidoService.criarPedido().then(() => {
+      this.navControl.navigateForward('/pedido-retirada');
+      this.common.loading.dismiss();
+    }, (error) => {
+      console.log(error);
+      this.common.loading.dismiss();
+    });
+    // try {
+    //   this.disableButton = true;
+    //   if (this.platform.is("ios") || this.platform.is("android")) {
+    //     // by Ryuge 03/09/2019
+    //     this.pedidoService.limpaDadosPedido();
+    //     this.navControl.navigateForward('/pedido-retirada')
+    //   } else {
+    //     this.pedidoService.limpaDadosPedido();
+    //     this.navControl.navigateForward('/pedido-retirada')
+    //   }
+    // } catch (error) {
+    //   this.disableButton = false;
+    // }
   }
 
 

@@ -73,7 +73,7 @@
               </ion-col>
 
               <ion-col size="6">
-                <ion-card [routerLink]="['/pedido-rapido']" routerDirection="forward">
+                <ion-card [routerLink]="['/pedido-rapido']" routerDirection="forward" [disabled]="pedidoService.tipoRetirada != 'IMEDIATA'">
                   <ion-card-header>
                     <ion-button disabled="true" fill="clear" style="opacity: 1 !important;">
                       <ion-icon slot="icon-only" name="speedometer-outline"></ion-icon>

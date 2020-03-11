@@ -39,7 +39,7 @@ export class PedidoService {
   public numPedido: string = '0';
   public digitoPedido: string;
   public pedidoHeader: any;
-  public tipoRetirada: any;
+  public tipoRetirada: string;
   public tipoDocumento: any;
   public qtdItensSacola: number = 0;
 
@@ -86,20 +86,21 @@ export class PedidoService {
 
 
   // by Hélio 06/02/2020
-  public async criarPedido() {
-    let link: string = ENV.WS_VENDAS + API_URL + 'PedidoVenda/' + localStorage.getItem('empresa') + '/criar';
-    return await this.baseService.post(link, {}).then((result: any) => {
-      this.pedidoHeader = result;
-      console.log('NOVO PEDIDO');
-      console.log(this.pedidoHeader);
-
-      this.numPedido = this.pedidoHeader.numpedido;
-      this.digitoPedido = this.pedidoHeader.digito;
-    }, (error: any) => {
-      this.navControl.pop();
-      this.showError(error);
-    })
-
+  public criarPedido() {
+    const link: string = ENV.WS_VENDAS + API_URL + 'PedidoVenda/' + localStorage.getItem('empresa') + '/criar';
+    return new Promise((resolve, reject) => {
+      this.baseService.post(link, {}).then((result: any) => {
+        this.pedidoHeader = result;
+        this.numPedido = this.pedidoHeader.numpedido;
+        this.digitoPedido = this.pedidoHeader.digito;
+        console.log('NOVO PEDIDO');
+        console.log(this.pedidoHeader);
+        resolve();
+      }, (error: any) => {
+        this.showError(error);
+        reject();
+      })
+    });
   }
 
   // edit by Helio 10/03/2020
@@ -188,10 +189,12 @@ export class PedidoService {
           if (this.qtdItensSacola == 0) {
             this.apagarPedido(this.numPedido).then(() => {
               this.navControl.navigateRoot('/pedido-lista');
+              console.clear();
             });
           } else {
             this.limpaDadosPedido();
             this.navControl.navigateRoot('/pedido-lista');
+            console.clear();
           }
         }
       }]
@@ -211,7 +214,7 @@ export class PedidoService {
   }
 
   // edit by Helio 10/03/2020
-  public async getItemPedido() {
+  public getItemPedido() {
     const link: string = ENV.WS_VENDAS + API_URL + 'PedidoVendaItem/' + localStorage.getItem('empresa') + '/' + this.numPedido + '/itens';
 
     return new Promise((resolve) => {
@@ -224,17 +227,16 @@ export class PedidoService {
   }
 
   // by Helio 10/03/2020
-  async addFast(body: PedidoItens) {
+  public addFast(body: PedidoItens) {
     const link: string = ENV.WS_VENDAS + API_URL + 'PedidoVendaItem/' + localStorage.getItem('empresa') + '/' + this.numPedido + '/addfast';
 
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       this.baseService.post(link, body).then((result: any) => {
         this.pedidoHeader = result.pedido;
         this.qtdItensSacola = result.items.content.length;
         resolve(result.items);
       }, (error) => {
         this.showError(error);
-        reject(error);
       });
     });
   }

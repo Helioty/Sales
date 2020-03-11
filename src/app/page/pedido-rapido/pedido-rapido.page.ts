@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { PedidoService } from 'src/app/services/pedido.service';
 import { NavController, Platform } from '@ionic/angular';
 import { CommonService } from 'src/app/services/common.service';
@@ -11,31 +11,13 @@ import { PedidoItens, Retiradas } from 'src/app/class/pedido';
 })
 export class PedidoRapidoPage implements OnInit {
 
+  @ViewChild('input', { static: true }) inputScanner: HTMLInputElement;
+
   public taskScanner: any;
   public valorScanner: string;
   public focusStatus: boolean = true;
 
-  public itens = [{
-    nome: 'TV',
-    qtd: 2,
-    preco: 1999
-  }, {
-    nome: 'Geladeira',
-    qtd: 1,
-    preco: 1499
-  }, {
-    nome: 'Furadeira',
-    qtd: 1,
-    preco: 199
-  }, {
-    nome: 'Cama',
-    qtd: 2,
-    preco: 259
-  }, {
-    nome: 'Ventilador',
-    qtd: 3,
-    preco: 119
-  }]
+  public itens: any[] = [];
 
   public pedidoItens: PedidoItens;
   public retiradas: Retiradas;
@@ -62,6 +44,7 @@ export class PedidoRapidoPage implements OnInit {
 
   ionViewWillEnter() {
     this.focusOn();
+    console.log("WillEnter Rapido");
     this.common.goToFullScreen();
   }
 
@@ -97,6 +80,7 @@ export class PedidoRapidoPage implements OnInit {
 
   focusPause() {
     this.focusStatus = false;
+    document.getElementById("scanner").blur();
   }
 
   // Encerra o loop de foco no input
@@ -127,7 +111,7 @@ export class PedidoRapidoPage implements OnInit {
 
   // by Ryuge
   // edit by Helio 10/03/2020
-  async addItem(codigo: string) {
+  addItem(codigo: string) {
     // by Ryuge 27/11/2019 - Não permitir gravar item com pedido = '0';
     if (this.pedidoService.numPedido != '0' || this.pedidoService.numPedido != undefined) {
       let tipo = this.pedidoService.codigoTipoRetirada;
@@ -142,11 +126,11 @@ export class PedidoRapidoPage implements OnInit {
       this.pedidoItens.prcUnitario = 0;
       this.pedidoItens.prcTotal = 0;
 
-      await this.adicionarSacola(tipo, valor, codigo);
+      this.adicionarSacola(tipo, valor, codigo);
     }
   }
 
-  async adicionarSacola(tipo: string, valor: number, codigo: string) {
+  adicionarSacola(tipo: string, valor: any, codigo: string) {
     let aRetiradas: any[] = [];
     try {
       this.retiradas = new Retiradas();
@@ -154,7 +138,7 @@ export class PedidoRapidoPage implements OnInit {
       this.retiradas.idDeposito = 8;
       this.retiradas.tipoRetirada = parseInt(tipo);
       this.retiradas.qtd = 1;
-      this.retiradas.precoUnitario = valor;
+      this.retiradas.precoUnitario = parseFloat(valor);
       //add array
       aRetiradas.push(this.retiradas);
 
@@ -171,7 +155,7 @@ export class PedidoRapidoPage implements OnInit {
         this.numRequest += 1;
         if (this.numRequest <= this.maxRequest) {
           if (this.pedidoItens.retiradas != [] && this.pedidoItens.idProduto != null || this.pedidoItens.idProduto != '') {
-            await this.addItemPedido(this.pedidoItens).then(() => {
+            this.addItemPedido(this.pedidoItens).then(() => {
               // this.retiradas = undefined;
             });
           }
@@ -183,7 +167,7 @@ export class PedidoRapidoPage implements OnInit {
         this.numRequest = 0;
         this.codProdRequest = codigo;
         if (this.pedidoItens.retiradas != [] && this.pedidoItens.idProduto != null || this.pedidoItens.idProduto != '') {
-          await this.addItemPedido(this.pedidoItens).then(() => {
+          this.addItemPedido(this.pedidoItens).then(() => {
             // this.retiradas = undefined;
           });
         }
@@ -212,13 +196,10 @@ export class PedidoRapidoPage implements OnInit {
   // by Ryuge
   // edit by Helio 10/03/2020
   async addItemPedido(body: PedidoItens) {
-    alert("uhu")
     await this.pedidoService.addFast(body).then((result: any) => {
       this.itens = result.content;
     }, (error) => {
       console.log(error);
-      // this.pedidoItens = undefined;
-      // this.retiradas = undefined;
     });
 
     // this.commonServices.ItensPedidoAdd = result.pedido; // cabeçalho dp pedido

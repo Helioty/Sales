@@ -23,8 +23,8 @@ export class PedidoRetiradaPage implements OnInit {
     public platform: Platform,
   ) { }
 
-  async ngOnInit() {
-    await this.pedidoService.criarPedido();
+  ngOnInit() {
+    // await this.pedidoService.criarPedido();
   }
 
   ionViewWillEnter() {

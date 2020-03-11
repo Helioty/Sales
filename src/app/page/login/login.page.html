@@ -5,7 +5,7 @@
 
     <ion-row class="ion-justify-content-center ion-padding-top" *ngIf="!emFoco" (dblclick)="showVersion()">
       <ion-col size-xs="8" size-sm="8" size-md="7" size-lg="6" size-xl="5" class="ion-no-padding">
-        <img class="imgHeader" src="/assets/imagens/01-logo/logo_branca.png" />
+        <img class="imgHeader" src="/assets/images/01-logo/logo_branca.png" />
       </ion-col>
     </ion-row>
 
@@ -14,7 +14,7 @@
 
         <ion-row class="userImgRow ion-margin-top ion-justify-content-center" *ngIf="!emFoco">
           <ion-col *ngIf="!isLoggedIn" size="9" class="ion-no-padding ion-text-center">
-            <img src="assets/imagens/02-login/idcliente.png" />
+            <img src="assets/images/02-login/idcliente.png" />
             <h4>Login</h4>
           </ion-col>
           <ion-col *ngIf="isLoggedIn" size="9" class="ion-no-padding ion-text-center">
@@ -23,7 +23,7 @@
             </div>
 
             <div *ngIf="noPhoto">
-              <img src="assets/imagens/02-login/idcliente.png" />
+              <img src="assets/images/02-login/idcliente.png" />
             </div>
 
             <h4>{{ usuarioLogado }}</h4>
@@ -32,7 +32,7 @@
 
         <ion-row class="inputField ion-align-items-center" *ngIf="!isLoggedIn">
           <ion-col size="2" class="ion-text-center ion-no-padding" style="font-size: 30px; color: #fff">
-            <!-- <img src="assets/imagens/02-login/user.png"> -->
+            <!-- <img src="assets/images/02-login/user.png"> -->
             <ion-icon name="person"></ion-icon>
           </ion-col>
 
@@ -44,7 +44,7 @@
 
         <ion-row class="inputField ion-align-items-center ion-margin-top">
           <ion-col size="2" class="ion-text-center ion-no-padding" style="font-size: 30px; color: #fff">
-            <!-- <img src="assets/imagens/02-login/lock.png"> -->
+            <!-- <img src="assets/images/02-login/lock.png"> -->
             <ion-icon name="lock-closed"></ion-icon>
           </ion-col>
 
