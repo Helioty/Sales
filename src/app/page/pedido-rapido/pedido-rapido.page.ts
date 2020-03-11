@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { PedidoService } from 'src/app/services/pedido.service';
-import { NavController, Platform } from '@ionic/angular';
+import { NavController, Platform, AlertController } from '@ionic/angular';
 import { CommonService } from 'src/app/services/common.service';
 import { PedidoItens, Retiradas } from 'src/app/class/pedido';
 
@@ -31,6 +31,7 @@ export class PedidoRapidoPage implements OnInit {
   constructor(
     public common: CommonService,
     public pedidoService: PedidoService,
+    private alertCtrl: AlertController,
     private navControl: NavController,
     private platform: Platform,
   ) { }
@@ -198,6 +199,7 @@ export class PedidoRapidoPage implements OnInit {
   async addItemPedido(body: PedidoItens) {
     await this.pedidoService.addFast(body).then((result: any) => {
       this.itens = result.content;
+      console.log(result);
     }, (error) => {
       console.log(error);
     });
@@ -219,6 +221,38 @@ export class PedidoRapidoPage implements OnInit {
     // this.commonServices.showAlert2('TEMPO PROCESSADO',sec2 );
     // }
 
+  }
+
+
+  // by Hélio 11/03/2020
+  async removerProduto(produto: any) {
+    const alert = await this.alertCtrl.create({
+      header: 'Remover produto',
+      message: 'Tem certeza que deseja remover o produto ' + produto.descricao + ' do pedido?',
+      buttons: [{
+        text: 'CANCELAR',
+        role: 'cancel'
+      }, {
+        text: 'REMOVER',
+        handler: () => {
+          this.deleteItemPedido(produto.idProduto);
+        }
+      }]
+    });
+    alert.onDidDismiss().finally(() => { this.focusPlay() });
+    await alert.present().then(()=>{
+      this.focusPause();
+    });
+  }
+
+  async deleteItemPedido(codigoProduto: string) {
+    await this.pedidoService.removeItemPedido(codigoProduto).then((result: any) => {
+      this.common.showToast(result.msg);
+    });
+    await this.pedidoService.getItemPedido().then((result: any) => {
+      this.itens = result.content;
+      console.log(result);
+    });
   }
 
 }

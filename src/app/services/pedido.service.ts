@@ -93,6 +93,7 @@ export class PedidoService {
         this.pedidoHeader = result;
         this.numPedido = this.pedidoHeader.numpedido;
         this.digitoPedido = this.pedidoHeader.digito;
+        this.tipoRetirada = this.pedidoHeader.tipoEntrega;
         console.log('NOVO PEDIDO');
         console.log(this.pedidoHeader);
         resolve();
@@ -123,6 +124,23 @@ export class PedidoService {
     table.value = tableValor;
     aResult.push(table);
     return aResult
+  }
+
+  // by Hélio 11/03/2020
+  public async alterarTipoRetirada(retirada: string) {
+    if (retirada != this.codigoTipoRetirada) {
+      let aResult: any = await this.atualizaPedido("entrega", this.opcaoRetirada[retirada]);
+
+      const link: string = ENV.WS_VENDAS + API_URL + "PedidoVenda/update/" + localStorage.getItem("empresa") + "/" + this.numPedido;
+      return new Promise((resolve, reject) => {
+        this.baseService.post(link, aResult).then(() => {
+          resolve();
+        }, (error: any) => {
+          this.showError(error);
+          reject();
+        });
+      });
+    }
   }
 
   // alterado por Nicollas Bastos em 25/09/2018
@@ -235,6 +253,19 @@ export class PedidoService {
         this.pedidoHeader = result.pedido;
         this.qtdItensSacola = result.items.content.length;
         resolve(result.items);
+      }, (error) => {
+        this.showError(error);
+      });
+    });
+  }
+
+  // by Helio 11/03/2020
+  public removeItemPedido(codigoProduto: string) {
+    const link: string = ENV.WS_VENDAS + API_URL + 'PedidoVendaItem/' + localStorage.getItem('empresa') + '/' + this.numPedido + '/' + codigoProduto;
+
+    return new Promise((resolve) => {
+      this.baseService.post(link, {}).then((result: any) => {
+        resolve(result);
       }, (error) => {
         this.showError(error);
       });

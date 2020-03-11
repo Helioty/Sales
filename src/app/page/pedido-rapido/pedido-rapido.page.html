@@ -11,6 +11,8 @@
 <ion-content>
   <input id="scanner" hideKeyboard class="scanner" [(ngModel)]="valorScanner" (keyup.enter)="scaneado($event)">
 
+  <ion-button (click)="addItem('40464550')">teste de pedido rapido</ion-button>
+
   <ion-grid *ngIf="itens.length == 0" class="noItens">
     <ion-row class="topHeading">
       <ion-col>
@@ -63,7 +65,7 @@
             </ion-row>
 
             <ion-row class="quantidadeBottom ion-justify-content-center ion-align-items-center">
-              <ion-button expand="full" fill="clear" color="dark" class="ion-no-margin">
+              <ion-button expand="full" fill="clear" color="dark" class="ion-no-margin" (click)="removerProduto(item)">
                 <ion-icon slot="icon-only" size="large" name="trash-bin-outline"></ion-icon>
               </ion-button>
             </ion-row>

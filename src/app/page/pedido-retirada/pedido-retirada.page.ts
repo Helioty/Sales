@@ -24,7 +24,7 @@ export class PedidoRetiradaPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    // await this.pedidoService.criarPedido();
+
   }
 
   ionViewWillEnter() {
@@ -42,25 +42,30 @@ export class PedidoRetiradaPage implements OnInit {
     this.pedidoService.codigoTipoRetirada = tipoRetirada;
     this.pedidoService.tipoRetirada = this.pedidoService.opcaoRetirada[tipoRetirada];
 
-    // by Ryuge 14/11/2019
-    if (this.pedidoService.tipoRetirada == "ENTREGA") {
-      let navigationExtras: NavigationExtras = {
-        queryParams: {
-          paginaSeguinte: 'pedido-atalhos',
-          paginaAnterior: 'pedido-retirada'
-        }
-      };
-      this.navControl.navigateForward(["/cliente"], navigationExtras);
-    }
-    else {
-      let navigationExtras: NavigationExtras = {
-        queryParams: {
-          paginaSeguinte: '',
-          paginaAnterior: 'pedido-retirada'
-        }
-      };
-      this.navControl.navigateRoot(["/pedido-atalhos"], navigationExtras);
-    }
+    await this.pedidoService.alterarTipoRetirada(tipoRetirada).then(() => {
+      // by Ryuge 14/11/2019
+      // edit by Helio 14/02/2020
+      if (this.pedidoService.tipoRetirada == "ENTREGA") {
+        let navigationExtras: NavigationExtras = {
+          queryParams: {
+            paginaSeguinte: 'pedido-atalhos',
+            paginaAnterior: 'pedido-retirada'
+          }
+        };
+        this.navControl.navigateForward(["/cliente"], navigationExtras);
+      }
+      else {
+        let navigationExtras: NavigationExtras = {
+          queryParams: {
+            paginaSeguinte: '',
+            paginaAnterior: 'pedido-retirada'
+          }
+        };
+        this.navControl.navigateRoot(["/pedido-atalhos"], navigationExtras);
+      }
+    }, (error) => {
+      console.log(error);
+    });
   }
 
 }

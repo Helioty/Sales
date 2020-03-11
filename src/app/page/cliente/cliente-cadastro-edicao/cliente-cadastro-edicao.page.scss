@@ -37,8 +37,9 @@ ion-content {
                             --inner-padding-end: 0 !important;
                             
                             ion-button {
-                                margin: 0 !important;
-                                height: 100% !important;
+                                margin: auto !important;
+                                margin-right: 5px !important;
+                                height: 75% !important;
                                 min-width: 50px !important;
 
                                 ion-icon {
