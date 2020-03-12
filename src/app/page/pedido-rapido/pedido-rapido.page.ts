@@ -58,7 +58,7 @@ export class PedidoRapidoPage implements OnInit {
   }
 
   ionViewDidLeave() {
-
+    console.clear();
   }
 
   // Cria o loop que da foco no input
@@ -156,21 +156,23 @@ export class PedidoRapidoPage implements OnInit {
         this.numRequest += 1;
         if (this.numRequest <= this.maxRequest) {
           if (this.pedidoItens.retiradas != [] && this.pedidoItens.idProduto != null || this.pedidoItens.idProduto != '') {
-            this.addItemPedido(this.pedidoItens).then(() => {
-              // this.retiradas = undefined;
-            });
+            this.addItemPedido(this.pedidoItens);
           }
         } else {
           this.common.showToast('Favor aguarde processamento...');
+          // by Helio - libera as requisições apos certo periodo
+          if (this.numRequest == this.maxRequest) {
+            setTimeout(() => {
+              this.numRequest = 0;
+            }, 2000);
+          }
         }
       }
       else {
         this.numRequest = 0;
         this.codProdRequest = codigo;
         if (this.pedidoItens.retiradas != [] && this.pedidoItens.idProduto != null || this.pedidoItens.idProduto != '') {
-          this.addItemPedido(this.pedidoItens).then(() => {
-            // this.retiradas = undefined;
-          });
+          this.addItemPedido(this.pedidoItens);
         }
       }
 
@@ -199,6 +201,9 @@ export class PedidoRapidoPage implements OnInit {
   async addItemPedido(body: PedidoItens) {
     await this.pedidoService.addFast(body).then((result: any) => {
       this.itens = result.content;
+      if (this.numRequest > 1) {
+        this.numRequest -= 1;
+      }
       console.log(result);
     }, (error) => {
       console.log(error);
@@ -206,20 +211,6 @@ export class PedidoRapidoPage implements OnInit {
 
     // this.commonServices.ItensPedidoAdd = result.pedido; // cabeçalho dp pedido
     // this.totalPedido = result.pedido.totpedido;
-    // this.exibeProduto = result.pedido.totpedido > 0;
-    // this.items = result.items.content;
-
-    // if (this.numRequest > 1) {
-    //   this.numRequest -= 1;
-    // }
-
-    // by ryuge 28/11/2018
-    // if (ENV.mode == 'Development') {
-    //   let sec1 = buscou_info_e_montou - pistolou
-    //   let sec2 = ((sec1 % 60000) / 1000);
-    //   this.TempoProc = sec2;
-    // this.commonServices.showAlert2('TEMPO PROCESSADO',sec2 );
-    // }
 
   }
 
@@ -240,7 +231,7 @@ export class PedidoRapidoPage implements OnInit {
       }]
     });
     alert.onDidDismiss().finally(() => { this.focusPlay() });
-    await alert.present().then(()=>{
+    await alert.present().then(() => {
       this.focusPause();
     });
   }

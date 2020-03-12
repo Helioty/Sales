@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { CommonService } from 'src/app/services/common.service';
+import { IonSearchbar } from '@ionic/angular';
 
 declare var google: any;
 
@@ -11,44 +12,48 @@ declare var google: any;
 })
 export class ConsultaCepPage implements OnInit {
 
-  @ViewChild("map", { static: false }) mapElement;
+  @ViewChild('mapElement', { static: false }) mapElement;
+  public map: any;
+  public start: string;
+  public end: string;
+
+  public latitude: any;
+  public longitude: any;
 
   public GoogleAutocomplete: any;
   public geocoder: any;
 
-  public map: any;
-  public start: string;
-  public end: string;
 
   public directionsService = new google.maps.DirectionsService();
   public directionsDisplay = new google.maps.DirectionsRenderer();
   public latLng: any;
 
+
+  @ViewChild("searchbar", { static: false }) searchbar: IonSearchbar;
+
   constructor(
     public common: CommonService,
-    public geolocation: Geolocation,
+    private geolocation: Geolocation,
   ) {
     this.GoogleAutocomplete = new google.maps.places.AutocompleteService();
     this.geocoder = new google.maps.Geocoder();
   }
 
   ngOnInit() {
-    this.latLng = new google.maps.LatLng(-8.1129892, -34.9126349);
-    this.map = new google.maps.Map(document.getElementById("map"), {
-      zoom: 15,
-      center: this.latLng,
-      disableDefaultUI: true
-    });
+
   }
 
   ionViewWillEnter() {
-    console.log("ionViewWillEnter")
-    this.common.goToFullScreen()
+    this.common.goToFullScreen();
+    this.map = new google.maps.Map(this.mapElement.nativeElement, {
+      center: { lat: -8.1129892, lng: -34.9126349 },
+      disableDefaultUI: true,
+      zoom: 15
+    });
   }
 
   ionViewDidEnter() {
-    console.log("ionViewDidEnter")
-    this.common.goToFullScreen()
+    this.common.goToFullScreen();
   }
 
 }

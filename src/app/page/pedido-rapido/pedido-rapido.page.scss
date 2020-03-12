@@ -97,6 +97,7 @@ ion-content {
                             --border-width: 0 !important;
                         }
                         .quantidadeTop {
+                            min-height: 40px !important;
                             height: 33% !important;
                         }
                         .quantidadeCenter {
@@ -108,6 +109,7 @@ ion-content {
                             height: 34% !important;
                         }
                         .quantidadeBottom {
+                            min-height: 40px !important;
                             height: 33% !important;
                         }
                     }
