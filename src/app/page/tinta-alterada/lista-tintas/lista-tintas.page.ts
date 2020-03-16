@@ -29,7 +29,7 @@ export class ListaTintasPage implements OnInit {
   }
 
   ionViewDidEnter() {
-    console.log("ionViewDidEnter")
+    console.log("ionViewDidEnter");
     this.common.goToFullScreen()
   }
 

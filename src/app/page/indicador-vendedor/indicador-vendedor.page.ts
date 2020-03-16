@@ -141,7 +141,7 @@ export class IndicadorVendedorPage implements OnInit {
             display: true
           }
         }
-      })
+      });
     }, 300);
 
   }

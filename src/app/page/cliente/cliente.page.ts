@@ -198,7 +198,7 @@ export class ClientePage implements OnInit {
   // Chamada de cliente.
   async getCliente(doc: string) {
     this.skeletonAni = true;
-    let link: string = ENV.WS_CRM + API_URL + "cliente/" + doc;
+    const link: string = ENV.WS_CRM + API_URL + "cliente/" + doc;
     await this.baseService.get(link).then((result: any) => {
       this.dados = result;
       console.log("DADOS DO CLIENTE")
@@ -252,7 +252,7 @@ export class ClientePage implements OnInit {
 
     // by Ryuge 17/09/2019
     if (this.dados.celulares.length > 0) {
-      let valor1: any = String(dados.celulares[0].numero);
+      const valor1: any = String(dados.celulares[0].numero);
 
       if (valor1.length > 8) {
         this.dadosShow.celular = this.common.formataFONE(dados.celulares[0].ddd + dados.celulares[0].numero);
@@ -264,7 +264,7 @@ export class ClientePage implements OnInit {
 
   async naoCliente() {
     if (this.pedidoService.clientSelected) {
-      let alert = await this.alertCtrl.create({
+      const alert = await this.alertCtrl.create({
         header: 'Remover cliente?',
         message: 'Deseja remover o cliente do pedido atual?',
         buttons: ["NÃO", {

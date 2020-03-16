@@ -90,12 +90,12 @@ export class PedidoListaPage implements OnInit {
   }
 
   async getPedidosEmAberto(page: number) {
-      let link: string = ENV.WS_VENDAS + API_URL + "PedidoVenda/list/" + localStorage.getItem("empresa") + "/abertos?page=" + page;
+      const link: string = ENV.WS_VENDAS + API_URL + "PedidoVenda/list/" + localStorage.getItem("empresa") + "/abertos?page=" + page;
       return await this.baseService.get(link);
   }
 
   async getPedidosFinalizados(page: number) {
-      let link: string = ENV.WS_VENDAS + API_URL + "PedidoVenda/list/" + localStorage.getItem("empresa") + "/faturados?page=" + page;
+      const link: string = ENV.WS_VENDAS + API_URL + "PedidoVenda/list/" + localStorage.getItem("empresa") + "/faturados?page=" + page;
       return await this.baseService.get(link);
   }
 
@@ -110,11 +110,9 @@ export class PedidoListaPage implements OnInit {
       } else {
         this.common.showAlert("Atenção!", JSON.stringify(error));
       }
-    }
-    else if (error.status == 503) {
+    } else if (error.status == 503) {
       this.common.showAlert('Atenção!', 'Sem serviço, entrar em contato com suporte.');
-    }
-    else {
+    } else {
       if (error.error.detail) {
         this.common.showAlert(error.error.title, error.error.detail);
       } else {

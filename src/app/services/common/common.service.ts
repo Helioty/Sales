@@ -47,8 +47,8 @@ export class CommonService {
   }
 
   async getVersionCode() {
-    let versionCode = await this.appVersion.getVersionCode();
-    let vCode = versionCode.toString();
+    const versionCode = await this.appVersion.getVersionCode();
+    const vCode = versionCode.toString();
     return vCode.replace(/^(\d{1})(\d)/, '$1.$2');
   }
 
@@ -86,7 +86,7 @@ export class CommonService {
 
   // Toast's --------------------------------------------------------------------------------------------------------
   async showToast(msg: string) {
-    let toast = await this.toastCtrl.create({
+    const toast = await this.toastCtrl.create({
       message: msg,
       duration: 2000,
       position: 'bottom',
@@ -137,37 +137,32 @@ export class CommonService {
   }
 
   public formataCPFNPJ(value: string): string {
-    value = value.replace(/\D/g, ''); //Remove tudo o que não é dígito
+    value = value.replace(/\D/g, ''); // Remove tudo o que não é dígito
 
     if (value.length === 11) {
       value = value.replace(/(\d{3})(\d)/, '$1.$2');
       value = value.replace(/(\d{3})(\d)/, '$1.$2');
       value = value.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
       return value;
-    } 
-    else if (value.length > 11) {
+    } else if (value.length > 11) {
       value = value.replace(/^(\d{2})(\d)/, '$1.$2');
       value = value.replace(/^(\d{2})\.(\d{3})(\d)/, '$1.$2.$3');
       value = value.replace(/\.(\d{3})(\d)/, '.$1/$2');
       value = value.replace(/(\d{4})(\d)/, '$1-$2');
       return value;
-    }
-    else if (value.length < 11 && value.length > 9) {
+    } else if (value.length < 11 && value.length > 9) {
       value = value.replace(/(\d{3})(\d)/, '$1.$2');
       value = value.replace(/(\d{3})(\d)/, '$1.$2');
       value = value.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
       return value;
-    }
-    else if (value.length > 6 && value.length <= 9) {
+    } else if (value.length > 6 && value.length <= 9) {
       value = value.replace(/(\d{3})(\d)/, '$1.$2');
       value = value.replace(/(\d{3})(\d)/, '$1.$2');
       return value;
-    }
-    else if (value.length > 3 && value.length <= 6) {
+    } else if (value.length > 3 && value.length <= 6) {
       value = value.replace(/^(\d{3})(\d)/, '$1.$2');
       return value;
-    }
-    else {
+    } else {
       return value;
     }
   }
@@ -175,14 +170,11 @@ export class CommonService {
   public formataFONE(value: string): string {
     if (value.length === 11) {
       value = value.replace(/^(\d{2})(\d{5})(\d{4})/, '($1) $2-$3');
-    }
-    else if (value.length < 11 && value.length > 6) {
+    } else if (value.length < 11 && value.length > 6) {
       value = value.replace(/^(\d{2})(\d{4})/, '($1) $2-');
-    }
-    else if (value.length <= 6 && value.length > 2) {
+    } else if (value.length <= 6 && value.length > 2) {
       value = value.replace(/^(\d{2})/, '($1) ');
-    }
-    else {
+    } else {
       value = value.replace(/^(\d{2})(\d{4})(\d{4})/, '($1) $2-$3');
     }
     return value;

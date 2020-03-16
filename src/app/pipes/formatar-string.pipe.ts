@@ -6,8 +6,8 @@ import { Pipe, PipeTransform } from "@angular/core";
 
 export class FormatarStringPipe implements PipeTransform {
   transform(value: any, ...args) {
-    let filter = args[0];
-    let mask: any = args[1];
+    const filter = args[0];
+    const mask: any = args[1];
 
     if (filter == "VALOR-PADRAO") {
       // return this.currencycomma(value);
@@ -31,19 +31,19 @@ export class FormatarStringPipe implements PipeTransform {
       value = value.toString();
 
       if (value.length === 11) {
-        value = value.replace(/\D/g, ""); //Remove tudo o que não é dígito
-        value = value.replace(/(\d{3})(\d)/, "$1.$2"); //Coloca um ponto entre o terceiro e o quarto dígitos
-        value = value.replace(/(\d{3})(\d)/, "$1.$2"); //Coloca um ponto entre o terceiro e o quarto dígitos
+        value = value.replace(/\D/g, ""); // Remove tudo o que não é dígito
+        value = value.replace(/(\d{3})(\d)/, "$1.$2"); // Coloca um ponto entre o terceiro e o quarto dígitos
+        value = value.replace(/(\d{3})(\d)/, "$1.$2"); // Coloca um ponto entre o terceiro e o quarto dígitos
         //de novo (para o segundo bloco de números)
-        value = value.replace(/(\d{3})(\d{1,2})$/, "$1-$2"); //Coloca um hífen entre o terceiro e o quarto dígitos
+        value = value.replace(/(\d{3})(\d{1,2})$/, "$1-$2"); // Coloca um hífen entre o terceiro e o quarto dígitos
         return value;
       }
       else {
-        value = value.replace(/\D/g, ""); //Remove tudo o que não é dígito
-        value = value.replace(/^(\d{2})(\d)/, "$1.$2"); //Coloca ponto entre o segundo e o terceiro dígitos
-        value = value.replace(/^(\d{2})\.(\d{3})(\d)/, "$1.$2.$3"); //Coloca ponto entre o quinto e o sexto dígitos
-        value = value.replace(/\.(\d{3})(\d)/, ".$1/$2"); //Coloca uma barra entre o oitavo e o nono dígitos
-        value = value.replace(/(\d{4})(\d)/, "$1-$2"); //Coloca um hífen depois do bloco de quatro dígitos
+        value = value.replace(/\D/g, ""); // Remove tudo o que não é dígito
+        value = value.replace(/^(\d{2})(\d)/, "$1.$2"); // Coloca ponto entre o segundo e o terceiro dígitos
+        value = value.replace(/^(\d{2})\.(\d{3})(\d)/, "$1.$2.$3"); // Coloca ponto entre o quinto e o sexto dígitos
+        value = value.replace(/\.(\d{3})(\d)/, ".$1/$2"); // Coloca uma barra entre o oitavo e o nono dígitos
+        value = value.replace(/(\d{4})(\d)/, "$1-$2"); // Coloca um hífen depois do bloco de quatro dígitos
         return value;
       }
     }
@@ -92,7 +92,7 @@ export class FormatarStringPipe implements PipeTransform {
   }
 
   private strlimited(str: string) {
-    var n = str.length;
+    const n = str.length;
     if (n > 20) {
       return str.substr(1, n - 30);
     }
@@ -106,8 +106,8 @@ export class FormatarStringPipe implements PipeTransform {
   }
 
   private StrFormatPipe(value, args: any) {
-    let tam = args.length - 1;
-    let zero = "0".repeat(tam);
+    const tam = args.length - 1;
+    const zero = "0".repeat(tam);
     value = zero + value;
     return value;
   }

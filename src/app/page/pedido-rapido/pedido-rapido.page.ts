@@ -95,7 +95,7 @@ export class PedidoRapidoPage implements OnInit {
     try {
       if (evento.target && evento.target.value.length >= 2) {
         this.focusPause();
-        let codigo: string = evento.target.value;
+        const codigo: string = evento.target.value;
 
         if (codigo.substring(0, 1) == "P") {
           this.pedidoService.setCardPedido(codigo);
@@ -115,8 +115,8 @@ export class PedidoRapidoPage implements OnInit {
   addItem(codigo: string) {
     // by Ryuge 27/11/2019 - Não permitir gravar item com pedido = '0';
     if (this.pedidoService.numPedido != '0' || this.pedidoService.numPedido != undefined) {
-      let tipo = this.pedidoService.codigoTipoRetirada;
-      let valor = 0;
+      const tipo = this.pedidoService.codigoTipoRetirada;
+      const valor = 0;
 
       this.pedidoItens = new PedidoItens(localStorage.getItem('empresa'), parseInt(this.pedidoService.numPedido));
       this.pedidoItens.idEmpresa = parseInt(localStorage.getItem('empresa'));
@@ -132,7 +132,7 @@ export class PedidoRapidoPage implements OnInit {
   }
 
   adicionarSacola(tipo: string, valor: any, codigo: string) {
-    let aRetiradas: any[] = [];
+    const aRetiradas: any[] = [];
     try {
       this.retiradas = new Retiradas();
       this.retiradas.empresaRetirada = parseInt(localStorage.getItem('empresa'));
@@ -140,7 +140,7 @@ export class PedidoRapidoPage implements OnInit {
       this.retiradas.tipoRetirada = parseInt(tipo);
       this.retiradas.qtd = 1;
       this.retiradas.precoUnitario = parseFloat(valor);
-      //add array
+      // add array
       aRetiradas.push(this.retiradas);
 
       console.log('this.retiradas');
@@ -167,8 +167,7 @@ export class PedidoRapidoPage implements OnInit {
             }, 2000);
           }
         }
-      }
-      else {
+      } else {
         this.numRequest = 0;
         this.codProdRequest = codigo;
         if (this.pedidoItens.retiradas != [] && this.pedidoItens.idProduto != null || this.pedidoItens.idProduto != '') {
@@ -178,15 +177,13 @@ export class PedidoRapidoPage implements OnInit {
 
 
     } catch (error) {
-      this.common.showAlertError("erro no adicionar sacola")
+      this.common.showAlertError("erro no adicionar sacola");
       // by Ryuge 28/11/2019
       if (error.status == 400) {
         // await this.showMessage(error.json().title, error.json().detail);
-      }
-      else if (error.status == 503) {
+      } else if (error.status == 503) {
         this.common.showAlert('Atenção!', 'Sem serviço, entrar em contato com suporte.');
-      }
-      else {
+      } else {
         if (error.error.detail) {
           this.common.showAlert(error.error.title, error.error.detail);
         } else {
@@ -230,7 +227,7 @@ export class PedidoRapidoPage implements OnInit {
         }
       }]
     });
-    alert.onDidDismiss().finally(() => { this.focusPlay() });
+    alert.onDidDismiss().finally(() => { this.focusPlay(); });
     await alert.present().then(() => {
       this.focusPause();
     });

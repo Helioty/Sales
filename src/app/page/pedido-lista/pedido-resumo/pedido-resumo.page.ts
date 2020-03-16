@@ -43,7 +43,7 @@ export class PedidoResumoPage implements OnInit {
       this.pedido = JSON.parse(params["pedido"]);
     });
     await this.separaDadosPedido();
-    console.log(this.pedido)
+    console.log(this.pedido);
   }
 
   ionViewDidEnter() {
@@ -56,10 +56,9 @@ export class PedidoResumoPage implements OnInit {
       this.cartaoPedido = "Sem Cartão";
     }
     if (this.pedido.cgccpf_cliente == null) {
-      this.docCliente = ""; 
+      this.docCliente = "";
       this.docTipo = "Cliente não selecionado.";
-    }
-    else {
+    } else {
       this.docCliente = this.pedido.cgccpf_cliente;
       if (!this.docCliente) {
         this.docCliente = "Sem Cliente";
@@ -87,19 +86,19 @@ export class PedidoResumoPage implements OnInit {
       // }
       // cabeçalho do pedido
       // item do pedido
-      let link: string = ENV.WS_VENDAS + API_URL + "PedidoVendaItem/" + localStorage.getItem("empresa") + "/" + nuPedido + "/itens";
+      const link: string = ENV.WS_VENDAS + API_URL + "PedidoVendaItem/" + localStorage.getItem("empresa") + "/" + nuPedido + "/itens";
       await this.baseService.get(link).then((result: any) => {
         console.log(result)
         this.pedidoItens = result.content;
-      })
+      });
 
       if (this.pedido.frete.valor > 0) {
         let enderecos: any;
-        let linkEndereco: string = ENV.WS_VENDAS + API_URL + "PedidoVenda/" + localStorage.getItem("empresa") + "/" + nuPedido + "/listEnderecos";
+        const linkEndereco: string = ENV.WS_VENDAS + API_URL + "PedidoVenda/" + localStorage.getItem("empresa") + "/" + nuPedido + "/listEnderecos";
         await this.baseService.get(linkEndereco).then((result: any) => {
           console.log(result)
           enderecos = result;
-        })
+        });
 
         if (enderecos.length > 0) {
           for (let end of enderecos) {

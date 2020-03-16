@@ -32,7 +32,7 @@ export class PedidoService {
   public codigoTipoRetirada: string;
 
   public ItensPedidoAdd: any;
-  public nomeCliente: String = '';
+  public nomeCliente: string = '';
 
 
   // PEDIDO EM MANUTENÇÃO
@@ -100,7 +100,7 @@ export class PedidoService {
       }, (error: any) => {
         this.showError(error);
         reject();
-      })
+      });
     });
   }
 
@@ -118,8 +118,8 @@ export class PedidoService {
 
   // by Hélio 06/02/2020
   private async atualizaPedido(tableName: any, tableValor: any) {
-    let aResult = [];
-    let table: PedidoTable = new PedidoTable();
+    const aResult = [];
+    const table: PedidoTable = new PedidoTable();
     table.name = tableName;
     table.value = tableValor;
     aResult.push(table);
@@ -129,7 +129,7 @@ export class PedidoService {
   // by Hélio 11/03/2020
   public async alterarTipoRetirada(retirada: string) {
     if (retirada != this.codigoTipoRetirada) {
-      let aResult: any = await this.atualizaPedido("entrega", this.opcaoRetirada[retirada]);
+      const aResult: any = await this.atualizaPedido("entrega", this.opcaoRetirada[retirada]);
 
       const link: string = ENV.WS_VENDAS + API_URL + "PedidoVenda/update/" + localStorage.getItem("empresa") + "/" + this.numPedido;
       return new Promise((resolve, reject) => {
@@ -146,7 +146,7 @@ export class PedidoService {
   // alterado por Nicollas Bastos em 25/09/2018
   // alterado por Hélio 06/02/2020
   public async setCardPedido(codCard: string) {
-    let aResult: any = await this.atualizaPedido("cartao_pedido", codCard);
+    const aResult: any = await this.atualizaPedido("cartao_pedido", codCard);
 
     const link: string = ENV.WS_VENDAS + API_URL + "PedidoVenda/update/" + localStorage.getItem("empresa") + "/" + this.numPedido;
     await this.baseService.post(link, aResult).then((result: any) => {
@@ -163,7 +163,7 @@ export class PedidoService {
 
   // by Hélio 11/02/2020
   public async adicionarCliente(cgccpf: string, dadosCli: any) {
-    let aResult: any = await this.atualizaPedido("cliente", cgccpf);
+    const aResult: any = await this.atualizaPedido("cliente", cgccpf);
 
     const link: string = ENV.WS_VENDAS + API_URL + "PedidoVenda/update/" + localStorage.getItem("empresa") + "/" + this.numPedido;
     await this.baseService.post(link, aResult).then((result: any) => {
@@ -183,7 +183,7 @@ export class PedidoService {
 
   // by Hélio 14/02/2020
   public async removerCliente() {
-    let aResult: any = await this.atualizaPedido("cliente", "");
+    const aResult: any = await this.atualizaPedido("cliente", "");
 
     const link: string = ENV.WS_VENDAS + API_URL + "PedidoVenda/update/" + localStorage.getItem("empresa") + "/" + this.numPedido;
     await this.baseService.post(link, aResult).then((result: any) => {
@@ -284,11 +284,9 @@ export class PedidoService {
       } else {
         this.common.showAlert("Atenção!", JSON.stringify(error));
       }
-    }
-    else if (error.status == 503) {
+    } else if (error.status == 503) {
       this.common.showAlert('Atenção!', 'Sem serviço, entrar em contato com suporte.');
-    }
-    else {
+    } else {
       if (error.error.detail) {
         this.common.showAlert(error.error.title, error.error.detail);
       } else {

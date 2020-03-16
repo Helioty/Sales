@@ -35,7 +35,7 @@ export class NewTMSPage implements OnInit {
   public opcaoSelecionada;
 
   public indexSeller: number;
-  
+
   constructor() { }
 
   ngOnInit() {
@@ -80,10 +80,10 @@ export class NewTMSPage implements OnInit {
 
   mee(A: any, I: any) {
     this.indexSeller = I;
-    console.log(this.teste)
-    console.log(this.opcaoSelecionada)
-    console.log(A)
-    console.log(this.dados[I])
+    console.log(this.teste);
+    console.log(this.opcaoSelecionada);
+    console.log(A);
+    console.log(this.dados[I]);
   }
 
 }

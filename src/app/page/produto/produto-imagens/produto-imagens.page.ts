@@ -10,7 +10,7 @@ export class ProdutoImagensPage implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    
+
   }
 
 }

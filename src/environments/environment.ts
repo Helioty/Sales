@@ -17,8 +17,7 @@ export const ENV: Environment = {
   WS_PUBLIC: 'https://publico.',
   WS_COMMONS: 'https://comum.',
   WS_TMS: 'https://tms.'
-
-}
+};
 
 /*
  * For easier debugging in development mode, you can import the following file

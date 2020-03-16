@@ -55,7 +55,7 @@ export class PedidoAbertoPage implements OnInit {
       this.paginaAtual = 1;
       await this.getPedidosEmAberto(this.paginaAtual).then(res => {
         event.target.complete();
-      })
+      });
     } catch (error) {
       console.log(error);
     }
@@ -93,14 +93,14 @@ export class PedidoAbertoPage implements OnInit {
       this.paginaAtual = page + 1;
       this.lastPage = this.resultGetPedidos.last;
       if (this.pedidos.length == 0) {
-        console.log("Nenhum pedido em aberto")
+        console.log("Nenhum pedido em aberto");
         this.pedidos = null;
       }
       console.log(this.pedidos);
       this.showSkeleton = false;
     }), (error: any) => {
       this.pedidoLista.showError(error);
-    }
+    };
   }
 
   openSlide(itemSlide: IonItemSliding) {
@@ -112,7 +112,7 @@ export class PedidoAbertoPage implements OnInit {
   }
 
   verProdutosPedido(pedido: any) {
-    let navigationExtras: NavigationExtras = {
+    const navigationExtras: NavigationExtras = {
       queryParams: {
         pedido: JSON.stringify(pedido)
       },
@@ -145,7 +145,7 @@ export class PedidoAbertoPage implements OnInit {
 
   async removePedido(pedidoId: any) {
     // this.common.showLoader()
-    let link: string = ENV.WS_VENDAS + API_URL + "PedidoVenda/" + localStorage.getItem("empresa") + "/" + pedidoId;
+    const link: string = ENV.WS_VENDAS + API_URL + "PedidoVenda/" + localStorage.getItem("empresa") + "/" + pedidoId;
 
     this.baseService.post(link, {}).then((result: any) => {
       console.log(result);

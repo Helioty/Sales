@@ -6,4 +6,4 @@ import { FormatarStringPipe } from './formatar-string.pipe';
 	imports: [],
 	exports: [FormatarStringPipe]
 })
-export class PipesModule {}
+export class PipesModule { }

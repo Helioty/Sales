@@ -55,9 +55,9 @@ export class PedidoFinalizadoPage implements OnInit {
       this.paginaAtual = 1;
       await this.getPedidosFinalizados(this.paginaAtual).then(res => {
         event.target.complete();
-      })
+      });
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   }
 
@@ -70,15 +70,14 @@ export class PedidoFinalizadoPage implements OnInit {
             this.infiniteScroll.disabled = true;
           }
         });
-      }
-      else {
+      } else {
         event.target.complete();
         if (this.paginaAtual >= this.totalPagina) {
           this.infiniteScroll.disabled = true;
         }
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   }
 
@@ -94,14 +93,14 @@ export class PedidoFinalizadoPage implements OnInit {
       this.paginaAtual = page + 1;
       this.lastPage = this.resultGetPedidos.last;
       if (this.pedidos.length == 0) {
-        console.log("Nenhum pedido em finalizado")
+        console.log("Nenhum pedido em finalizado");
         this.pedidos = null;
       }
       console.log(this.pedidos);
       this.showSkeleton = false;
     }), (error: any) => {
       this.pedidoLista.showError(error);
-    }
+    };
   }
 
   openSlide(itemSlide: IonItemSliding) {
@@ -113,7 +112,7 @@ export class PedidoFinalizadoPage implements OnInit {
   }
 
   verProdutosPedido(pedido: any) {
-    let navigationExtras: NavigationExtras = {
+    const navigationExtras: NavigationExtras = {
       queryParams: {
         pedido: JSON.stringify(pedido)
       },
@@ -146,7 +145,7 @@ export class PedidoFinalizadoPage implements OnInit {
 
   async removePedido(pedidoId: any) {
     // this.common.showLoader()
-    let link: string = ENV.WS_VENDAS + API_URL + "PedidoVenda/" + localStorage.getItem("empresa") + "/" + pedidoId;
+    const link: string = ENV.WS_VENDAS + API_URL + "PedidoVenda/" + localStorage.getItem("empresa") + "/" + pedidoId;
 
     this.baseService.post(link, {}).then((result: any) => {
       console.log(result);

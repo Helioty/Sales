@@ -16,7 +16,7 @@ export class TintaAlteradaPage implements OnInit {
   @ViewChild(IonContent, { static: true }) content: IonContent;
   @ViewChild(IonSlides, { static: true }) slides: IonSlides;
 
-  fors: any = [{a: 'cA', b: 'cA'}, {a: 'cB', b: 'cB'}, {a: 'cC', b: 'cC'}, {a: 'cA', b: 'cA'}, {a: 'cB', b: 'cB'}, {a: 'cC', b: 'cC'}, {a: 'cA', b: 'cA'}]
+  fors: any = [{ a: 'cA', b: 'cA' }, { a: 'cB', b: 'cB' }, { a: 'cC', b: 'cC' }, { a: 'cA', b: 'cA' }, { a: 'cB', b: 'cB' }, { a: 'cC', b: 'cC' }, { a: 'cA', b: 'cA' }]
 
   constructor(
     public common: CommonService,
@@ -28,28 +28,28 @@ export class TintaAlteradaPage implements OnInit {
   }
 
   ionViewWillEnter() {
-    console.log("ionViewWillEnter")
-    this.common.goToFullScreen()
+    console.log("ionViewWillEnter");
+    this.common.goToFullScreen();
   }
 
   ionViewDidEnter() {
-    console.log("ionViewDidEnter")
-    this.common.goToFullScreen()
+    console.log("ionViewDidEnter");
+    this.common.goToFullScreen();
   }
 
   mudaSlide(event: any) {
-    this.slides.lockSwipes(false)
-    this.slides.slideTo(event.detail.value)
-    this.slides.lockSwipes(true)
+    this.slides.lockSwipes(false);
+    this.slides.slideTo(event.detail.value);
+    this.slides.lockSwipes(true);
   }
 
   scrollOnFocus() {
-    console.log("scroll")
-    this.content.scrollToTop()
+    console.log("scroll");
+    this.content.scrollToTop();
   }
 
   listaTintas(list: any) {
-    let navigationExtras: NavigationExtras = {
+    const navigationExtras: NavigationExtras = {
       queryParams: {
         tintas: JSON.stringify(list)
       },

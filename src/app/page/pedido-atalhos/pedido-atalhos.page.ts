@@ -79,7 +79,7 @@ export class PedidoAtalhosPage implements OnInit {
     try {
       if (evento.target && evento.target.value.length >= 2) {
         this.focusPause();
-        let codigo: string = evento.target.value;
+        const codigo: string = evento.target.value;
 
         if (codigo.substring(0, 1) == "P") {
           this.pedidoService.setCardPedido(codigo);
@@ -111,14 +111,14 @@ export class PedidoAtalhosPage implements OnInit {
         }
       }]
     });
-    alert.onDidDismiss().finally(() => { this.focusPlay() });
-    await alert.present().then(()=>{
+    alert.onDidDismiss().finally(() => { this.focusPlay(); });
+    await alert.present().then(() => {
       this.focusPause();
     });
   }
 
   async openClientePage() {
-    let navigationExtras: NavigationExtras = {
+    const navigationExtras: NavigationExtras = {
       queryParams: {
         paginaSeguinte: 'back',
         paginaAnterior: 'produto-atalhos'
