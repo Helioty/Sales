@@ -4,7 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { ENV } from 'src/environments/environment';
 import { API_URL } from 'src/app/config/app.config.service';
 
-import { CommonService } from 'src/app/services/common.service';
+import { CommonService } from 'src/app/services/common/common.service';
 import { BaseService } from '../../../services/base-service.service';
 
 

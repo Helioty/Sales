@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { IonContent, IonSlides, NavController } from '@ionic/angular';
 import { NavigationExtras } from '@angular/router';
-import { CommonService } from 'src/app/services/common.service';
+import { CommonService } from 'src/app/services/common/common.service';
 
 @Component({
   selector: 'app-tinta-alterada',

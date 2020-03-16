@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
-import { CommonService } from 'src/app/services/common.service';
-import { IonSearchbar } from '@ionic/angular';
+import { CommonService } from 'src/app/services/common/common.service';
+import { IonSearchbar, IonSlides } from '@ionic/angular';
 
 declare var google: any;
 
@@ -11,6 +11,8 @@ declare var google: any;
   styleUrls: ['./consulta-cep.page.scss'],
 })
 export class ConsultaCepPage implements OnInit {
+
+  @ViewChild(IonSlides, { static: true }) slides: IonSlides;
 
   @ViewChild('mapElement', { static: false }) mapElement;
   public map: any;
@@ -45,6 +47,7 @@ export class ConsultaCepPage implements OnInit {
 
   ionViewWillEnter() {
     this.common.goToFullScreen();
+    this.slides.lockSwipes(true);
     this.map = new google.maps.Map(this.mapElement.nativeElement, {
       center: { lat: -8.1129892, lng: -34.9126349 },
       disableDefaultUI: true,

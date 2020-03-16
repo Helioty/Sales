@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { CommonService } from 'src/app/services/common.service';
+import { CommonService } from 'src/app/services/common/common.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IonContent, IonSlides } from '@ionic/angular';
 import { ActivatedRoute } from '@angular/router';

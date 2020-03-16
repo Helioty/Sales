@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { NavController, AlertController } from '@ionic/angular';
-import { BaseService } from './base-service.service';
-import { CommonService } from 'src/app/services/common.service';
+import { BaseService } from '../base-service.service';
+import { CommonService } from 'src/app/services/common/common.service';
 import { ENV } from 'src/environments/environment';
 import { API_URL } from 'src/app/config/app.config.service';
 import { PedidoTable, PedidoItens } from 'src/app/class/pedido';
@@ -36,19 +36,19 @@ export class PedidoService {
 
 
   // PEDIDO EM MANUTENÇÃO
-  public numPedido: string = '0';
+  public numPedido: string = '0'; // Numero do pedido em manutenção.
   public digitoPedido: string;
-  public pedidoHeader: any;
-  public tipoRetirada: string;
+  public pedidoHeader: any; // Todos os principais dados do pedido em manutenção.
+  public tipoRetirada: string; // Tipo de retirada do pedido em manutenção.
   public tipoDocumento: any;
-  public qtdItensSacola: number = 0;
+  public qtdItensSacola: number = 0; // Quantidade de itens do pedido em manutenção.
 
-  public clientSelected: boolean = false;
-  public docCliente: string = '';
-  public dadosCliente: any;
+  public clientSelected: boolean = false; // Verdadeiro se o pedido em manutenção tiver um cliente selecionado.
+  public docCliente: string = ''; // CPF/CNPJ do cliente do pedido em manutenção.
+  public dadosCliente: any; // Dados do cliente do pedido em manutenção.
 
-  public cardSelected: boolean = false;
-  public codigoCartaoPedido: string = '';
+  public cardSelected: boolean = false; // Verdadeiro se o pedido em manutenção tiver um cartão-pedido selecionado.
+  public codigoCartaoPedido: string = ''; // Codido do cartão-pedido do pedido em manutenção.
 
   constructor(
     public alertCtrl: AlertController,
@@ -176,6 +176,7 @@ export class PedidoService {
     });
   }
 
+  // by Hélio - Retorna os dados do cliente selecionado
   public retornaDadosCliente() {
     return this.dadosCliente;
   }

@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuController, NavController, Platform } from '@ionic/angular';
-import { CommonService } from 'src/app/services/common.service';
+import { CommonService } from 'src/app/services/common/common.service';
 
 import { ENV } from 'src/environments/environment';
 import { API_URL } from 'src/app/config/app.config.service';
 
 import { BaseService } from 'src/app/services/base-service.service';
-import { PedidoService } from 'src/app/services/pedido.service';
+import { PedidoService } from 'src/app/services/pedido/pedido.service';
 
 @Component({
   selector: 'app-pedido-lista',

@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewChild, Renderer } from '@angular/core';
 import { IonInput, NavController, AlertController } from '@ionic/angular';
-import { CommonService } from 'src/app/services/common.service';
+import { CommonService } from 'src/app/services/common/common.service';
 import { BaseService } from 'src/app/services/base-service.service';
-import { PedidoService } from 'src/app/services/pedido.service';
+import { PedidoService } from 'src/app/services/pedido/pedido.service';
 import { ActivatedRoute, NavigationExtras } from '@angular/router';
 
 import { ENV } from 'src/environments/environment';
