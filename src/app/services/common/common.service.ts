@@ -10,8 +10,8 @@ export class CommonService {
 
   public loading: any;
 
-  public appName: string = '';
-  public version: string = '';
+  public appName = '';
+  public version = '';
 
   constructor(
     private androidFullScreen: AndroidFullScreen,
@@ -25,7 +25,7 @@ export class CommonService {
 
   // Funções comuns --------------------------------------------------------------------------------------------------
   public goToFullScreen() {
-    if (this.platform.is("cordova")) {
+    if (this.platform.is('cordova')) {
       this.androidFullScreen.isImmersiveModeSupported()
         .then(() => this.androidFullScreen.immersiveMode())
         .catch(err => console.log(err));
@@ -35,13 +35,13 @@ export class CommonService {
 
   // Version --------------------------------------------------------------------------------------------------------
   async getAppName() {
-    if (this.platform.is("cordova")) {
+    if (this.platform.is('cordova')) {
       this.appName = await this.appVersion.getAppName();
     }
   }
 
   async getVersionNumber() {
-    if (this.platform.is("cordova")) {
+    if (this.platform.is('cordova')) {
       this.version = await this.appVersion.getVersionNumber();
     }
   }
@@ -53,11 +53,11 @@ export class CommonService {
   }
 
   async showVersion() {
-    if (this.platform.is("cordova")) {
-      if (this.appName == '') {
+    if (this.platform.is('cordova')) {
+      if (this.appName === '') {
         await this.getAppName();
       }
-      if (this.version == '') {
+      if (this.version === '') {
         await this.getVersionNumber();
       }
       const versionCode = await this.getVersionCode();
@@ -112,7 +112,7 @@ export class CommonService {
 
   async showAlertInfo(msg: string) {
     const alert = await this.alertCtrl.create({
-      header: "Info",
+      header: 'Info',
       message: msg,
       buttons: ['OK']
     });
@@ -121,7 +121,7 @@ export class CommonService {
 
   async showAlertError(erro: string) {
     const alert = await this.alertCtrl.create({
-      header: "ERRO!",
+      header: 'ERRO!',
       message: erro,
       buttons: ['OK']
     });
@@ -132,7 +132,7 @@ export class CommonService {
   // formatação de string -------------------------------------------------------------------------------------------
   public formataCEP(value: string): string {
     value = value.replace(/\D/g, '');
-    value = value.replace(/^(\d{2})(\d{3})(\d)/, "$1.$2-$3");
+    value = value.replace(/^(\d{2})(\d{3})(\d)/, '$1.$2-$3');
     return value;
   }
 

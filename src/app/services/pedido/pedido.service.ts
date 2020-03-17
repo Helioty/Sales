@@ -98,7 +98,7 @@ export class PedidoService {
         console.log(this.pedidoHeader);
         resolve();
       }, (error: any) => {
-        this.showError(error);
+        console.log(error);
         reject();
       });
     });
@@ -112,7 +112,7 @@ export class PedidoService {
         return result;
       });
     } catch (error) {
-      this.showError(error);
+      console.log(error);
     }
   }
 
@@ -123,7 +123,7 @@ export class PedidoService {
     table.name = tableName;
     table.value = tableValor;
     aResult.push(table);
-    return aResult
+    return aResult;
   }
 
   // by Hélio 11/03/2020
@@ -136,7 +136,7 @@ export class PedidoService {
         this.baseService.post(link, aResult).then(() => {
           resolve();
         }, (error: any) => {
-          this.showError(error);
+          console.log(error);
           reject();
         });
       });
@@ -157,7 +157,7 @@ export class PedidoService {
     }, (error: any) => {
       this.cardSelected = false;
       this.codigoCartaoPedido = '';
-      this.showError(error);
+      console.log(error);
     });
   }
 
@@ -172,7 +172,7 @@ export class PedidoService {
       this.docCliente = cgccpf;
       this.dadosCliente = dadosCli;
     }, (error: any) => {
-      this.showError(error);
+      console.log(error);
     });
   }
 
@@ -192,7 +192,7 @@ export class PedidoService {
       this.docCliente = "";
       this.dadosCliente = undefined;
     }, (error: any) => {
-      this.showError(error);
+      console.log(error);
     });
   }
 
@@ -228,7 +228,7 @@ export class PedidoService {
       this.limpaDadosPedido();
       this.common.showToast("Pedido apagado!");
     }, (error: any) => {
-      this.showError(error);
+      console.log(error);
     });
   }
 
@@ -238,9 +238,10 @@ export class PedidoService {
 
     return new Promise((resolve) => {
       this.baseService.get(link).then((result: any) => {
+        this.qtdItensSacola = result.totalElements;
         resolve(result);
       }, (error: any) => {
-        this.showError(error);
+        console.log(error);
       });
     });
   }
@@ -252,10 +253,10 @@ export class PedidoService {
     return new Promise((resolve) => {
       this.baseService.post(link, body).then((result: any) => {
         this.pedidoHeader = result.pedido;
-        this.qtdItensSacola = result.items.content.length;
+        this.qtdItensSacola = result.items.totalElements;
         resolve(result.items);
       }, (error) => {
-        this.showError(error);
+        console.log(error);
       });
     });
   }
@@ -268,31 +269,9 @@ export class PedidoService {
       this.baseService.post(link, {}).then((result: any) => {
         resolve(result);
       }, (error) => {
-        this.showError(error);
+        console.log(error);
       });
     });
-  }
-
-  // by Helio 10/03/2020
-  showError(error: any) {
-    // by Ryuge 28/11/2019
-    if (error.status == 400) {
-      console.log(error)
-      // await this.showMessage(error.json().title, error.json().detail);
-      if (error.error.detail) {
-        this.common.showAlert(error.error.title, error.error.detail);
-      } else {
-        this.common.showAlert("Atenção!", JSON.stringify(error));
-      }
-    } else if (error.status == 503) {
-      this.common.showAlert('Atenção!', 'Sem serviço, entrar em contato com suporte.');
-    } else {
-      if (error.error.detail) {
-        this.common.showAlert(error.error.title, error.error.detail);
-      } else {
-        this.common.showAlert("Atenção!", JSON.stringify(error));
-      }
-    }
   }
 
 

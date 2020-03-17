@@ -15,16 +15,21 @@ export class PedidoSacolaPage implements OnInit {
   public valorScanner: string;
   public focusStatus: boolean = true;
 
+  public itens: any[] = [];
+
   constructor(
-    public alertCtrl: AlertController,
+    private alertCtrl: AlertController,
     public common: CommonService,
     public pedidoService: PedidoService,
     private navControl: NavController,
     private platform: Platform,
   ) { }
 
-  ngOnInit() {
-
+  async ngOnInit() {
+    await this.pedidoService.getItemPedido().then((result: any) => {
+      this.itens = result.content;
+      console.log(result);
+    });
   }
 
   ionViewWillEnter() {
@@ -83,7 +88,7 @@ export class PedidoSacolaPage implements OnInit {
           this.pedidoService.setCardPedido(codigo);
           this.focusPlay();
         } else {
-
+          this.focusPlay();
         }
       }
     } catch (error) {

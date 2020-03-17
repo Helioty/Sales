@@ -34,7 +34,8 @@ const routes: Routes = [
   },
   {
     path: 'pedido-sacola',
-    loadChildren: './page/pedido-sacola/pedido-sacola.module#PedidoSacolaPageModule'
+    loadChildren: './page/pedido-sacola/pedido-sacola.module#PedidoSacolaPageModule',
+    canActivate: [AuthGuard]
   },
   {
     path: 'pedido-rapido',

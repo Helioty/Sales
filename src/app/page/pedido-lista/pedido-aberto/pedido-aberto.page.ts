@@ -51,14 +51,13 @@ export class PedidoAbertoPage implements OnInit {
   }
 
   async doRefresh(event: any) {
-    try {
-      this.paginaAtual = 1;
-      await this.getPedidosEmAberto(this.paginaAtual).then(res => {
-        event.target.complete();
-      });
-    } catch (error) {
+    this.paginaAtual = 1;
+    await this.getPedidosEmAberto(this.paginaAtual).then(res => {
+      event.target.complete();
+    }, (error) => {
       console.log(error);
-    }
+      event.target.complete();
+    });
   }
 
   async doInfinite(event: any) {
@@ -99,7 +98,7 @@ export class PedidoAbertoPage implements OnInit {
       console.log(this.pedidos);
       this.showSkeleton = false;
     }), (error: any) => {
-      this.pedidoLista.showError(error);
+      console.log(error);
     };
   }
 
@@ -152,8 +151,8 @@ export class PedidoAbertoPage implements OnInit {
       this.common.showToast(result.msg);
       this.getPedidosEmAberto(1);
     }, (error) => {
+      console.log(error);
       this.common.loading.dismiss();
-      this.pedidoLista.showError(error);
     });
   }
 

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { PedidoService } from 'src/app/services/pedido/pedido.service';
 import { NavController, Platform, AlertController } from '@ionic/angular';
 import { CommonService } from 'src/app/services/common/common.service';
@@ -10,8 +10,6 @@ import { PedidoItens, Retiradas } from 'src/app/class/pedido';
   styleUrls: ['./pedido-rapido.page.scss'],
 })
 export class PedidoRapidoPage implements OnInit {
-
-  @ViewChild('input', { static: true }) inputScanner: HTMLInputElement;
 
   public taskScanner: any;
   public valorScanner: string;

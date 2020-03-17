@@ -43,6 +43,14 @@ export class PedidoListaPage implements OnInit {
     this.common.goToFullScreen();
   }
 
+  ionViewWillLeave() {
+    console.clear();
+  }
+
+  ionViewDidLeave() {
+
+  }
+
   async addNovoPedido() {
     this.pedidoService.limpaDadosPedido();
     await this.common.showLoaderCustom('Criando Pedido!');
@@ -90,35 +98,13 @@ export class PedidoListaPage implements OnInit {
   }
 
   async getPedidosEmAberto(page: number) {
-      const link: string = ENV.WS_VENDAS + API_URL + "PedidoVenda/list/" + localStorage.getItem("empresa") + "/abertos?page=" + page;
-      return await this.baseService.get(link);
+    const link: string = ENV.WS_VENDAS + API_URL + "PedidoVenda/list/" + localStorage.getItem("empresa") + "/abertos?page=" + page;
+    return await this.baseService.get(link);
   }
 
   async getPedidosFinalizados(page: number) {
-      const link: string = ENV.WS_VENDAS + API_URL + "PedidoVenda/list/" + localStorage.getItem("empresa") + "/faturados?page=" + page;
-      return await this.baseService.get(link);
-  }
-
-  // by Helio 10/03/2020
-  public showError(error: any) {
-    // by Ryuge 28/11/2019
-    if (error.status == 400) {
-      console.log(error)
-      // await this.showMessage(error.json().title, error.json().detail);
-      if (error.error.detail) {
-        this.common.showAlert(error.error.title, error.error.detail);
-      } else {
-        this.common.showAlert("Atenção!", JSON.stringify(error));
-      }
-    } else if (error.status == 503) {
-      this.common.showAlert('Atenção!', 'Sem serviço, entrar em contato com suporte.');
-    } else {
-      if (error.error.detail) {
-        this.common.showAlert(error.error.title, error.error.detail);
-      } else {
-        this.common.showAlert("Atenção!", JSON.stringify(error));
-      }
-    }
+    const link: string = ENV.WS_VENDAS + API_URL + "PedidoVenda/list/" + localStorage.getItem("empresa") + "/faturados?page=" + page;
+    return await this.baseService.get(link);
   }
 
 }
