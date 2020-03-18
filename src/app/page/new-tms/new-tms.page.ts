@@ -27,7 +27,7 @@ export class NewTMSPage implements OnInit {
     estoque: 30
   }];
 
-  public toggleTeste: boolean = false;
+  public toggleTeste = false;
 
   public qtdEntrega = 0;
 
@@ -42,15 +42,14 @@ export class NewTMSPage implements OnInit {
   }
 
   aqui() {
-    console.log("aqui")
-    console.log(this.slideOpts)
+    console.log('aqui');
+    console.log(this.slideOpts);
   }
 
   goToSlide(sln: string) {
     switch (sln) {
-      case "opcsEntrega":
-        // this.slides.slideNext()
-        this.slides.slideTo(1)
+      case 'opcsEntrega':
+        this.slides.slideTo(1);
         break;
 
       default:

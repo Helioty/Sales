@@ -16,14 +16,14 @@ import { BaseService } from '../../../services/base-service.service';
 export class PedidoResumoPage implements OnInit {
 
   public pedido: any;
-  public showPedido: boolean = false;
+  public showPedido = false;
 
   public pedidoItens: any;
-  public showPedidoItens: boolean = false;
+  public showPedidoItens = false;
 
   public cartaoPedido: any;
-  public docCliente: string = "";
-  public docTipo: string = "";
+  public docCliente = '';
+  public docTipo = '';
   public endereco: any;
 
   constructor(
@@ -40,7 +40,7 @@ export class PedidoResumoPage implements OnInit {
   async ionViewWillEnter() {
     this.common.goToFullScreen();
     this.activatedRoute.queryParams.subscribe(params => {
-      this.pedido = JSON.parse(params["pedido"]);
+      this.pedido = JSON.parse(params['pedido']);
     });
     await this.separaDadosPedido();
     console.log(this.pedido);
@@ -52,18 +52,18 @@ export class PedidoResumoPage implements OnInit {
 
   async separaDadosPedido() {
     this.cartaoPedido = this.pedido.barCodecartaoPedido;
-    if (this.pedido.cartaoPedido == 0) {
-      this.cartaoPedido = "Sem Cartão";
+    if (this.pedido.cartaoPedido === 0) {
+      this.cartaoPedido = 'Sem Cartão';
     }
     if (this.pedido.cgccpf_cliente == null) {
-      this.docCliente = "";
-      this.docTipo = "Cliente não selecionado.";
+      this.docCliente = '';
+      this.docTipo = 'Cliente não selecionado.';
     } else {
       this.docCliente = this.pedido.cgccpf_cliente;
       if (!this.docCliente) {
-        this.docCliente = "Sem Cliente";
+        this.docCliente = 'Sem Cliente';
       }
-      this.docTipo = this.docCliente.length > 12 ? "CNPJ do cliente:" : "CPF do cliente:";
+      this.docTipo = this.docCliente.length > 12 ? 'CNPJ do cliente:' : 'CPF do cliente:';
     }
     this.showPedido = true;
 
@@ -86,22 +86,22 @@ export class PedidoResumoPage implements OnInit {
       // }
       // cabeçalho do pedido
       // item do pedido
-      const link: string = ENV.WS_VENDAS + API_URL + "PedidoVendaItem/" + localStorage.getItem("empresa") + "/" + nuPedido + "/itens";
+      const link: string = ENV.WS_VENDAS + API_URL + 'PedidoVendaItem/' + localStorage.getItem('empresa') + '/' + nuPedido + '/itens';
       await this.baseService.get(link).then((result: any) => {
-        console.log(result)
+        console.log(result);
         this.pedidoItens = result.content;
       });
 
       if (this.pedido.frete.valor > 0) {
         let enderecos: any;
-        const linkEndereco: string = ENV.WS_VENDAS + API_URL + "PedidoVenda/" + localStorage.getItem("empresa") + "/" + nuPedido + "/listEnderecos";
+        const linkEndereco: string = ENV.WS_VENDAS + API_URL + 'PedidoVenda/' + localStorage.getItem('empresa') + '/' + nuPedido + '/listEnderecos';
         await this.baseService.get(linkEndereco).then((result: any) => {
-          console.log(result)
+          console.log(result);
           enderecos = result;
         });
 
         if (enderecos.length > 0) {
-          for (let end of enderecos) {
+          for (const end of enderecos) {
             if (end.seq_endereco == this.pedido.seqEnderecoEntrega) {
               this.endereco = end.dsc_endereco;
             }

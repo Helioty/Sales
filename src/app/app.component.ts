@@ -70,12 +70,12 @@ export class AppComponent {
 
   buttonAction(page: any) {
     switch (page.title) {
-      case ("Logout"): {
+      case ('Logout'): {
         this.showAlertLogout();
       } break;
 
       default: {
-        console.log("default of button Action!");
+        console.log('default of button Action!');
         this.navControl.navigateRoot([page.url]);
       }
     }
@@ -83,8 +83,8 @@ export class AppComponent {
 
   async showAlertLogout() {
     const alert = await this.alertCtrl.create({
-      header: "Logout",
-      subHeader: "Deseja sair?",
+      header: 'Logout',
+      subHeader: 'Deseja sair?',
       buttons: ['NÃO', {
         text: 'SIM',
         handler: () => {
@@ -99,16 +99,16 @@ export class AppComponent {
 
   getStatus(): any {
 
-    if (localStorage.getItem("token")) {
-      if (localStorage.getItem("foto")) {
-        this.foto = localStorage.getItem("foto");
+    if (localStorage.getItem('token')) {
+      if (localStorage.getItem('foto')) {
+        this.foto = localStorage.getItem('foto');
       }
 
-      if (localStorage.getItem("nome")) {
-        this.nome = localStorage.getItem("nome");
+      if (localStorage.getItem('nome')) {
+        this.nome = localStorage.getItem('nome');
       }
 
-      if (localStorage.getItem("foto") != 'null' && localStorage.getItem("foto") != undefined) {
+      if (localStorage.getItem('foto') != 'null' && localStorage.getItem('foto') != undefined) {
         this.noPhoto = true;
       }
 

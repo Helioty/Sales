@@ -10,7 +10,7 @@ export class PedidoFinalizacaoPage implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    
+
   }
 
 }

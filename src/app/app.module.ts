@@ -8,7 +8,7 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { AppVersion } from '@ionic-native/app-version/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { AndroidFullScreen } from '@ionic-native/android-full-screen/ngx';
-import { Network } from "@ionic-native/network/ngx";
+import { Network } from '@ionic-native/network/ngx';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { HideKeyboardModule } from 'hide-keyboard';
 import { ReactiveFormsModule } from '@angular/forms';

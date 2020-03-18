@@ -15,10 +15,10 @@ import { PedidoService } from 'src/app/services/pedido/pedido.service';
 })
 export class PedidoListaPage implements OnInit {
 
-  public totalEmAberto: number = 0;
-  public totalFinalizados: number = 0;
+  public totalEmAberto = 0;
+  public totalFinalizados = 0;
 
-  public disableButton: boolean = false;
+  public disableButton = false;
 
   constructor(
     public common: CommonService,
@@ -63,7 +63,7 @@ export class PedidoListaPage implements OnInit {
     });
     // try {
     //   this.disableButton = true;
-    //   if (this.platform.is("ios") || this.platform.is("android")) {
+    //   if (this.platform.is('ios') || this.platform.is('android')) {
     //     // by Ryuge 03/09/2019
     //     this.pedidoService.limpaDadosPedido();
     //     this.navControl.navigateForward('/pedido-retirada')
@@ -78,17 +78,17 @@ export class PedidoListaPage implements OnInit {
 
 
   checaAtivo(id: string, id2: string) {
-    // console.log("A")
+    // console.log('A')
     // let elemento = document.getElementById(id);
     // let classes = elemento.className.split(' ');
-    // let getIndex = classes.indexOf("fab-button-close-active");
+    // let getIndex = classes.indexOf('fab-button-close-active');
 
     // let elemento2 = document.getElementById(id2);
     // let classes2 = elemento2.className.split(' ');
-    // let getIndex2 = classes2.indexOf("contentOpaco");
+    // let getIndex2 = classes2.indexOf('contentOpaco');
 
     // if (getIndex === -1) {
-    //   classes.push("contentOpaco");
+    //   classes.push('contentOpaco');
     //   elemento2.className = classes.join(' ');
     // }
     // else {
@@ -98,12 +98,12 @@ export class PedidoListaPage implements OnInit {
   }
 
   async getPedidosEmAberto(page: number) {
-    const link: string = ENV.WS_VENDAS + API_URL + "PedidoVenda/list/" + localStorage.getItem("empresa") + "/abertos?page=" + page;
+    const link: string = ENV.WS_VENDAS + API_URL + 'PedidoVenda/list/' + localStorage.getItem('empresa') + '/abertos?page=' + page;
     return await this.baseService.get(link);
   }
 
   async getPedidosFinalizados(page: number) {
-    const link: string = ENV.WS_VENDAS + API_URL + "PedidoVenda/list/" + localStorage.getItem("empresa") + "/faturados?page=" + page;
+    const link: string = ENV.WS_VENDAS + API_URL + 'PedidoVenda/list/' + localStorage.getItem('empresa') + '/faturados?page=' + page;
     return await this.baseService.get(link);
   }
 

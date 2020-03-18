@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpHeaders, HttpClient } from "@angular/common/http";
+import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { CommonService } from 'src/app/services/common/common.service';
 
 import { Observable, Subject, asapScheduler, pipe, of, from, interval, merge, fromEvent } from 'rxjs';
@@ -17,7 +17,7 @@ export class BaseService {
   ) { }
 
   get(link: string): Promise<any> {
-    const headers = new HttpHeaders().set("x-auth-token", localStorage.getItem("token"));
+    const headers = new HttpHeaders().set('x-auth-token', localStorage.getItem('token'));
 
     return new Promise((resolve, reject) => {
       this.http.get<JSON>(link, { headers }).subscribe((result: any) => {
@@ -31,7 +31,7 @@ export class BaseService {
   }
 
   post(link: string, body: any): Promise<any> {
-    const headers = new HttpHeaders().set("x-auth-token", localStorage.getItem("token"));
+    const headers = new HttpHeaders().set('x-auth-token', localStorage.getItem('token'));
 
     return new Promise((resolve, reject) => {
       this.http.post(link, body, { headers }).subscribe((result: any) => {

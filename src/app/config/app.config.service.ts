@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { ENV } from 'src/environments/environment';
 import { CommonService } from 'src/app/services/common/common.service';
 
-export let API_URL: string = '';
+export let API_URL = '';
 
 export function getHTTP(): any {
   return API_URL;
@@ -14,7 +14,7 @@ export function getHTTP(): any {
 })
 export class AppConfigService {
 
-  private getApiUrl: string = '';
+  private getApiUrl = '';
 
   constructor(
     private http: HttpClient,
@@ -38,7 +38,7 @@ export class AppConfigService {
   }
 
   public getURL() {
-    let apiUrl = this.getApiUrl;
+    const apiUrl = this.getApiUrl;
     return new Promise((resolve, reject) => {
       this.http.get(apiUrl).subscribe((link: any) => {
         console.log(link);

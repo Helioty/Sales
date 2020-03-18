@@ -12,7 +12,7 @@ import { NavigationExtras } from '@angular/router';
 })
 export class PedidoRetiradaPage implements OnInit {
 
-  public disableButton: boolean = false;
+  public disableButton = false;
 
   constructor(
     public common: CommonService,
@@ -38,21 +38,21 @@ export class PedidoRetiradaPage implements OnInit {
   }
 
   async openPesquisaProduto(tipoRetirada: string) {
-    this.pedidoService.sistuacaoPedido = "A";
+    this.pedidoService.sistuacaoPedido = 'A';
     this.pedidoService.codigoTipoRetirada = tipoRetirada;
     this.pedidoService.tipoRetirada = this.pedidoService.opcaoRetirada[tipoRetirada];
 
     await this.pedidoService.alterarTipoRetirada(tipoRetirada).then(() => {
       // by Ryuge 14/11/2019
       // edit by Helio 14/02/2020
-      if (this.pedidoService.tipoRetirada == "ENTREGA") {
+      if (this.pedidoService.tipoRetirada == 'ENTREGA') {
         const navigationExtras: NavigationExtras = {
           queryParams: {
             paginaSeguinte: 'pedido-atalhos',
             paginaAnterior: 'pedido-retirada'
           }
         };
-        this.navControl.navigateForward(["/cliente"], navigationExtras);
+        this.navControl.navigateForward(['/cliente'], navigationExtras);
       } else {
         const navigationExtras: NavigationExtras = {
           queryParams: {
@@ -60,7 +60,7 @@ export class PedidoRetiradaPage implements OnInit {
             paginaAnterior: 'pedido-retirada'
           }
         };
-        this.navControl.navigateRoot(["/pedido-atalhos"], navigationExtras);
+        this.navControl.navigateRoot(['/pedido-atalhos'], navigationExtras);
       }
     }, (error) => {
       console.log(error);

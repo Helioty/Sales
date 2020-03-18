@@ -23,11 +23,11 @@ export class PedidoFinalizadoPage implements OnInit {
   public resultGetPedidos: any;
   public pedidos: any[] = [];
 
-  public showSkeleton: boolean = false;
+  public showSkeleton = false;
 
-  public paginaAtual: number = 1;
-  public totalPagina: number = 0;
-  public lastPage: boolean = false;
+  public paginaAtual = 1;
+  public totalPagina = 0;
+  public lastPage = false;
 
   constructor(
     public baseService: BaseService,
@@ -81,7 +81,7 @@ export class PedidoFinalizadoPage implements OnInit {
   }
 
   async getPedidosFinalizados(page: number) {
-    if (page == 1) {
+    if (page === 1) {
       this.lastPage = false;
     }
     await this.pedidoLista.getPedidosFinalizados(page).then((result: any) => {
@@ -91,8 +91,8 @@ export class PedidoFinalizadoPage implements OnInit {
       this.totalPagina = this.resultGetPedidos.totalPages;
       this.paginaAtual = page + 1;
       this.lastPage = this.resultGetPedidos.last;
-      if (this.pedidos.length == 0) {
-        console.log("Nenhum pedido em finalizado");
+      if (this.pedidos.length === 0) {
+        console.log('Nenhum pedido em finalizado');
         this.pedidos = null;
       }
       console.log(this.pedidos);
@@ -117,34 +117,34 @@ export class PedidoFinalizadoPage implements OnInit {
       },
       skipLocationChange: true
     };
-    this.navControl.navigateForward(["/pedido-resumo"], navigationExtras);
+    this.navControl.navigateForward(['/pedido-resumo'], navigationExtras);
   }
 
   async apagarPedido(pedido: any) {
     const alert = await this.alertCtrl.create({
-      header: "ATENÇÃO!",
-      message: "Tem certeza? Apagando um pedido, os dados inseridos não poderão ser recuperados.",
+      header: 'ATENÇÃO!',
+      message: 'Tem certeza? Apagando um pedido, os dados inseridos não poderão ser recuperados.',
       buttons: [
         {
-          text: "Voltar",
+          text: 'Voltar',
           handler: () => {
-            console.log("Cancelado");
+            console.log('Cancelado');
           }
         },
         {
-          text: "APAGAR",
+          text: 'APAGAR',
           handler: () => {
             this.removePedido(pedido.numpedido);
           }
         }
       ]
-    })
+    });
     await alert.present();
   }
 
   async removePedido(pedidoId: any) {
     // this.common.showLoader()
-    const link: string = ENV.WS_VENDAS + API_URL + "PedidoVenda/" + localStorage.getItem("empresa") + "/" + pedidoId;
+    const link: string = ENV.WS_VENDAS + API_URL + 'PedidoVenda/' + localStorage.getItem('empresa') + '/' + pedidoId;
 
     this.baseService.post(link, {}).then((result: any) => {
       console.log(result);

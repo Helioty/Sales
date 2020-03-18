@@ -8,19 +8,18 @@ import { CommonService } from 'src/app/services/common/common.service';
 
 export class AuthGuard implements CanActivate {
 
-  public logged: boolean = false;
+  public logged = false;
 
   constructor(private router: Router, public common: CommonService) { }
 
-  canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot){
+  canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     if (!this.logged) {
-      this.common.showAlertInfo("Login necessário!")
-      return this.router.navigateByUrl("/login")
+      this.common.showAlertInfo('Login necessário!');
+      return this.router.navigateByUrl('/login');
+    } else {
+      return true;
     }
-    else {
-      return true
-    }
-    
+
   }
 
 }

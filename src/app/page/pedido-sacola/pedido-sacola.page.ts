@@ -51,12 +51,12 @@ export class PedidoSacolaPage implements OnInit {
 
   // Cria o loop que da foco no input
   focusOn() {
-    if (this.platform.is("cordova")) {
+    if (this.platform.is('cordova')) {
       this.taskScanner = setInterval(() => {
         try {
-          this.valorScanner = "";
+          this.valorScanner = '';
           if (this.focusStatus) {
-            document.getElementById("scanner").focus();
+            document.getElementById('scanner').focus();
           }
         } catch (error) { }
       }, 300);
@@ -84,7 +84,7 @@ export class PedidoSacolaPage implements OnInit {
         this.focusPause();
         const codigo: string = evento.target.value;
 
-        if (codigo.substring(0, 1) == "P") {
+        if (codigo.substring(0, 1) == 'P') {
           this.pedidoService.setCardPedido(codigo);
           this.focusPlay();
         } else {
@@ -98,7 +98,7 @@ export class PedidoSacolaPage implements OnInit {
 
   async adicionarCartaoPedido() {
     const alert = await this.alertCtrl.create({
-      header: "Cartão Pedido",
+      header: 'Cartão Pedido',
       cssClass: 'ion-alert-input',
       inputs: [
         {
@@ -115,19 +115,19 @@ export class PedidoSacolaPage implements OnInit {
       }]
     });
     alert.onDidDismiss().finally(() => { this.focusPlay(); });
-    await alert.present().then(()=>{
+    await alert.present().then(() => {
       this.focusPause();
     });
   }
 
   async openClientePage() {
-    let navigationExtras: NavigationExtras = {
+    const navigationExtras: NavigationExtras = {
       queryParams: {
         paginaSeguinte: 'back',
         paginaAnterior: 'pedido-sacola'
       }
     };
-    this.navControl.navigateForward(["/cliente"], navigationExtras);
+    this.navControl.navigateForward(['/cliente'], navigationExtras);
   }
-  
+
 }

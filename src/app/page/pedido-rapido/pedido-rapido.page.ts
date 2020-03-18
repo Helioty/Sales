@@ -22,9 +22,9 @@ export class PedidoRapidoPage implements OnInit {
 
 
   // controle de requisições by Ryuge 28/11/2019
-  private maxRequest: number = 10;
-  private numRequest: number = 0;
-  private codProdRequest: string = '';
+  private maxRequest = 10;
+  private numRequest = 0;
+  private codProdRequest = '';
 
   constructor(
     public common: CommonService,
@@ -43,7 +43,7 @@ export class PedidoRapidoPage implements OnInit {
 
   ionViewWillEnter() {
     this.focusOn();
-    console.log("WillEnter Rapido");
+    console.log('WillEnter Rapido');
     this.common.goToFullScreen();
   }
 
@@ -61,12 +61,12 @@ export class PedidoRapidoPage implements OnInit {
 
   // Cria o loop que da foco no input
   focusOn() {
-    if (this.platform.is("cordova")) {
+    if (this.platform.is('cordova')) {
       this.taskScanner = setInterval(() => {
         try {
-          this.valorScanner = "";
+          this.valorScanner = '';
           if (this.focusStatus) {
-            document.getElementById("scanner").focus();
+            document.getElementById('scanner').focus();
           }
         } catch (error) { }
       }, 300);
@@ -79,7 +79,7 @@ export class PedidoRapidoPage implements OnInit {
 
   focusPause() {
     this.focusStatus = false;
-    document.getElementById("scanner").blur();
+    document.getElementById('scanner').blur();
   }
 
   // Encerra o loop de foco no input
@@ -95,7 +95,7 @@ export class PedidoRapidoPage implements OnInit {
         this.focusPause();
         const codigo: string = evento.target.value;
 
-        if (codigo.substring(0, 1) == "P") {
+        if (codigo.substring(0, 1) == 'P') {
           this.pedidoService.setCardPedido(codigo);
           this.focusPlay();
         } else {
@@ -175,7 +175,7 @@ export class PedidoRapidoPage implements OnInit {
 
 
     } catch (error) {
-      this.common.showAlertError("erro no adicionar sacola");
+      this.common.showAlertError('erro no adicionar sacola');
       // by Ryuge 28/11/2019
       if (error.status == 400) {
         // await this.showMessage(error.json().title, error.json().detail);
@@ -185,7 +185,7 @@ export class PedidoRapidoPage implements OnInit {
         if (error.error.detail) {
           this.common.showAlert(error.error.title, error.error.detail);
         } else {
-          this.common.showAlert("Atenção!", JSON.stringify(error));
+          this.common.showAlert('Atenção!', JSON.stringify(error));
         }
       }
     }

@@ -15,29 +15,29 @@ import { API_URL } from 'src/app/config/app.config.service';
 })
 export class ClientePage implements OnInit {
 
-  @ViewChild("input", { static: false }) search: IonInput;
+  @ViewChild('input', { static: false }) search: IonInput;
 
   // Valor digitado no input de CPF/CNPJ
-  private valorDigitado: any = "";
+  private valorDigitado = '';
 
   // Controle da animação do skeleton
-  public skeletonAni: boolean = false;
+  public skeletonAni = false;
 
   // Controle da cor do background // by Ryuge
-  public isBlue: boolean = false;
-  public isGreen: boolean = false;
-  public isOrange: boolean = false;
+  public isBlue = false;
+  public isGreen = false;
+  public isOrange = false;
 
   // Controle da pesquisa de CPF/CNPJ
-  public isCNPJ: boolean = false;
-  public atualizaCadastro: boolean = false;
-  public novoCadastro: boolean = false;
-  public mensagem: string = "";
-  public isActive: string = "";
+  public isCNPJ = false;
+  public atualizaCadastro = false;
+  public novoCadastro = false;
+  public mensagem = '';
+  public isActive = '';
 
   // Dados do cliente.
   private dados: any;
-  private dadosShow: any = { nome: "", endereco: "", celular: "", email: "" };
+  private dadosShow: any = { nome: '', endereco: '', celular: '', email: '' };
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -57,8 +57,7 @@ export class ClientePage implements OnInit {
     this.common.goToFullScreen();
     if (this.pedidoService.clientSelected && this.pedidoService.docCliente != '') {
       this.getClienteAntesSelecionado();
-    }
-    else if (this.valorDigitado == '') {
+    } else if (this.valorDigitado == '') {
       this.setEstado('reset');
     }
   }
@@ -85,14 +84,14 @@ export class ClientePage implements OnInit {
   }
 
   blur(evento: any) {
-    this.renderer.invokeElementMethod(evento.target, "blur");
+    this.renderer.invokeElementMethod(evento.target, 'blur');
   }
 
   // by Helio 12/02/2020
   async getClienteAntesSelecionado() {
     this.dados = await this.pedidoService.retornaDadosCliente();
     this.valorDigitado = this.common.formataCPFNPJ(this.pedidoService.docCliente);
-    this.isCNPJ = this.dados.natureza != "FISICA";
+    this.isCNPJ = this.dados.natureza != 'FISICA';
     this.isActive = this.dados.ativo;
     this.atualizaCadastro = this.dados.atualizaCadastro;
     this.showDados(this.dados);
@@ -133,8 +132,8 @@ export class ClientePage implements OnInit {
   // mascara dinamica
   dynamicMask(inputName: string) {
     if (this.valorDigitado.length > 2) {
-      if (inputName == "cli") {
-        if (this.valorDigitado != "" || this.valorDigitado != undefined) {
+      if (inputName == 'cli') {
+        if (this.valorDigitado != '' || this.valorDigitado != undefined) {
           this.valorDigitado = this.common.formataCPFNPJ(this.valorDigitado);
         }
       }
@@ -171,11 +170,11 @@ export class ClientePage implements OnInit {
         this.atualizaCadastro = false;
         this.novoCadastro = false;
         this.isCNPJ = false;
-        this.isActive = "";
-        this.dadosShow.nome = "";
-        this.dadosShow.endereco = "";
-        this.dadosShow.celular = "";
-        this.dadosShow.email = "";
+        this.isActive = '';
+        this.dadosShow.nome = '';
+        this.dadosShow.endereco = '';
+        this.dadosShow.celular = '';
+        this.dadosShow.email = '';
         this.setCor('blue');
         setTimeout(() => {
           this.foco();
@@ -189,7 +188,7 @@ export class ClientePage implements OnInit {
 
   // Checa o minimo de caracteres necessarios para executar a chamada.
   checaMinimo(doc: string) {
-    let clieDoc: string = doc.replace(/\D/g, '');
+    const clieDoc: string = doc.replace(/\D/g, '');
     if (clieDoc.length > 10) {
       this.getCliente(clieDoc);
     }
@@ -198,13 +197,13 @@ export class ClientePage implements OnInit {
   // Chamada de cliente.
   async getCliente(doc: string) {
     this.skeletonAni = true;
-    const link: string = ENV.WS_CRM + API_URL + "cliente/" + doc;
+    const link: string = ENV.WS_CRM + API_URL + 'cliente/' + doc;
     await this.baseService.get(link).then((result: any) => {
       this.dados = result;
-      console.log("DADOS DO CLIENTE")
+      console.log('DADOS DO CLIENTE')
       console.log(this.dados);
       if (this.dados != undefined || this.dados != [] || this.dados != '') {
-        this.isCNPJ = this.dados.natureza != "FISICA";
+        this.isCNPJ = this.dados.natureza != 'FISICA';
         this.isActive = this.dados.ativo;
         this.atualizaCadastro = this.dados.atualizaCadastro;
         this.showDados(this.dados);
@@ -220,12 +219,12 @@ export class ClientePage implements OnInit {
       }
     }, (error: any) => {
       if (error.error.detail) {
-        this.mensagem = "Não encontramos o cadastro do cliente!";
+        this.mensagem = 'Não encontramos o cadastro do cliente!';
         this.skeletonAni = false;
         this.setEstado('novo');
       }
       else {
-        this.common.showAlert("Atenção!", "Falha de processamento, tente novamente !!");
+        this.common.showAlert('Atenção!', 'Falha de processamento, tente novamente !!');
         this.skeletonAni = false;
         this.setEstado('reset');
       }
@@ -237,14 +236,14 @@ export class ClientePage implements OnInit {
 
     // by Hélio 11/02/2020
     if (dados.numero != null && dados.numero != undefined) {
-      this.dadosShow.endereco = dados.endereco + ", " + dados.numero;
+      this.dadosShow.endereco = dados.endereco + ', ' + dados.numero;
     } else {
       this.dadosShow.endereco = dados.endereco;
     }
 
     // by Ryuge 17/09/2019
     if (this.dados.emails.length > 0) {
-      let valor0: any = String(dados.emails[0].email_site);
+      const valor0: any = String(dados.emails[0].email_site);
       if (valor0 != null || valor0 != '') {
         this.dadosShow.email = dados.emails[0].email_site;
       }
@@ -257,7 +256,7 @@ export class ClientePage implements OnInit {
       if (valor1.length > 8) {
         this.dadosShow.celular = this.common.formataFONE(dados.celulares[0].ddd + dados.celulares[0].numero);
       } else {
-        this.dadosShow.celular = "";
+        this.dadosShow.celular = '';
       }
     }
   }
@@ -267,8 +266,8 @@ export class ClientePage implements OnInit {
       const alert = await this.alertCtrl.create({
         header: 'Remover cliente?',
         message: 'Deseja remover o cliente do pedido atual?',
-        buttons: ["NÃO", {
-          text: "SIM",
+        buttons: ['NÃO', {
+          text: 'SIM',
           handler: () => {
             this.common.showLoader();
             this.pedidoService.removerCliente().then(() => {
@@ -317,15 +316,15 @@ export class ClientePage implements OnInit {
     }
     switch (navParams.paginaAnterior) {
       case 'pedido-retirada':
-        navigationExtras.queryParams.paginaSeguinte = 'produto-pesquisa';
+        navigationExtras.queryParams.paginaSeguinte = 'produto-atalhos';
         navigationExtras.queryParams.paginaAnterior = 'pedido-retirada';
-        this.navControl.navigateForward(["/cliente-cadastro-edicao"], navigationExtras);
+        this.navControl.navigateForward(['/cliente-cadastro-edicao'], navigationExtras);
         break;
 
       default:
         navigationExtras.queryParams.paginaSeguinte = navParams.paginaAnterior;
         navigationExtras.queryParams.paginaAnterior = 'back';
-        this.navControl.navigateForward(["/cliente-cadastro-edicao"], navigationExtras);
+        this.navControl.navigateForward(['/cliente-cadastro-edicao'], navigationExtras);
         break;
     }
   }
@@ -353,7 +352,7 @@ export class ClientePage implements OnInit {
   async prosseguir() {
     let paginaSeguinte: any;
     this.activatedRoute.queryParams.subscribe(params => {
-      paginaSeguinte = params["paginaSeguinte"];
+      paginaSeguinte = params['paginaSeguinte'];
     });
     switch (paginaSeguinte) {
       case 'back':
@@ -361,7 +360,7 @@ export class ClientePage implements OnInit {
         break;
 
       default:
-        this.navControl.navigateRoot(["/" + paginaSeguinte]);
+        this.navControl.navigateRoot(['/' + paginaSeguinte]);
         break;
     }
   }

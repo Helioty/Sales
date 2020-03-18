@@ -13,18 +13,18 @@ export class ClienteCadastroEdicaoPage implements OnInit {
 
   @ViewChild(IonContent, { static: true }) content: IonContent;
   @ViewChild(IonSlides, { static: true }) slides: IonSlides;
-  @ViewChild("slidesFooter", { static: true }) slidesFooter: IonSlides;
+  @ViewChild('slidesFooter', { static: true }) slidesFooter: IonSlides;
 
   // Controle do formulario
   public formCliente: FormGroup;
   public formEndereco: FormGroup;
 
   // Controle do Loading
-  public loading: boolean = false;
+  public loading = false;
 
   // Controle do cadastro
-  public situacao: string = "";
-  public cliente: string = "";
+  public situacao = '';
+  public cliente = '';
 
   // Dados do cliente
   private clienteDadosOld: any;
@@ -54,16 +54,16 @@ export class ClienteCadastroEdicaoPage implements OnInit {
   ngOnInit() {
     this.slides.lockSwipes(true);
     this.activatedRoute.queryParams.subscribe(params => {
-      this.situacao = params["situacao"];
-      this.cliente = params["cliente"];
+      this.situacao = params['situacao'];
+      this.cliente = params['cliente'];
     });
   }
 
   ionViewWillEnter() {
     this.common.goToFullScreen();
-    if (this.situacao == "edicao") {
+    if (this.situacao == 'edicao') {
       this.activatedRoute.queryParams.subscribe(params => {
-        this.clienteDadosOld = JSON.parse(params["dados"]);
+        this.clienteDadosOld = JSON.parse(params['dados']);
       });
       console.log(this.clienteDadosOld);
     } else {

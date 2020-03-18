@@ -15,7 +15,7 @@ export class PedidoAtalhosPage implements OnInit {
 
   public taskScanner: any;
   public valorScanner: string;
-  public focusStatus: boolean = true;
+  public focusStatus = true;
 
   constructor(
     private alertCtrl: AlertController,
@@ -48,12 +48,12 @@ export class PedidoAtalhosPage implements OnInit {
 
   // Cria o loop que da foco no input
   focusOn() {
-    if (this.platform.is("cordova")) {
+    if (this.platform.is('cordova')) {
       this.taskScanner = setInterval(() => {
         try {
-          this.valorScanner = "";
+          this.valorScanner = '';
           if (this.focusStatus) {
-            document.getElementById("scanner").focus();
+            document.getElementById('scanner').focus();
           }
         } catch (error) { }
       }, 300);
@@ -81,7 +81,7 @@ export class PedidoAtalhosPage implements OnInit {
         this.focusPause();
         const codigo: string = evento.target.value;
 
-        if (codigo.substring(0, 1) == "P") {
+        if (codigo.substring(0, 1) == 'P') {
           this.pedidoService.setCardPedido(codigo);
           this.focusPlay();
         } else {
@@ -95,7 +95,7 @@ export class PedidoAtalhosPage implements OnInit {
 
   async adicionarCartaoPedido() {
     const alert = await this.alertCtrl.create({
-      header: "Cartão Pedido",
+      header: 'Cartão Pedido',
       cssClass: 'ion-alert-input',
       inputs: [
         {
@@ -124,7 +124,7 @@ export class PedidoAtalhosPage implements OnInit {
         paginaAnterior: 'produto-atalhos'
       }
     };
-    this.navControl.navigateForward(["/cliente"], navigationExtras);
+    this.navControl.navigateForward(['/cliente'], navigationExtras);
   }
 
 }

@@ -24,7 +24,7 @@ export class LoginPage implements OnInit {
   loginData = { login: '', senha: '' };
   data: any;
 
-  public emFoco: boolean = false;
+  public emFoco = false;
 
   constructor(
     public appComponent: AppComponent,
@@ -46,20 +46,20 @@ export class LoginPage implements OnInit {
       this.loginData.senha = 'japa1966';
     }
 
-    if (localStorage.getItem("token")) {
-      this.isLoggedIn = JSON.parse(localStorage.getItem("isLoggedIn"));
-      this.foto = localStorage.getItem("foto");
-      this.usuarioLogado = localStorage.getItem("nome");
-      this.loginData.login = localStorage.getItem("login");
+    if (localStorage.getItem('token')) {
+      this.isLoggedIn = JSON.parse(localStorage.getItem('isLoggedIn'));
+      this.foto = localStorage.getItem('foto');
+      this.usuarioLogado = localStorage.getItem('nome');
+      this.loginData.login = localStorage.getItem('login');
 
-      if (localStorage.getItem("foto") === 'null') {
+      if (localStorage.getItem('foto') === 'null') {
         this.noPhoto = true;
       }
     }
   }
 
   ngOnInit() {
-    console.log("ngOnInit");
+    console.log('ngOnInit');
   }
 
   ionViewWillEnter() {
@@ -84,12 +84,12 @@ export class LoginPage implements OnInit {
   }
 
   async entrar() {
-    await this.common.showLoader()
+    await this.common.showLoader();
 
     this.authService.login(this.loginData.login.toUpperCase(), this.loginData.senha).then((result) => {
       this.common.loading.dismiss();
       this.data = result;
-      console.log("entrou aqui");
+      console.log('entrou aqui');
 
       if (this.data.status == 'OK') {
         this.common.showAlert(this.data.title, this.data.detail);
@@ -102,7 +102,7 @@ export class LoginPage implements OnInit {
         localStorage.setItem('nome', this.data.nomeDisplay);
         localStorage.setItem('isLoggedIn', 'true');
 
-        if (localStorage.getItem("foto") === 'null') {
+        if (localStorage.getItem('foto') === 'null') {
           this.noPhoto = true;
         }
 
@@ -116,13 +116,13 @@ export class LoginPage implements OnInit {
       this.isLoggedIn = false;
       this.common.loading.dismiss();
       this.loginData.senha = '';
-      console.log("Erro!");
+      console.log('Erro!');
       console.log(error.error);
 
-      if (error.error.tittle != "" && error.error.detail != "") {
+      if (error.error.tittle != '' && error.error.detail != '') {
         this.common.showAlert(error.error.title, error.error.detail);
       } else {
-        this.common.showAlert("Ops!", JSON.stringify(error));
+        this.common.showAlert('Ops!', JSON.stringify(error));
       }
     });
 
@@ -131,7 +131,7 @@ export class LoginPage implements OnInit {
   logout() {
     this.isLoggedIn = false;
 
-    if (localStorage.getItem("token")) {
+    if (localStorage.getItem('token')) {
       localStorage.clear();
     }
   }

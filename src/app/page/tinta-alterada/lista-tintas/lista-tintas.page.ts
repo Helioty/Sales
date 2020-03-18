@@ -19,18 +19,18 @@ export class ListaTintasPage implements OnInit {
 
   ngOnInit() {
     this.activatedRoute.queryParams.subscribe(params => {
-      this.tintas = JSON.parse(params["tintas"]);
+      this.tintas = JSON.parse(params['tintas']);
     });
   }
 
   ionViewWillEnter() {
-    console.log("ionViewWillEnter")
-    this.common.goToFullScreen()
+    console.log('ionViewWillEnter');
+    this.common.goToFullScreen();
   }
 
   ionViewDidEnter() {
-    console.log("ionViewDidEnter");
-    this.common.goToFullScreen()
+    console.log('ionViewDidEnter');
+    this.common.goToFullScreen();
   }
 
 }
