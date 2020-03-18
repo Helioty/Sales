@@ -12,12 +12,12 @@ import { PedidoTable, PedidoItens } from 'src/app/class/pedido';
 export class PedidoService {
 
   public tipoConexao: string;
-  public exibeBotaoComprar: boolean = false;
-  public executaPedidoRapido: boolean = false;
-  public alteracaoItemPedido: boolean = false;
+  public exibeBotaoComprar = false;
+  public executaPedidoRapido = false;
+  public alteracaoItemPedido = false;
 
-  public noCard: boolean = false;
-  public enderecoSelected: boolean = false;
+  public noCard = false;
+  public enderecoSelected = false;
   public valorFrete = 0;
 
 
@@ -32,12 +32,12 @@ export class PedidoService {
   public codigoTipoRetirada: string;
 
   public ItensPedidoAdd: any;
-  public nomeCliente: string = '';
+  public nomeCliente = '';
 
 
   // PEDIDO EM MANUTENÇÃO
   public numPedido = '0'; // Numero do pedido em manutenção.
-  public digitoPedido;
+  public digitoPedido: string;
   public pedidoHeader: any; // Todos os principais dados do pedido em manutenção.
   public tipoRetirada; // Tipo de retirada do pedido em manutenção.
   public tipoDocumento: any;
@@ -153,7 +153,7 @@ export class PedidoService {
       this.pedidoHeader = result;
       this.cardSelected = true;
       this.codigoCartaoPedido = codCard;
-      this.common.showToast('Cartão Pedido Adicionado com sucesso!');
+      this.common.showToast('Cartão Pedido Adicionado!');
     }, (error: any) => {
       this.cardSelected = false;
       this.codigoCartaoPedido = '';

@@ -3,10 +3,24 @@
     width: 100% !important;
 }
 
-ion-slides {
-    height: 100% !important;
-
-    ion-slide {
+ion-content {
+    ion-slides {
         height: 100% !important;
+    
+        ion-slide {
+            height: 100% !important;
+        }
+    }
+}
+
+ion-footer {
+    ion-item {
+        width: 100% !important;
+        margin: auto !important;
+
+        ion-text {
+            margin: auto !important;
+            font-size: 110%;
+        }
     }
 }

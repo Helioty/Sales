@@ -12,6 +12,8 @@
 
     </ion-searchbar>
   </ion-toolbar>
+  
+  <ion-progress-bar type="indeterminate" color="success" *ngIf="progressBar"></ion-progress-bar>
 </ion-header>
 
 <ion-content>
@@ -22,14 +24,14 @@
     </ion-slide>
 
     <ion-slide>
-       
+
     </ion-slide>
   </ion-slides>
-  
+
 </ion-content>
 
-<ion-footer>
-  <ion-grid>
-    
-  </ion-grid>
+<ion-footer *ngIf="!modoConsulta">
+  <ion-item button lines="none" color="fc-button-green">
+    <ion-text>FINALIZAR</ion-text>
+  </ion-item>
 </ion-footer>

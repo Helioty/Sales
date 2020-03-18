@@ -130,4 +130,35 @@ export class PedidoSacolaPage implements OnInit {
     this.navControl.navigateForward(['/cliente'], navigationExtras);
   }
 
+  // by Hélio 11/03/2020
+  async removerProduto(produto: any) {
+    const alert = await this.alertCtrl.create({
+      header: 'Remover produto',
+      message: 'Tem certeza que deseja remover o produto ' + produto.descricao + ' do pedido?',
+      buttons: [{
+        text: 'CANCELAR',
+        role: 'cancel'
+      }, {
+        text: 'REMOVER',
+        handler: () => {
+          this.deleteItemPedido(produto.idProduto);
+        }
+      }]
+    });
+    alert.onDidDismiss().finally(() => { this.focusPlay(); });
+    await alert.present().then(() => {
+      this.focusPause();
+    });
+  }
+
+  async deleteItemPedido(codigoProduto: string) {
+    await this.pedidoService.removeItemPedido(codigoProduto).then((result: any) => {
+      this.common.showToast(result.msg);
+    });
+    await this.pedidoService.getItemPedido().then((result: any) => {
+      this.itens = result.content;
+      console.log(result);
+    });
+  }
+
 }

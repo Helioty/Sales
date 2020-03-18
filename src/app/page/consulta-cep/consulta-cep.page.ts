@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { CommonService } from 'src/app/services/common/common.service';
 import { IonSearchbar, IonSlides } from '@ionic/angular';
+import { ActivatedRoute } from '@angular/router';
 
 declare var google: any;
 
@@ -33,7 +34,11 @@ export class ConsultaCepPage implements OnInit {
 
   @ViewChild("searchbar", { static: false }) searchbar: IonSearchbar;
 
+  public modoConsulta = true; // controla o modo da pagina se é apenas consulta ou não.
+  public progressBar = false; // controla o a barra de progresso.
+
   constructor(
+    private router: ActivatedRoute,
     public common: CommonService,
     private geolocation: Geolocation,
   ) {
@@ -42,7 +47,12 @@ export class ConsultaCepPage implements OnInit {
   }
 
   ngOnInit() {
-
+    this.router.paramMap.subscribe((params: any) => {
+      console.log(params.params.mode);
+      if (params.params.mode !== 'consulta') {
+        this.modoConsulta = false;
+      }
+    });
   }
 
   ionViewWillEnter() {

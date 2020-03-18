@@ -19,7 +19,7 @@
         <ion-badge color="success" class="badge-position" *ngIf="pedidoService.clientSelected">✔</ion-badge>
       </ion-button>
 
-      <ion-button *ngIf="pedidoService.qtdItensSacola > 0">
+      <ion-button *ngIf="pedidoService.qtdItensSacola > 0" [routerLink]="['/pedido-sacola']" routerDirection="forward">
         <ion-icon name="basket"></ion-icon>
         <ion-badge color="fc-cinza-vermelho" class="badge-position">
           {{ pedidoService.qtdItensSacola }}
@@ -73,7 +73,8 @@
               </ion-col>
 
               <ion-col size="6">
-                <ion-card [routerLink]="['/pedido-rapido']" routerDirection="forward" [disabled]="pedidoService.tipoRetirada != 'IMEDIATA'">
+                <ion-card [routerLink]="['/pedido-rapido']" routerDirection="forward"
+                  [disabled]="pedidoService.tipoRetirada != 'IMEDIATA'">
                   <ion-card-header>
                     <ion-button disabled="true" fill="clear" style="opacity: 1 !important;">
                       <ion-icon slot="icon-only" name="speedometer-outline"></ion-icon>
