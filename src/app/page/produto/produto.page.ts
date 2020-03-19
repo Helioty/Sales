@@ -33,7 +33,7 @@ export class ProdutoPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    // this.getProdutoInformacao('40464550');
+    this.getProdutoInformacao('40464550');
   }
 
   ionViewWillEnter() {
