@@ -82,6 +82,8 @@ export class BaseService {
           this.common.showAlert('Atenção!', JSON.stringify(error));
         }
       }
+    } else if (error.status === 0) {
+      this.common.showAlert(error.statusText, error.message);
     } else {
       if (error.error.detail) {
         this.common.showAlert(error.error.title, error.error.detail);

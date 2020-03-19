@@ -1,0 +1,21 @@
+ion-content {
+    ion-slides {
+        width: 100% !important;
+        height: 100% !important;
+
+        ion-slide {
+            width: 100% !important;
+            height: 100% !important;
+        }
+    }
+}
+
+ion-footer {
+    padding: 5px !important;
+    background: #F4F4F4;
+    ion-slides {
+        ion-slide {
+            background-color: #FFF;
+        }
+    }
+}

@@ -55,11 +55,13 @@ const routes: Routes = [
   },
   {
     path: 'produto-imagens',
-    loadChildren: './page/produto/produto-imagens/produto-imagens.module#ProdutoImagensPageModule'
+    loadChildren: './page/produto/produto-imagens/produto-imagens.module#ProdutoImagensPageModule',
+    canActivate: [AuthGuard]
   },
   {
     path: 'produto-detalhes',
-    loadChildren: './page/produto/produto-detalhes/produto-detalhes.module#ProdutoDetalhesPageModule'
+    loadChildren: './page/produto/produto-detalhes/produto-detalhes.module#ProdutoDetalhesPageModule',
+    canActivate: [AuthGuard]
   },
 
 

@@ -18,49 +18,49 @@
 </ion-header>
 
 <ion-content color="cinza">
-  <ion-grid>
-    <ion-row>
-      <ion-col size="12">
-        <ion-item lines="none" button="true" [disabled]="disableButton" (click)="openPesquisaProduto('0')">
-          <ion-thumbnail slot="start">
-            <ion-img src="..\..\..\assets\images\07-formas_de_retirada\imediata.png"></ion-img>
-          </ion-thumbnail>
+  <ion-grid style="height: 100%;">
+    <ion-row style="height: 100%;">
+      <ion-col size="12" style="margin: auto;">
+        <ion-row>
+          <ion-col size="12">
+            <ion-item lines="none" button="true" [disabled]="disableButton" (click)="openPesquisaProduto('0')">
+              <ion-thumbnail slot="start">
+                <ion-img src="..\..\..\assets\images\07-formas_de_retirada\imediata.png"></ion-img>
+              </ion-thumbnail>
 
-          <ion-label>
-            <span style="font-weight: bold">Imediata</span>
-            <p style="white-space: normal;">Retirada imediata dos produtos pelo cliente.</p>
-          </ion-label>
-        </ion-item>
-      </ion-col>
-    </ion-row>
+              <ion-label>
+                <span style="font-weight: bold">Imediata</span>
+                <p style="white-space: normal;">Retirada imediata dos produtos pelo cliente.</p>
+              </ion-label>
+            </ion-item>
+          </ion-col>
 
-    <ion-row>
-      <ion-col size="12">
-        <ion-item lines="none" button="true" [disabled]="disableButton" (click)="openPesquisaProduto('1')">
-          <ion-thumbnail slot="start">
-            <ion-img src="..\..\..\assets\images\07-formas_de_retirada\posterior.png"></ion-img>
-          </ion-thumbnail>
+          <ion-col size="12">
+            <ion-item lines="none" button="true" [disabled]="disableButton" (click)="openPesquisaProduto('1')">
+              <ion-thumbnail slot="start">
+                <ion-img src="..\..\..\assets\images\07-formas_de_retirada\posterior.png"></ion-img>
+              </ion-thumbnail>
 
-          <ion-label>
-            <span style="font-weight: bold">Posterior</span>
-            <p style="white-space: normal;">Retirada posterior dos produtos pelo cliente.</p>
-          </ion-label>
-        </ion-item>
-      </ion-col>
-    </ion-row>
+              <ion-label>
+                <span style="font-weight: bold">Posterior</span>
+                <p style="white-space: normal;">Retirada posterior dos produtos pelo cliente.</p>
+              </ion-label>
+            </ion-item>
+          </ion-col>
 
-    <ion-row>
-      <ion-col size="12">
-        <ion-item lines="none" button="true" [disabled]="disableButton" (click)="openPesquisaProduto('2')">
-          <ion-thumbnail slot="start">
-            <ion-img src="..\..\..\assets\images\07-formas_de_retirada\entrega.png"></ion-img>
-          </ion-thumbnail>
+          <ion-col size="12">
+            <ion-item lines="none" button="true" [disabled]="disableButton" (click)="openPesquisaProduto('2')">
+              <ion-thumbnail slot="start">
+                <ion-img src="..\..\..\assets\images\07-formas_de_retirada\entrega.png"></ion-img>
+              </ion-thumbnail>
 
-          <ion-label>
-            <span style="font-weight: bold">Entrega</span>
-            <p style="white-space: normal;">Entrega posterior dos produtos no endereço do cliente.</p>
-          </ion-label>
-        </ion-item>
+              <ion-label>
+                <span style="font-weight: bold">Entrega</span>
+                <p style="white-space: normal;">Entrega posterior dos produtos no endereço do cliente.</p>
+              </ion-label>
+            </ion-item>
+          </ion-col>
+        </ion-row>
       </ion-col>
     </ion-row>
   </ion-grid>

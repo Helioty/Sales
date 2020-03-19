@@ -3,6 +3,7 @@ import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { AuthGuard } from '../../guards/auth.guard';
 import { API_URL } from 'src/app/config/app.config.service';
 import { ENV } from 'src/environments/environment';
+import { BaseService } from '../base-service.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +12,7 @@ export class AuthService {
 
   constructor(
     private authGuard: AuthGuard,
+    private base: BaseService,
     private http: HttpClient
   ) { }
 
@@ -26,7 +28,7 @@ export class AuthService {
         console.log(result);
         resolve(result);
       }, (error) => {
-        console.log(error);
+        this.base.showError(error);
         reject(error);
       });
     });

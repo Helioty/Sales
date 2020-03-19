@@ -14,7 +14,6 @@ import { HideKeyboardModule } from 'hide-keyboard';
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { AppConfigService } from 'src/app/config/app.config.service';
-import { DataService } from './services/data.service';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -42,7 +41,6 @@ console.log(ENV.mode);
     AndroidFullScreen,
     AppConfigService,
     AppVersion,
-    DataService,
     StatusBar,
     SplashScreen,
     Network,

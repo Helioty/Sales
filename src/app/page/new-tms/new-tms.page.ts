@@ -60,20 +60,20 @@ export class NewTMSPage implements OnInit {
 
   validaNumero(qtd: any) {
     let max = 9999;
-    let running: boolean = false;
+    let running = false;
 
-    //Para evitar conflito entre o blur e o keyup
+    // Para evitar conflito entre o blur e o keyup
     if (running) return;
 
-    //Bloqueia multiplas chamadas do blur e keyup
+    // Bloqueia multiplas chamadas do blur e keyup
     running = true;
 
-    //Se o input for maior que max ele irá fixa o valor maximo no value
+    // Se o input for maior que max ele irá fixa o valor maximo no value
     if (parseFloat(qtd) > max) {
       this.qtdEntrega = max;
     }
 
-    //Habilita novamente as chamadas do blur e keyup
+    // Habilita novamente as chamadas do blur e keyup
     running = false;
   }
 

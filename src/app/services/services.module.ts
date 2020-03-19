@@ -5,6 +5,7 @@ import { AuthService } from './auth/auth.service';
 import { BaseService } from './base-service.service';
 import { ClienteService } from './cliente/cliente.service';
 import { CommonService } from './common/common.service';
+import { DataService } from './data/data.service';
 import { PedidoService } from './pedido/pedido.service';
 import { ProdutoService } from './produto/produto.service';
 
@@ -19,6 +20,7 @@ import { ProdutoService } from './produto/produto.service';
     BaseService,
     ClienteService,
     CommonService,
+    DataService,
     PedidoService,
     ProdutoService
   ]

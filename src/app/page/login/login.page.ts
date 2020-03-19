@@ -37,13 +37,13 @@ export class LoginPage implements OnInit {
     private router: Router
   ) {
 
-    // this.common.showToast(ENV.mode)
-    if (ENV.mode == 'Production') {
+    if (ENV.mode === 'Production') {
       this.loginData.login = '';
       this.loginData.senha = '';
     } else {
+      this.common.showToast(ENV.mode);
       this.loginData.login = 'R6543MRM';
-      this.loginData.senha = 'japa1966';
+      this.loginData.senha = 'R6543MRM';
     }
 
     if (localStorage.getItem('token')) {
@@ -91,7 +91,7 @@ export class LoginPage implements OnInit {
       this.data = result;
       console.log('entrou aqui');
 
-      if (this.data.status == 'OK') {
+      if (this.data.status === 'OK') {
         this.common.showAlert(this.data.title, this.data.detail);
       } else {
 
@@ -109,21 +109,12 @@ export class LoginPage implements OnInit {
         this.appComponent.getStatus();
         this.navControl.navigateRoot('/pedido-lista');
         this.common.loading.dismiss();
-
       }
-
     }, (error: any) => {
+      console.log(error);
       this.isLoggedIn = false;
       this.common.loading.dismiss();
       this.loginData.senha = '';
-      console.log('Erro!');
-      console.log(error.error);
-
-      if (error.error.tittle != '' && error.error.detail != '') {
-        this.common.showAlert(error.error.title, error.error.detail);
-      } else {
-        this.common.showAlert('Ops!', JSON.stringify(error));
-      }
     });
 
   }

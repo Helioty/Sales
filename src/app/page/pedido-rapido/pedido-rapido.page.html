@@ -11,7 +11,8 @@
 <ion-content>
   <input id="scanner" hideKeyboard class="scanner" [(ngModel)]="valorScanner" (keyup.enter)="scaneado($event)">
 
-  <ion-button (click)="addItem('40464550')">teste de pedido rapido</ion-button>
+  <ion-input #teste></ion-input>
+  <ion-button (click)="addItem(teste.value)">teste de pedido rapido</ion-button>
 
   <ion-grid *ngIf="itens.length == 0" class="noItens">
     <ion-row class="topHeading">

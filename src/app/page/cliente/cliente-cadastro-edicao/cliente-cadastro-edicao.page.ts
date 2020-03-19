@@ -53,21 +53,21 @@ export class ClienteCadastroEdicaoPage implements OnInit {
 
   ngOnInit() {
     this.slides.lockSwipes(true);
-    this.activatedRoute.queryParams.subscribe(params => {
-      this.situacao = params['situacao'];
-      this.cliente = params['cliente'];
+    this.activatedRoute.queryParams.subscribe((params: any) => {
+      this.situacao = params.situacao;
+      this.cliente = params.cliente;
     });
   }
 
   ionViewWillEnter() {
     this.common.goToFullScreen();
-    if (this.situacao == 'edicao') {
-      this.activatedRoute.queryParams.subscribe(params => {
-        this.clienteDadosOld = JSON.parse(params['dados']);
+    if (this.situacao === 'edicao') {
+      this.activatedRoute.queryParams.subscribe((params: any) => {
+        this.clienteDadosOld = JSON.parse(params.dados);
       });
       console.log(this.clienteDadosOld);
     } else {
-      
+
     }
   }
 

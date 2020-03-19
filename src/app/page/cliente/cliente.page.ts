@@ -55,9 +55,9 @@ export class ClientePage implements OnInit {
 
   ionViewWillEnter() {
     this.common.goToFullScreen();
-    if (this.pedidoService.clientSelected && this.pedidoService.docCliente != '') {
+    if (this.pedidoService.clientSelected && this.pedidoService.docCliente !== '') {
       this.getClienteAntesSelecionado();
-    } else if (this.valorDigitado == '') {
+    } else if (this.valorDigitado === '') {
       this.setEstado('reset');
     }
   }
@@ -91,7 +91,7 @@ export class ClientePage implements OnInit {
   async getClienteAntesSelecionado() {
     this.dados = await this.pedidoService.retornaDadosCliente();
     this.valorDigitado = this.common.formataCPFNPJ(this.pedidoService.docCliente);
-    this.isCNPJ = this.dados.natureza != 'FISICA';
+    this.isCNPJ = this.dados.natureza !== 'FISICA';
     this.isActive = this.dados.ativo;
     this.atualizaCadastro = this.dados.atualizaCadastro;
     this.showDados(this.dados);
@@ -132,8 +132,8 @@ export class ClientePage implements OnInit {
   // mascara dinamica
   dynamicMask(inputName: string) {
     if (this.valorDigitado.length > 2) {
-      if (inputName == 'cli') {
-        if (this.valorDigitado != '' || this.valorDigitado != undefined) {
+      if (inputName === 'cli') {
+        if (this.valorDigitado !== '' || this.valorDigitado !== undefined) {
           this.valorDigitado = this.common.formataCPFNPJ(this.valorDigitado);
         }
       }
@@ -200,10 +200,10 @@ export class ClientePage implements OnInit {
     const link: string = ENV.WS_CRM + API_URL + 'cliente/' + doc;
     await this.baseService.get(link).then((result: any) => {
       this.dados = result;
-      console.log('DADOS DO CLIENTE')
+      console.log('DADOS DO CLIENTE');
       console.log(this.dados);
-      if (this.dados != undefined || this.dados != [] || this.dados != '') {
-        this.isCNPJ = this.dados.natureza != 'FISICA';
+      if (this.dados !== undefined || this.dados !== [] || this.dados !== '') {
+        this.isCNPJ = this.dados.natureza !== 'FISICA';
         this.isActive = this.dados.ativo;
         this.atualizaCadastro = this.dados.atualizaCadastro;
         this.showDados(this.dados);
@@ -212,8 +212,7 @@ export class ClientePage implements OnInit {
         } else {
           this.setEstado('confirmacao');
         }
-      }
-      else {
+      } else {
         this.dados = undefined;
         this.skeletonAni = false;
       }
@@ -222,8 +221,7 @@ export class ClientePage implements OnInit {
         this.mensagem = 'Não encontramos o cadastro do cliente!';
         this.skeletonAni = false;
         this.setEstado('novo');
-      }
-      else {
+      } else {
         this.common.showAlert('Atenção!', 'Falha de processamento, tente novamente !!');
         this.skeletonAni = false;
         this.setEstado('reset');
@@ -235,7 +233,7 @@ export class ClientePage implements OnInit {
     this.dadosShow.nome = dados.nome;
 
     // by Hélio 11/02/2020
-    if (dados.numero != null && dados.numero != undefined) {
+    if (dados.numero !== null && dados.numero !== undefined) {
       this.dadosShow.endereco = dados.endereco + ', ' + dados.numero;
     } else {
       this.dadosShow.endereco = dados.endereco;
@@ -244,7 +242,7 @@ export class ClientePage implements OnInit {
     // by Ryuge 17/09/2019
     if (this.dados.emails.length > 0) {
       const valor0: any = String(dados.emails[0].email_site);
-      if (valor0 != null || valor0 != '') {
+      if (valor0 !== null || valor0 !== '') {
         this.dadosShow.email = dados.emails[0].email_site;
       }
     }
@@ -278,8 +276,7 @@ export class ClientePage implements OnInit {
         }]
       });
       await alert.present();
-    }
-    else {
+    } else {
       this.setEstado('reset');
     }
   }
@@ -311,7 +308,7 @@ export class ClientePage implements OnInit {
         dados: ''
       }
     };
-    if (situacao = 'edicao') {
+    if (situacao === 'edicao') {
       navigationExtras.queryParams.dados = JSON.stringify(this.dados);
     }
     switch (navParams.paginaAnterior) {
@@ -331,8 +328,8 @@ export class ClientePage implements OnInit {
 
   async confirmaCliente() {
     await this.common.showLoader();
-    let doc: string = await this.valorDigitado.replace(/\D/g, '');
-    if (doc != this.pedidoService.docCliente) {
+    const doc: string = await this.valorDigitado.replace(/\D/g, '');
+    if (doc !== this.pedidoService.docCliente) {
       this.pedidoService.adicionarCliente(doc, this.dados).then(() => {
         if (this.pedidoService.clientSelected) {
           this.prosseguir();
@@ -351,8 +348,8 @@ export class ClientePage implements OnInit {
 
   async prosseguir() {
     let paginaSeguinte: any;
-    this.activatedRoute.queryParams.subscribe(params => {
-      paginaSeguinte = params['paginaSeguinte'];
+    this.activatedRoute.queryParams.subscribe((params: any) => {
+      paginaSeguinte = params.paginaSeguinte;
     });
     switch (paginaSeguinte) {
       case 'back':

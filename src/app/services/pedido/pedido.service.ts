@@ -128,7 +128,7 @@ export class PedidoService {
 
   // by Hélio 11/03/2020
   public async alterarTipoRetirada(retirada: string) {
-    if (retirada != this.codigoTipoRetirada) {
+    if (retirada !== this.codigoTipoRetirada) {
       const aResult: any = await this.atualizaPedido('entrega', this.opcaoRetirada[retirada]);
 
       const link: string = ENV.WS_VENDAS + API_URL + 'PedidoVenda/update/' + localStorage.getItem('empresa') + '/' + this.numPedido;

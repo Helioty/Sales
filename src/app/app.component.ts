@@ -25,11 +25,6 @@ export class AppComponent {
       icon: 'location-outline'
     },
     {
-      title: 'New TMS',
-      url: '/new-tms',
-      icon: 'cube'
-    },
-    {
       title: 'Desempenho',
       url: '/indicador-vendedor',
       icon: 'stats-chart'

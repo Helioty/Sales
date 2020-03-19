@@ -52,7 +52,8 @@ ion-content {
 
             ion-thumbnail {
                 margin-right: 0;
-                --size: 45px;
+                height: auto;
+                width: 46px;
             }
 
             ion-grid {
@@ -73,7 +74,7 @@ ion-content {
                         }
                         .produtoPreco {
                             font-size: 15px;
-                            color: red;
+                            color: #C40318;
                             font-weight: bold;
                             padding: 0;
                         }

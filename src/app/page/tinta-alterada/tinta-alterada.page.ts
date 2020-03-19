@@ -35,12 +35,12 @@ export class TintaAlteradaPage implements OnInit {
   }
 
   ionViewWillEnter() {
-    console.log("ionViewWillEnter");
+    console.log('ionViewWillEnter');
     this.common.goToFullScreen();
   }
 
   ionViewDidEnter() {
-    console.log("ionViewDidEnter");
+    console.log('ionViewDidEnter');
     this.common.goToFullScreen();
   }
 
@@ -51,7 +51,7 @@ export class TintaAlteradaPage implements OnInit {
   }
 
   scrollOnFocus() {
-    console.log("scroll");
+    console.log('scroll');
     this.content.scrollToTop();
   }
 
@@ -62,7 +62,7 @@ export class TintaAlteradaPage implements OnInit {
       },
       skipLocationChange: true
     };
-    this.navControl.navigateForward(["/lista-tintas"], navigationExtras)
+    this.navControl.navigateForward(['/lista-tintas'], navigationExtras)
   }
 
 }

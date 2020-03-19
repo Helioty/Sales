@@ -81,7 +81,7 @@ export class PedidoAtalhosPage implements OnInit {
         this.focusPause();
         const codigo: string = evento.target.value;
 
-        if (codigo.substring(0, 1) == 'P') {
+        if (codigo.substring(0, 1) === 'P') {
           this.pedidoService.setCardPedido(codigo);
           this.focusPlay();
         } else {

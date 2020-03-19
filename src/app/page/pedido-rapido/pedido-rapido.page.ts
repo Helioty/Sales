@@ -13,7 +13,7 @@ export class PedidoRapidoPage implements OnInit {
 
   public taskScanner: any;
   public valorScanner: string;
-  public focusStatus: boolean = true;
+  public focusStatus = true;
 
   public itens: any[] = [];
 
@@ -95,7 +95,7 @@ export class PedidoRapidoPage implements OnInit {
         this.focusPause();
         const codigo: string = evento.target.value;
 
-        if (codigo.substring(0, 1) == 'P') {
+        if (codigo.substring(0, 1) === 'P') {
           this.pedidoService.setCardPedido(codigo);
           this.focusPlay();
         } else {
@@ -112,7 +112,7 @@ export class PedidoRapidoPage implements OnInit {
   // edit by Helio 10/03/2020
   addItem(codigo: string) {
     // by Ryuge 27/11/2019 - Não permitir gravar item com pedido = '0';
-    if (this.pedidoService.numPedido != '0' || this.pedidoService.numPedido != undefined) {
+    if (this.pedidoService.numPedido !== '0' || this.pedidoService.numPedido !== undefined) {
       const tipo = this.pedidoService.codigoTipoRetirada;
       const valor = 0;
 
@@ -150,16 +150,16 @@ export class PedidoRapidoPage implements OnInit {
 
       // by Ryuge 27/11/2019
       // controle de requisições para o mesmo produto escaneado
-      if (this.codProdRequest == codigo) {
+      if (this.codProdRequest === codigo) {
         this.numRequest += 1;
         if (this.numRequest <= this.maxRequest) {
-          if (this.pedidoItens.retiradas != [] && this.pedidoItens.idProduto != null || this.pedidoItens.idProduto != '') {
+          if (this.pedidoItens.retiradas !== [] && this.pedidoItens.idProduto !== null || this.pedidoItens.idProduto !== '') {
             this.addItemPedido(this.pedidoItens);
           }
         } else {
           this.common.showToast('Favor aguarde processamento...');
           // by Helio - libera as requisições apos certo periodo
-          if (this.numRequest == this.maxRequest) {
+          if (this.numRequest === this.maxRequest) {
             setTimeout(() => {
               this.numRequest = 0;
             }, 2000);
@@ -168,7 +168,7 @@ export class PedidoRapidoPage implements OnInit {
       } else {
         this.numRequest = 0;
         this.codProdRequest = codigo;
-        if (this.pedidoItens.retiradas != [] && this.pedidoItens.idProduto != null || this.pedidoItens.idProduto != '') {
+        if (this.pedidoItens.retiradas !== [] && this.pedidoItens.idProduto !== null || this.pedidoItens.idProduto !== '') {
           this.addItemPedido(this.pedidoItens);
         }
       }
@@ -177,9 +177,9 @@ export class PedidoRapidoPage implements OnInit {
     } catch (error) {
       this.common.showAlertError('erro no adicionar sacola');
       // by Ryuge 28/11/2019
-      if (error.status == 400) {
+      if (error.status === 400) {
         // await this.showMessage(error.json().title, error.json().detail);
-      } else if (error.status == 503) {
+      } else if (error.status === 503) {
         this.common.showAlert('Atenção!', 'Sem serviço, entrar em contato com suporte.');
       } else {
         if (error.error.detail) {

@@ -15,7 +15,7 @@ export class ConsultaCepPage implements OnInit {
 
   @ViewChild(IonSlides, { static: true }) slides: IonSlides;
 
-  @ViewChild('mapElement', { static: false }) mapElement;
+  @ViewChild('mapElement', { static: false }) mapElement: { nativeElement: any; };
   public map: any;
   public start: string;
   public end: string;
@@ -32,10 +32,20 @@ export class ConsultaCepPage implements OnInit {
   public latLng: any;
 
 
-  @ViewChild("searchbar", { static: false }) searchbar: IonSearchbar;
+  @ViewChild('searchbar', { static: false }) searchbar: IonSearchbar;
 
   public modoConsulta = true; // controla o modo da pagina se é apenas consulta ou não.
   public progressBar = false; // controla o a barra de progresso.
+
+  public enderecoSelecionado = {
+    cep: '',
+    estado: '',
+    endere: '',
+    numero: '',
+    comple: '',
+    bairro: '',
+    cidade: ''
+  };
 
   constructor(
     private router: ActivatedRoute,

@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="primary">
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
@@ -29,6 +29,10 @@
 
 <ion-content>
   <input id="scanner" hideKeyboard class="scanner" [(ngModel)]="valorScanner" (keyup.enter)="scaneado($event)">
+
+  <ion-button (click)="openProdutoDetalhe()" *ngIf="showMoreInfo">teste tela detalhes</ion-button>
+
+  <ion-button (click)="openProdutoImagens('4046455')">teste tela imagens</ion-button>
 </ion-content>
 
 <ion-footer>

@@ -102,7 +102,7 @@ export class PedidoResumoPage implements OnInit {
 
         if (enderecos.length > 0) {
           for (const end of enderecos) {
-            if (end.seq_endereco == this.pedido.seqEnderecoEntrega) {
+            if (end.seq_endereco === this.pedido.seqEnderecoEntrega) {
               this.endereco = end.dsc_endereco;
             }
           }

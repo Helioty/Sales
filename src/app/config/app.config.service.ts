@@ -21,7 +21,7 @@ export class AppConfigService {
     private common: CommonService,
   ) {
 
-    if (ENV.mode == 'Production') {
+    if (ENV.mode === 'Production') {
 
       this.getApiUrl = 'https://publico.api.imb/getUrlServiceOKD';
       this.getURL();

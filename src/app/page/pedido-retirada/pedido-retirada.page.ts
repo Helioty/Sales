@@ -45,7 +45,7 @@ export class PedidoRetiradaPage implements OnInit {
     await this.pedidoService.alterarTipoRetirada(tipoRetirada).then(() => {
       // by Ryuge 14/11/2019
       // edit by Helio 14/02/2020
-      if (this.pedidoService.tipoRetirada == 'ENTREGA') {
+      if (this.pedidoService.tipoRetirada === 'ENTREGA') {
         const navigationExtras: NavigationExtras = {
           queryParams: {
             paginaSeguinte: 'pedido-atalhos',

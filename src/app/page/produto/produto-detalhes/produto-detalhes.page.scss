@@ -1,0 +1,31 @@
+ion-content {
+    ion-grid {
+
+        ion-row.secoes {
+            ion-col {
+                ion-row.secaoDescricao {
+                    p {
+                        margin-top: 12px;
+                        margin-bottom: 6px;
+                    }
+                }
+                
+                ion-row.secaoItem {
+                    p {
+                        font-size: 12px;
+                        margin: 6px 0;
+                    }
+
+                    ion-col.sideItem {
+                        background-color: #F4F4F4;
+
+                    }
+
+                    ion-col.sideValor {
+                        
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AlertController, NavController, Platform } from '@ionic/angular';
 import { CommonService } from 'src/app/services/common/common.service';
+import { DataService } from 'src/app/services/data/data.service';
 import { PedidoService } from 'src/app/services/pedido/pedido.service';
+import { ProdutoService } from 'src/app/services/produto/produto.service';
 import { NavigationExtras } from '@angular/router';
 
 @Component({
@@ -15,16 +17,23 @@ export class ProdutoPage implements OnInit {
   public valorScanner: string;
   public focusStatus = true;
 
+
+  // controla a exibição do botão que leva a tela de mais informações
+  public showMoreInfo = false;
+  private moreInfo = [];
+
   constructor(
     public alertCtrl: AlertController,
     public common: CommonService,
     public pedidoService: PedidoService,
+    private dataService: DataService,
+    private produtoService: ProdutoService,
     private navControl: NavController,
     private platform: Platform,
   ) { }
 
   ngOnInit() {
-
+    // this.getProdutoInformacao('40464550');
   }
 
   ionViewWillEnter() {
@@ -79,7 +88,7 @@ export class ProdutoPage implements OnInit {
         this.focusPause();
         const codigo: string = evento.target.value;
 
-        if (codigo.substring(0, 1) == 'P') {
+        if (codigo.substring(0, 1) === 'P') {
           this.pedidoService.setCardPedido(codigo);
           this.focusPlay();
         } else {
@@ -115,7 +124,7 @@ export class ProdutoPage implements OnInit {
     });
   }
 
-  async openClientePage() {
+  openClientePage() {
     const navigationExtras: NavigationExtras = {
       queryParams: {
         paginaSeguinte: 'back',
@@ -124,5 +133,47 @@ export class ProdutoPage implements OnInit {
     };
     this.navControl.navigateForward(['/cliente'], navigationExtras);
   }
+
+  // pega as informações do produto
+  async getProdutoInformacao(codigo: string) {
+    this.produtoService.getProductInfomation(codigo).then((result: any) => {
+      console.log(result);
+      this.showMoreInfo = (result.items.length > 0);
+      this.moreInfo = result.items;
+    }, (error) => {
+      console.log(error);
+    });
+  }
+
+  openProdutoDetalhe() {
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        produto: 'produtoObject',
+        info: 'produtoInformacao'
+      }
+    };
+    this.dataService.setData('produto', '40464550');
+    this.dataService.setData('produtoInformacao', this.moreInfo);
+    this.navControl.navigateForward(['/produto-detalhes'], navigationExtras);
+  }
+ 
+  async openProdutoImagens(codigoNoEmbalagem: string) {
+    await this.common.showLoader();
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        dataId: 'produtoListImage'
+      }
+    };
+    await this.produtoService.getAllListImage(codigoNoEmbalagem).then((result: any) => {
+      // console.log(result);
+      this.dataService.setData('produtoListImage', result);
+      this.navControl.navigateForward(['/produto-imagens'], navigationExtras);
+      this.common.loading.dismiss();
+    }, (error) => {
+      console.log(error);
+      this.common.loading.dismiss();
+    });
+  }
+
 
 }

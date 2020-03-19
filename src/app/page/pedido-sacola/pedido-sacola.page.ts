@@ -13,7 +13,7 @@ export class PedidoSacolaPage implements OnInit {
 
   public taskScanner: any;
   public valorScanner: string;
-  public focusStatus: boolean = true;
+  public focusStatus = true;
 
   public itens: any[] = [];
 
@@ -84,7 +84,7 @@ export class PedidoSacolaPage implements OnInit {
         this.focusPause();
         const codigo: string = evento.target.value;
 
-        if (codigo.substring(0, 1) == 'P') {
+        if (codigo.substring(0, 1) === 'P') {
           this.pedidoService.setCardPedido(codigo);
           this.focusPlay();
         } else {
