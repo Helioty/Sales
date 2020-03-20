@@ -18,8 +18,8 @@ export class ListaTintasPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.activatedRoute.queryParams.subscribe(params => {
-      this.tintas = JSON.parse(params['tintas']);
+    this.activatedRoute.queryParams.subscribe((params: any) => {
+      this.tintas = JSON.parse(params.tintas);
     });
   }
 

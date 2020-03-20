@@ -59,7 +59,7 @@ export class NewTMSPage implements OnInit {
 
 
   validaNumero(qtd: any) {
-    let max = 9999;
+    const max = 9999;
     let running = false;
 
     // Para evitar conflito entre o blur e o keyup

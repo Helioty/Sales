@@ -9,7 +9,7 @@ export class FormatarStringPipe implements PipeTransform {
     const filter = args[0];
     const mask: any = args[1];
 
-    if (filter == 'VALOR-PADRAO') {
+    if (filter === 'VALOR-PADRAO') {
       // return this.currencycomma(value);
       return new Intl.NumberFormat('pt-BR', {
         style: 'decimal',
@@ -22,7 +22,7 @@ export class FormatarStringPipe implements PipeTransform {
         currency: 'BRL'
       }).format(value);
     } else if (filter === 'PERCENT') {
-      let val = value.toFixed(mask);
+      const val = value.toFixed(mask);
       return val + '%';
     } else if (filter === 'CPFCGC') {
       value = value.toString();
@@ -75,7 +75,7 @@ export class FormatarStringPipe implements PipeTransform {
   }
 
   private splited(str: string, idx) {
-    let fulltext = str.split('|');
+    const fulltext = str.split('|');
     return fulltext[idx];
   }
 

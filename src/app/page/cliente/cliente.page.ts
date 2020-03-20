@@ -2,11 +2,11 @@ import { Component, OnInit, ViewChild, Renderer } from '@angular/core';
 import { IonInput, NavController, AlertController } from '@ionic/angular';
 import { CommonService } from 'src/app/services/common/common.service';
 import { BaseService } from 'src/app/services/base-service.service';
+import { ClienteService } from 'src/app/services/cliente/cliente.service';
 import { PedidoService } from 'src/app/services/pedido/pedido.service';
 import { ActivatedRoute, NavigationExtras } from '@angular/router';
-
-import { ENV } from 'src/environments/environment';
 import { API_URL } from 'src/app/config/app.config.service';
+import { ENV } from 'src/environments/environment';
 
 @Component({
   selector: 'app-cliente',
@@ -44,6 +44,7 @@ export class ClientePage implements OnInit {
     private alertCtrl: AlertController,
     private common: CommonService,
     private baseService: BaseService,
+    private clienteService: ClienteService,
     private navControl: NavController,
     private pedidoService: PedidoService,
     private renderer: Renderer
@@ -197,8 +198,8 @@ export class ClientePage implements OnInit {
   // Chamada de cliente.
   async getCliente(doc: string) {
     this.skeletonAni = true;
-    const link: string = ENV.WS_CRM + API_URL + 'cliente/' + doc;
-    await this.baseService.get(link).then((result: any) => {
+
+    await this.clienteService.getCliente(doc).then((result: any) => {
       this.dados = result;
       console.log('DADOS DO CLIENTE');
       console.log(this.dados);
@@ -222,7 +223,6 @@ export class ClientePage implements OnInit {
         this.skeletonAni = false;
         this.setEstado('novo');
       } else {
-        this.common.showAlert('Atenção!', 'Falha de processamento, tente novamente !!');
         this.skeletonAni = false;
         this.setEstado('reset');
       }
@@ -299,7 +299,7 @@ export class ClientePage implements OnInit {
 
   // by Hélio 14/02/2020, controla a navegação para a tela de cadastro/edição
   async toCadastroEdicao(navParams: any, situacao: string) {
-    let navigationExtras: NavigationExtras = {
+    const navigationExtras: NavigationExtras = {
       queryParams: {
         paginaSeguinte: '',
         paginaAnterior: '',
@@ -328,7 +328,7 @@ export class ClientePage implements OnInit {
 
   async confirmaCliente() {
     await this.common.showLoader();
-    const doc: string = await this.valorDigitado.replace(/\D/g, '');
+    const doc: string = this.valorDigitado.replace(/\D/g, '');
     if (doc !== this.pedidoService.docCliente) {
       this.pedidoService.adicionarCliente(doc, this.dados).then(() => {
         if (this.pedidoService.clientSelected) {

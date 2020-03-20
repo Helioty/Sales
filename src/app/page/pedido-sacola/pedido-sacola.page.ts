@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AlertController, NavController, Platform } from '@ionic/angular';
 import { CommonService } from 'src/app/services/common/common.service';
 import { PedidoService } from 'src/app/services/pedido/pedido.service';
+import { PedidoItemService } from 'src/app/services/pedido/pedido-item.service';
 import { NavigationExtras } from '@angular/router';
 
 @Component({
@@ -21,12 +22,13 @@ export class PedidoSacolaPage implements OnInit {
     private alertCtrl: AlertController,
     public common: CommonService,
     public pedidoService: PedidoService,
+    public pedidoItemService: PedidoItemService,
     private navControl: NavController,
     private platform: Platform,
   ) { }
 
   async ngOnInit() {
-    await this.pedidoService.getItemPedido().then((result: any) => {
+    await this.pedidoItemService.getItemPedido().then((result: any) => {
       this.itens = result.content;
       console.log(result);
     });
@@ -152,10 +154,10 @@ export class PedidoSacolaPage implements OnInit {
   }
 
   async deleteItemPedido(codigoProduto: string) {
-    await this.pedidoService.removeItemPedido(codigoProduto).then((result: any) => {
+    await this.pedidoItemService.removeItemPedido(codigoProduto).then((result: any) => {
       this.common.showToast(result.msg);
     });
-    await this.pedidoService.getItemPedido().then((result: any) => {
+    await this.pedidoItemService.getItemPedido().then((result: any) => {
       this.itens = result.content;
       console.log(result);
     });

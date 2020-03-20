@@ -97,9 +97,9 @@ export class PedidoFinalizadoPage implements OnInit {
       }
       console.log(this.pedidos);
       this.showSkeleton = false;
-    }), (error: any) => {
+    }, (error: any) => {
       console.log(error);
-    };
+    });
   }
 
   openSlide(itemSlide: IonItemSliding) {

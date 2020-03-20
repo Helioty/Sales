@@ -39,7 +39,7 @@ export class AppComponent {
 
   public foto: any;
   public nome: any;
-  public noPhoto: boolean = false;
+  public noPhoto = false;
 
   constructor(
     private authGuard: AuthGuard,
@@ -65,14 +65,14 @@ export class AppComponent {
 
   buttonAction(page: any) {
     switch (page.title) {
-      case ('Logout'): {
+      case ('Logout'):
         this.showAlertLogout();
-      } break;
+        break;
 
-      default: {
+      default:
         console.log('default of button Action!');
         this.navControl.navigateRoot([page.url]);
-      }
+        break;
     }
   }
 
@@ -103,7 +103,7 @@ export class AppComponent {
         this.nome = localStorage.getItem('nome');
       }
 
-      if (localStorage.getItem('foto') != 'null' && localStorage.getItem('foto') != undefined) {
+      if (localStorage.getItem('foto') !== 'null' && localStorage.getItem('foto') !== undefined) {
         this.noPhoto = true;
       }
 

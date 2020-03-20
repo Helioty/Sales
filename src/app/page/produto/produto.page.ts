@@ -156,7 +156,7 @@ export class ProdutoPage implements OnInit {
     this.dataService.setData('produtoInformacao', this.moreInfo);
     this.navControl.navigateForward(['/produto-detalhes'], navigationExtras);
   }
- 
+
   async openProdutoImagens(codigoNoEmbalagem: string) {
     await this.common.showLoader();
     const navigationExtras: NavigationExtras = {

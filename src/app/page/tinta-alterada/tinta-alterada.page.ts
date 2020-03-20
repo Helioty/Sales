@@ -62,7 +62,7 @@ export class TintaAlteradaPage implements OnInit {
       },
       skipLocationChange: true
     };
-    this.navControl.navigateForward(['/lista-tintas'], navigationExtras)
+    this.navControl.navigateForward(['/lista-tintas'], navigationExtras);
   }
 
 }

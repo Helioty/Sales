@@ -39,8 +39,8 @@ export class PedidoResumoPage implements OnInit {
 
   async ionViewWillEnter() {
     this.common.goToFullScreen();
-    this.activatedRoute.queryParams.subscribe(params => {
-      this.pedido = JSON.parse(params['pedido']);
+    this.activatedRoute.queryParams.subscribe((params: any) => {
+      this.pedido = JSON.parse(params.pedido);
     });
     await this.separaDadosPedido();
     console.log(this.pedido);

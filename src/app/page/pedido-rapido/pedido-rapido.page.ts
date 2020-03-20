@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { PedidoService } from 'src/app/services/pedido/pedido.service';
 import { NavController, Platform, AlertController } from '@ionic/angular';
 import { CommonService } from 'src/app/services/common/common.service';
+import { PedidoService } from 'src/app/services/pedido/pedido.service';
+import { PedidoItemService } from 'src/app/services/pedido/pedido-item.service';
 import { PedidoItens, Retiradas } from 'src/app/class/pedido';
 
 @Component({
@@ -29,13 +30,14 @@ export class PedidoRapidoPage implements OnInit {
   constructor(
     public common: CommonService,
     public pedidoService: PedidoService,
+    public pedidoItemService: PedidoItemService,
     private alertCtrl: AlertController,
     private navControl: NavController,
     private platform: Platform,
   ) { }
 
   async ngOnInit() {
-    await this.pedidoService.getItemPedido().then((result: any) => {
+    await this.pedidoItemService.getItemPedido().then((result: any) => {
       this.itens = result.content;
       console.log(result);
     });
@@ -194,7 +196,7 @@ export class PedidoRapidoPage implements OnInit {
   // by Ryuge
   // edit by Helio 10/03/2020
   async addItemPedido(body: PedidoItens) {
-    await this.pedidoService.addFast(body).then((result: any) => {
+    await this.pedidoItemService.addFast(body).then((result: any) => {
       this.itens = result.content;
       if (this.numRequest > 1) {
         this.numRequest -= 1;
@@ -232,10 +234,10 @@ export class PedidoRapidoPage implements OnInit {
   }
 
   async deleteItemPedido(codigoProduto: string) {
-    await this.pedidoService.removeItemPedido(codigoProduto).then((result: any) => {
+    await this.pedidoItemService.removeItemPedido(codigoProduto).then((result: any) => {
       this.common.showToast(result.msg);
     });
-    await this.pedidoService.getItemPedido().then((result: any) => {
+    await this.pedidoItemService.getItemPedido().then((result: any) => {
       this.itens = result.content;
       console.log(result);
     });

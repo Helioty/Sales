@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { NavController, AlertController } from '@ionic/angular';
 import { BaseService } from '../base-service.service';
 import { CommonService } from 'src/app/services/common/common.service';
-import { ENV } from 'src/environments/environment';
-import { API_URL } from 'src/app/config/app.config.service';
 import { PedidoTable, PedidoItens } from 'src/app/class/pedido';
+import { API_URL } from 'src/app/config/app.config.service';
+import { ENV } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -36,9 +36,9 @@ export class PedidoService {
 
 
   // PEDIDO EM MANUTENÇÃO
+  public pedidoHeader: any; // Todos os principais dados do pedido em manutenção.
   public numPedido = '0'; // Numero do pedido em manutenção.
   public digitoPedido: string;
-  public pedidoHeader: any; // Todos os principais dados do pedido em manutenção.
   public tipoRetirada; // Tipo de retirada do pedido em manutenção.
   public tipoDocumento: any;
   public qtdItensSacola = 0; // Quantidade de itens do pedido em manutenção.
@@ -84,18 +84,25 @@ export class PedidoService {
   }
 
 
+  // by Helio 20/03/2020
+  public atualizaPedidoHeader(pedidoHeader: any) {
+    this.pedidoHeader = pedidoHeader;
+    this.numPedido = pedidoHeader.numpedido;
+    this.digitoPedido = pedidoHeader.digito;
+    this.tipoRetirada = pedidoHeader.tipoEntrega;
+
+    console.log('PEDIDO HEADER ATUALIZADO');
+    console.log(this.pedidoHeader);
+  }
 
   // by Hélio 06/02/2020
   public criarPedido() {
-    const link: string = ENV.WS_VENDAS + API_URL + 'PedidoVenda/' + localStorage.getItem('empresa') + '/criar';
+    const link = ENV.WS_VENDAS + API_URL + 'PedidoVenda/' + localStorage.getItem('empresa') + '/criar';
+
     return new Promise((resolve, reject) => {
       this.baseService.post(link, {}).then((result: any) => {
-        this.pedidoHeader = result;
-        this.numPedido = this.pedidoHeader.numpedido;
-        this.digitoPedido = this.pedidoHeader.digito;
-        this.tipoRetirada = this.pedidoHeader.tipoEntrega;
-        console.log('NOVO PEDIDO');
-        console.log(this.pedidoHeader);
+        this.atualizaPedidoHeader(result);
+        console.log('Pedido criado!');
         resolve();
       }, (error: any) => {
         console.log(error);
@@ -106,7 +113,7 @@ export class PedidoService {
 
   // edit by Helio 10/03/2020
   public async getPedido(idPedido: string) {
-    const link: string = ENV.WS_VENDAS + API_URL + 'PedidoVenda/' + localStorage.getItem('empresa') + '/' + idPedido;
+    const link = ENV.WS_VENDAS + API_URL + 'PedidoVenda/' + localStorage.getItem('empresa') + '/' + idPedido;
     try {
       await this.baseService.get(link).then((result: any) => {
         return result;
@@ -131,7 +138,10 @@ export class PedidoService {
     if (retirada !== this.codigoTipoRetirada) {
       const aResult: any = await this.atualizaPedido('entrega', this.opcaoRetirada[retirada]);
 
-      const link: string = ENV.WS_VENDAS + API_URL + 'PedidoVenda/update/' + localStorage.getItem('empresa') + '/' + this.numPedido;
+      const link =
+        ENV.WS_VENDAS + API_URL + 'PedidoVenda/update/' +
+        localStorage.getItem('empresa') + '/' + this.numPedido;
+
       return new Promise((resolve, reject) => {
         this.baseService.post(link, aResult).then(() => {
           resolve();
@@ -148,9 +158,12 @@ export class PedidoService {
   public async setCardPedido(codCard: string) {
     const aResult: any = await this.atualizaPedido('cartao_pedido', codCard);
 
-    const link: string = ENV.WS_VENDAS + API_URL + 'PedidoVenda/update/' + localStorage.getItem('empresa') + '/' + this.numPedido;
+    const link =
+      ENV.WS_VENDAS + API_URL + 'PedidoVenda/update/' +
+      localStorage.getItem('empresa') + '/' + this.numPedido;
+
     await this.baseService.post(link, aResult).then((result: any) => {
-      this.pedidoHeader = result;
+      this.atualizaPedidoHeader(result);
       this.cardSelected = true;
       this.codigoCartaoPedido = codCard;
       this.common.showToast('Cartão Pedido Adicionado!');
@@ -165,9 +178,12 @@ export class PedidoService {
   public async adicionarCliente(cgccpf: string, dadosCli: any) {
     const aResult: any = await this.atualizaPedido('cliente', cgccpf);
 
-    const link: string = ENV.WS_VENDAS + API_URL + 'PedidoVenda/update/' + localStorage.getItem('empresa') + '/' + this.numPedido;
+    const link =
+      ENV.WS_VENDAS + API_URL + 'PedidoVenda/update/' +
+      localStorage.getItem('empresa') + '/' + this.numPedido;
+
     await this.baseService.post(link, aResult).then((result: any) => {
-      this.pedidoHeader = result;
+      this.atualizaPedidoHeader(result);
       this.clientSelected = true;
       this.docCliente = cgccpf;
       this.dadosCliente = dadosCli;
@@ -185,9 +201,12 @@ export class PedidoService {
   public async removerCliente() {
     const aResult: any = await this.atualizaPedido('cliente', '');
 
-    const link: string = ENV.WS_VENDAS + API_URL + 'PedidoVenda/update/' + localStorage.getItem('empresa') + '/' + this.numPedido;
+    const link =
+      ENV.WS_VENDAS + API_URL + 'PedidoVenda/update/' +
+      localStorage.getItem('empresa') + '/' + this.numPedido;
+
     await this.baseService.post(link, aResult).then((result: any) => {
-      this.pedidoHeader = result;
+      this.atualizaPedidoHeader(result);
       this.clientSelected = false;
       this.docCliente = '';
       this.dadosCliente = undefined;
@@ -223,7 +242,8 @@ export class PedidoService {
 
   // Apagar pedido, alterado por Hélio 14/02/2020
   public async apagarPedido(pedidoId: any) {
-    const link: string = ENV.WS_VENDAS + API_URL + 'PedidoVenda/' + localStorage.getItem('empresa') + '/' + pedidoId;
+    const link = ENV.WS_VENDAS + API_URL + 'PedidoVenda/' + localStorage.getItem('empresa') + '/' + pedidoId;
+
     await this.baseService.post(link, {}).then(() => {
       this.limpaDadosPedido();
       this.common.showToast('Pedido apagado!');
@@ -231,48 +251,5 @@ export class PedidoService {
       console.log(error);
     });
   }
-
-  // edit by Helio 10/03/2020
-  public getItemPedido() {
-    const link: string = ENV.WS_VENDAS + API_URL + 'PedidoVendaItem/' + localStorage.getItem('empresa') + '/' + this.numPedido + '/itens';
-
-    return new Promise((resolve) => {
-      this.baseService.get(link).then((result: any) => {
-        this.qtdItensSacola = result.totalElements;
-        resolve(result);
-      }, (error: any) => {
-        console.log(error);
-      });
-    });
-  }
-
-  // by Helio 10/03/2020
-  public addFast(body: PedidoItens) {
-    const link: string = ENV.WS_VENDAS + API_URL + 'PedidoVendaItem/' + localStorage.getItem('empresa') + '/' + this.numPedido + '/addfast';
-
-    return new Promise((resolve) => {
-      this.baseService.post(link, body).then((result: any) => {
-        this.pedidoHeader = result.pedido;
-        this.qtdItensSacola = result.items.totalElements;
-        resolve(result.items);
-      }, (error) => {
-        console.log(error);
-      });
-    });
-  }
-
-  // by Helio 11/03/2020
-  public removeItemPedido(codigoProduto: string) {
-    const link: string = ENV.WS_VENDAS + API_URL + 'PedidoVendaItem/' + localStorage.getItem('empresa') + '/' + this.numPedido + '/' + codigoProduto;
-
-    return new Promise((resolve) => {
-      this.baseService.post(link, {}).then((result: any) => {
-        resolve(result);
-      }, (error) => {
-        console.log(error);
-      });
-    });
-  }
-
 
 }
