@@ -17,7 +17,9 @@ export class ClienteService {
     private navControl: NavController
   ) { }
 
-  async getCliente(doc: string) {
+
+  // edit by Helio 20/03/2020, pega as informações do cliente via CPF/CNPJ
+  public getCliente(doc: string) {
     const link = ENV.WS_CRM + API_URL + 'cliente/' + doc;
 
     return new Promise((resolve, reject) => {
@@ -25,6 +27,19 @@ export class ClienteService {
         resolve(result);
       }, (error) => {
         reject(error);
+      });
+    });
+  }
+
+  // by Helio 20/03/2020, usado para pegar as informações do cliente apos reabrir o pedido
+  public getClienteNoAlert(doc: string) {
+    const link = ENV.WS_CRM + API_URL + 'cliente/' + doc;
+
+    return new Promise((resolve, reject) => {
+      this.baseService.getNoShowError(link).then((result: any) => {
+        resolve(result);
+      }, () => {
+        reject();
       });
     });
   }

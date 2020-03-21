@@ -74,7 +74,7 @@
     <ion-row class="clie-input" *ngIf="isBlue">
       <ion-input #input id="input" placeholder="CPF ou CNPJ do cliente" (ionChange)="dynamicMask('cli')"
         [(ngModel)]="valorDigitado" style="margin-bottom: 1px; font-size: 20px;" inputmode="numeric"
-        (ionBlur)="checaMinimo(valorDigitado); common.goToFullScreen()" (keyup.enter)="blur($event)">
+        (ionBlur)="checaMinimo(valorDigitado);" (keyup.enter)="blur($event)">
       </ion-input>
     </ion-row>
 

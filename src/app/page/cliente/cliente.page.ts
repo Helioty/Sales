@@ -18,7 +18,7 @@ export class ClientePage implements OnInit {
   @ViewChild('input', { static: false }) search: IonInput;
 
   // Valor digitado no input de CPF/CNPJ
-  private valorDigitado = '';
+  public valorDigitado = '';
 
   // Controle da animação do skeleton
   public skeletonAni = false;
@@ -36,8 +36,8 @@ export class ClientePage implements OnInit {
   public isActive = '';
 
   // Dados do cliente.
-  private dados: any;
-  private dadosShow: any = { nome: '', endereco: '', celular: '', email: '' };
+  public dados: any;
+  public dadosShow: any = { nome: '', endereco: '', celular: '', email: '' };
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -189,6 +189,7 @@ export class ClientePage implements OnInit {
 
   // Checa o minimo de caracteres necessarios para executar a chamada.
   checaMinimo(doc: string) {
+    this.common.goToFullScreen();
     const clieDoc: string = doc.replace(/\D/g, '');
     if (clieDoc.length > 10) {
       this.getCliente(clieDoc);

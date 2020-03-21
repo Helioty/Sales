@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { NavController, AlertController } from '@ionic/angular';
 import { BaseService } from '../base-service.service';
 import { CommonService } from 'src/app/services/common/common.service';
+import { ClienteService } from 'src/app/services/cliente/cliente.service';
 import { PedidoTable, PedidoItens } from 'src/app/class/pedido';
 import { API_URL } from 'src/app/config/app.config.service';
 import { ENV } from 'src/environments/environment';
@@ -17,7 +18,6 @@ export class PedidoService {
   public alteracaoItemPedido = false;
 
   public noCard = false;
-  public enderecoSelected = false;
   public valorFrete = 0;
 
 
@@ -39,7 +39,7 @@ export class PedidoService {
   public pedidoHeader: any; // Todos os principais dados do pedido em manutenção.
   public numPedido = '0'; // Numero do pedido em manutenção.
   public digitoPedido: string;
-  public tipoRetirada; // Tipo de retirada do pedido em manutenção.
+  public tipoRetirada: string; // Tipo de retirada do pedido em manutenção.
   public tipoDocumento: any;
   public qtdItensSacola = 0; // Quantidade de itens do pedido em manutenção.
 
@@ -50,10 +50,14 @@ export class PedidoService {
   public cardSelected = false; // Verdadeiro se o pedido em manutenção tiver um cartão-pedido selecionado.
   public codigoCartaoPedido = ''; // Codido do cartão-pedido do pedido em manutenção.
 
+  public enderecoSelected = false; // Verdadeiro se o pedido em manutenção tiver um endereco selecionado.
+  public sequencialEndereco = 0;
+
   constructor(
     private alertCtrl: AlertController,
     private baseService: BaseService,
     private common: CommonService,
+    private clienteService: ClienteService,
     private navControl: NavController
   ) { }
 
@@ -89,7 +93,10 @@ export class PedidoService {
     this.pedidoHeader = pedidoHeader;
     this.numPedido = pedidoHeader.numpedido;
     this.digitoPedido = pedidoHeader.digito;
+
     this.tipoRetirada = pedidoHeader.tipoEntrega;
+
+    this.qtdItensSacola = pedidoHeader.numitens;
 
     console.log('PEDIDO HEADER ATUALIZADO');
     console.log(this.pedidoHeader);
@@ -193,8 +200,15 @@ export class PedidoService {
   }
 
   // by Hélio - Retorna os dados do cliente selecionado
-  public retornaDadosCliente() {
-    return this.dadosCliente;
+  public async retornaDadosCliente() {
+    if (this.clientSelected && this.docCliente !== '' && this.dadosCliente == undefined) {
+      await this.clienteService.getClienteNoAlert(this.docCliente).then((result: any) => {
+        this.dadosCliente = result;
+        return this.dadosCliente;
+      }, () => {});
+    } else {
+      return this.dadosCliente;
+    }
   }
 
   // by Hélio 14/02/2020

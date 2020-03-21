@@ -8,6 +8,7 @@ import { CommonService } from './common/common.service';
 import { DataService } from './data/data.service';
 import { PedidoService } from './pedido/pedido.service';
 import { PedidoItemService } from './pedido/pedido-item.service';
+import { PedidoManutencaoService } from './pedido/pedido-manutencao.service';
 import { ProdutoService } from './produto/produto.service';
 
 
@@ -24,6 +25,7 @@ import { ProdutoService } from './produto/produto.service';
     DataService,
     PedidoService,
     PedidoItemService,
+    PedidoManutencaoService,
     ProdutoService
   ]
 })

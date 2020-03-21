@@ -5,7 +5,7 @@ import { ENV } from 'src/environments/environment';
 import { API_URL } from 'src/app/config/app.config.service';
 
 import { CommonService } from 'src/app/services/common/common.service';
-import { BaseService } from '../../../services/base-service.service';
+import { BaseService } from 'src/app/services/base-service.service';
 
 
 @Component({
@@ -30,7 +30,7 @@ export class PedidoResumoPage implements OnInit {
     public baseService: BaseService,
     public common: CommonService,
     private activatedRoute: ActivatedRoute,
-    public router: Router
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -86,7 +86,7 @@ export class PedidoResumoPage implements OnInit {
       // }
       // cabeçalho do pedido
       // item do pedido
-      const link: string = ENV.WS_VENDAS + API_URL + 'PedidoVendaItem/' + localStorage.getItem('empresa') + '/' + nuPedido + '/itens';
+      const link = ENV.WS_VENDAS + API_URL + 'PedidoVendaItem/' + localStorage.getItem('empresa') + '/' + nuPedido + '/itens';
       await this.baseService.get(link).then((result: any) => {
         console.log(result);
         this.pedidoItens = result.content;
@@ -94,7 +94,10 @@ export class PedidoResumoPage implements OnInit {
 
       if (this.pedido.frete.valor > 0) {
         let enderecos: any;
-        const linkEndereco: string = ENV.WS_VENDAS + API_URL + 'PedidoVenda/' + localStorage.getItem('empresa') + '/' + nuPedido + '/listEnderecos';
+        const linkEndereco =
+          ENV.WS_VENDAS + API_URL + 'PedidoVenda/' +
+          localStorage.getItem('empresa') + '/' + nuPedido + '/listEnderecos';
+
         await this.baseService.get(linkEndereco).then((result: any) => {
           console.log(result);
           enderecos = result;
