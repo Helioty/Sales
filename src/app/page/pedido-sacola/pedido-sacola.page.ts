@@ -20,7 +20,7 @@ export class PedidoSacolaPage implements OnInit {
 
   constructor(
     private alertCtrl: AlertController,
-    public common: CommonService,
+    private common: CommonService,
     public pedidoService: PedidoService,
     public pedidoItemService: PedidoItemService,
     private navControl: NavController,
@@ -80,7 +80,7 @@ export class PedidoSacolaPage implements OnInit {
     }, 150);
   }
 
-  async scaneado(evento: any) {
+  scaneado(evento: any) {
     try {
       if (evento.target && evento.target.value.length >= 2) {
         this.focusPause();
@@ -122,7 +122,7 @@ export class PedidoSacolaPage implements OnInit {
     });
   }
 
-  async openClientePage() {
+  openClientePage() {
     const navigationExtras: NavigationExtras = {
       queryParams: {
         paginaSeguinte: 'back',

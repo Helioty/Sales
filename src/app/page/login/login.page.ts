@@ -19,7 +19,7 @@ export class LoginPage implements OnInit {
   public isLoggedIn: boolean;
   public foto: any;
   public usuarioLogado: any;
-  public noPhoto: boolean = false;
+  public noPhoto = false;
 
   loginData = { login: '', senha: '' };
   data: any;

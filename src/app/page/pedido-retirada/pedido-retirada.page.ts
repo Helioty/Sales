@@ -54,13 +54,7 @@ export class PedidoRetiradaPage implements OnInit {
         };
         this.navControl.navigateForward(['/cliente'], navigationExtras);
       } else {
-        const navigationExtras: NavigationExtras = {
-          queryParams: {
-            paginaSeguinte: '',
-            paginaAnterior: 'pedido-retirada'
-          }
-        };
-        this.navControl.navigateRoot(['/pedido-atalhos'], navigationExtras);
+        this.navControl.navigateRoot(['/pedido-atalhos']);
       }
     }, (error) => {
       console.log(error);

@@ -12,6 +12,8 @@ import { ENV } from 'src/environments/environment';
 })
 export class PedidoItemService {
 
+  public pedidoItens: any[] = [];
+
   constructor(
     private alertCtrl: AlertController,
     private baseService: BaseService,
@@ -30,6 +32,7 @@ export class PedidoItemService {
     return new Promise((resolve) => {
       this.baseService.get(link).then((result: any) => {
         this.pedidoService.qtdItensSacola = result.totalElements;
+        this.pedidoItens = result.content;
         resolve(result);
       }, (error: any) => {
         console.log(error);

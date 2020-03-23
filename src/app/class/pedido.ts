@@ -1,3 +1,44 @@
+export class PedidoHeader {
+    recnum: number;
+    cod_empresa: number;
+    numpedido: number;
+    nome_cliente: string;
+    codvend: number;
+    condpag: string;
+    descricao_condpag: string;
+    qtdParcelas: number;
+    msgJuros: string;
+    tipodoc: string;
+    descricao_tipodoc: string;
+    totpedido: number;
+    numitens: number;
+    cgccpf_cliente: string;
+    qtdpages: number;
+    totalElements: number;
+    dataEmissao: string;
+    tipoEntrega: string;
+    status: string;
+    hora: string;
+    seqEnderecoEntrega: number;
+    frete: {};
+    icmsRetido: number;
+    valorTotalPedido: number;
+    digito: number;
+    cartaoPedido: number;
+    barCodecartaoPedido: string;
+    informarCliente: string;
+    pesoTotal: number;
+    descontoBrinde: number;
+    user_allow_desconto: number;
+    valorDesconto: number;
+    percDesconto: number;
+    valorEntrada: number;
+    valorParcela;
+    totalProdutos: number;
+    canalVenda: number;
+    sqltypeName;
+}
+
 export class PedidoCab {
     id: number;
     empresa: string;

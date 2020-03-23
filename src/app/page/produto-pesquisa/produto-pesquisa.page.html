@@ -1,15 +1,15 @@
 <ion-header>
   <ion-toolbar color="fc">
     <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
+      <ion-back-button defaultHref="pedido-atalhos"></ion-back-button>
     </ion-buttons>
 
     <ion-title>Pesquisa</ion-title>
 
     <ion-buttons slot="end">
-      <ion-button [routerLink]="['/pedido-atalhos']" routerDirection="forward">
+      <!-- <ion-button [routerLink]="['/pedido-atalhos']" routerDirection="forward">
         <ion-icon name="apps-sharp"></ion-icon>
-      </ion-button>
+      </ion-button> -->
 
       <ion-button (click)="adicionarCartaoPedido()">
         <ion-icon name="card"></ion-icon>

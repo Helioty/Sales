@@ -3,7 +3,7 @@ import { NavController, AlertController } from '@ionic/angular';
 import { BaseService } from '../base-service.service';
 import { CommonService } from 'src/app/services/common/common.service';
 import { ClienteService } from 'src/app/services/cliente/cliente.service';
-import { PedidoTable, PedidoItens } from 'src/app/class/pedido';
+import { PedidoHeader, PedidoTable, PedidoItens } from 'src/app/class/pedido';
 import { API_URL } from 'src/app/config/app.config.service';
 import { ENV } from 'src/environments/environment';
 
@@ -36,16 +36,16 @@ export class PedidoService {
 
 
   // PEDIDO EM MANUTENÇÃO
-  public pedidoHeader: any; // Todos os principais dados do pedido em manutenção.
+  public pedidoHeader = new PedidoHeader; // Todos os principais dados do pedido em manutenção.
   public numPedido = '0'; // Numero do pedido em manutenção.
-  public digitoPedido: string;
+  public digitoPedido: number;
   public tipoRetirada: string; // Tipo de retirada do pedido em manutenção.
   public tipoDocumento: any;
   public qtdItensSacola = 0; // Quantidade de itens do pedido em manutenção.
 
   public clientSelected = false; // Verdadeiro se o pedido em manutenção tiver um cliente selecionado.
   public docCliente = ''; // CPF/CNPJ do cliente do pedido em manutenção.
-  public dadosCliente: any; // Dados do cliente do pedido em manutenção.
+  public dadosCliente: any = undefined; // Dados do cliente do pedido em manutenção.
 
   public cardSelected = false; // Verdadeiro se o pedido em manutenção tiver um cartão-pedido selecionado.
   public codigoCartaoPedido = ''; // Codido do cartão-pedido do pedido em manutenção.
@@ -63,8 +63,8 @@ export class PedidoService {
 
 
   public limpaDadosPedido() {
-    this.valorFrete = 0;
-    this.enderecoSelected = false;
+    this.pedidoHeader = new PedidoHeader;
+    this.numPedido = '0';
 
     // Limpando cliente do pedido
     this.clientSelected = false;
@@ -75,13 +75,16 @@ export class PedidoService {
     this.cardSelected = false;
     this.codigoCartaoPedido = '';
 
+
+
+    this.valorFrete = 0;
+    this.enderecoSelected = false;
+
     this.alteracaoItemPedido = false;
-    this.digitoPedido = '';
+    this.digitoPedido = null;
     this.sistuacaoPedido = 'N';
     this.tipoDocumento = '';
     this.qtdItensSacola = 0;
-    this.numPedido = '0';
-    this.pedidoHeader = {};
     this.statusPedido = '';
     this.docCliente = '';
     this.nomeCliente = '';
@@ -201,11 +204,15 @@ export class PedidoService {
 
   // by Hélio - Retorna os dados do cliente selecionado
   public async retornaDadosCliente() {
-    if (this.clientSelected && this.docCliente !== '' && this.dadosCliente == undefined) {
+    if (this.clientSelected && this.docCliente !== '' && this.dadosCliente === undefined) {
+      await this.common.showLoader();
       await this.clienteService.getClienteNoAlert(this.docCliente).then((result: any) => {
         this.dadosCliente = result;
+        this.common.loading.dismiss();
         return this.dadosCliente;
-      }, () => {});
+      }, () => {
+        this.common.loading.dismiss();
+      });
     } else {
       return this.dadosCliente;
     }
