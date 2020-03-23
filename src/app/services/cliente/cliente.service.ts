@@ -44,4 +44,17 @@ export class ClienteService {
     });
   }
 
+  // by Helio 23/03/2020, usado para cadastrar um novo endereco
+  public postClienteAlteracao(cliente: any) {
+    const link = ENV.WS_CRM + API_URL + 'cliente/save/';
+
+    return new Promise((resolve, reject) => {
+      this.baseService.post(link, cliente).then((result: any) => {
+        resolve(result);
+      }, () => {
+        reject();
+      });
+    });
+  }
+
 }

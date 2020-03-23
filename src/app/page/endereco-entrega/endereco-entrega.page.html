@@ -72,7 +72,7 @@
 
           <ion-col size="12">
             <ion-row class="cadastrarNovoEndereco">
-              <p style="margin-top: 5px;">Cadastrar novo endereço</p>
+              <p style="margin-top: 0; margin-bottom: 5px;">Cadastrar novo endereço</p>
             </ion-row>
 
             <ion-row>
@@ -87,7 +87,8 @@
                       <ion-label>CEP</ion-label>
                     </ion-row>
                     <ion-row>
-                      <ion-input type="tel" placeholder="00000-000" mask="**.***-***"></ion-input>
+                      <ion-input type="tel" placeholder="00000-000" mask="**.***-***" [(ngModel)]="novoEndereco.cep"
+                        (keyup.enter)="getEnderecoByCEP(novoEndereco.cep);"></ion-input>
                     </ion-row>
                   </ion-col>
 

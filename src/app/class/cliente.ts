@@ -108,3 +108,13 @@ export class Email {
     status: string;
     email_site: string;
 }
+
+export interface CamposParaNovoEndereco {
+	cep: string;
+	endereco: string;
+	numero: string;
+	complemento: string;
+	bairro: string;
+	cidade: string;
+	uf: string;
+}
