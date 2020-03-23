@@ -35,7 +35,9 @@ export class PedidoManutencaoService {
       // await this.reGetCliente(pedido.cgccpf_cliente);
     }
 
-    this.navControl.navigateRoot(['/pedido-atalhos']);
+    this.navControl.navigateRoot(['/pedido-atalhos']).then(() => {
+      this.common.loading.dismiss();
+    });
 
   }
 
