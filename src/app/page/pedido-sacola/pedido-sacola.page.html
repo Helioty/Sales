@@ -93,7 +93,7 @@
 
     <ion-grid>
       <ion-row>
-        <ion-col size="12" *ngFor="let item of itens; let i of index;" style="padding: 0 !important;">
+        <ion-col size="12" *ngFor="let item of pedidoItemService.pedidoItens; let i of index;" style="padding: 0 !important;">
           <ion-row *ngIf="item?.retiradas[0].tipoRetirada == 9997" style="padding: 5px !important;">
             <ion-item lines="none" class="produto">
               <ion-thumbnail slot="start">

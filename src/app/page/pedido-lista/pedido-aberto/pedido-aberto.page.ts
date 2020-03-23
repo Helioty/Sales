@@ -9,6 +9,7 @@ import { CommonService } from 'src/app/services/common/common.service';
 import { BaseService } from '../../../services/base-service.service';
 
 import { PedidoListaPage } from '../pedido-lista.page';
+import { PedidoManutencaoService } from 'src/app/services/pedido/pedido-manutencao.service';
 
 
 @Component({
@@ -35,6 +36,7 @@ export class PedidoAbertoPage implements OnInit {
     private alertCtrl: AlertController,
     private navControl: NavController,
     private pedidoLista: PedidoListaPage,
+    private pedidoManutencaoService: PedidoManutencaoService
   ) { }
 
   ngOnInit() {
@@ -157,7 +159,7 @@ export class PedidoAbertoPage implements OnInit {
   }
 
   alterarPedido(pedido: any) {
-
+    this.pedidoManutencaoService.reabrirPedido(pedido);
   }
 
 }

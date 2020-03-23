@@ -16,7 +16,7 @@ export class PedidoSacolaPage implements OnInit {
   public valorScanner: string;
   public focusStatus = true;
 
-  public itens: any[] = [];
+  // public itens: any[] = [];
 
   constructor(
     private alertCtrl: AlertController,
@@ -29,7 +29,7 @@ export class PedidoSacolaPage implements OnInit {
 
   async ngOnInit() {
     await this.pedidoItemService.getItemPedido().then((result: any) => {
-      this.itens = result.content;
+      // this.itens = result.content;
       console.log(result);
     });
   }
@@ -158,7 +158,7 @@ export class PedidoSacolaPage implements OnInit {
       this.common.showToast(result.msg);
     });
     await this.pedidoItemService.getItemPedido().then((result: any) => {
-      this.itens = result.content;
+      // this.itens = result.content;
       console.log(result);
     });
   }

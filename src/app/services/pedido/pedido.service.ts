@@ -92,9 +92,9 @@ export class PedidoService {
 
 
   // by Helio 20/03/2020
-  public atualizaPedidoHeader(pedidoHeader: any) {
+  public atualizaPedidoHeader(pedidoHeader: PedidoHeader) {
     this.pedidoHeader = pedidoHeader;
-    this.numPedido = pedidoHeader.numpedido;
+    this.numPedido = pedidoHeader.numpedido.toString();
     this.digitoPedido = pedidoHeader.digito;
 
     this.tipoRetirada = pedidoHeader.tipoEntrega;
