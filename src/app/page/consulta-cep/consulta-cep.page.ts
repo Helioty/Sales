@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, AfterContentInit, ViewChild } from '@angular/core';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { CommonService } from 'src/app/services/common/common.service';
 import { IonSearchbar, IonSlides } from '@ionic/angular';
@@ -11,7 +11,7 @@ declare var google: any;
   templateUrl: './consulta-cep.page.html',
   styleUrls: ['./consulta-cep.page.scss'],
 })
-export class ConsultaCepPage implements OnInit {
+export class ConsultaCepPage implements OnInit, AfterContentInit {
 
   @ViewChild(IonSlides, { static: true }) slides: IonSlides;
 
@@ -63,6 +63,15 @@ export class ConsultaCepPage implements OnInit {
         this.modoConsulta = false;
       }
     });
+  }
+
+  ngAfterContentInit(): void {
+    this.geolocation.getCurrentPosition().then((resp) => {
+      this.latitude = resp.coords.latitude;
+      this.longitude = resp.coords.longitude;
+     }).catch((error) => {
+       console.log('Error getting location', error);
+     });
   }
 
   ionViewWillEnter() {
