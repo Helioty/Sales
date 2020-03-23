@@ -209,12 +209,12 @@ export class PedidoService {
       await this.clienteService.getClienteNoAlert(this.docCliente).then((result: any) => {
         this.dadosCliente = result;
         this.common.loading.dismiss();
-        return this.dadosCliente;
+        return;
       }, () => {
         this.common.loading.dismiss();
       });
     } else {
-      return this.dadosCliente;
+      return;
     }
   }
 

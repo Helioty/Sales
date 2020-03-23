@@ -90,8 +90,8 @@ export class ClientePage implements OnInit {
 
   // by Helio 12/02/2020
   async getClienteAntesSelecionado() {
-    await this.pedidoService.retornaDadosCliente().then((retorno: any) => {
-      this.dados = retorno;
+    await this.pedidoService.retornaDadosCliente().then(() => {
+      this.dados = this.pedidoService.dadosCliente;
       this.valorDigitado = this.common.formataCPFNPJ(this.pedidoService.docCliente);
       this.isCNPJ = this.dados.natureza !== 'FISICA';
       this.isActive = this.dados.ativo;
