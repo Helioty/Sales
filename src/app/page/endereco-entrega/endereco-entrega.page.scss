@@ -70,9 +70,10 @@ ion-content {
                     font-size: 14px;
                 }
 
-                ion-item {
+                ion-input {
                     border: 1px solid lightgray;
                     border-radius: 6px;
+                    text-align: start;
                 }
             }
         }
