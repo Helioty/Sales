@@ -17,7 +17,7 @@ ion-content {
                         ion-row.text-endereco {
                             padding-right: 3px;
                             padding-left: 3px;
-                            
+
                             p {
                                 white-space: normal;
                                 word-break: break-all;
@@ -25,11 +25,13 @@ ion-content {
                             }
 
                             p.rua {
+                                font-weight: bold;
                                 font-size: 14px;
                                 color: black;
                             }
 
                             p.local {
+                                margin-top: 10px;
                                 font-size: 14px;
                                 color: #808080;
                             }

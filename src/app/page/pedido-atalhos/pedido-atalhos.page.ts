@@ -75,7 +75,7 @@ export class PedidoAtalhosPage implements OnInit {
     }, 150);
   }
 
-  async scaneado(evento: any) {
+  scaneado(evento: any) {
     try {
       if (evento.target && evento.target.value.length >= 2) {
         this.focusPause();

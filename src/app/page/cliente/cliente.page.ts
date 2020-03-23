@@ -360,6 +360,16 @@ export class ClientePage implements OnInit {
         this.navControl.pop();
         break;
 
+      case 'endereco-entrega':
+        const navigationExtras: NavigationExtras = {
+          queryParams: {
+            paginaSeguinte: 'pedido-atalhos',
+            paginaAnterior: 'cliente'
+          }
+        };
+        this.navControl.navigateForward(['/' + paginaSeguinte], navigationExtras);
+        break;
+
       default:
         this.navControl.navigateForward(['/' + paginaSeguinte]);
         break;
