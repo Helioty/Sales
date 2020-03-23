@@ -361,7 +361,7 @@ export class ClientePage implements OnInit {
         break;
 
       default:
-        this.navControl.navigateRoot(['/' + paginaSeguinte]);
+        this.navControl.navigateForward(['/' + paginaSeguinte]);
         break;
     }
   }
