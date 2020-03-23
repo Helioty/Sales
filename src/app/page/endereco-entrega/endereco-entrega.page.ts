@@ -26,7 +26,9 @@ export class EnderecoEntregaPage implements OnInit {
     private clienteService: ClienteService,
     private consultaEnderecoService: ConsultaEnderecoService,
     private navControl: NavController
-  ) { }
+  ) {
+    this.novoEndereco = new CamposParaNovoEndereco;
+  }
 
   ngOnInit() {
     this.slides.lockSwipes(true);
@@ -56,6 +58,11 @@ export class EnderecoEntregaPage implements OnInit {
 
   getEnderecoByCEP(cep: string) {
     this.consultaEnderecoService.getEnderecoByCep(cep).then((result: any) => {
+      this.novoEndereco.cep = this.common.formataCEP(cep);
+      this.novoEndereco.endereco = result.logradouro;
+      this.novoEndereco.bairro = result.bairro;
+      this.novoEndereco.uf = result.estado;
+      this.novoEndereco.cidade = result.cidade;
       console.log(result);
     });
   }

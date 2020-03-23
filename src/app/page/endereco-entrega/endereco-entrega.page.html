@@ -88,7 +88,8 @@
                     </ion-row>
                     <ion-row>
                       <ion-input type="tel" placeholder="00000-000" mask="**.***-***" [(ngModel)]="novoEndereco.cep"
-                        (keyup.enter)="getEnderecoByCEP(novoEndereco.cep);"></ion-input>
+                        (keyup.enter)="getEnderecoByCEP(novoEndereco.cep);">
+                      </ion-input>
                     </ion-row>
                   </ion-col>
 
@@ -97,7 +98,7 @@
                       <ion-label>UF</ion-label>
                     </ion-row>
                     <ion-row>
-                      <ion-input type="text"></ion-input>
+                      <ion-input type="text" [(ngModel)]="novoEndereco.uf"></ion-input>
                     </ion-row>
                   </ion-col>
 
@@ -106,7 +107,8 @@
                       <ion-label>Cidade</ion-label>
                     </ion-row>
                     <ion-row>
-                      <ion-input type="text" placeholder="Cidade"></ion-input>
+                      <ion-input type="text" placeholder="Cidade" [(ngModel)]="novoEndereco.cidade">
+                      </ion-input>
                     </ion-row>
                   </ion-col>
 
@@ -115,7 +117,8 @@
                       <ion-label>Bairro</ion-label>
                     </ion-row>
                     <ion-row>
-                      <ion-input type="text" placeholder="Bairro"></ion-input>
+                      <ion-input type="text" placeholder="Bairro" [(ngModel)]="novoEndereco.bairro">
+                      </ion-input>
                     </ion-row>
                   </ion-col>
 
@@ -124,7 +127,8 @@
                       <ion-label>Rua ou Avenida</ion-label>
                     </ion-row>
                     <ion-row>
-                      <ion-input type="text" placeholder="Rua ou Avenida"></ion-input>
+                      <ion-input type="text" placeholder="Rua ou Avenida" [(ngModel)]="novoEndereco.endereco">
+                      </ion-input>
                     </ion-row>
                   </ion-col>
 
@@ -133,7 +137,8 @@
                       <ion-label>Número</ion-label>
                     </ion-row>
                     <ion-row>
-                      <ion-input type="tel" placeholder="Número"></ion-input>
+                      <ion-input type="tel" placeholder="Número" [(ngModel)]="novoEndereco.numero">
+                      </ion-input>
                     </ion-row>
                   </ion-col>
 
@@ -142,7 +147,8 @@
                       <ion-label>Complemento (opcional)</ion-label>
                     </ion-row>
                     <ion-row>
-                      <ion-input type="text" placeholder="Complemento"></ion-input>
+                      <ion-input type="text" placeholder="Complemento" [(ngModel)]="novoEndereco.complemento">
+                      </ion-input>
                     </ion-row>
                   </ion-col>
                 </ion-row>

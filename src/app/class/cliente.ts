@@ -109,7 +109,7 @@ export class Email {
     email_site: string;
 }
 
-export interface CamposParaNovoEndereco {
+export class CamposParaNovoEndereco {
 	cep: string;
 	endereco: string;
 	numero: string;
