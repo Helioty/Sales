@@ -6,6 +6,7 @@ import { BaseService } from './base-service.service';
 import { ClienteService } from './cliente/cliente.service';
 import { CommonService } from './common/common.service';
 import { DataService } from './data/data.service';
+import { ConsultaEnderecoService } from './entrega/consulta-endereco.service';
 import { PedidoService } from './pedido/pedido.service';
 import { PedidoItemService } from './pedido/pedido-item.service';
 import { PedidoManutencaoService } from './pedido/pedido-manutencao.service';
@@ -23,6 +24,7 @@ import { ProdutoService } from './produto/produto.service';
     ClienteService,
     CommonService,
     DataService,
+    ConsultaEnderecoService,
     PedidoService,
     PedidoItemService,
     PedidoManutencaoService,
