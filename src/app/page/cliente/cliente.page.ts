@@ -90,12 +90,15 @@ export class ClientePage implements OnInit {
 
   // by Helio 12/02/2020
   async getClienteAntesSelecionado() {
-    this.dados = await this.pedidoService.retornaDadosCliente();
-    this.valorDigitado = this.common.formataCPFNPJ(this.pedidoService.docCliente);
-    this.isCNPJ = this.dados.natureza !== 'FISICA';
-    this.isActive = this.dados.ativo;
-    this.atualizaCadastro = this.dados.atualizaCadastro;
-    this.showDados(this.dados);
+    await this.pedidoService.retornaDadosCliente().then((retorno: any) => {
+      this.dados = retorno;
+      this.valorDigitado = this.common.formataCPFNPJ(this.pedidoService.docCliente);
+      this.isCNPJ = this.dados.natureza !== 'FISICA';
+      this.isActive = this.dados.ativo;
+      this.atualizaCadastro = this.dados.atualizaCadastro;
+      this.showDados(this.dados);
+    });
+
     if (this.atualizaCadastro) {
       this.setEstado('atualizacao');
     } else {
