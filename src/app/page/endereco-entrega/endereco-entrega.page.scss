@@ -14,14 +14,29 @@ ion-content {
                         border-top-right-radius: 6px;
                         border-top-left-radius: 6px;
 
-                        ion-button {
-                            width: 100%;
+                        ion-row.text-endereco {
+                            padding-right: 3px;
+                            padding-left: 3px;
+                            
+                            p {
+                                white-space: normal;
+                                word-break: break-all;
+                                margin: 0;
+                            }
+
+                            p.rua {
+                                font-size: 14px;
+                                color: black;
+                            }
+
+                            p.local {
+                                font-size: 14px;
+                                color: #808080;
+                            }
                         }
 
-                        .rua {
-                            white-space: normal;
-                            word-break: break-all;
-
+                        ion-button {
+                            width: 100%;
                         }
                     }
                 }
@@ -32,6 +47,11 @@ ion-content {
                     border-left: 1px solid lightgray;
                     border-bottom-right-radius: 6px;
                     border-bottom-left-radius: 6px;
+                    overflow: hidden;
+
+                    ion-item {
+                        width: 100%;
+                    }
                 }
             }
         }
