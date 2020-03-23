@@ -22,15 +22,15 @@
         <ion-row class="listaEnderecos">
           <ion-col size="12" *ngFor="let endereco of pedidoService.dadosCliente.enderecos" class="endereco">
             <ion-row>
-              <p>Entregar em:</p>
+              <p style="margin-top: 10px; margin-bottom: 6px;">Entregar em:</p>
             </ion-row>
 
             <ion-row>
-              <p class="rua">{{ endereco.ds_ende }}, {{ endereco.nu_ende }}</p>
+              <p style="margin-top: 0; margin-bottom: 6px;" class="rua">{{ endereco.ds_ende }}, {{ endereco.nu_ende }}</p>
             </ion-row>
 
             <ion-row>
-              <p class="local">{{ endereco.ds_bairro }} - {{ endereco.cidade }} - {{ endereco.ds_uf }}</p>
+              <p style="margin-top: 10px; margin-bottom: 6px;" class="local">{{ endereco.ds_bairro }} - {{ endereco.cidade }} - {{ endereco.ds_uf }}</p>
             </ion-row>
 
             <ion-row>
@@ -39,8 +39,8 @@
           </ion-col>
         </ion-row>
 
-        <ion-row>
-
+        <ion-row class="novoEndereco">
+          <ion-item button detail>Adicionar novo Endereço</ion-item>
         </ion-row>
       </ion-col>
     </ion-row>
