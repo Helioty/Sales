@@ -64,6 +64,16 @@ ion-content {
             ion-col.cadastro-campos {
                 border: 1px solid lightgray;
                 border-radius: 6px;
+
+                ion-label {
+                    float: left;
+                    font-size: 14px;
+                }
+
+                ion-item {
+                    border: 1px solid lightgray;
+                    border-radius: 6px;
+                }
             }
         }
     }
