@@ -4,10 +4,15 @@ ion-content {
             ion-col {
                 .listaEnderecos {
                     border-top: 1px solid lightgray;
+                    border-top-right-radius: 6px;
+                    border-top-left-radius: 6px;
 
                     .endereco {
+                        border-bottom: 1px solid lightgray;
                         border-right: 1px solid lightgray;
                         border-left: 1px solid lightgray;
+                        border-top-right-radius: 6px;
+                        border-top-left-radius: 6px;
                     }
                 }
             }

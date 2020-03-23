@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './guards/auth/auth.guard';
+import { ListaEnderecoGuard } from './guards/endereco/lista-endereco.guard';
 
 const routes: Routes = [
   {
@@ -77,7 +78,8 @@ const routes: Routes = [
 
   {
     path: 'endereco-entrega',
-    loadChildren: './page/endereco-entrega/endereco-entrega.module#EnderecoEntregaPageModule'
+    loadChildren: './page/endereco-entrega/endereco-entrega.module#EnderecoEntregaPageModule',
+    canActivate: [AuthGuard, ListaEnderecoGuard]
   },
   {
     path: 'pedido-finalizacao',
