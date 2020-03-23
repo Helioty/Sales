@@ -3,7 +3,7 @@ import { Platform, MenuController, AlertController, NavController } from '@ionic
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 
-import { AuthGuard } from 'src/app/guards/auth.guard';
+import { AuthGuard } from 'src/app/guards/auth/auth.guard';
 import { CommonService } from 'src/app/services/common/common.service';
 
 @Component({

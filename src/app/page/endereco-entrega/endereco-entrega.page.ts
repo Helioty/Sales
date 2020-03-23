@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { AlertController, NavController } from '@ionic/angular';
+import { CommonService } from 'src/app/services/common/common.service';
+import { PedidoService } from 'src/app/services/pedido/pedido.service';
 
 @Component({
   selector: 'app-endereco-entrega',
@@ -7,9 +10,30 @@ import { Component, OnInit } from '@angular/core';
 })
 export class EnderecoEntregaPage implements OnInit {
 
-  constructor() { }
+  constructor(
+    private alertCtrl: AlertController,
+    private common: CommonService,
+    public pedidoService: PedidoService,
+    private navControl: NavController
+  ) { }
 
   ngOnInit() {
+
+  }
+
+  ionViewWillEnter() {
+    this.common.goToFullScreen();
+  }
+
+  ionViewDidEnter() {
+    this.common.goToFullScreen();
+  }
+
+  ionViewWillLeave() {
+
+  }
+
+  ionViewDidLeave() {
 
   }
 

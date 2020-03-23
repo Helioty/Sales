@@ -10,7 +10,7 @@ export class AuthGuard implements CanActivate {
 
   public logged = false;
 
-  constructor(private router: Router, public common: CommonService) { }
+  constructor(private router: Router, private common: CommonService) { }
 
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     if (!this.logged) {

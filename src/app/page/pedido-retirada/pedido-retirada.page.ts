@@ -48,7 +48,7 @@ export class PedidoRetiradaPage implements OnInit {
       if (this.pedidoService.tipoRetirada === 'ENTREGA') {
         const navigationExtras: NavigationExtras = {
           queryParams: {
-            paginaSeguinte: 'pedido-atalhos',
+            paginaSeguinte: 'endereco-entrega',
             paginaAnterior: 'pedido-retirada'
           }
         };
