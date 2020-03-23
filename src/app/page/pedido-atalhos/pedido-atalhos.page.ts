@@ -85,7 +85,7 @@ export class PedidoAtalhosPage implements OnInit {
           this.pedidoService.setCardPedido(codigo);
           this.focusPlay();
         } else {
-
+          this.focusPlay();
         }
       }
     } catch (error) {
@@ -117,7 +117,7 @@ export class PedidoAtalhosPage implements OnInit {
     });
   }
 
-  async openClientePage() {
+  openClientePage() {
     const navigationExtras: NavigationExtras = {
       queryParams: {
         paginaSeguinte: 'back',
