@@ -109,10 +109,8 @@ export class EnderecoEntregaPage implements OnInit {
       this.pedidoService.dadosCliente = result;
       this.common.loading.dismiss();
       this.changeSlide(0);
-    }, () => {
-      setTimeout(() => {
-        this.atualizaDadosCliente(docCliente);
-      }, 500);
+    }, (error) => {
+      this.navControl.pop();
     });
   }
 

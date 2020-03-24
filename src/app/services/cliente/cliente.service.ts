@@ -38,8 +38,8 @@ export class ClienteService {
     return new Promise((resolve, reject) => {
       this.baseService.getNoShowError(link).then((result: any) => {
         resolve(result);
-      }, () => {
-        reject();
+      }, (error) => {
+        reject(error);
       });
     });
   }
@@ -51,8 +51,8 @@ export class ClienteService {
     return new Promise((resolve, reject) => {
       this.baseService.post(link, cliente).then((result: any) => {
         resolve(result);
-      }, () => {
-        reject();
+      }, (error) => {
+        reject(error);
       });
     });
   }
