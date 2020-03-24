@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { AlertController, NavController } from '@ionic/angular';
 import { BaseService } from '../base-service.service';
-import { CommonService } from '../common/common.service';
+import { PedidoService } from 'src/app/services/pedido/pedido.service';
+import { CommonService } from 'src/app/services/common/common.service';
 import { API_URL } from 'src/app/config/app.config.service';
 import { ENV } from 'src/environments/environment';
 
@@ -13,6 +14,7 @@ export class ClienteService {
   constructor(
     private alertCtrl: AlertController,
     private baseService: BaseService,
+    private pedidoService: PedidoService,
     private common: CommonService,
     private navControl: NavController
   ) { }
@@ -37,6 +39,7 @@ export class ClienteService {
 
     return new Promise((resolve, reject) => {
       this.baseService.getNoShowError(link).then((result: any) => {
+        this.pedidoService.dadosCliente = result;
         resolve(result);
       }, (error) => {
         reject(error);

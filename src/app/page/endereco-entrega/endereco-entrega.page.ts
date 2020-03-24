@@ -110,7 +110,8 @@ export class EnderecoEntregaPage implements OnInit {
       this.common.loading.dismiss();
       this.changeSlide(0);
     }, (error) => {
-      this.navControl.pop();
+      this.common.loading.dismiss();
+      // this.common.showAlert('Atenção!', 'Erro ao recuperar as informações do cliente.');
     });
   }
 

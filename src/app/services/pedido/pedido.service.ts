@@ -206,8 +206,7 @@ export class PedidoService {
   public async retornaDadosCliente() {
     if (this.clientSelected && this.docCliente !== '' && this.dadosCliente === undefined) {
       await this.common.showLoader();
-      await this.clienteService.getClienteNoAlert(this.docCliente).then((result: any) => {
-        this.dadosCliente = result;
+      await this.clienteService.getClienteNoAlert(this.docCliente).then(() => {
         this.common.loading.dismiss();
         return;
       }, () => {
