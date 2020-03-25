@@ -9,7 +9,8 @@
 
   <ion-toolbar color="primary">
     <form [formGroup]="directionForm">
-      <ion-searchbar #searchbar formControlName="placeName" placeholder="Pesquise seu endereço aqui!">
+      <ion-searchbar #searchbar formControlName="placeName" placeholder="Pesquise seu endereço aqui!"
+        (ionFocus)="foco = true" (ionBlur)="foco = false" (ionChange)="updateSearchResults()">
       </ion-searchbar>
     </form>
   </ion-toolbar>
@@ -18,10 +19,13 @@
 </ion-header>
 
 <ion-content>
-  <div id="infowindow-content">
-    <img src="" width="16" height="16" id="place-icon">
-    <span id="place-name" class="title"></span><br>
-    <span id="place-address"></span>
+  <div [hidden]="autocompleteItems.length == 0">
+    <ion-list class="listagem">
+      <ion-item *ngFor="let item of autoCompleteList" button>
+        <ion-icon slot="start" name="logo-google"></ion-icon>
+        {{item.description}}
+      </ion-item>
+    </ion-list>
   </div>
 
   <ion-slides>

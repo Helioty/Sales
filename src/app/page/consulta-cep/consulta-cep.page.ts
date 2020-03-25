@@ -26,7 +26,6 @@ export class ConsultaCepPage implements OnInit, AfterContentInit {
   public latitude: any;
   public longitude: any;
 
-  public GoogleAutocomplete: any;
   public geocoder: any;
 
 
@@ -35,7 +34,12 @@ export class ConsultaCepPage implements OnInit, AfterContentInit {
   public latLng: any;
 
 
+  public googleAutocomplete = new google.maps.places.AutocompleteService();
   @ViewChild('searchbar', { static: false }) searchbar: IonSearchbar;
+  public autoCompleteList: any[] = [];
+
+  // controla o foco no searchbar
+  public foco = false;
 
   public modoConsulta = true; // controla o modo da pagina se é apenas consulta ou não.
   public progressBar = false; // controla o a barra de progresso.
@@ -56,7 +60,7 @@ export class ConsultaCepPage implements OnInit, AfterContentInit {
     public common: CommonService,
     private geolocation: Geolocation,
   ) {
-    this.GoogleAutocomplete = new google.maps.places.AutocompleteService();
+    this.googleAutocomplete = new google.maps.places.AutocompleteService();
     this.geocoder = new google.maps.Geocoder();
     this.createDirectionForm();
   }
@@ -82,46 +86,46 @@ export class ConsultaCepPage implements OnInit, AfterContentInit {
       disableDefaultUI: true,
       zoom: 15
     });
-    const infowindow = new google.maps.InfoWindow();
-    const infowindowContent = document.getElementById('infowindow-content');
-    infowindow.setContent(infowindowContent);
-    const marker = new google.maps.Marker({
-      map: this.map,
-      anchorPoint: new google.maps.Point(0, -29)
-    });
-    const inputElement: any = this.searchbar.getInputElement();
-    const autocomplete = new google.maps.places.Autocomplete(inputElement as HTMLInputElement);
-    autocomplete.addListener('place_changed', () => {
-      infowindow.close();
-      marker.setVisible(false);
-      const place = autocomplete.getPlace();
-      if (!place.geometry) {
-        // User entered the name of a Place that was not suggested and
-        // pressed the Enter key, or the Place Details request failed.
-        window.alert('No details available for input: ' + place.name );
-        return;
-      }
-      if (place.geometry.viewport) {
-        this.map.fitBounds(place.geometry.viewport);
-      } else {
-        this.map.setCenter(place.geometry.location);
-        this.map.setZoom(17);  // Why 17? Because it looks good.
-      }
-      marker.setPosition(place.geometry.location);
-      marker.setVisible(true);
-      let address = '';
-      if (place.address_components) {
-        address = [
-          (place.address_components[0] && place.address_components[0].short_name || ''),
-          (place.address_components[1] && place.address_components[1].short_name || ''),
-          (place.address_components[2] && place.address_components[2].short_name || '')
-        ].join(' ');
-      }
-      infowindowContent.children['place-icon'].src = place.icon;
-      infowindowContent.children['place-name'].textContent = place.name;
-      infowindowContent.children['place-address'].textContent = address;
-      infowindow.open(this.map, marker);
-    });
+    // const infowindow = new google.maps.InfoWindow();
+    // const infowindowContent = document.getElementById('infowindow-content');
+    // infowindow.setContent(infowindowContent);
+    // const marker = new google.maps.Marker({
+    //   map: this.map,
+    //   anchorPoint: new google.maps.Point(0, -29)
+    // });
+    // const inputElement: any = this.searchbar.getInputElement();
+    // const autocomplete = new google.maps.places.Autocomplete(inputElement as HTMLInputElement);
+    // autocomplete.addListener('place_changed', () => {
+    //   infowindow.close();
+    //   marker.setVisible(false);
+    //   const place = autocomplete.getPlace();
+    //   if (!place.geometry) {
+    //     // User entered the name of a Place that was not suggested and
+    //     // pressed the Enter key, or the Place Details request failed.
+    //     window.alert('No details available for input: ' + place.name);
+    //     return;
+    //   }
+    //   if (place.geometry.viewport) {
+    //     this.map.fitBounds(place.geometry.viewport);
+    //   } else {
+    //     this.map.setCenter(place.geometry.location);
+    //     this.map.setZoom(17);  // Why 17? Because it looks good.
+    //   }
+    //   marker.setPosition(place.geometry.location);
+    //   marker.setVisible(true);
+    //   let address = '';
+    //   if (place.address_components) {
+    //     address = [
+    //       (place.address_components[0] && place.address_components[0].short_name || ''),
+    //       (place.address_components[1] && place.address_components[1].short_name || ''),
+    //       (place.address_components[2] && place.address_components[2].short_name || '')
+    //     ].join(' ');
+    //   }
+    //   infowindowContent.children['place-icon'].src = place.icon;
+    //   infowindowContent.children['place-name'].textContent = place.name;
+    //   infowindowContent.children['place-address'].textContent = address;
+    //   infowindow.open(this.map, marker);
+    // });
   }
 
   ionViewDidEnter() {
@@ -133,5 +137,33 @@ export class ConsultaCepPage implements OnInit, AfterContentInit {
       placeName: [''],
     });
   }
+
+  // edit by Helio 25/03/2020
+  updateSearchResults() {
+    if (!this.foco) {
+      return;
+    }
+    if (this.searchbar.value === '') {
+      this.autoCompleteList = [];
+      return;
+    }
+    this.googleAutocomplete.getPlacePredictions(
+      {
+        input: this.searchbar.value,
+        componentRestrictions: { country: ["br"] }
+      },
+      (predictions: any, status) => {
+        this.autoCompleteList = [];
+        if (predictions) {
+          predictions.forEach((prediction: any) => {
+            this.autoCompleteList.push(prediction);
+            console.log(this.autoCompleteList);
+          });
+        }
+      }
+    );
+  }
+
+
 
 }
