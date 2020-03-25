@@ -21,7 +21,7 @@
 <ion-content>
   <div [hidden]="autoCompleteList.length == 0">
     <ion-list class="listagem">
-      <ion-item button lines="full" *ngFor="let item of autoCompleteList">
+      <ion-item button lines="full" *ngFor="let item of autoCompleteList" (click)="selectSearchResult(item);">
         <ion-icon slot="start" name="logo-google"></ion-icon>
         <ion-label>
           {{ item.description }}
