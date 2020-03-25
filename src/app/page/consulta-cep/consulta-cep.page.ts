@@ -34,6 +34,7 @@ export class ConsultaCepPage implements OnInit {
 
   @ViewChild('searchbar', { static: false }) searchbar: IonSearchbar;
   public autoCompleteList: any[] = [];
+  public markers: any[] = [];
   
   public googleAutocomplete = new google.maps.places.AutocompleteService();
   public geocoder = new google.maps.Geocoder();;
@@ -128,15 +129,25 @@ export class ConsultaCepPage implements OnInit {
     });
   }
 
-  insereMarker(latlng) {
-    // this.clearLocations();
-    // const marker = new google.maps.Marker({
-    //   position: latlng,
-    //   map: this.map,
-    //   visible: true
-    // });
-    // this.markers.push(marker);
+  insereMarker(latlng: any) {
+    this.clearLocations();
+    const marker = new google.maps.Marker({
+      position: latlng,
+      map: this.map,
+      visible: true
+    });
+    this.markers.push(marker);
     this.map.setCenter(latlng);
+  }
+
+  // clear markers before starting new search
+  clearLocations() {
+    for (let mark of this.markers) {
+      mark.setMap(null);
+    }
+    if (this.markers.length > 20) {
+      this.markers = [];
+    }
   }
 
 

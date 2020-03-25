@@ -1,7 +1,8 @@
 <ion-header>
   <ion-toolbar color="primary">
     <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
+      <ion-menu-button [hidden]="!modoConsulta"></ion-menu-button>
+      <ion-back-button [hidden]="modoConsulta"></ion-back-button>
     </ion-buttons>
 
     <ion-title>Consulta CEP</ion-title>
@@ -13,7 +14,7 @@
     </ion-searchbar>
   </ion-toolbar>
 
-  <ion-progress-bar type="indeterminate" color="success" [hidden]="progressBar"></ion-progress-bar>
+  <ion-progress-bar type="indeterminate" color="success" [hidden]="!progressBar"></ion-progress-bar>
 </ion-header>
 
 <ion-content>
