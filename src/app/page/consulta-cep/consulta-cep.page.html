@@ -8,19 +8,17 @@
   </ion-toolbar>
 
   <ion-toolbar color="primary">
-    <!-- <form [formGroup]="directionForm"> -->
     <ion-searchbar #searchbar placeholder="Pesquise seu endereço aqui!" (ionFocus)="foco = true"
-      (ionBlur)="foco = false" (ionChange)="updateSearchResults()">
+      (ionBlur)="foco = false" (ionChange)="updateSearchResults()" showCancelButton="always">
     </ion-searchbar>
-    <!-- </form> -->
   </ion-toolbar>
 
-  <ion-progress-bar type="indeterminate" color="success" *ngIf="progressBar"></ion-progress-bar>
+  <ion-progress-bar type="indeterminate" color="success" [hidden]="progressBar"></ion-progress-bar>
 </ion-header>
 
 <ion-content>
-  <div [hidden]="autoCompleteList.length == 0">
-    <ion-list class="listagem">
+  <div class="listagem" [hidden]="autoCompleteList.length == 0">
+    <ion-list>
       <ion-item button lines="full" *ngFor="let item of autoCompleteList" (click)="selectSearchResult(item);">
         <ion-icon slot="start" name="logo-google"></ion-icon>
         <ion-label>

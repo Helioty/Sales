@@ -6,15 +6,20 @@
 ion-content {
 
     .listagem {
-        padding-bottom: 0 !important;
+        position: fixed;
+        z-index: 999;
         
-        ion-item {
-            ion-icon {
-                margin-right: 16px;
-            }
+        ion-list {
+            padding-bottom: 0 !important;
 
-            ion-label {
-                font-size: 14px;
+            ion-item {
+                ion-icon {
+                    margin-right: 16px;
+                }
+    
+                ion-label {
+                    font-size: 14px;
+                }
             }
         }
     }

@@ -1,9 +1,9 @@
-import { Component, OnInit, AfterContentInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { CommonService } from 'src/app/services/common/common.service';
 import { IonSearchbar, IonSlides } from '@ionic/angular';
 import { ActivatedRoute } from '@angular/router';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 
 declare var google: any;
 
@@ -12,12 +12,11 @@ declare var google: any;
   templateUrl: './consulta-cep.page.html',
   styleUrls: ['./consulta-cep.page.scss'],
 })
-export class ConsultaCepPage implements OnInit, AfterContentInit {
+export class ConsultaCepPage implements OnInit {
 
   @ViewChild(IonSlides, { static: true }) slides: IonSlides;
 
   @ViewChild('mapElement', { static: false }) mapElement: { nativeElement: any; };
-  directionForm: FormGroup;
 
   public map: any;
   public start: string;
@@ -56,13 +55,11 @@ export class ConsultaCepPage implements OnInit, AfterContentInit {
 
   constructor(
     private router: ActivatedRoute,
-    private fb: FormBuilder,
     public common: CommonService,
     private geolocation: Geolocation,
   ) {
-    this.googleAutocomplete = new google.maps.places.AutocompleteService();
-    this.geocoder = new google.maps.Geocoder();
-    // this.createDirectionForm();
+    // this.googleAutocomplete = new google.maps.places.AutocompleteService();
+    // this.geocoder = new google.maps.Geocoder();
   }
 
   ngOnInit() {
@@ -74,10 +71,6 @@ export class ConsultaCepPage implements OnInit, AfterContentInit {
     });
   }
 
-  ngAfterContentInit(): void {
-
-  }
-
   ionViewWillEnter() {
     this.common.goToFullScreen();
     this.slides.lockSwipes(true);
@@ -86,56 +79,10 @@ export class ConsultaCepPage implements OnInit, AfterContentInit {
       disableDefaultUI: true,
       zoom: 15
     });
-    // const infowindow = new google.maps.InfoWindow();
-    // const infowindowContent = document.getElementById('infowindow-content');
-    // infowindow.setContent(infowindowContent);
-    // const marker = new google.maps.Marker({
-    //   map: this.map,
-    //   anchorPoint: new google.maps.Point(0, -29)
-    // });
-    // const inputElement: any = this.searchbar.getInputElement();
-    // const autocomplete = new google.maps.places.Autocomplete(inputElement as HTMLInputElement);
-    // autocomplete.addListener('place_changed', () => {
-    //   infowindow.close();
-    //   marker.setVisible(false);
-    //   const place = autocomplete.getPlace();
-    //   if (!place.geometry) {
-    //     // User entered the name of a Place that was not suggested and
-    //     // pressed the Enter key, or the Place Details request failed.
-    //     window.alert('No details available for input: ' + place.name);
-    //     return;
-    //   }
-    //   if (place.geometry.viewport) {
-    //     this.map.fitBounds(place.geometry.viewport);
-    //   } else {
-    //     this.map.setCenter(place.geometry.location);
-    //     this.map.setZoom(17);  // Why 17? Because it looks good.
-    //   }
-    //   marker.setPosition(place.geometry.location);
-    //   marker.setVisible(true);
-    //   let address = '';
-    //   if (place.address_components) {
-    //     address = [
-    //       (place.address_components[0] && place.address_components[0].short_name || ''),
-    //       (place.address_components[1] && place.address_components[1].short_name || ''),
-    //       (place.address_components[2] && place.address_components[2].short_name || '')
-    //     ].join(' ');
-    //   }
-    //   infowindowContent.children['place-icon'].src = place.icon;
-    //   infowindowContent.children['place-name'].textContent = place.name;
-    //   infowindowContent.children['place-address'].textContent = address;
-    //   infowindow.open(this.map, marker);
-    // });
   }
 
   ionViewDidEnter() {
     this.common.goToFullScreen();
-  }
-
-  createDirectionForm() {
-    this.directionForm = this.fb.group({
-      placeName: [''],
-    });
   }
 
   // edit by Helio 25/03/2020
@@ -164,6 +111,7 @@ export class ConsultaCepPage implements OnInit, AfterContentInit {
     );
   }
 
+  // edit by Helio 25/03/2020
   async selectSearchResult(item: any) {
     await this.common.showLoader();
     console.log('ENTREI x AQUI!');
