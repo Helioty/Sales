@@ -68,8 +68,10 @@ export class EnderecoEntregaPage implements OnInit {
   }
 
   async saveEndereco() {
-    const seq = new Sequence();
     const cep = this.novoEndereco.cep.replace(/\D/g, '');
+    let seq = new Sequence();
+    seq.sequencialId = 0;
+    seq.clienteId = this.pedidoService.docCliente;
     let novoEndereco: Endereco = new Endereco();
     novoEndereco = {
       id: seq,
@@ -87,7 +89,8 @@ export class EnderecoEntregaPage implements OnInit {
       cd_inscricao: '',
       usuario_cadastrou: '',
       latitude: '',
-      longitude: ''
+      longitude: '',
+      cidade: this.novoEndereco.cidade
     }
 
     console.log('novoEndereco');
@@ -95,11 +98,7 @@ export class EnderecoEntregaPage implements OnInit {
     await this.common.showLoader();
     this.pedidoService.retornaDadosCliente().then(() => {
       let dados = this.pedidoService.dadosCliente;
-      console.log('dados');
-      console.log(dados);
       dados.enderecos.push(novoEndereco);
-      console.log('dados-novoEndereco');
-      console.log(dados);
       this.gravaNovoEndereco(dados);
     });
   }

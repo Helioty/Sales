@@ -36,6 +36,7 @@ export class Endereco {
     usuario_cadastrou: string;
     latitude: string;
     longitude: string;
+    cidade: string;
 }
 
 export class Empresa {
