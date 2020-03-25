@@ -62,7 +62,7 @@ export class ConsultaCepPage implements OnInit, AfterContentInit {
   ) {
     this.googleAutocomplete = new google.maps.places.AutocompleteService();
     this.geocoder = new google.maps.Geocoder();
-    this.createDirectionForm();
+    // this.createDirectionForm();
   }
 
   ngOnInit() {
