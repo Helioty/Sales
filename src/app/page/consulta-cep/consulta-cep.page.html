@@ -107,10 +107,6 @@
                 </ion-row>
               </ion-col>
             </ion-row>
-
-            <ion-row class="cadastrar-button">
-              <ion-button color="fc-button-green" (click)="saveEndereco()">Cadastrar endereço</ion-button>
-            </ion-row>
           </ion-col>
 
         </ion-row>
@@ -120,8 +116,8 @@
 
 </ion-content>
 
-<ion-footer *ngIf="!modoConsulta">
-  <ion-item button lines="none" color="fc-button-green">
-    <ion-text>FINALIZAR</ion-text>
+<ion-footer *ngIf="modoConsulta">
+  <ion-item button lines="none" (click)="confirmaLocal()" color="fc-button-green">
+    <ion-text>Confirmar Local</ion-text>
   </ion-item>
 </ion-footer>
