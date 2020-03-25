@@ -3,7 +3,7 @@ import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { CommonService } from 'src/app/services/common/common.service';
 import { IonSearchbar, IonSlides } from '@ionic/angular';
 import { ActivatedRoute } from '@angular/router';
-import { FormGroup } from '@angular/forms';
+import { CamposParaNovoEndereco } from 'src/app/class/cliente';
 
 declare var google: any;
 
@@ -19,23 +19,21 @@ export class ConsultaCepPage implements OnInit {
   @ViewChild('mapElement', { static: false }) mapElement: { nativeElement: any; };
 
   public map: any;
-  public start: string;
-  public end: string;
+  // public start: string;
+  // public end: string;
 
-  public latitude: any;
-  public longitude: any;
+  // public latitude: any;
+  // public longitude: any;
 
-  public directionsService = new google.maps.DirectionsService();
-  public directionsDisplay = new google.maps.DirectionsRenderer();
-  public latLng: any;
-  
-
+  // public directionsService = new google.maps.DirectionsService();
+  // public directionsDisplay = new google.maps.DirectionsRenderer();
+  // public latLng: any;
 
 
   @ViewChild('searchbar', { static: false }) searchbar: IonSearchbar;
   public autoCompleteList: any[] = [];
   public markers: any[] = [];
-  
+
   public googleAutocomplete = new google.maps.places.AutocompleteService();
   public geocoder = new google.maps.Geocoder();;
 
@@ -44,23 +42,14 @@ export class ConsultaCepPage implements OnInit {
   public modoConsulta = true; // controla o modo da pagina se é apenas consulta ou não.
   public progressBar = false; // controla o a barra de progresso.
 
-  public enderecoSelecionado = {
-    cep: '',
-    estado: '',
-    endere: '',
-    numero: '',
-    comple: '',
-    bairro: '',
-    cidade: ''
-  };
+  public enderecoSelecionado: CamposParaNovoEndereco;
 
   constructor(
     private router: ActivatedRoute,
     public common: CommonService,
     private geolocation: Geolocation,
   ) {
-    // this.googleAutocomplete = new google.maps.places.AutocompleteService();
-    // this.geocoder = new google.maps.Geocoder();
+    this.enderecoSelecionado = new CamposParaNovoEndereco;
   }
 
   ngOnInit() {
@@ -105,7 +94,6 @@ export class ConsultaCepPage implements OnInit {
         if (predictions) {
           predictions.forEach((prediction: any) => {
             this.autoCompleteList.push(prediction);
-            console.log(this.autoCompleteList);
           });
         }
       }
@@ -113,18 +101,21 @@ export class ConsultaCepPage implements OnInit {
   }
 
   // edit by Helio 25/03/2020
-  async selectSearchResult(item: any) {
-    await this.common.showLoader();
+  selectSearchResult(item: any) {
+    // await this.common.showLoader();
+    this.progressBar = true;
     console.log('ENTREI x AQUI!');
 
     this.autoCompleteList = [];
     this.geocoder.geocode({ placeId: item.place_id }, (results, status) => {
       if (status === 'OK' && results[0]) {
-        this.common.loading.dismiss();
+        // this.common.loading.dismiss();
+        this.progressBar = false;
         this.insereMarker(results[0].geometry.location);
         this.searchbar.value = item.description;
       } else {
-        this.common.loading.dismiss();
+        // this.common.loading.dismiss();
+        this.progressBar = false;
       }
     });
   }
