@@ -17,7 +17,6 @@ export class ConsultaCepPage implements OnInit, AfterContentInit {
   @ViewChild(IonSlides, { static: true }) slides: IonSlides;
 
   @ViewChild('mapElement', { static: false }) mapElement: { nativeElement: any; };
-  @ViewChild('autoCompleteInput', { static: true }) inputNativeElement: any;
   directionForm: FormGroup;
 
   public map: any;
@@ -90,7 +89,8 @@ export class ConsultaCepPage implements OnInit, AfterContentInit {
       map: this.map,
       anchorPoint: new google.maps.Point(0, -29)
     });
-    const autocomplete = new google.maps.places.Autocomplete(this.inputNativeElement.nativeElement as IonSearchbar);
+    const inputElement: any = this.searchbar.getInputElement();
+    const autocomplete = new google.maps.places.Autocomplete(inputElement as HTMLInputElement);
     autocomplete.addListener('place_changed', () => {
       infowindow.close();
       marker.setVisible(false);

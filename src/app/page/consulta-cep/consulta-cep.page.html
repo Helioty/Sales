@@ -9,17 +9,18 @@
 
   <ion-toolbar color="primary">
     <form [formGroup]="directionForm">
-      <ion-searchbar formControlName="placeName" placeholder="Pesquise seu endereço aqui!"></ion-searchbar>
+      <ion-searchbar #searchbar formControlName="placeName" placeholder="Pesquise seu endereço aqui!">
+      </ion-searchbar>
     </form>
   </ion-toolbar>
-  
+
   <ion-progress-bar type="indeterminate" color="success" *ngIf="progressBar"></ion-progress-bar>
 </ion-header>
 
 <ion-content>
   <div id="infowindow-content">
     <img src="" width="16" height="16" id="place-icon">
-    <span id="place-name"  class="title"></span><br>
+    <span id="place-name" class="title"></span><br>
     <span id="place-address"></span>
   </div>
 
