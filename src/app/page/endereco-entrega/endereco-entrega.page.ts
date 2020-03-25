@@ -68,8 +68,9 @@ export class EnderecoEntregaPage implements OnInit {
   }
 
   async saveEndereco() {
+    const seq = new Sequence();
     const novoEndereco: Endereco = {
-      id: new Sequence,
+      id: seq,
       cd_status: 'L',
       tp_ende: 'ENTREGA',
       ds_ende: this.novoEndereco.endereco,
