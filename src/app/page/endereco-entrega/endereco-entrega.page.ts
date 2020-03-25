@@ -76,7 +76,7 @@ export class EnderecoEntregaPage implements OnInit {
       nu_ende: this.novoEndereco.numero,
       ds_compl: this.novoEndereco.complemento,
       ds_bairro: this.novoEndereco.bairro,
-      ds_cep: this.novoEndereco.cep,
+      ds_cep: this.novoEndereco.cep.replace(/\D/g, ''),
       ds_uf: this.novoEndereco.uf,
       nu_praca: 0,
       ds_obs: '',
@@ -96,7 +96,9 @@ export class EnderecoEntregaPage implements OnInit {
 
   // by Hélio, cadastra o novo endereco do cliente
   gravaNovoEndereco(cliente: any) {
-    this.clienteService.postClienteAlteracao(cliente).then(() => {
+    this.clienteService.postClienteAlteracao(cliente).then((result: any) => {
+      console.log('RETORNO DO ATUALIZA CLIENTE');
+      console.log(result);
       this.atualizaDadosCliente(this.pedidoService.pedidoHeader.cgccpf_cliente);
     }, () => {
       this.common.loading.dismiss();
