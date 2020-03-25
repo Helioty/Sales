@@ -75,6 +75,12 @@ export class ConsultaCepPage implements OnInit {
     this.common.goToFullScreen();
   }
 
+  changeSlide(slide: number) {
+    this.slides.lockSwipes(false);
+    this.slides.slideTo(slide);
+    this.slides.lockSwipes(true);
+  }
+
   // edit by Helio 25/03/2020
   updateSearchResults() {
     if (!this.foco) {
@@ -102,19 +108,16 @@ export class ConsultaCepPage implements OnInit {
 
   // edit by Helio 25/03/2020
   selectSearchResult(item: any) {
-    // await this.common.showLoader();
     this.progressBar = true;
     console.log('ENTREI x AQUI!');
 
     this.autoCompleteList = [];
     this.geocoder.geocode({ placeId: item.place_id }, (results, status) => {
       if (status === 'OK' && results[0]) {
-        // this.common.loading.dismiss();
         this.progressBar = false;
         this.insereMarker(results[0].geometry.location);
         this.searchbar.value = item.description;
       } else {
-        // this.common.loading.dismiss();
         this.progressBar = false;
       }
     });
@@ -138,6 +141,59 @@ export class ConsultaCepPage implements OnInit {
     }
     if (this.markers.length > 20) {
       this.markers = [];
+    }
+  }
+
+  confirmaLocal() {
+    this.progressBar = true;
+    this.getAddressGoogleMap();
+  }
+
+  getAddressGoogleMap() {
+    this.geocoder.geocode(
+      { latLng: this.markers[this.markers.length - 1].getPosition() },
+      (results: any, status: any) => {
+        if (status === 'OK' && results[0]) {
+          this.insereMarker(results[0].geometry.location);
+          this.showResultGoogleMap(results[0].address_components);
+          this.changeSlide(1);
+          this.progressBar = false;
+        } else {
+          this.progressBar = false;
+        }
+      });
+  }
+
+  showResultGoogleMap(item: any) {
+    if (item.length === 7) {
+      console.log('CONSULTA GOOGLE MAP');
+      console.log(item);
+
+      this.enderecoSelecionado.endereco = item[1].long_name;
+      this.enderecoSelecionado.bairro = item[2].long_name;
+      this.enderecoSelecionado.cidade = item[3].long_name;
+      this.enderecoSelecionado.uf = item[4].short_name;
+      this.enderecoSelecionado.cep = item[6].long_name;
+    }
+    if (item.length === 6) {
+      console.log('CEP GENERICO');
+      console.log(item);
+
+      this.enderecoSelecionado.endereco = item[0].long_name;
+      this.enderecoSelecionado.bairro = item[1].long_name;
+      this.enderecoSelecionado.cidade = item[2].long_name;
+      this.enderecoSelecionado.uf = item[3].short_name;
+      this.enderecoSelecionado.cep = item[5].long_name;
+    }
+    if (item.length === 5) {
+      console.log('CEP GENERICO');
+      console.log(item);
+
+      this.enderecoSelecionado.endereco = item[1].long_name;
+      // this.enderecoSelecionado.bairro = item[2].long_name;
+      this.enderecoSelecionado.cidade = item[2].long_name;
+      this.enderecoSelecionado.uf = item[3].short_name;
+      this.enderecoSelecionado.cep = item[4].long_name;
     }
   }
 

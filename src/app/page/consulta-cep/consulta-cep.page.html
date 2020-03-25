@@ -10,7 +10,7 @@
 
   <ion-toolbar color="primary">
     <ion-searchbar #searchbar placeholder="Pesquise seu endereço aqui!" (ionFocus)="foco = true"
-      (ionBlur)="foco = false" (keyup)="updateSearchResults()" showCancelButton="none">
+      (ionBlur)="foco = false" (keyup)="updateSearchResults()" showCancelButton="never">
     </ion-searchbar>
   </ion-toolbar>
 
@@ -44,9 +44,7 @@
                   <ion-label>CEP</ion-label>
                 </ion-row>
                 <ion-row>
-                  <ion-input type="tel" placeholder="00000-000" mask="**.***-***" [(ngModel)]="enderecoSelecionado.cep"
-                    (keyup.enter)="getEnderecoByCEP(novoEndereco.cep);">
-                  </ion-input>
+                  <ion-input type="tel" [(ngModel)]="enderecoSelecionado.cep"></ion-input>
                 </ion-row>
               </ion-col>
 
