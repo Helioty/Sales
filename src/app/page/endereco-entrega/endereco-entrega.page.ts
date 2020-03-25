@@ -70,7 +70,8 @@ export class EnderecoEntregaPage implements OnInit {
   async saveEndereco() {
     const seq = new Sequence();
     const cep = this.novoEndereco.cep.replace(/\D/g, '');
-    const novoEndereco: Endereco = {
+    let novoEndereco: Endereco = new Endereco();
+    novoEndereco = {
       id: seq,
       cd_status: 'L',
       tp_ende: 'ENTREGA',
