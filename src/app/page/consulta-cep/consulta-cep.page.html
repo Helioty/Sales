@@ -21,9 +21,11 @@
 <ion-content>
   <div [hidden]="autoCompleteList.length == 0">
     <ion-list class="listagem">
-      <ion-item *ngFor="let item of autoCompleteList" button>
+      <ion-item button lines="full" *ngFor="let item of autoCompleteList">
         <ion-icon slot="start" name="logo-google"></ion-icon>
-        {{ item.description }}
+        <ion-label>
+          {{ item.description }}
+        </ion-label>
       </ion-item>
     </ion-list>
   </div>

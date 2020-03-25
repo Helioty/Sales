@@ -26,20 +26,20 @@ export class ConsultaCepPage implements OnInit, AfterContentInit {
   public latitude: any;
   public longitude: any;
 
-  public geocoder: any;
-
-
   public directionsService = new google.maps.DirectionsService();
   public directionsDisplay = new google.maps.DirectionsRenderer();
   public latLng: any;
+  
 
 
-  public googleAutocomplete = new google.maps.places.AutocompleteService();
+
   @ViewChild('searchbar', { static: false }) searchbar: IonSearchbar;
   public autoCompleteList: any[] = [];
+  
+  public googleAutocomplete = new google.maps.places.AutocompleteService();
+  public geocoder = new google.maps.Geocoder();;
 
-  // controla o foco no searchbar
-  public foco = false;
+  public foco = false; // controla o foco no searchbar
 
   public modoConsulta = true; // controla o modo da pagina se é apenas consulta ou não.
   public progressBar = false; // controla o a barra de progresso.
@@ -164,6 +164,32 @@ export class ConsultaCepPage implements OnInit, AfterContentInit {
     );
   }
 
+  async selectSearchResult(item: any) {
+    await this.common.showLoader();
+    console.log('ENTREI x AQUI!');
+
+    this.autoCompleteList = [];
+    this.geocoder.geocode({ placeId: item.place_id }, (results, status) => {
+      if (status === 'OK' && results[0]) {
+        this.common.loading.dismiss();
+        this.insereMarker(results[0].geometry.location);
+        this.searchbar.value = item.description;
+      } else {
+        this.common.loading.dismiss();
+      }
+    });
+  }
+
+  insereMarker(latlng) {
+    // this.clearLocations();
+    // const marker = new google.maps.Marker({
+    //   position: latlng,
+    //   map: this.map,
+    //   visible: true
+    // });
+    // this.markers.push(marker);
+    this.map.setCenter(latlng);
+  }
 
 
 }
