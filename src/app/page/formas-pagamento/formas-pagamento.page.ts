@@ -49,6 +49,7 @@ export class FormasPagamentoPage implements OnInit {
     this.pagamento.setTipoPagamento(opcaoPagamento.codigo).then((result: any) => {
       this.common.loading.dismiss();
       console.log(result);
+      this.slides.getActiveIndex();
     }, (error) => {
       this.common.loading.dismiss();
     });

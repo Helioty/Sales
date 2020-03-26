@@ -41,9 +41,9 @@ export class CondicaoPagamentoService {
 
     return new Promise((resolve, reject) => {
       this.baseService.post(link, aResult).then((result: any) => {
+        this.pedidoService.atualizaPedidoHeader(result);
         console.log('Result Atualiza tipo pagamento');
         console.log(result);
-        // this.pedidoService.atualizaPedidoHeader(result);
         // this.common.showToast('Cartão Pedido Adicionado!');
         resolve(result);
       }, (error: any) => {

@@ -16,7 +16,7 @@
           <ion-col size="12" style="margin: auto;">
             <ion-row>
               <ion-col size="6" *ngFor="let op of opcoesPagamento; let i = index" style="padding: 15px 5px;">
-                <ion-card button (click)="goToCondicaoPagamento(op);">
+                <ion-card button (click)="goToCondicaoPagamento(op);" [ngClass]="selected ? pedido.pedidoHeader.tipodoc == op.codigo">
                   <ion-card-header>
                     <ion-thumbnail>
                       <img src="assets/images/06-formas_de_pagamento/{{op.codigo}}.png" />
