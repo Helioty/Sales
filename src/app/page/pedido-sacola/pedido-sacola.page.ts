@@ -189,7 +189,7 @@ export class PedidoSacolaPage implements OnInit {
     if (this.pedidoService.pedidoHeader.informarCliente === 'S') {
       if (!this.pedidoService.clientSelected &&
         (this.pedidoService.pedidoHeader.cgccpf_cliente === '' ||
-          this.pedidoService.pedidoHeader.cgccpf_cliente === 'Não Identificado')
+          this.pedidoService.pedidoHeader.cgccpf_cliente === null)
       ) {
         console.log('Cliente obrigatorio!');
         this.openCustomPage('cliente', 'finzalizaService', 'pedido-sacola');

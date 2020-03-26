@@ -156,7 +156,7 @@ export class PedidoService {
   }
 
   // by Hélio 06/02/2020
-  private async atualizaPedido(tableName: any, tableValor: any) {
+  public async atualizaPedido(tableName: any, tableValor: any) {
     const aResult = [];
     const table: PedidoTable = new PedidoTable();
     table.name = tableName;
