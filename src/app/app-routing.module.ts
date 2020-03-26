@@ -82,6 +82,10 @@ const routes: Routes = [
     canActivate: [AuthGuard, ListaEnderecoGuard]
   },
   {
+    path: 'endereco-entrega-old',
+    loadChildren: './page/endereco-entrega-old/endereco-entrega-old.module#EnderecoEntregaOldPageModule'
+  },
+  {
     path: 'pedido-finalizacao',
     loadChildren: './page/pedido-finalizacao/pedido-finalizacao.module#PedidoFinalizacaoPageModule'
   },
@@ -116,7 +120,9 @@ const routes: Routes = [
   {
     path: 'forma-pagamento',
     loadChildren: './page/forma-pagamento/forma-pagamento.module#FormaPagamentoPageModule'
-  },
+  },  { path: 'formas-pagamento', loadChildren: './page/formas-pagamento/formas-pagamento.module#FormasPagamentoPageModule' }
+
+
 
 
 
