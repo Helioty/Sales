@@ -120,7 +120,8 @@ const routes: Routes = [
     path: 'formas-pagamento',
     loadChildren: './page/formas-pagamento/formas-pagamento.module#FormasPagamentoPageModule',
     canActivate: [AuthGuard]
-  }
+  },  { path: 'parcelamento', loadChildren: './page/formas-pagamento/parcelamento/parcelamento.module#ParcelamentoPageModule' }
+
 
 
 

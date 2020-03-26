@@ -44,7 +44,6 @@ export class CondicaoPagamentoService {
         this.pedidoService.atualizaPedidoHeader(result);
         console.log('Result Atualiza tipo pagamento');
         console.log(result);
-        // this.common.showToast('Cartão Pedido Adicionado!');
         resolve(result);
       }, (error: any) => {
         console.log(error);
