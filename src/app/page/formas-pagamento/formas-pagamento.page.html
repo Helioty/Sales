@@ -15,7 +15,7 @@
         <ion-row style="height: 100%;">
           <ion-col size="12" style="margin: auto;">
             <ion-row>
-              <ion-col size="6">
+              <ion-col size="6" *ngFor="let op of opcoesPagamento; let i = index">
                 <ion-card>
                   <ion-card-header>
                     <ion-button disabled="true" fill="clear" style="opacity: 1 !important;">
@@ -24,77 +24,7 @@
                   </ion-card-header>
 
                   <ion-card-content>
-                    <ion-label>Pesquisa</ion-label>
-                  </ion-card-content>
-                </ion-card>
-              </ion-col>
-
-              <ion-col size="6">
-                <ion-card>
-                  <ion-card-header>
-                    <ion-button disabled="true" fill="clear" style="opacity: 1 !important;">
-                      <ion-icon slot="icon-only" name="speedometer-outline"></ion-icon>
-                    </ion-button>
-                  </ion-card-header>
-
-                  <ion-card-content>
-                    <ion-label>Pedido Rapido</ion-label>
-                  </ion-card-content>
-                </ion-card>
-              </ion-col>
-
-              <ion-col size="6">
-                <ion-card>
-                  <ion-card-header>
-                    <ion-button disabled="true" fill="clear" style="opacity: 1 !important;">
-                      <ion-icon slot="icon-only" name="construct-outline"></ion-icon>
-                    </ion-button>
-                  </ion-card-header>
-
-                  <ion-card-content>
-                    <ion-label>Serviços</ion-label>
-                  </ion-card-content>
-                </ion-card>
-              </ion-col>
-
-              <ion-col size="6">
-                <ion-card>
-                  <ion-card-header>
-                    <ion-button disabled="true" fill="clear" style="opacity: 1 !important;">
-                      <ion-icon slot="icon-only" name="color-fill"></ion-icon>
-                    </ion-button>
-                  </ion-card-header>
-
-                  <ion-card-content>
-                    <ion-label>Tintas</ion-label>
-                  </ion-card-content>
-                </ion-card>
-              </ion-col>
-
-              <ion-col size="6">
-                <ion-card>
-                  <ion-card-header>
-                    <ion-button disabled="true" fill="clear" style="opacity: 1 !important;">
-                      <ion-icon slot="icon-only" name="flash-outline"></ion-icon>
-                    </ion-button>
-                  </ion-card-header>
-
-                  <ion-card-content>
-                    <ion-label>Eletrica</ion-label>
-                  </ion-card-content>
-                </ion-card>
-              </ion-col>
-
-              <ion-col size="6">
-                <ion-card>
-                  <ion-card-header>
-                    <ion-button disabled="true" fill="clear" style="opacity: 1 !important;">
-                      <ion-icon slot="icon-only" name="apps-sharp"></ion-icon>
-                    </ion-button>
-                  </ion-card-header>
-
-                  <ion-card-content>
-                    <ion-label>teste</ion-label>
+                    <ion-label>{{ op.descricao }}</ion-label>
                   </ion-card-content>
                 </ion-card>
               </ion-col>

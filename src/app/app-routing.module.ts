@@ -118,7 +118,8 @@ const routes: Routes = [
 
   {
     path: 'formas-pagamento',
-    loadChildren: './page/formas-pagamento/formas-pagamento.module#FormasPagamentoPageModule'
+    loadChildren: './page/formas-pagamento/formas-pagamento.module#FormasPagamentoPageModule',
+    canActivate: [AuthGuard]
   }
 
 

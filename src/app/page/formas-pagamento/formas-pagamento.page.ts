@@ -27,6 +27,7 @@ export class FormasPagamentoPage implements OnInit {
   ionViewWillEnter() {
     this.common.goToFullScreen();
     this.pagamento.getFormaPagamento(this.pedido.numPedido).then((result: any) => {
+      this.opcoesPagamento = result;
       console.log(result);
     });
   }
