@@ -91,7 +91,7 @@ export class EnderecoEntregaPage implements OnInit {
       latitude: '',
       longitude: '',
       cidade: this.novoEndereco.cidade
-    }
+    };
 
     console.log('novoEndereco');
     console.log(novoEndereco);
