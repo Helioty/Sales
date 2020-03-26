@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { CondicaoPagamentoService } from 'src/app/services/pagamento/condicao-pagamento.service';
+import { PedidoService } from 'src/app/services/pedido/pedido.service';
 import { CommonService } from 'src/app/services/common/common.service';
 import { IonSlides } from '@ionic/angular';
 
@@ -15,14 +16,19 @@ export class FormasPagamentoPage implements OnInit {
 
   constructor(
     public common: CommonService,
+    private pedido: PedidoService,
     private pagamento: CondicaoPagamentoService
   ) { }
 
   ngOnInit() {
+    this.slides.lockSwipes(true);
   }
 
   ionViewWillEnter() {
     this.common.goToFullScreen();
+    this.pagamento.getFormaPagamento(this.pedido.numPedido).then((result: any) => {
+      console.log(result);
+    });
   }
 
   ionViewDidEnter() {
