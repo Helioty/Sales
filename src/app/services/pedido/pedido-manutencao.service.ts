@@ -41,14 +41,14 @@ export class PedidoManutencaoService {
 
   }
 
-  async reGetCliente(clie: string) {
-    await this.clienteService.getClienteNoAlert(clie).then((result) => {
-      this.pedidoService.dadosCliente = result;
-    }, () => {
-      setTimeout(() => {
-        this.reGetCliente(clie);
-      }, 500);
-    });
-  }
+  // async reGetCliente(clie: string) {
+  //   await this.clienteService.getClienteNoAlert(clie).then((result) => {
+  //     this.pedidoService.dadosCliente = result;
+  //   }, () => {
+  //     setTimeout(() => {
+  //       this.reGetCliente(clie);
+  //     }, 500);
+  //   });
+  // }
 
 }
