@@ -92,6 +92,20 @@ export class PedidoService {
     this.digitoPedido = pedidoHeader.digito;
 
     this.tipoRetirada = pedidoHeader.tipoEntrega;
+    switch (pedidoHeader.tipoEntrega) {
+      case 'IMEDIATA':
+        this.codigoTipoRetirada = '0';
+        break;
+      case 'POSTERIOR':
+        this.codigoTipoRetirada = '1';
+        break;
+      case 'ENTREGA':
+        this.codigoTipoRetirada = '2';
+        break;
+
+      default:
+        break;
+    }
 
     this.qtdItensSacola = pedidoHeader.numitens;
 

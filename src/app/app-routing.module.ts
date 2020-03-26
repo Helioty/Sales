@@ -116,11 +116,10 @@ const routes: Routes = [
     loadChildren: './page/tinta-alterada/lista-tintas/lista-tintas.module#ListaTintasPageModule'
   },
 
-
   {
-    path: 'forma-pagamento',
-    loadChildren: './page/forma-pagamento/forma-pagamento.module#FormaPagamentoPageModule'
-  },  { path: 'formas-pagamento', loadChildren: './page/formas-pagamento/formas-pagamento.module#FormasPagamentoPageModule' }
+    path: 'formas-pagamento',
+    loadChildren: './page/formas-pagamento/formas-pagamento.module#FormasPagamentoPageModule'
+  }
 
 
 

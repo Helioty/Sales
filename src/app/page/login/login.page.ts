@@ -86,36 +86,38 @@ export class LoginPage implements OnInit {
   async entrar() {
     await this.common.showLoader();
 
-    this.authService.login(this.loginData.login.toUpperCase(), this.loginData.senha).then((result) => {
-      this.common.loading.dismiss();
-      this.data = result;
-      console.log('entrou aqui');
-
-      if (this.data.status === 'OK') {
-        this.common.showAlert(this.data.title, this.data.detail);
-      } else {
-
-        localStorage.setItem('token', this.data.authorization);
-        localStorage.setItem('login', this.loginData.login);
-        localStorage.setItem('foto', this.data.foto);
-        localStorage.setItem('empresa', this.data.empresa.id);
-        localStorage.setItem('nome', this.data.nomeDisplay);
-        localStorage.setItem('isLoggedIn', 'true');
-
-        if (localStorage.getItem('foto') === 'null') {
-          this.noPhoto = true;
-        }
-
-        this.appComponent.getStatus();
-        this.navControl.navigateRoot('/pedido-lista');
+    this.authService.login(this.loginData.login.toUpperCase(), this.loginData.senha)
+      .then((result: any) => {
         this.common.loading.dismiss();
-      }
-    }, (error: any) => {
-      console.log(error);
-      this.isLoggedIn = false;
-      this.common.loading.dismiss();
-      this.loginData.senha = '';
-    });
+        this.data = result;
+        console.log('entrou aqui');
+
+        if (this.data.status === 'OK') {
+          this.common.showAlert(this.data.title, this.data.detail);
+        } else {
+
+          localStorage.setItem('token', this.data.authorization);
+          localStorage.setItem('login', this.loginData.login);
+          localStorage.setItem('foto', this.data.foto);
+          localStorage.setItem('empresa', this.data.empresa.id);
+          localStorage.setItem('nome', this.data.nomeDisplay);
+          localStorage.setItem('isLoggedIn', 'true');
+          localStorage.setItem('tms', this.data.empresa.usaFreteTMS);
+
+          if (localStorage.getItem('foto') === 'null') {
+            this.noPhoto = true;
+          }
+
+          this.appComponent.getStatus();
+          this.navControl.navigateRoot('/pedido-lista');
+          this.common.loading.dismiss();
+        }
+      }, (error: any) => {
+        console.log(error);
+        this.isLoggedIn = false;
+        this.common.loading.dismiss();
+        this.loginData.senha = '';
+      });
 
   }
 

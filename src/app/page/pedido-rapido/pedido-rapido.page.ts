@@ -91,7 +91,7 @@ export class PedidoRapidoPage implements OnInit {
     }, 150);
   }
 
-  async scaneado(evento: any) {
+  scaneado(evento: any) {
     try {
       if (evento.target && evento.target.value.length >= 2) {
         this.focusPause();
@@ -118,8 +118,14 @@ export class PedidoRapidoPage implements OnInit {
       const tipo = this.pedidoService.codigoTipoRetirada;
       const valor = 0;
 
-      this.pedidoItens = new PedidoItens(localStorage.getItem('empresa'), parseInt(this.pedidoService.numPedido));
+      this.pedidoItens = new PedidoItens(
+        localStorage.getItem('empresa'),
+        // tslint:disable-next-line: radix
+        parseInt(this.pedidoService.numPedido)
+      );
+      // tslint:disable-next-line: radix
       this.pedidoItens.idEmpresa = parseInt(localStorage.getItem('empresa'));
+      // tslint:disable-next-line: radix
       this.pedidoItens.numPedido = parseInt(this.pedidoService.numPedido);
       this.pedidoItens.idProduto = codigo;
       this.pedidoItens.embalagem = 0;
@@ -135,8 +141,10 @@ export class PedidoRapidoPage implements OnInit {
     const aRetiradas: any[] = [];
     try {
       this.retiradas = new Retiradas();
+      // tslint:disable-next-line: radix
       this.retiradas.empresaRetirada = parseInt(localStorage.getItem('empresa'));
       this.retiradas.idDeposito = 8;
+      // tslint:disable-next-line: radix
       this.retiradas.tipoRetirada = parseInt(tipo);
       this.retiradas.qtd = 1;
       this.retiradas.precoUnitario = parseFloat(valor);
@@ -146,7 +154,6 @@ export class PedidoRapidoPage implements OnInit {
       console.log('this.retiradas');
       console.log(this.pedidoItens);
 
-
       // this.pedidoService.sistuacaoPedido = 'A';  // altera situação do pedido
       this.pedidoItens.retiradas = aRetiradas;
 
@@ -155,7 +162,8 @@ export class PedidoRapidoPage implements OnInit {
       if (this.codProdRequest === codigo) {
         this.numRequest += 1;
         if (this.numRequest <= this.maxRequest) {
-          if (this.pedidoItens.retiradas !== [] && this.pedidoItens.idProduto !== null || this.pedidoItens.idProduto !== '') {
+          if (this.pedidoItens.retiradas !== [] &&
+            (this.pedidoItens.idProduto !== null || this.pedidoItens.idProduto !== '')) {
             this.addItemPedido(this.pedidoItens);
           }
         } else {
@@ -170,12 +178,11 @@ export class PedidoRapidoPage implements OnInit {
       } else {
         this.numRequest = 0;
         this.codProdRequest = codigo;
-        if (this.pedidoItens.retiradas !== [] && this.pedidoItens.idProduto !== null || this.pedidoItens.idProduto !== '') {
+        if (this.pedidoItens.retiradas !== [] &&
+          (this.pedidoItens.idProduto !== null || this.pedidoItens.idProduto !== '')) {
           this.addItemPedido(this.pedidoItens);
         }
       }
-
-
     } catch (error) {
       this.common.showAlertError('erro no adicionar sacola');
       // by Ryuge 28/11/2019
@@ -210,7 +217,6 @@ export class PedidoRapidoPage implements OnInit {
     // this.totalPedido = result.pedido.totpedido;
 
   }
-
 
   // by Hélio 11/03/2020
   async removerProduto(produto: any) {
