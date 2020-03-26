@@ -44,4 +44,14 @@ export class FormasPagamentoPage implements OnInit {
 
   }
 
+  async goToCondicaoPagamento(opcaoPagamento: any) {
+    await this.common.showLoader();
+    this.pagamento.setTipoPagamento(opcaoPagamento.codigo).then((result: any) => {
+      this.common.loading.dismiss();
+      console.log(result);
+    }, (error) => {
+      this.common.loading.dismiss();
+    });
+  }
+
 }
