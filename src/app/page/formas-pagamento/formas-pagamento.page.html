@@ -16,11 +16,14 @@
           <ion-col size="12" style="margin: auto;">
             <ion-row>
               <ion-col size="6" *ngFor="let op of opcoesPagamento; let i = index">
-                <ion-card>
+                <ion-card button>
                   <ion-card-header>
-                    <ion-button disabled="true" fill="clear" style="opacity: 1 !important;">
+                    <!-- <ion-button disabled="true" fill="clear" style="opacity: 1 !important;">
                       <ion-icon slot="icon-only" name="search"></ion-icon>
-                    </ion-button>
+                    </ion-button> -->
+                    <ion-thumbnail>
+                      <img src="assets/images/06-formas_de_pagamento/{{op.codigo}}.png" />
+                    </ion-thumbnail>
                   </ion-card-header>
 
                   <ion-card-content>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="84px" height="84px" viewBox="0 0 84 84" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 47.1 (45422) - http://www.bohemiancoding.com/sketch -->
+    <title>receipt@1x</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Sacola---Forma-Pag-2" transform="translate(-218.000000, -333.000000)">
+            <g id="receipt" transform="translate(220.000000, 335.000000)">
+                <circle id="Oval-3" stroke="#D9D9D9" stroke-width="4" fill="#F4F4F4" cx="40" cy="40" r="40"></circle>
+                <path d="M80,40 C80,35.4549565 79.2403478,31.0876522 77.8438261,27.0161739 L60.5956522,9.768 L19.5201739,70.1158261 L27.365913,77.9615652 C31.3373913,79.2827826 35.5846957,80 40,80 C62.0913043,80 80,62.0913043 80,40 Z" id="Shape" fill-opacity="0.5" fill="#95989A" fill-rule="nonzero"></path>
+                <polygon id="Shape" fill="#E8E8E8" fill-rule="nonzero" points="53.7497391 14.462087 46.9015652 9.76817391 40.057913 14.462087 34.4544348 42.7426087 40.057913 65.421913 46.9015652 70.116 53.7497391 65.421913 60.5956522 70.116 60.5956522 9.76817391"></polygon>
+                <polygon id="Shape" fill="#FFFFFF" fill-rule="nonzero" points="33.212 9.76817391 26.366087 14.462087 19.5201739 9.76817391 19.5201739 70.116 26.366087 65.421913 33.212 70.116 40.057913 65.421913 40.057913 14.462087"></polygon>
+                <rect id="Rectangle-path" fill="#C00D0E" fill-rule="nonzero" x="50.1608696" y="40.8116522" width="5.2173913" height="3.47826087"></rect>
+                <rect id="Rectangle-path" fill="#C00D0E" fill-rule="nonzero" x="50.1608696" y="33.8551304" width="5.2173913" height="3.47826087"></rect>
+                <rect id="Rectangle-path" fill="#C00D0E" fill-rule="nonzero" x="50.1608696" y="54.7246957" width="5.2173913" height="3.47826087"></rect>
+                <rect id="Rectangle-path" fill="#C00D0E" fill-rule="nonzero" x="50.1608696" y="47.7681739" width="5.2173913" height="3.47826087"></rect>
+                <rect id="Rectangle-path" fill="#324A5E" fill-rule="nonzero" x="24.7375652" y="47.7681739" width="15.3203478" height="3.47826087"></rect>
+                <rect id="Rectangle-path" fill="#324A5E" fill-rule="nonzero" x="24.7375652" y="40.8116522" width="15.3203478" height="3.47826087"></rect>
+                <rect id="Rectangle-path" fill="#324A5E" fill-rule="nonzero" x="24.7375652" y="33.8551304" width="15.3203478" height="3.47826087"></rect>
+                <polygon id="Shape" fill="#F1543F" fill-rule="nonzero" points="40.057913 21.6812174 36.5796522 25.1594783 40.057913 28.6377391 55.3782609 28.6377391 55.3782609 21.6812174"></polygon>
+                <rect id="Rectangle-path" fill="#FC6F58" fill-rule="nonzero" x="24.7375652" y="21.6812174" width="15.3203478" height="6.95652174"></rect>
+                <rect id="Rectangle-path" fill="#324A5E" fill-rule="nonzero" x="24.7375652" y="54.7246957" width="15.3203478" height="3.47826087"></rect>
+                <circle id="Oval-3-Copy" stroke="#D9D9D9" stroke-width="4" cx="40" cy="40" r="40"></circle>
+            </g>
+        </g>
+    </g>
+</svg>
