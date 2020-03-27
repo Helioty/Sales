@@ -1,14 +1,22 @@
 <ion-header>
   <ion-toolbar color="primary">
-    <ion-buttons slot="start">
+    <!-- <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
-    </ion-buttons>
+    </ion-buttons> -->
 
-    <ion-title>parcelamento</ion-title>
+    <ion-title>{{ pedido.pedidoHeader.descricao_tipodoc }}</ion-title>
   </ion-toolbar>
 
-  <ion-toolbar>
-
+  <ion-toolbar color="primary">
+    <ion-grid>
+      <ion-row style="width: fit-content; margin: auto;">
+        <ion-col size="12" style="margin: auto;">
+          <ion-thumbnail>
+            <img src="assets/images/06-formas_de_pagamento/{{pedido.pedidoHeader.tipodoc}}.png" />
+          </ion-thumbnail>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
   </ion-toolbar>
 </ion-header>
 
