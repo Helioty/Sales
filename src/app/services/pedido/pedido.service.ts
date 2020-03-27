@@ -3,7 +3,7 @@ import { NavController, AlertController } from '@ionic/angular';
 import { BaseService } from '../base-service.service';
 import { CommonService } from 'src/app/services/common/common.service';
 import { ClienteService } from 'src/app/services/cliente/cliente.service';
-import { PedidoHeader, PedidoTable, PedidoItens } from 'src/app/class/pedido';
+import { PedidoHeader, PedidoTable } from 'src/app/class/pedido';
 import { API_URL } from 'src/app/config/app.config.service';
 import { ENV } from 'src/environments/environment';
 

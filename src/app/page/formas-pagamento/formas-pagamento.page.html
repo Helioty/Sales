@@ -9,38 +9,26 @@
 </ion-header>
 
 <ion-content (click)="common.goToFullScreen();">
-  <ion-slides style="width: 100%; height: 100%;">
-    <ion-slide>
-      <ion-grid style="height: 100%;">
-        <ion-row style="height: 100%;">
-          <ion-col size="12" style="margin: auto;">
-            <ion-row>
-              <ion-col size="6" *ngFor="let op of opcoesPagamento; let i = index" style="padding: 15px 5px;">
-                <ion-card button (click)="goToCondicaoPagamento(op);"
-                  [class.selected]="pedido.pedidoHeader.tipodoc == op.codigo">
-                  <ion-card-header>
-                    <ion-thumbnail>
-                      <img src="assets/images/06-formas_de_pagamento/{{op.codigo}}.png" />
-                    </ion-thumbnail>
-                  </ion-card-header>
+  <ion-grid style="height: 100%;">
+    <ion-row style="height: 100%;">
+      <ion-col size="12" style="margin: auto;">
+        <ion-row>
+          <ion-col size="6" *ngFor="let op of opcoesPagamento; let i = index" style="padding: 15px 5px;">
+            <ion-card button (click)="goToCondicaoPagamento(op);"
+              [class.selected]="pedido.pedidoHeader.tipodoc == op.codigo">
+              <ion-card-header>
+                <ion-thumbnail>
+                  <img src="assets/images/06-formas_de_pagamento/{{op.codigo}}.png" />
+                </ion-thumbnail>
+              </ion-card-header>
 
-                  <ion-card-content>
-                    <ion-label>{{ op.descricao }}</ion-label>
-                  </ion-card-content>
-                </ion-card>
-              </ion-col>
-            </ion-row>
+              <ion-card-content>
+                <ion-label>{{ op.descricao }}</ion-label>
+              </ion-card-content>
+            </ion-card>
           </ion-col>
         </ion-row>
-      </ion-grid>
-    </ion-slide>
-
-    <ion-slide>
-
-    </ion-slide>
-
-    <ion-slide>
-
-    </ion-slide>
-  </ion-slides>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>

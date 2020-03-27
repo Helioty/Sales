@@ -15,8 +15,6 @@ export class PedidoSacolaPage implements OnInit {
   public valorScanner: string;
   public focusStatus = true;
 
-  // public itens: any[] = [];
-
   constructor(
     private alertCtrl: AlertController,
     private common: CommonService,
