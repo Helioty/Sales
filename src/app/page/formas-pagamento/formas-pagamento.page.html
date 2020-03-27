@@ -19,13 +19,21 @@
                 <ion-card button (click)="goToCondicaoPagamento(op);"
                   [class.selected]="pedido.pedidoHeader.tipodoc == op.codigo">
                   <ion-card-header>
-                    <ion-thumbnail>
+                    <ion-thumbnail style="width: 60px; height: 60px;">
                       <img src="assets/images/06-formas_de_pagamento/{{op.codigo}}.png" />
                     </ion-thumbnail>
                   </ion-card-header>
 
                   <ion-card-content>
-                    <ion-label>{{ op.descricao }}</ion-label>
+                    <ion-grid>
+                      <ion-row>
+                        <ion-label>{{ op.descricao }}</ion-label>
+                      </ion-row>
+
+                      <ion-row *ngIf="op.parcelas > 0">
+                        Até {{ op.parcelas }} x de {{ op.valorParcelas | formatarString: 'VALOR' }}
+                      </ion-row>
+                    </ion-grid>
                   </ion-card-content>
                 </ion-card>
               </ion-col>
@@ -36,3 +44,21 @@
     </ion-slide>
   </ion-slides>
 </ion-content>
+
+<ion-footer>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="6">
+        <ion-label class="title">
+          Pedido:
+        </ion-label>
+      </ion-col>
+
+      <ion-col size="6">
+        <ion-label class="valor">
+          {{ pedido.pedidoHeader.totpedido | formatarString: 'VALOR' }}
+        </ion-label>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-footer>

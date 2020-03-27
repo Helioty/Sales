@@ -24,11 +24,39 @@ ion-content {
 
                     ion-card-content {
                         padding: 0 0 13px 0;
+
+                        ion-grid {
+                            padding: 0 !important;
+                        }
                     }
                 }
 
                 ion-card.selected {
                     border: 3px solid #FC6F58;
+                }
+            }
+        }
+    }
+}
+
+ion-footer {
+
+    ion-grid {
+
+        ion-row {
+
+            ion-col {
+
+                ion-label {
+                    font-size: 18px;
+                }
+
+                ion-label.title {
+                    color: #A9A9A9;
+                }
+
+                ion-label.valor {
+                    color: #3D3D3D
                 }
             }
         }
