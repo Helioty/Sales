@@ -9,7 +9,7 @@ ion-content {
 
                 ion-row {
                     border: 2px solid transparent;
-                    border-bottom-color: #606060;
+                    border-bottom-color: #D9D9D9;
 
                     ion-col {
                         margin: auto;
@@ -34,6 +34,41 @@ ion-content {
                     border: 2px solid #FC6F58;
                 }
             }
+        }
+    }
+}
+
+ion-footer {
+
+    ion-grid {
+
+        ion-row {
+
+            ion-col {
+
+                ion-label {
+                    font-size: 18px;
+                }
+
+                ion-label.title {
+                    color: #A9A9A9;
+                }
+
+                ion-label.valor {
+                    color: #3D3D3D;
+                    font-weight: bold;
+                }
+            }
+        }
+    }
+
+    ion-item {
+        width: 100% !important;
+        margin: auto !important;
+
+        ion-text {
+            margin: auto !important;
+            font-size: 110%;
         }
     }
 }
