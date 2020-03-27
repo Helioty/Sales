@@ -28,6 +28,7 @@ export class ParcelamentoPage implements OnInit {
     this.pagamento.getCondicaoPagamento(this.pedido.pedidoHeader.tipodoc, this.pedido.numPedido)
       .then((result: any) => {
         console.log(result);
+        this.opcoesList = result;
         this.common.loading.dismiss();
       }, (error) => {
         this.common.loading.dismiss();
