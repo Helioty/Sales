@@ -1,7 +1,7 @@
 ion-content {
 
     ion-slides {
-        height: 100%;
+        min-height: 100%;
 
         ion-slide {
             background: #f4f4f4;
@@ -13,6 +13,7 @@ ion-content {
                 ion-card {
                     margin: 0 !important;
                     border: 3px solid transparent;
+                    height: 100%;
 
                     ion-card-header {
                         padding: 5px !important;
