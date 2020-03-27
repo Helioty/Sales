@@ -1,0 +1,33 @@
+ion-content {
+    background-color: #F4F4F4;
+
+    ion-grid {
+
+        ion-row {
+
+            ion-col.opcoes {
+
+                ion-row {
+
+                    ion-col {
+                        margin: auto;
+                    }
+
+                    ion-col.serial {
+                        font-weight: bold;
+                        font-size: 17px;
+                    }
+
+                    ion-col.txt {
+                        font-size: 14px;
+                    }
+
+                    ion-col.val {
+                        color: var(--ion-color-success);
+                        font-size: 12px;
+                    }
+                }
+            }
+        }
+    }
+}
