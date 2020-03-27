@@ -40,6 +40,7 @@ ion-content {
 
                                 ion-label.valor-parcela {
                                     color: var(--ion-color-primary);
+                                    font-size: 13px;
                                 }
                             }
                         }
@@ -71,7 +72,8 @@ ion-footer {
                 }
 
                 ion-label.valor {
-                    color: #3D3D3D
+                    color: #3D3D3D;
+                    font-weight: bold;
                 }
             }
         }
