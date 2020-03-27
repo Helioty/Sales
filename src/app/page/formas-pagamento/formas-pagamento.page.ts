@@ -60,7 +60,7 @@ export class FormasPagamentoPage implements OnInit {
     // by Ryuge 29/11/2018
     // edit by Helio 27/03/2020
     if (opcao.parcelas !== 0) {
-      this.navControl.navigateForward(['/parcelamento']);
+      this.navControl.navigateForward(['/formas-pagamento/parcelamento']);
     } else {
       this.navControl.navigateRoot(['/pedido-finalizacao']);
     }
