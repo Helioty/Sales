@@ -27,11 +27,15 @@
                   <ion-card-content>
                     <ion-grid>
                       <ion-row>
-                        <ion-label>{{ op.descricao }}</ion-label>
+                        <ion-label class="descricao">
+                          {{ op.descricao }}
+                        </ion-label>
                       </ion-row>
 
                       <ion-row *ngIf="op.parcelas > 0">
-                        Até {{ op.parcelas }} x de {{ op.valorParcelas | formatarString: 'VALOR' }}
+                        <ion-label class="valor-parcela">
+                          Até {{ op.parcelas }} x de {{ op.valorParcelas | formatarString: 'VALOR' }}
+                        </ion-label>
                       </ion-row>
                     </ion-grid>
                   </ion-card-content>

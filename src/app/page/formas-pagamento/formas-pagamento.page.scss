@@ -27,6 +27,20 @@ ion-content {
 
                         ion-grid {
                             padding: 0 !important;
+
+                            ion-row {
+                                width: fit-content;
+                                margin: auto;
+
+                                ion-label.descricao {
+                                    color: #000;
+                                    font-weight: bold;
+                                }
+
+                                ion-label.valor-parcela {
+                                    color: var(--ion-color-primary);
+                                }
+                            }
                         }
                     }
                 }
