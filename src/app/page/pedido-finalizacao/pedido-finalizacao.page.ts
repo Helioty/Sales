@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { PedidoService } from 'src/app/services/pedido/pedido.service';
+import { CommonService } from 'src/app/services/common/common.service';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-pedido-finalizacao',
@@ -7,7 +10,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PedidoFinalizacaoPage implements OnInit {
 
-  constructor() { }
+  constructor(
+    public common: CommonService,
+    public pedido: PedidoService,
+    private navControl: NavController
+  ) { }
 
   ngOnInit() {
 
