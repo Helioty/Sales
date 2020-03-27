@@ -17,7 +17,9 @@ const routes: Routes = [
         children: [
           {
             path: '',
-            loadChildren: () => import('./pedido-aberto/pedido-aberto.module').then(m => m.PedidoAbertoPageModule)
+            loadChildren: () =>
+              import('./pedido-aberto/pedido-aberto.module')
+                .then(m => m.PedidoAbertoPageModule)
           }
         ]
       },
@@ -26,7 +28,9 @@ const routes: Routes = [
         children: [
           {
             path: '',
-            loadChildren: () => import('./pedido-finalizado/pedido-finalizado.module').then(m => m.PedidoFinalizadoPageModule)
+            loadChildren: () =>
+              import('./pedido-finalizado/pedido-finalizado.module')
+                .then(m => m.PedidoFinalizadoPageModule)
           }
         ]
       },
