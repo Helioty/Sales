@@ -15,7 +15,9 @@ const routes: Routes = [
   },
   {
     path: 'pedido-lista',
-    loadChildren: () => import('./page/pedido-lista/pedido-lista.module').then(m => m.PedidoListaPageModule),
+    loadChildren: () =>
+      import('./page/pedido-lista/pedido-lista.module')
+        .then(m => m.PedidoListaPageModule),
     canActivate: [AuthGuard]
   },
   {
@@ -121,10 +123,11 @@ const routes: Routes = [
     loadChildren: './page/formas-pagamento/formas-pagamento.module#FormasPagamentoPageModule',
     canActivate: [AuthGuard]
   },
-  // {
-  //   path: 'parcelamento',
-  //   loadChildren: './page/formas-pagamento/parcelamento/parcelamento.module#ParcelamentoPageModule'
-  // }
+  {
+    path: 'parcelamento',
+    loadChildren: './page/formas-pagamento/parcelamento/parcelamento.module#ParcelamentoPageModule',
+    canActivate: [AuthGuard]
+  }
 
 
 

@@ -10,20 +10,7 @@ import { FormasPagamentoPage } from './formas-pagamento.page';
 const routes: Routes = [
   {
     path: '',
-    component: FormasPagamentoPage,
-    children: [
-      {
-        path: 'parcelamento',
-        children: [
-          {
-            path: '',
-            loadChildren: () =>
-              import('./parcelamento/parcelamento.module')
-                .then(m => m.ParcelamentoPageModule)
-          }
-        ]
-      }
-    ]
+    component: FormasPagamentoPage
   }
 ];
 
