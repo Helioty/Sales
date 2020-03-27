@@ -103,3 +103,16 @@ export class PedidoTable {
     name: string; // Atributo do objeto AtualizaPedido
     value: string; // Valor do atributo
 }
+
+// by Helio 27/03/2020
+export class OpcaoParcela {
+    id: string;
+    descricao: string;
+    tipoDoc: string;
+    qtdParcelas: number;
+    pctEntrada: number;
+    valorEntrada: number;
+    valorParcelas: number;
+    taxaJuros: number;
+    isEntrada: string;
+}

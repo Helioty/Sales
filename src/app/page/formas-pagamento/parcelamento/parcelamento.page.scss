@@ -8,6 +8,8 @@ ion-content {
             ion-col.opcoes {
 
                 ion-row {
+                    border: 2px solid transparent;
+                    border-bottom-color: #606060;
 
                     ion-col {
                         margin: auto;
@@ -26,6 +28,10 @@ ion-content {
                         color: var(--ion-color-success);
                         font-size: 12px;
                     }
+                }
+
+                ion-row.selected {
+                    border: 2px solid #FC6F58;
                 }
             }
         }

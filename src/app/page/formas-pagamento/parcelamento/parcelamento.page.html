@@ -1,8 +1,8 @@
 <ion-header>
   <ion-toolbar color="primary">
-    <ion-buttons slot="start">
+    <!-- <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
-    </ion-buttons>
+    </ion-buttons> -->
 
     <ion-title>{{ pedido.pedidoHeader.descricao_tipodoc }}</ion-title>
   </ion-toolbar>
@@ -37,7 +37,8 @@
       <ion-col size="12">
         <ion-row>
           <ion-col size="12" class="opcoes" *ngFor="let op of opcoesList; let i = index">
-            <ion-row>
+            <ion-row id="{{obj.status ? 'selectedPaymentValue' : ''}}"
+              [class.selected]="opcaoSelect.id == op.id">
               <ion-col size="2" class="serial" *ngIf="op.isEntrada == 'N'">{{ op.qtdParcelas }}x</ion-col>
               <ion-col size="2" class="serial" *ngIf="op.isEntrada == 'S'">1 + {{ op.qtdParcelas }}</ion-col>
               <ion-col size="6" class="txt">{{ op.valorParcelas | formatarString: 'VALOR' }}</ion-col>

@@ -3,6 +3,7 @@ import { CondicaoPagamentoService } from 'src/app/services/pagamento/condicao-pa
 import { PedidoService } from 'src/app/services/pedido/pedido.service';
 import { CommonService } from 'src/app/services/common/common.service';
 import { NavController } from '@ionic/angular';
+import { OpcaoParcela } from 'src/app/class/pedido';
 
 @Component({
   selector: 'app-parcelamento',
@@ -12,12 +13,16 @@ import { NavController } from '@ionic/angular';
 export class ParcelamentoPage implements OnInit {
   public opcoesList: any[] = [];
 
+  public opcaoSelect: OpcaoParcela;
+
   constructor(
     public common: CommonService,
     public pedido: PedidoService,
     private pagamento: CondicaoPagamentoService,
     private navControl: NavController
-  ) { }
+  ) {
+    this.opcaoSelect = new OpcaoParcela();
+  }
 
   async ngOnInit() {
     await this.common.showLoader();
