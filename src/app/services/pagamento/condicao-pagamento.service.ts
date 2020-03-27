@@ -16,6 +16,7 @@ export class CondicaoPagamentoService {
     private pedidoService: PedidoService
   ) { }
 
+  // edit by Helio 27/03/2020, usado para pegar as formas de pagamento
   getFormaPagamento(nuPedido: string) {
     const link =
       ENV.WS_VENDAS + API_URL + 'condicaoPagto/list/' +
@@ -50,6 +51,22 @@ export class CondicaoPagamentoService {
         reject(error);
       }
       );
+    });
+  }
+
+  // edit by Helio 27/03/2020, usado para pegar as parcelas
+  getCondicaoPagamento(codigoCondicao: string, nuPedido: string) {
+    const link =
+      ENV.WS_VENDAS + API_URL + 'condicaoPagto/list/' +
+      localStorage.getItem('empresa') + '/' +
+      codigoCondicao + '?pedido=' + nuPedido;
+
+    return new Promise((resolve, reject) => {
+      this.baseService.get(link).then((result: any) => {
+        resolve(result);
+      }, (error) => {
+        reject(error);
+      });
     });
   }
 

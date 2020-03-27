@@ -10,6 +10,7 @@ import { NavController } from '@ionic/angular';
   styleUrls: ['./parcelamento.page.scss'],
 })
 export class ParcelamentoPage implements OnInit {
+  public opcoesList: any[] = [];
 
   constructor(
     public common: CommonService,
@@ -18,7 +19,31 @@ export class ParcelamentoPage implements OnInit {
     private navControl: NavController
   ) { }
 
-  ngOnInit() {
+  async ngOnInit() {
+    await this.common.showLoader();
+  }
+
+  ionViewWillEnter() {
+    this.common.goToFullScreen();
+    this.pagamento.getCondicaoPagamento(this.pedido.pedidoHeader.tipodoc, this.pedido.numPedido)
+      .then((result: any) => {
+        console.log(result);
+        this.common.loading.dismiss();
+      }, (error) => {
+        this.common.loading.dismiss();
+      });
+  }
+
+  ionViewDidEnter() {
+    this.common.goToFullScreen();
+  }
+
+  ionViewWillLeave() {
+
+  }
+
+  ionViewDidLeave() {
+
   }
 
 }

@@ -35,7 +35,12 @@
 
     <ion-row>
       <ion-col size="12">
-
+        <ion-row *ngFor="let op of opcoesList; let i = index">
+          <ion-col size="3" class="serial" *ngIf="op.isEntrada == 'N'">{{ op.qtdParcelas }}x</ion-col>
+          <ion-col size="3" class="serial" *ngIf="op.isEntrada == 'S'">1 + {{ op.qtdParcelas }}</ion-col>
+          <ion-col size="6" class="txt">{{ op.valorParcelas | formatarString: 'VALOR' }}</ion-col>
+          <ion-col size="3" class="val">Sem juros</ion-col>
+        </ion-row>
       </ion-col>
     </ion-row>
   </ion-grid>
