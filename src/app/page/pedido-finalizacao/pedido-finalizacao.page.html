@@ -46,7 +46,66 @@
     <ion-text>FINALIZAR</ion-text>
   </ion-item>
 
-  <ion-grid>
+  <ion-grid class="grid2">
+    <ion-row>
+      <ion-col size="12">
+        <ion-list lines="none" class="listaProdutos" *ngIf="itens.length > 0">
+          <ion-item lines="none" class="produto" *ngFor="let item of itens; let i = index">
+            <ion-thumbnail slot="start">
+              <ion-img src="data:image/jpeg;base64,{{item?.imagem}}"></ion-img>
+            </ion-thumbnail>
+
+            <ion-grid>
+              <ion-row class="produtoRow">
+                <ion-col size="8" class="produtoInformacao">
+                  <ion-row class="produtoDescri">
+                    {{ item.idProduto }} - {{ item.descricao }}
+                  </ion-row>
+
+                  <ion-row class="produtoPreco">
+                    {{ item.prcTotal | formatarString: 'VALOR' }}
+                  </ion-row>
+
+                  <ion-row class="produtoPrecoUnidade" *ngIf="item.qtdTotal > 1">
+                    {{ item.prcUnitario | formatarString: 'VALOR' }} cada
+                  </ion-row>
+                </ion-col>
+
+                <ion-col size="4" class="produtoQuantidade">
+                  <ion-row class="quantidadeTop ion-justify-content-center ion-align-items-center">
+                    <ion-button expand="full" fill="clear" color="dark" class="ion-no-margin">
+                      <ion-icon slot="icon-only" size="large" name="arrow-up"></ion-icon>
+                    </ion-button>
+                  </ion-row>
+
+                  <ion-row class="quantidadeCenter ion-justify-content-center ion-align-items-center">
+                    {{ item.qtdTotal }}
+                  </ion-row>
+
+                  <ion-row class="quantidadeBottom ion-justify-content-center ion-align-items-center">
+                    <ion-button expand="full" fill="clear" color="dark" class="ion-no-margin"
+                      (click)="removerProduto(item)">
+                      <ion-icon slot="icon-only" size="large" name="trash-bin-outline"></ion-icon>
+                    </ion-button>
+                  </ion-row>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-item>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-grid class="grid3">
+    <ion-row>
+      <ion-col size="12">
+
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-grid class="grid4">
     <ion-row>
       <ion-col size="12">
 

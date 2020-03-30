@@ -29,7 +29,7 @@ ion-content {
         ion-row.row2 {
             ion-col.ESQ {
                 text-align: end;
-                
+
                 ion-label {
                     font-size: 14px;
                 }
@@ -43,5 +43,13 @@ ion-content {
                 }
             }
         }
+    }
+
+    ion-grid.grid2 {
+        border-bottom: 1px solid #DADADA;
+    }
+
+    ion-grid.grid3 {
+        border-bottom: 1px solid #DADADA;
     }
 }
