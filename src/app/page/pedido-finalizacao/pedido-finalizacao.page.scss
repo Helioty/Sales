@@ -20,13 +20,13 @@ ion-content {
 
             ion-col {
                 ion-label {
+                    font-size: 20px !important;
                     font-weight: bold;
-                    font-size: 20px;
                 }
             }
         }
 
-        ion-row.row2 {
+        ion-row {
             ion-col.ESQ {
                 text-align: end;
 

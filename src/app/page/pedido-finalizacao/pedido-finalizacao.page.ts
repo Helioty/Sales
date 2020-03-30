@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { PedidoItemService } from 'src/app/services/pedido/pedido-item.service';
 import { PedidoService } from 'src/app/services/pedido/pedido.service';
 import { CommonService } from 'src/app/services/common/common.service';
 import { NavController, Platform } from '@ionic/angular';
@@ -19,6 +20,9 @@ export class PedidoFinalizacaoPage implements OnInit {
   public totalProdutos: any;
   public totalPedido: any;
 
+  public existeFrete = false;
+  public frete: any;
+
   // Produtos
   public itens: any[] = [];
 
@@ -26,6 +30,7 @@ export class PedidoFinalizacaoPage implements OnInit {
   constructor(
     public common: CommonService,
     public pedido: PedidoService,
+    public pedidoIt: PedidoItemService,
     private navControl: NavController,
     private platform: Platform,
   ) { }
@@ -47,6 +52,13 @@ export class PedidoFinalizacaoPage implements OnInit {
       this.pedido.pedidoHeader.descontoBrinde + this.pedido.pedidoHeader.valorDesconto;
 
     this.totalPedido = this.pedido.pedidoHeader.valorTotalPedido;
+
+    if (this.pedido.pedidoHeader.tipoEntrega === 'ENTREGA') {
+      this.frete = this.pedido.pedidoHeader.frete.valor;
+      this.existeFrete = true;
+    }
+
+    this.getItemPedido();
   }
 
   ionViewDidEnter() {
@@ -107,6 +119,13 @@ export class PedidoFinalizacaoPage implements OnInit {
     } catch (error) {
       this.focusPlay();
     }
+  }
+
+  async getItemPedido() {
+    await this.pedidoIt.getItemPedido().then((result: any) => {
+      this.itens = result.content;
+      console.log(result);
+    });
   }
 
 }
