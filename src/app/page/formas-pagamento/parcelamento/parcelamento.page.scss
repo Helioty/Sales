@@ -10,6 +10,7 @@ ion-content {
             ion-item {
                 --inner-padding-end: none !important;
                 --padding-start: none !important;
+                width: 100% !important;
 
                 ion-grid {
                     padding: 0 5px !important;
