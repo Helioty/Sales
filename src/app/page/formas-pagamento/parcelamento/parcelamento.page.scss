@@ -7,15 +7,35 @@ ion-content {
         ion-row.row-top {
             border-bottom: 1px solid #D9D9D9;
 
-            ion-col.right {
-                text-align: end;
+            ion-item {
+                --inner-padding-end: none !important;
+                --padding-start: none !important;
 
-                ion-label {
-                    color: var(--ion-color-primary);
-                    font-weight: bold;
-                    font-size: 15px;
+                ion-grid {
+                    padding: 0 !important;
+
+                    ion-row {
+                        ion-col.left {
+                            ion-label {
+                                font-weight: bold;
+                                font-size: 14px;
+                                color: #000;
+                            }
+                        }
+
+                        ion-col.right {
+                            text-align: end;
+            
+                            ion-label {
+                                color: var(--ion-color-primary);
+                                font-weight: bold;
+                                font-size: 15px;
+                            }
+                        }
+                    }
                 }
             }
+
         }
 
         ion-row.title {
@@ -32,7 +52,6 @@ ion-content {
         }
 
         ion-row {
-
             ion-col.opcoes {
                 padding: 0 !important;
 
