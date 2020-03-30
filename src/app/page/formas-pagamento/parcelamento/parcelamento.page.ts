@@ -15,7 +15,8 @@ export class ParcelamentoPage implements OnInit {
 
   public opcaoSelect: OpcaoParcela;
 
-  public entradaLabel = 'Sem entrada';
+  public labelEntrada = 'Sem entrada';
+  public hasEntrada = false;
 
   constructor(
     public common: CommonService,
@@ -52,6 +53,16 @@ export class ParcelamentoPage implements OnInit {
 
   ionViewDidLeave() {
 
+  }
+
+  changeEntrada() {
+    this.hasEntrada = !this.hasEntrada;
+
+    if (this.hasEntrada) {
+      this.labelEntrada = 'Com entrada';
+    } else {
+      this.labelEntrada = 'Sem entrada';
+    }
   }
 
 }
