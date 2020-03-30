@@ -15,6 +15,8 @@ export class ParcelamentoPage implements OnInit {
 
   public opcaoSelect: OpcaoParcela;
 
+  public entradaLabel = 'Sem entrada';
+
   constructor(
     public common: CommonService,
     public pedido: PedidoService,

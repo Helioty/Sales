@@ -4,6 +4,19 @@ ion-content {
     ion-grid {
         padding: 0;
 
+        ion-row.title {
+            padding: 5px;
+
+            ion-col {
+
+                ion-label {
+                    font-weight: bold;
+                    font-size: 14px;
+                    color: #000;
+                }
+            }
+        }
+
         ion-row {
 
             ion-col.opcoes {
