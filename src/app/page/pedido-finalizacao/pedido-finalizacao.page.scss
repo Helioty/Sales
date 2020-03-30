@@ -2,3 +2,21 @@
     height: 0 !important;
     background-image: none !important;
 }
+
+ion-content {
+    ion-grid.grid1 {
+        background: var(--ion-color-primary);
+
+        ion-row.row1 {
+            width: fit-content;
+            margin: auto;
+
+            ion-col {
+                ion-label {
+                    font-weight: bold;
+                    font-size: 20px;
+                }
+            }
+        }
+    }
+}

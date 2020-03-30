@@ -20,7 +20,7 @@ export class PedidoHeader {
     status: string;
     hora: string;
     seqEnderecoEntrega: number;
-    frete: {};
+    frete: any;
     icmsRetido: number;
     valorTotalPedido: number;
     digito: number;
