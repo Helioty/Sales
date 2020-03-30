@@ -15,9 +15,9 @@ const routes: Routes = [
   },
   {
     path: 'pedido-lista',
-    loadChildren: () =>
-      import('./page/pedido-lista/pedido-lista.module')
-        .then(m => m.PedidoListaPageModule),
+    loadChildren: () => import(
+      './page/pedido-lista/pedido-lista.module'
+    ).then(m => m.PedidoListaPageModule),
     canActivate: [AuthGuard]
   },
   {
@@ -63,7 +63,9 @@ const routes: Routes = [
   },
   {
     path: 'produto-detalhes',
-    loadChildren: './page/produto/produto-detalhes/produto-detalhes.module#ProdutoDetalhesPageModule',
+    loadChildren: () => import(
+      './page/produto/produto-detalhes/produto-detalhes.module'
+    ).then(m => m.ProdutoDetalhesPageModule),
     canActivate: [AuthGuard]
   },
 
@@ -85,7 +87,9 @@ const routes: Routes = [
   },
   {
     path: 'endereco-entrega-old',
-    loadChildren: './page/endereco-entrega-old/endereco-entrega-old.module#EnderecoEntregaOldPageModule'
+    loadChildren: () => import(
+      './page/endereco-entrega-old/endereco-entrega-old.module'
+    ).then(m => m.EnderecoEntregaOldPageModule),
   },
   {
     path: 'pedido-finalizacao',
@@ -104,7 +108,9 @@ const routes: Routes = [
   },
   {
     path: 'cliente-cadastro-edicao',
-    loadChildren: './page/cliente/cliente-cadastro-edicao/cliente-cadastro-edicao.module#ClienteCadastroEdicaoPageModule',
+    loadChildren: () => import(
+      './page/cliente/cliente-cadastro-edicao/cliente-cadastro-edicao.module'
+    ).then(m => m.ClienteCadastroEdicaoPageModule),
     canActivate: [AuthGuard]
   },
 

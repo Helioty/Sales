@@ -49,7 +49,7 @@
           <ion-col size="7"></ion-col>
           <ion-col size="2" style="margin: auto; text-align: end;">R$</ion-col>
           <ion-col size="3" style="padding: 0 !important;">
-            <ion-input type="number" pattern="[0-9]*" placeholder="0,000"></ion-input>
+            <ion-input type="number" pattern="[0-9]*" placeholder="0,00" (keyup)="keyupEvent()"></ion-input>
           </ion-col>
         </ion-row>
       </ion-col>
@@ -98,7 +98,7 @@
     </ion-row>
   </ion-grid>
 
-  <ion-item button lines="none" color="fc-button-green" (click)="finalizarPedido();">
-    <ion-text>FINALIZAR</ion-text>
+  <ion-item button lines="none" color="fc-button-green" (click)="continuar();">
+    <ion-text>CONTINUAR</ion-text>
   </ion-item>
 </ion-footer>

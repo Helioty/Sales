@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { CondicaoPagamentoService } from 'src/app/services/pagamento/condicao-pagamento.service';
 import { PedidoService } from 'src/app/services/pedido/pedido.service';
 import { CommonService } from 'src/app/services/common/common.service';
-import { NavController } from '@ionic/angular';
+import { NavController, AlertController, IonInput } from '@ionic/angular';
 import { OpcaoParcela } from 'src/app/class/pedido';
 
 @Component({
@@ -11,6 +11,8 @@ import { OpcaoParcela } from 'src/app/class/pedido';
   styleUrls: ['./parcelamento.page.scss'],
 })
 export class ParcelamentoPage implements OnInit {
+  @ViewChild(IonInput, { static: false }) input: IonInput;
+
   public opcoesList: any[] = [];
 
   public opcaoSelect: OpcaoParcela;
@@ -22,6 +24,7 @@ export class ParcelamentoPage implements OnInit {
     public common: CommonService,
     public pedido: PedidoService,
     private pagamento: CondicaoPagamentoService,
+    private alertCtrl: AlertController,
     private navControl: NavController
   ) {
     this.opcaoSelect = new OpcaoParcela();
@@ -39,6 +42,7 @@ export class ParcelamentoPage implements OnInit {
         this.opcoesList = result;
         this.common.loading.dismiss();
       }, (error) => {
+        console.log(error);
         this.common.loading.dismiss();
       });
   }
@@ -63,6 +67,63 @@ export class ParcelamentoPage implements OnInit {
     } else {
       this.labelEntrada = 'Sem entrada';
     }
+  }
+
+  keyupEvent() {
+    this.input.value = this.common.currency(this.input.value);
+  }
+
+  async showAlert(titulo: string, msg: string) {
+    if (msg != null) {
+      const alert = await this.alertCtrl.create({
+        header: titulo,
+        message: msg,
+        buttons: [{
+          text: 'OK',
+          handler: () => {
+            this.input.setFocus();
+          }
+        }]
+      });
+      await alert.present();
+    }
+  }
+
+  async getCondicaoPagamentoComEntrada(evento: any) {
+    // tslint:disable-next-line: radix
+    const intValue = parseInt(evento.target.value);
+    if (intValue > this.pedido.pedidoHeader.totpedido) {
+      this.showAlert(
+        'Valor inválido', 'O valor da entrada não pode ser maior que o valor do pedido!'
+      );
+      return;
+    }
+    await this.common.showLoader();
+    this.pagamento.getCondicaoPagamentoComEntrada(
+      this.pedido.pedidoHeader.tipodoc, this.pedido.numPedido, parseFloat(evento.target.value)
+    ).then((result: any) => {
+      console.log(result);
+      this.opcoesList = result;
+      this.common.loading.dismiss();
+      this.opcaoSelect = new OpcaoParcela();
+    }, (error) => {
+      console.log(error);
+      this.common.loading.dismiss();
+    });
+  }
+
+  // by Ryuge 18/12/2018
+  // edit by Helio 30/03/2020
+  continuar() {
+    this.pagamento.setCondicaoPagamento(
+      this.opcaoSelect, this.input.value
+    ).then((result: any) => {
+      this.navControl.navigateRoot(['pedido-finalizacao']);
+      console.log('Result setCondicaoPagamento');
+      console.log(result);
+    }, (error) => {
+      console.log(error);
+    });
   }
 
 }

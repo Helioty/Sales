@@ -3,6 +3,7 @@ import { BaseService } from '../base-service.service';
 import { CommonService } from '../common/common.service';
 import { PedidoService } from 'src/app/services/pedido/pedido.service';
 import { API_URL } from 'src/app/config/app.config.service';
+import { OpcaoParcela } from 'src/app/class/pedido';
 import { ENV } from 'src/environments/environment';
 
 @Injectable({
@@ -49,8 +50,7 @@ export class CondicaoPagamentoService {
       }, (error: any) => {
         console.log(error);
         reject(error);
-      }
-      );
+      });
     });
   }
 
@@ -65,6 +65,55 @@ export class CondicaoPagamentoService {
       this.baseService.get(link).then((result: any) => {
         resolve(result);
       }, (error) => {
+        reject(error);
+      });
+    });
+  }
+
+  // edit by Helio 27/03/2020, usado para pegar as parcelas
+  getCondicaoPagamentoComEntrada(codigoCondicao: string, nuPedido: string, entrada: number) {
+    const link =
+      ENV.WS_VENDAS + API_URL + 'condicaoPagto/list/' +
+      localStorage.getItem('empresa') + '/' +
+      codigoCondicao + '?pedido=' + nuPedido +
+      '&valorentrada=' + entrada;
+
+    return new Promise((resolve, reject) => {
+      this.baseService.get(link).then((result: any) => {
+        resolve(result);
+      }, (error) => {
+        reject(error);
+      });
+    });
+  }
+
+  // by Hélio 30/03/2020
+  async setCondicaoPagamento(opcaoSelect: OpcaoParcela, valor: any) {
+    const aResult: any[] = [];
+
+    if (opcaoSelect.id !== '' && opcaoSelect.id !== undefined) {
+      const table1 = await this.pedidoService.atualizaPedido('condicao_pagto', opcaoSelect.id);
+      aResult.push(table1);
+    }
+
+    if (valor !== undefined) {
+      const table2 = await this.pedidoService.atualizaPedido('valorentrada', valor.toString());
+      aResult.push(table2);
+    }
+
+    const link =
+      ENV.WS_VENDAS + API_URL + 'PedidoVenda/update/' +
+      localStorage.getItem('empresa') + '/' +
+      this.pedidoService.numPedido;
+
+    return new Promise((resolve, reject) => {
+      this.baseService.post(link, aResult).then((result: any) => {
+        this.pedidoService.atualizaPedidoHeader(result);
+        console.log('Result Atualiza tipo pagamento');
+        console.log(result);
+        resolve(result);
+      }, (error: any) => {
+        console.log(error);
         reject(error);
       });
     });

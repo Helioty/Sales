@@ -180,5 +180,10 @@ export class CommonService {
     return value;
   }
 
+  // formata de forma generica os campos
+  public currency(n: any) {
+    n = parseFloat(n);
+    return isNaN(n) ? false : n.toFixed(2);
+  }
 
 }
