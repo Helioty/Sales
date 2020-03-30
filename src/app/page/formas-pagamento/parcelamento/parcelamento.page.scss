@@ -2,20 +2,24 @@ ion-content {
     background-color: #F4F4F4;
 
     ion-grid {
+        padding: 0;
 
         ion-row {
 
             ion-col.opcoes {
+                padding: 0 !important;
 
                 ion-row {
                     border: 2px solid transparent;
                     border-bottom-color: #D9D9D9;
+                    padding: 10px;
 
                     ion-col {
                         margin: auto;
                     }
 
                     ion-col.serial {
+                        text-align: center;
                         font-weight: bold;
                         font-size: 17px;
                     }
