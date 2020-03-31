@@ -77,7 +77,7 @@
 
             <ion-grid>
               <ion-row class="produtoRow">
-                <ion-col size="8" class="produtoInformacao">
+                <ion-col size="12" class="produtoInformacao">
                   <ion-row class="produtoDescri">
                     {{ item.idProduto }} - {{ item.descricao }}
                   </ion-row>
@@ -90,25 +90,6 @@
                     {{ item.prcUnitario | formatarString: 'VALOR' }} cada
                   </ion-row>
                 </ion-col>
-
-                <ion-col size="4" class="produtoQuantidade">
-                  <ion-row class="quantidadeTop ion-justify-content-center ion-align-items-center">
-                    <ion-button expand="full" fill="clear" color="dark" class="ion-no-margin">
-                      <ion-icon slot="icon-only" size="large" name="arrow-up"></ion-icon>
-                    </ion-button>
-                  </ion-row>
-
-                  <ion-row class="quantidadeCenter ion-justify-content-center ion-align-items-center">
-                    {{ item.qtdTotal }}
-                  </ion-row>
-
-                  <ion-row class="quantidadeBottom ion-justify-content-center ion-align-items-center">
-                    <ion-button expand="full" fill="clear" color="dark" class="ion-no-margin"
-                      (click)="removerProduto(item)">
-                      <ion-icon slot="icon-only" size="large" name="trash-bin-outline"></ion-icon>
-                    </ion-button>
-                  </ion-row>
-                </ion-col>
               </ion-row>
 
               <ion-row>
@@ -117,7 +98,7 @@
                 </ion-col>
 
                 <ion-col size="4">
-                  <ion-button fill="clear">
+                  <ion-button fill="clear" style="font-size: 14px;">
                     <ion-icon slot="icon-only" name="chevron-down"></ion-icon>
                   </ion-button>
                 </ion-col>
@@ -141,6 +122,30 @@
     <ion-row>
       <ion-col size="12">
 
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-grid class="grid5">
+    <ion-row>
+      <ion-col size="12">
+        <ion-card button>
+          <ion-card-header>
+            <ion-thumbnail style="width: 60px; height: 60px;">
+              <img src="assets/images/06-formas_de_pagamento/{{pedido.pedidoHeader.tipodoc}}.png" />
+            </ion-thumbnail>
+          </ion-card-header>
+
+          <ion-card-content>
+            <ion-grid>
+              <ion-row>
+                <ion-label class="descricao">
+                  <!-- {{ op.descricao }} -->
+                </ion-label>
+              </ion-row>
+            </ion-grid>
+          </ion-card-content>
+        </ion-card>
       </ion-col>
     </ion-row>
   </ion-grid>
