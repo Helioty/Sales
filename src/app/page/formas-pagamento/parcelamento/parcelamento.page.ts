@@ -19,6 +19,7 @@ export class ParcelamentoPage implements OnInit {
 
   public labelEntrada = 'Sem entrada';
   public hasEntrada = false;
+  public entradaValue = 0;
 
   public buttonDisable = true;
 
