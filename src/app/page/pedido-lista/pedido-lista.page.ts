@@ -44,6 +44,7 @@ export class PedidoListaPage implements OnInit {
   }
 
   ionViewWillLeave() {
+    this.menu.enable(false);
     console.clear();
   }
 
@@ -98,12 +99,18 @@ export class PedidoListaPage implements OnInit {
   }
 
   async getPedidosEmAberto(page: number) {
-    const link: string = ENV.WS_VENDAS + API_URL + 'PedidoVenda/list/' + localStorage.getItem('empresa') + '/abertos?page=' + page;
+    const link =
+      ENV.WS_VENDAS + API_URL + 'PedidoVenda/list/' +
+      localStorage.getItem('empresa') + '/abertos?page=' + page;
+
     return await this.baseService.get(link);
   }
 
   async getPedidosFinalizados(page: number) {
-    const link: string = ENV.WS_VENDAS + API_URL + 'PedidoVenda/list/' + localStorage.getItem('empresa') + '/faturados?page=' + page;
+    const link =
+      ENV.WS_VENDAS + API_URL + 'PedidoVenda/list/' +
+      localStorage.getItem('empresa') + '/faturados?page=' + page;
+
     return await this.baseService.get(link);
   }
 

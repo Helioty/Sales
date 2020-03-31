@@ -18,14 +18,14 @@ export class PedidoSacolaPage implements OnInit {
   constructor(
     private alertCtrl: AlertController,
     private common: CommonService,
-    public pedidoService: PedidoService,
-    public pedidoItemService: PedidoItemService,
+    public pedido: PedidoService,
+    public pedidoIt: PedidoItemService,
     private navControl: NavController,
     private platform: Platform
   ) { }
 
   async ngOnInit() {
-    await this.pedidoItemService.getItemPedido().then((result: any) => {
+    await this.pedidoIt.getItemPedido().then((result: any) => {
       console.log(result);
     });
   }
@@ -81,7 +81,7 @@ export class PedidoSacolaPage implements OnInit {
         const codigo: string = evento.target.value;
 
         if (codigo.substring(0, 1) === 'P') {
-          this.pedidoService.setCardPedido(codigo);
+          this.pedido.setCardPedido(codigo);
           this.focusPlay();
         } else {
           this.focusPlay();
@@ -108,7 +108,7 @@ export class PedidoSacolaPage implements OnInit {
         {
           text: 'ADICIONAR',
           handler: (data: any) => {
-            this.pedidoService.setCardPedido(data.codigo);
+            this.pedido.setCardPedido(data.codigo);
           }
         }
       ]
@@ -151,10 +151,10 @@ export class PedidoSacolaPage implements OnInit {
   }
 
   async deleteItemPedido(codigoProduto: string) {
-    await this.pedidoItemService.removeItemPedido(codigoProduto).then((result: any) => {
+    await this.pedidoIt.removeItemPedido(codigoProduto).then((result: any) => {
       this.common.showToast(result.msg);
     });
-    await this.pedidoItemService.getItemPedido().then((result: any) => {
+    await this.pedidoIt.getItemPedido().then((result: any) => {
       // this.itens = result.content;
       console.log(result);
     });
@@ -170,49 +170,9 @@ export class PedidoSacolaPage implements OnInit {
     this.navControl.navigateForward(['/cliente'], navigationExtras);
   }
 
-  // abrindo pagina customizada utilizando parametros
-  openCustomPage(P: string, PS: string, PA: string) {
-    const navigationExtras: NavigationExtras = {
-      queryParams: {
-        paginaSeguinte: PS,
-        paginaAnterior: PA
-      }
-    };
-    this.navControl.navigateForward(['/' + P], navigationExtras);
-  }
-
   // finalização do pedido
   finalizarPedido() {
-    // checa se é necessario informar o cliente
-    if (this.pedidoService.pedidoHeader.informarCliente === 'S') {
-      if (!this.pedidoService.clientSelected &&
-        (this.pedidoService.pedidoHeader.cgccpf_cliente === '' ||
-          this.pedidoService.pedidoHeader.cgccpf_cliente === null)
-      ) {
-        console.log('Cliente obrigatorio!');
-        this.openCustomPage('cliente', 'finzalizaService', 'pedido-sacola');
-        return;
-      }
-    }
-
-    // checa o tipo de entrega do pedido
-    if (this.pedidoService.pedidoHeader.tipoEntrega === 'ENTREGA') {
-      console.log('Pedido do tipo ENTREGA!');
-      const tms = localStorage.getItem('tms');
-      // checa se o TMS está ativo na filial baseado na informações retornada no login
-      if (tms === 'true') {
-        console.log('TMS ativo!');
-        this.openCustomPage('endereco-entrega', 'finzalizaService', 'pedido-sacola');
-        return;
-      } else {
-        console.log('TMS inativo!');
-        this.openCustomPage('endereco-entrega-old', 'finzalizaService', 'pedido-sacola');
-        return;
-      }
-    } else {
-      this.openCustomPage('formas-pagamento', 'finzalizaService', 'pedido-sacola');
-      return;
-    }
+    this.pedido.goToFinalizacao('pedido-sacola');
   }
 
 }

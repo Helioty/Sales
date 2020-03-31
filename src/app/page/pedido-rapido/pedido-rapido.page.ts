@@ -29,15 +29,15 @@ export class PedidoRapidoPage implements OnInit {
 
   constructor(
     public common: CommonService,
-    public pedidoService: PedidoService,
-    public pedidoItemService: PedidoItemService,
+    public pedido: PedidoService,
+    public pedidoIt: PedidoItemService,
     private alertCtrl: AlertController,
     private navControl: NavController,
     private platform: Platform,
   ) { }
 
   async ngOnInit() {
-    await this.pedidoItemService.getItemPedido().then((result: any) => {
+    await this.pedidoIt.getItemPedido().then((result: any) => {
       this.itens = result.content;
       console.log(result);
     });
@@ -98,7 +98,7 @@ export class PedidoRapidoPage implements OnInit {
         const codigo: string = evento.target.value;
 
         if (codigo.substring(0, 1) === 'P') {
-          this.pedidoService.setCardPedido(codigo);
+          this.pedido.setCardPedido(codigo);
           this.focusPlay();
         } else {
           this.addItem(codigo);
@@ -114,19 +114,19 @@ export class PedidoRapidoPage implements OnInit {
   // edit by Helio 10/03/2020
   addItem(codigo: string) {
     // by Ryuge 27/11/2019 - Não permitir gravar item com pedido = '0';
-    if (this.pedidoService.numPedido !== '0' || this.pedidoService.numPedido !== undefined) {
-      const tipo = this.pedidoService.codigoTipoRetirada;
+    if (this.pedido.numPedido !== '0' || this.pedido.numPedido !== undefined) {
+      const tipo = this.pedido.codigoTipoRetirada;
       const valor = 0;
 
       this.pedidoItens = new PedidoItens(
         localStorage.getItem('empresa'),
         // tslint:disable-next-line: radix
-        parseInt(this.pedidoService.numPedido)
+        parseInt(this.pedido.numPedido)
       );
       // tslint:disable-next-line: radix
       this.pedidoItens.idEmpresa = parseInt(localStorage.getItem('empresa'));
       // tslint:disable-next-line: radix
-      this.pedidoItens.numPedido = parseInt(this.pedidoService.numPedido);
+      this.pedidoItens.numPedido = parseInt(this.pedido.numPedido);
       this.pedidoItens.idProduto = codigo;
       this.pedidoItens.embalagem = 0;
       this.pedidoItens.qtdTotal = 0;
@@ -154,7 +154,7 @@ export class PedidoRapidoPage implements OnInit {
       console.log('this.retiradas');
       console.log(this.pedidoItens);
 
-      // this.pedidoService.sistuacaoPedido = 'A';  // altera situação do pedido
+      // this.pedido.sistuacaoPedido = 'A';  // altera situação do pedido
       this.pedidoItens.retiradas = aRetiradas;
 
       // by Ryuge 27/11/2019
@@ -203,7 +203,7 @@ export class PedidoRapidoPage implements OnInit {
   // by Ryuge
   // edit by Helio 10/03/2020
   async addItemPedido(body: PedidoItens) {
-    await this.pedidoItemService.addFast(body).then((result: any) => {
+    await this.pedidoIt.addFast(body).then((result: any) => {
       this.itens = result.content;
       if (this.numRequest > 1) {
         this.numRequest -= 1;
@@ -240,10 +240,10 @@ export class PedidoRapidoPage implements OnInit {
   }
 
   async deleteItemPedido(codigoProduto: string) {
-    await this.pedidoItemService.removeItemPedido(codigoProduto).then((result: any) => {
+    await this.pedidoIt.removeItemPedido(codigoProduto).then((result: any) => {
       this.common.showToast(result.msg);
     });
-    await this.pedidoItemService.getItemPedido().then((result: any) => {
+    await this.pedidoIt.getItemPedido().then((result: any) => {
       this.itens = result.content;
       console.log(result);
     });

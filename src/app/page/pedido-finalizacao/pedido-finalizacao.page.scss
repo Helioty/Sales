@@ -159,7 +159,11 @@ ion-content {
         border-bottom: 1px solid #DADADA;
     }
 
-    ion-grid.grid4 {
-        border-bottom: 1px solid #DADADA;
+    ion-item.finalizarItem {
+        ion-text {
+            margin: auto !important;
+            font-size: 110%;
+        }
     }
+
 }

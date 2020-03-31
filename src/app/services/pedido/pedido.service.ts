@@ -6,6 +6,7 @@ import { ClienteService } from 'src/app/services/cliente/cliente.service';
 import { PedidoHeader, PedidoTable } from 'src/app/class/pedido';
 import { API_URL } from 'src/app/config/app.config.service';
 import { ENV } from 'src/environments/environment';
+import { NavigationExtras } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -347,9 +348,46 @@ export class PedidoService {
     );
   }
 
-  goToFinalizacao() {
-    if (this.pedidoHeader.informarCliente === 'S') {
+  // abrindo pagina customizada utilizando parametros
+  openCustomPage(P: string, PS: string, PA: string) {
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        paginaSeguinte: PS,
+        paginaAnterior: PA
+      }
+    };
+    this.navControl.navigateForward(['/' + P], navigationExtras);
+  }
 
+  goToFinalizacao(paginaAtual: string) {
+    // checa se é necessario informar o cliente
+    if (this.pedidoHeader.informarCliente === 'S') {
+      if (!this.clientSelected &&
+        (this.pedidoHeader.cgccpf_cliente === '' || this.pedidoHeader.cgccpf_cliente === null)
+      ) {
+        console.log('Cliente obrigatorio!');
+        this.openCustomPage('cliente', 'finzalizaService', paginaAtual);
+        return;
+      }
+    }
+
+    // checa o tipo de entrega do pedido
+    if (this.pedidoHeader.tipoEntrega === 'ENTREGA') {
+      console.log('Pedido do tipo ENTREGA!');
+      const tms = localStorage.getItem('tms');
+      // checa se o TMS está ativo na filial baseado na informações retornada no login
+      if (tms === 'true') {
+        console.log('TMS ativo!');
+        this.openCustomPage('endereco-entrega', 'finzalizaService', paginaAtual);
+        return;
+      } else {
+        console.log('TMS inativo!');
+        this.openCustomPage('endereco-entrega-old', 'finzalizaService', paginaAtual);
+        return;
+      }
+    } else {
+      this.openCustomPage('formas-pagamento', 'finzalizaService', paginaAtual);
+      return;
     }
   }
 

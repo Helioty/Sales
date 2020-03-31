@@ -122,21 +122,11 @@ export class ParcelamentoPage implements OnInit {
     this.pagamento.setCondicaoPagamento(
       this.opcaoSelect, this.input.value
     ).then((result: any) => {
-      console.log('result!!!');
-      console.log(result);
-      this.atualizaPedidoHeader();
-    }, (error) => {
-      this.common.loading.dismiss();
-      console.log(error);
-    });
-  }
-
-  atualizaPedidoHeader() {
-    this.pedido.getPedido(this.pedido.numPedido).then((result: any) => {
       this.pedido.atualizaPedidoHeader(result);
       this.navControl.navigateRoot(['pedido-finalizacao']);
       this.common.loading.dismiss();
-    }, () => {
+    }, (error) => {
+      console.log(error);
       this.common.loading.dismiss();
     });
   }
