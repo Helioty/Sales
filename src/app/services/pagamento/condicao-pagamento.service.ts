@@ -100,7 +100,7 @@ export class CondicaoPagamentoService {
       console.log(table1);
     }
 
-    if (valor !== undefined) {
+    if (valor !== '' && valor !== undefined) {
       console.log('Segundo IF');
       const table2 = await this.pedidoService.atualizaPedido('valorentrada', valor.toString());
       aResult.push(table2);
