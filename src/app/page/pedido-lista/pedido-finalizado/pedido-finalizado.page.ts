@@ -6,9 +6,10 @@ import { ENV } from 'src/environments/environment';
 import { API_URL } from 'src/app/config/app.config.service';
 
 import { CommonService } from 'src/app/services/common/common.service';
-import { BaseService } from '../../../services/base-service.service';
+import { BaseService } from 'src/app/services/base-service.service';
 
 import { PedidoListaPage } from '../pedido-lista.page';
+import { PedidoManutencaoService } from 'src/app/services/pedido/pedido-manutencao.service';
 
 
 @Component({
@@ -35,6 +36,7 @@ export class PedidoFinalizadoPage implements OnInit {
     private alertCtrl: AlertController,
     private navControl: NavController,
     private pedidoLista: PedidoListaPage,
+    private pedidoManutencaoService: PedidoManutencaoService
   ) { }
 
   ngOnInit() {
@@ -144,7 +146,9 @@ export class PedidoFinalizadoPage implements OnInit {
 
   async removePedido(pedidoId: any) {
     // this.common.showLoader()
-    const link: string = ENV.WS_VENDAS + API_URL + 'PedidoVenda/' + localStorage.getItem('empresa') + '/' + pedidoId;
+    const link =
+      ENV.WS_VENDAS + API_URL + 'PedidoVenda/' +
+      localStorage.getItem('empresa') + '/' + pedidoId;
 
     this.baseService.post(link, {}).then((result: any) => {
       console.log(result);
@@ -157,7 +161,7 @@ export class PedidoFinalizadoPage implements OnInit {
   }
 
   alterarPedido(pedido: any) {
-
+    this.pedidoManutencaoService.reabrirPedido(pedido);
   }
 
 }
