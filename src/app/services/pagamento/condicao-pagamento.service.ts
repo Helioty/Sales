@@ -97,19 +97,19 @@ export class CondicaoPagamentoService {
     const table0 = await this.pedidoService.atualizaPedido(
       'tipo_pagamento', this.pedidoService.pedidoHeader.tipodoc
     );
-    aResult.push(table0);
+    aResult.push(table0[0]);
 
     if (opcaoSelect.id !== '' && opcaoSelect.id !== undefined) {
       console.log('Primeiro IF');
       const table1 = await this.pedidoService.atualizaPedido('condicao_pagto', opcaoSelect.id);
-      aResult.push(table1);
+      aResult.push(table1[0]);
       console.log(table1);
     }
 
     if (valor !== '' && valor !== undefined) {
       console.log('Segundo IF');
       const table2 = await this.pedidoService.atualizaPedido('valorentrada', valor.toString());
-      aResult.push(table2);
+      aResult.push(table2[0]);
       console.log(table2);
     }
 
