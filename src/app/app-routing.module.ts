@@ -93,7 +93,8 @@ const routes: Routes = [
   },
   {
     path: 'pedido-finalizacao',
-    loadChildren: './page/pedido-finalizacao/pedido-finalizacao.module#PedidoFinalizacaoPageModule'
+    loadChildren: './page/pedido-finalizacao/pedido-finalizacao.module#PedidoFinalizacaoPageModule',
+    canActivate: [AuthGuard]
   },
   {
     path: 'consulta-cep/:mode',

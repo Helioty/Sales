@@ -18,10 +18,16 @@ export class PedidoFinalizacaoPage implements OnInit {
   // Exibição
   public numeroPedido: string;
   public totalProdutos: any;
-  public totalPedido: any;
-
   public existeFrete = false;
   public frete: any;
+
+  public existeParcela = false;
+  public qtdParcelas: any;
+  public parcela: any;
+  public entrada = 0;
+  public pesoPedido: any;
+  public totalPedido: any;
+
 
   // Produtos
   public itens: any[] = [];
@@ -51,11 +57,19 @@ export class PedidoFinalizacaoPage implements OnInit {
       this.pedido.pedidoHeader.totpedido - this.pedido.pedidoHeader.frete.valor +
       this.pedido.pedidoHeader.descontoBrinde + this.pedido.pedidoHeader.valorDesconto;
 
+    this.pesoPedido = this.pedido.pedidoHeader.pesoTotal;
     this.totalPedido = this.pedido.pedidoHeader.valorTotalPedido;
 
     if (this.pedido.pedidoHeader.tipoEntrega === 'ENTREGA') {
       this.frete = this.pedido.pedidoHeader.frete.valor;
       this.existeFrete = true;
+    }
+
+    if (this.pedido.pedidoHeader.qtdParcelas > 0) {
+      this.qtdParcelas = this.pedido.pedidoHeader.qtdParcelas;
+      this.parcela = this.pedido.pedidoHeader.valorParcela;
+      this.entrada = this.pedido.pedidoHeader.valorEntrada;
+      this.existeParcela = true;
     }
 
     this.getItemPedido();

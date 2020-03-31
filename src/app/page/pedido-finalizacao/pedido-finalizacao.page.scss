@@ -46,6 +46,8 @@ ion-content {
 
         ion-row.total {
             ion-col {
+                text-align: end;
+
                 ion-label {
                     font-size: 20px;
                 }
