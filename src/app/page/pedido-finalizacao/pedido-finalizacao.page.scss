@@ -145,6 +145,14 @@ ion-content {
                 }
             }
         }
+
+        ion-row.alteraBtn {
+            ion-col {
+                ion-button {
+                    width: 100%;
+                }
+            }
+        }
     }
 
     ion-grid.grid3 {

@@ -3,6 +3,7 @@ import { PedidoItemService } from 'src/app/services/pedido/pedido-item.service';
 import { PedidoService } from 'src/app/services/pedido/pedido.service';
 import { CommonService } from 'src/app/services/common/common.service';
 import { NavController, Platform } from '@ionic/angular';
+import { NavigationExtras } from '@angular/router';
 
 @Component({
   selector: 'app-pedido-finalizacao',
@@ -140,6 +141,16 @@ export class PedidoFinalizacaoPage implements OnInit {
       this.itens = result.content;
       console.log(result);
     });
+  }
+
+  openClientePage() {
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        paginaSeguinte: 'back',
+        paginaAnterior: 'pedido-finalizacao'
+      }
+    };
+    this.navControl.navigateForward(['/cliente'], navigationExtras);
   }
 
 }
