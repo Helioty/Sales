@@ -118,7 +118,7 @@ export class ParcelamentoPage implements OnInit {
     await this.common.showLoader();
     this.pagamento.setCondicaoPagamento(
       this.opcaoSelect, this.input.value
-    ).then((result: any) => {
+    ).then(() => {
       this.atualizaPedidoHeader();
     }, (error) => {
       this.common.loading.dismiss();
@@ -128,9 +128,8 @@ export class ParcelamentoPage implements OnInit {
 
   atualizaPedidoHeader() {
     this.pedido.getPedido(this.pedido.numPedido).then((result: any) => {
+      this.pedido.atualizaPedidoHeader(result);
       this.navControl.navigateRoot(['pedido-finalizacao']);
-      console.log('Result getPedido');
-      console.log(result);
       this.common.loading.dismiss();
     }, () => {
       this.common.loading.dismiss();
