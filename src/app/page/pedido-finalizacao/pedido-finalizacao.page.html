@@ -71,13 +71,15 @@
       <ion-col size="12">
         <ion-list lines="none" class="listaProdutos" *ngIf="itens.length > 0">
           <ion-item lines="none" class="produto" *ngFor="let item of itens; let i = index">
-            <ion-thumbnail slot="start">
-              <ion-img src="data:image/jpeg;base64,{{item?.imagem}}"></ion-img>
-            </ion-thumbnail>
-
             <ion-grid>
               <ion-row class="produtoRow">
-                <ion-col size="12" class="produtoInformacao">
+                <ion-col size="2">
+                  <ion-thumbnail>
+                    <ion-img src="data:image/jpeg;base64,{{item?.imagem}}"></ion-img>
+                  </ion-thumbnail>
+                </ion-col>
+
+                <ion-col size="10" class="produtoInformacao">
                   <ion-row class="produtoDescri">
                     {{ item.idProduto }} - {{ item.descricao }}
                   </ion-row>
@@ -98,7 +100,7 @@
                 </ion-col>
 
                 <ion-col size="4">
-                  <ion-button fill="clear" style="font-size: 14px;">
+                  <ion-button fill="clear" style="font-size: 14px; float: right;">
                     <ion-icon slot="icon-only" name="chevron-down"></ion-icon>
                   </ion-button>
                 </ion-col>
@@ -131,7 +133,7 @@
       <ion-col size="12">
         <ion-card button>
           <ion-card-header>
-            <ion-thumbnail style="width: 60px; height: 60px;">
+            <ion-thumbnail style="width: 70px; height: 70px; margin: auto;">
               <img src="assets/images/06-formas_de_pagamento/{{pedido.pedidoHeader.tipodoc}}.png" />
             </ion-thumbnail>
           </ion-card-header>
@@ -140,7 +142,7 @@
             <ion-grid>
               <ion-row>
                 <ion-label class="descricao">
-                  <!-- {{ op.descricao }} -->
+                  {{ pedido.pedidoHeader.descricao_tipodoc }}
                 </ion-label>
               </ion-row>
             </ion-grid>
