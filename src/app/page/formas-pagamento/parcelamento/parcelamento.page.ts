@@ -121,7 +121,9 @@ export class ParcelamentoPage implements OnInit {
     await this.common.showLoader();
     this.pagamento.setCondicaoPagamento(
       this.opcaoSelect, this.input.value
-    ).then(() => {
+    ).then((result: any) => {
+      console.log('result!!!');
+      console.log(result);
       this.atualizaPedidoHeader();
     }, (error) => {
       this.common.loading.dismiss();

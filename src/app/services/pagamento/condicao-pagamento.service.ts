@@ -90,9 +90,6 @@ export class CondicaoPagamentoService {
   // by Hélio 30/03/2020
   async setCondicaoPagamento(opcaoSelect: OpcaoParcela, valor: any) {
     const aResult: any[] = [];
-    console.log('setCondicaoPagamento');
-    console.log(opcaoSelect);
-    console.log(valor);
 
     const table0 = await this.pedidoService.atualizaPedido(
       'tipo_pagamento', this.pedidoService.pedidoHeader.tipodoc
@@ -100,17 +97,13 @@ export class CondicaoPagamentoService {
     aResult.push(table0[0]);
 
     if (opcaoSelect.id !== '' && opcaoSelect.id !== undefined) {
-      console.log('Primeiro IF');
       const table1 = await this.pedidoService.atualizaPedido('condicao_pagto', opcaoSelect.id);
       aResult.push(table1[0]);
-      console.log(table1);
     }
 
     if (valor !== '' && valor !== undefined) {
-      console.log('Segundo IF');
       const table2 = await this.pedidoService.atualizaPedido('valorentrada', valor.toString());
       aResult.push(table2[0]);
-      console.log(table2);
     }
 
     const link =
