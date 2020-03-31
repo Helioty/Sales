@@ -118,6 +118,8 @@ export class CondicaoPagamentoService {
       localStorage.getItem('empresa') + '/' +
       this.pedidoService.numPedido;
 
+    console.log('aResult');
+    console.log(aResult);
     return new Promise((resolve, reject) => {
       this.baseService.post(link, aResult).then((result: any) => {
         resolve(result);
