@@ -68,7 +68,7 @@
         <ion-row>
           <ion-col size="12" button class="opcoes" *ngFor="let op of opcoesList; let i = index">
             <ion-row id="{{op.status ? 'selectedPaymentValue' : ''}}" [class.selected]="opcaoSelect.id == op.id"
-              (click)="opcaoSelect = op">
+              (click)="opcaoSelect = op; buttonDisable = false">
               <ion-col size="2" class="serial" *ngIf="op.isEntrada == 'N'">{{ op.qtdParcelas }}x</ion-col>
               <ion-col size="2" class="serial" *ngIf="op.isEntrada == 'S'">1 + {{ op.qtdParcelas }}</ion-col>
               <ion-col size="6" class="txt">{{ op.valorParcelas | formatarString: 'VALOR' }}</ion-col>
@@ -98,7 +98,7 @@
     </ion-row>
   </ion-grid>
 
-  <ion-item button lines="none" color="fc-button-green" (click)="continuar();" [disabled]="opcaoSelect.id == ''">
+  <ion-item button lines="none" color="fc-button-green" (click)="continuar();" [disabled]="buttonDisable">
     <ion-text>CONTINUAR</ion-text>
   </ion-item>
 </ion-footer>

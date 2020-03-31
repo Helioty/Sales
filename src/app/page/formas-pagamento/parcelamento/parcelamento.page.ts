@@ -20,6 +20,8 @@ export class ParcelamentoPage implements OnInit {
   public labelEntrada = 'Sem entrada';
   public hasEntrada = false;
 
+  public buttonDisable = true;
+
   constructor(
     public common: CommonService,
     public pedido: PedidoService,

@@ -93,6 +93,12 @@ export class CondicaoPagamentoService {
     console.log('setCondicaoPagamento');
     console.log(opcaoSelect);
     console.log(valor);
+
+    const table0 = await this.pedidoService.atualizaPedido(
+      'tipo_pagamento', this.pedidoService.pedidoHeader.tipodoc
+    );
+    aResult.push(table0);
+
     if (opcaoSelect.id !== '' && opcaoSelect.id !== undefined) {
       console.log('Primeiro IF');
       const table1 = await this.pedidoService.atualizaPedido('condicao_pagto', opcaoSelect.id);
