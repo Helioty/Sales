@@ -171,6 +171,13 @@ export class PedidoFinalizacaoPage implements OnInit {
 
   openFormasPagamentoPage() {
     this.navControl.navigateForward(['/formas-pagamento']);
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        paginaSeguinte: 'back',
+        paginaAnterior: 'pedido-finalizacao'
+      }
+    };
+    this.navControl.navigateForward(['/formas-pagamento'], navigationExtras);
   }
 
 }
