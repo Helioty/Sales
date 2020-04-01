@@ -46,7 +46,7 @@ export class ClientePage implements OnInit {
     private baseService: BaseService,
     private clienteService: ClienteService,
     private navControl: NavController,
-    private pedidoService: PedidoService,
+    private pedido: PedidoService,
     private renderer: Renderer
   ) { }
 
@@ -56,7 +56,7 @@ export class ClientePage implements OnInit {
 
   ionViewWillEnter() {
     this.common.goToFullScreen();
-    if (this.pedidoService.clientSelected && this.pedidoService.docCliente !== '') {
+    if (this.pedido.clientSelected && this.pedido.docCliente !== '') {
       this.getClienteAntesSelecionado();
     } else if (this.valorDigitado === '') {
       this.setEstado('reset');
@@ -90,9 +90,9 @@ export class ClientePage implements OnInit {
 
   // by Helio 12/02/2020
   async getClienteAntesSelecionado() {
-    await this.pedidoService.retornaDadosCliente().then(() => {
-      this.dados = this.pedidoService.dadosCliente;
-      this.valorDigitado = this.common.formataCPFNPJ(this.pedidoService.docCliente);
+    await this.pedido.retornaDadosCliente().then(() => {
+      this.dados = this.pedido.dadosCliente;
+      this.valorDigitado = this.common.formataCPFNPJ(this.pedido.docCliente);
       this.isCNPJ = this.dados.natureza !== 'FISICA';
       this.isActive = this.dados.ativo;
       this.atualizaCadastro = this.dados.atualizaCadastro;
@@ -256,7 +256,8 @@ export class ClientePage implements OnInit {
       const valor1: any = String(dados.celulares[0].numero);
 
       if (valor1.length > 8) {
-        this.dadosShow.celular = this.common.formataFONE(dados.celulares[0].ddd + dados.celulares[0].numero);
+        this.dadosShow.celular =
+          this.common.formataFONE(dados.celulares[0].ddd + dados.celulares[0].numero);
       } else {
         this.dadosShow.celular = '';
       }
@@ -264,7 +265,7 @@ export class ClientePage implements OnInit {
   }
 
   async naoCliente() {
-    if (this.pedidoService.clientSelected) {
+    if (this.pedido.clientSelected) {
       const alert = await this.alertCtrl.create({
         header: 'Remover cliente?',
         message: 'Deseja remover o cliente do pedido atual?',
@@ -272,7 +273,7 @@ export class ClientePage implements OnInit {
           text: 'SIM',
           handler: () => {
             this.common.showLoader();
-            this.pedidoService.removerCliente().then(() => {
+            this.pedido.removerCliente().then(() => {
               this.setEstado('reset');
               this.common.loading.dismiss();
             });
@@ -333,9 +334,9 @@ export class ClientePage implements OnInit {
   async confirmaCliente() {
     await this.common.showLoader();
     const doc: string = this.valorDigitado.replace(/\D/g, '');
-    if (doc !== this.pedidoService.docCliente) {
-      this.pedidoService.adicionarCliente(doc, this.dados).then(() => {
-        if (this.pedidoService.clientSelected) {
+    if (doc !== this.pedido.docCliente) {
+      this.pedido.adicionarCliente(doc, this.dados).then(() => {
+        if (this.pedido.clientSelected) {
           this.prosseguir();
         }
         this.common.loading.dismiss();
@@ -368,6 +369,10 @@ export class ClientePage implements OnInit {
           }
         };
         this.navControl.navigateForward(['/' + paginaSeguinte], navigationExtras);
+        break;
+
+      case 'finalizaService':
+        this.pedido.goToFinalizacao('cliente');
         break;
 
       default:
