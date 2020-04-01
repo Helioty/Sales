@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Renderer } from '@angular/core';
 import { CondicaoPagamentoService } from 'src/app/services/pagamento/condicao-pagamento.service';
 import { PedidoService } from 'src/app/services/pedido/pedido.service';
 import { CommonService } from 'src/app/services/common/common.service';
@@ -28,7 +28,8 @@ export class ParcelamentoPage implements OnInit {
     public pedido: PedidoService,
     private pagamento: CondicaoPagamentoService,
     private alertCtrl: AlertController,
-    private navControl: NavController
+    private navControl: NavController,
+    private renderer: Renderer
   ) {
     this.opcaoSelect = new OpcaoParcela();
   }
@@ -93,15 +94,15 @@ export class ParcelamentoPage implements OnInit {
     }
   }
 
-  verificaEntrada() {
-    const input = this.input.getInputElement();
-    console.log(input);
+  verificaEntrada(evento: any) {
+    if (this.entradaValue > 0) {
+      this.getCondicaoPagamentoComEntrada(this.entradaValue);
+      this.renderer.invokeElementMethod(evento.target, 'blur');
+    }
   }
 
-  async getCondicaoPagamentoComEntrada(evento: any) {
-    // tslint:disable-next-line: radix
-    const intValue = parseInt(evento.target.value);
-    if (intValue > this.pedido.pedidoHeader.totpedido) {
+  async getCondicaoPagamentoComEntrada(valor: number) {
+    if (valor > this.pedido.pedidoHeader.totpedido) {
       this.showAlert(
         'Valor inválido', 'O valor da entrada não pode ser maior que o valor do pedido!'
       );
@@ -109,7 +110,7 @@ export class ParcelamentoPage implements OnInit {
     }
     await this.common.showLoader();
     this.pagamento.getCondicaoPagamentoComEntrada(
-      this.pedido.pedidoHeader.tipodoc, this.pedido.numPedido, evento.target.value
+      this.pedido.pedidoHeader.tipodoc, this.pedido.numPedido, valor
     ).then((result: any) => {
       console.log(result);
       this.opcoesList = result;
