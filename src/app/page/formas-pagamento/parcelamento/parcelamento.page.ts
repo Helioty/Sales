@@ -69,6 +69,7 @@ export class ParcelamentoPage implements OnInit {
       this.labelEntrada = 'Com entrada';
     } else {
       this.labelEntrada = 'Sem entrada';
+      this.entradaValue = 0;
     }
   }
 
@@ -92,6 +93,11 @@ export class ParcelamentoPage implements OnInit {
     }
   }
 
+  verificaEntrada() {
+    const input = this.input.getInputElement();
+    console.log(input);
+  }
+
   async getCondicaoPagamentoComEntrada(evento: any) {
     // tslint:disable-next-line: radix
     const intValue = parseInt(evento.target.value);
@@ -103,7 +109,7 @@ export class ParcelamentoPage implements OnInit {
     }
     await this.common.showLoader();
     this.pagamento.getCondicaoPagamentoComEntrada(
-      this.pedido.pedidoHeader.tipodoc, this.pedido.numPedido, parseFloat(evento.target.value)
+      this.pedido.pedidoHeader.tipodoc, this.pedido.numPedido, evento.target.value
     ).then((result: any) => {
       console.log(result);
       this.opcoesList = result;
