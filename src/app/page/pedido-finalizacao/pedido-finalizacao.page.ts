@@ -21,7 +21,9 @@ export class PedidoFinalizacaoPage implements OnInit {
   public totalProdutos: any;
   public existeFrete = false;
   public frete: any;
-
+  public icmsRetido: any;
+  public descontoBrinde: any;
+  public desconto: any;
   public existeParcela = false;
   public qtdParcelas: any;
   public parcela: any;
@@ -71,6 +73,20 @@ export class PedidoFinalizacaoPage implements OnInit {
       this.parcela = this.pedido.pedidoHeader.valorParcela;
       this.entrada = this.pedido.pedidoHeader.valorEntrada;
       this.existeParcela = true;
+    }
+
+    // by Ryuge 11/12/2018
+    if (this.pedido.pedidoHeader.descontoBrinde > 0) {
+      this.descontoBrinde = this.pedido.pedidoHeader.descontoBrinde;
+    }
+
+    // by Ryuge 11/12/2018
+    if (this.pedido.pedidoHeader.valorDesconto > 0) {
+      this.desconto = this.pedido.pedidoHeader.valorDesconto;
+    }
+
+    if (this.pedido.pedidoHeader.icmsRetido > 0) {
+      this.icmsRetido = this.pedido.pedidoHeader.icmsRetido;
     }
 
     this.getItemPedido();

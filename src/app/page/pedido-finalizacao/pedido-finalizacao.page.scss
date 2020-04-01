@@ -157,6 +157,20 @@ ion-content {
 
     ion-grid.grid3 {
         border-bottom: 1px solid #DADADA;
+
+        ion-row {
+            ion-col {
+                ion-card {
+                    ion-card-header {
+                        ion-thumbnail {
+                            width: 70px; 
+                            height: 70px; 
+                            margin: auto;
+                        }
+                    }
+                }
+            }
+        }
     }
 
     ion-item.finalizarItem {
