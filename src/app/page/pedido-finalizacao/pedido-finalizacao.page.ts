@@ -49,6 +49,7 @@ export class PedidoFinalizacaoPage implements OnInit {
   }
 
   ionViewWillEnter() {
+    console.log('ionViewWillEnter');
     this.focusOn();
     this.common.goToFullScreen();
     this.numeroPedido =
