@@ -366,7 +366,7 @@ export class PedidoService {
         (this.pedidoHeader.cgccpf_cliente === '' || this.pedidoHeader.cgccpf_cliente === null)
       ) {
         console.log('Cliente obrigatorio!');
-        this.openCustomPage('cliente', 'finzalizaService', paginaAtual);
+        this.openCustomPage('cliente', 'finalizaService', paginaAtual);
         return;
       }
     }
@@ -378,15 +378,15 @@ export class PedidoService {
       // checa se o TMS está ativo na filial baseado na informações retornada no login
       if (tms === 'true') {
         console.log('TMS ativo!');
-        this.openCustomPage('endereco-entrega', 'finzalizaService', paginaAtual);
+        this.openCustomPage('endereco-entrega', 'finalizaService', paginaAtual);
         return;
       } else {
         console.log('TMS inativo!');
-        this.openCustomPage('endereco-entrega-old', 'finzalizaService', paginaAtual);
+        this.openCustomPage('endereco-entrega-old', 'finalizaService', paginaAtual);
         return;
       }
     } else {
-      this.openCustomPage('formas-pagamento', 'finzalizaService', paginaAtual);
+      this.openCustomPage('formas-pagamento', 'finalizaService', paginaAtual);
       return;
     }
   }
