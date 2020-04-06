@@ -35,11 +35,11 @@
   <input id="scanner" hideKeyboard class="scanner" [(ngModel)]="valorScanner" (keyup.enter)="scaneado($event)">
 
   <!-- Grid pesquisa detalhada -->
-  <ion-grid [hidden]="!pesquisaDetalhada">
+  <ion-grid [hidden]="!pesquisaDetalhada" class="pesquisa-detalhada-grid">
     <ion-row>
       <!-- Codigo -->
       <ion-col size=12 class="pesquisa-input-col">
-        <ion-item>
+        <ion-item lines="none">
           <ion-label position="stacked">Codigo</ion-label>
           <ion-input type="tel"></ion-input>
         </ion-item>
@@ -47,7 +47,7 @@
 
       <!-- Descrição -->
       <ion-col size=12 class="pesquisa-input-col">
-        <ion-item>
+        <ion-item lines="none">
           <ion-label position="stacked">Descrição</ion-label>
           <ion-input type="text"></ion-input>
         </ion-item>
@@ -55,7 +55,7 @@
 
       <!-- Fornecedor -->
       <ion-col size=12 class="pesquisa-input-col">
-        <ion-item>
+        <ion-item lines="none">
           <ion-label position="stacked">Stacked Label</ion-label>
           <ion-input type="text"></ion-input>
         </ion-item>
@@ -63,7 +63,7 @@
 
       <!-- Modelo -->
       <ion-col size=6 class="pesquisa-input-col">
-        <ion-item>
+        <ion-item lines="none">
           <ion-label position="stacked">Modelo</ion-label>
           <ion-input type="text"></ion-input>
         </ion-item>
@@ -71,20 +71,20 @@
 
       <!-- Linha -->
       <ion-col size=6 class="pesquisa-input-col">
-        <ion-item>
+        <ion-item lines="none">
           <ion-label position="stacked">Linha</ion-label>
           <ion-input type="text"></ion-input>
         </ion-item>
       </ion-col>
     </ion-row>
 
-    <ion-row>
+    <ion-row class="pesquisa-button-row">
       <ion-col size="6">
-        <ion-button>LIMPAR</ion-button>
+        <ion-button color="fc-cinza-vermelho">LIMPAR</ion-button>
       </ion-col>
 
       <ion-col size="6">
-        <ion-button>PESQUISAR</ion-button>
+        <ion-button color="fc-button-green">PESQUISAR</ion-button>
       </ion-col>
     </ion-row>
   </ion-grid>
