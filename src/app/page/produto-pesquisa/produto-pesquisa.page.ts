@@ -18,6 +18,7 @@ export class ProdutoPesquisaPage implements OnInit {
 
   // controle de exibição
   public pesquisaDetalhada = false;
+  public foco = false;
 
   constructor(
     public alertCtrl: AlertController,
@@ -87,7 +88,7 @@ export class ProdutoPesquisaPage implements OnInit {
           this.pedido.setCardPedido(codigo);
           this.focusPlay();
         } else {
-
+          this.focusPlay();
         }
       }
     } catch (error) {
@@ -130,7 +131,7 @@ export class ProdutoPesquisaPage implements OnInit {
   }
 
   showPesquisa() {
-    this.pesquisaDetalhada = true;
+    this.pesquisaDetalhada = !this.pesquisaDetalhada;
   }
 
 }
