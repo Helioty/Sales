@@ -15,10 +15,14 @@ export class ProdutoPesquisaPage implements OnInit {
   public valorScanner: string;
   public focusStatus = true;
 
+
+  // controle de exibição
+  public pesquisaDetalhada = false;
+
   constructor(
     public alertCtrl: AlertController,
     public common: CommonService,
-    public pedidoService: PedidoService,
+    public pedido: PedidoService,
     private navControl: NavController,
     private platform: Platform,
   ) { }
@@ -73,14 +77,14 @@ export class ProdutoPesquisaPage implements OnInit {
     }, 150);
   }
 
-  async scaneado(evento: any) {
+  scaneado(evento: any) {
     try {
       if (evento.target && evento.target.value.length >= 2) {
         this.focusPause();
         const codigo: string = evento.target.value;
 
         if (codigo.substring(0, 1) === 'P') {
-          this.pedidoService.setCardPedido(codigo);
+          this.pedido.setCardPedido(codigo);
           this.focusPlay();
         } else {
 
@@ -105,7 +109,7 @@ export class ProdutoPesquisaPage implements OnInit {
       buttons: ['CANCELAR', {
         text: 'ADICIONAR',
         handler: (data: any) => {
-          this.pedidoService.setCardPedido(data.codigo);
+          this.pedido.setCardPedido(data.codigo);
         }
       }]
     });
@@ -115,7 +119,7 @@ export class ProdutoPesquisaPage implements OnInit {
     });
   }
 
-  async openClientePage() {
+  openClientePage() {
     const navigationExtras: NavigationExtras = {
       queryParams: {
         paginaSeguinte: 'back',
@@ -123,6 +127,10 @@ export class ProdutoPesquisaPage implements OnInit {
       }
     };
     this.navControl.navigateForward(['/cliente'], navigationExtras);
+  }
+
+  showPesquisa() {
+    this.pesquisaDetalhada = true;
   }
 
 }

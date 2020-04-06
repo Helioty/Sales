@@ -7,24 +7,24 @@
     <ion-title>Pesquisa</ion-title>
 
     <ion-buttons slot="end">
-      <!-- <ion-button [routerLink]="['/pedido-atalhos']" routerDirection="forward">
-        <ion-icon name="apps-sharp"></ion-icon>
-      </ion-button> -->
+      <ion-button (click)="showPesquisa()">
+        <ion-icon name="search-sharp"></ion-icon>
+      </ion-button>
 
       <ion-button (click)="adicionarCartaoPedido()">
         <ion-icon name="card"></ion-icon>
-        <ion-badge color="success" class="badge-position" *ngIf="pedidoService.cardSelected">✔</ion-badge>
+        <ion-badge color="success" class="badge-position" *ngIf="pedido.cardSelected">✔</ion-badge>
       </ion-button>
 
       <ion-button (click)="openClientePage()">
         <ion-icon name="person"></ion-icon>
-        <ion-badge color="success" class="badge-position" *ngIf="pedidoService.clientSelected">✔</ion-badge>
+        <ion-badge color="success" class="badge-position" *ngIf="pedido.clientSelected">✔</ion-badge>
       </ion-button>
 
-      <ion-button *ngIf="pedidoService.qtdItensSacola > 0">
+      <ion-button *ngIf="pedido.qtdItensSacola > 0">
         <ion-icon name="basket"></ion-icon>
         <ion-badge color="fc-cinza-vermelho" class="badge-position">
-          {{pedidoService.qtdItensSacola}}
+          {{ pedido.qtdItensSacola }}
         </ion-badge>
       </ion-button>
     </ion-buttons>
@@ -33,5 +33,54 @@
 
 <ion-content>
   <input id="scanner" hideKeyboard class="scanner" [(ngModel)]="valorScanner" (keyup.enter)="scaneado($event)">
+
+  <!-- Grid pesquisa detalhada -->
+  <ion-grid [hidden]="!pesquisaDetalhada">
+    <ion-row>
+      <!-- Codigo -->
+      <ion-col size=12>
+        <ion-row>
+          <ion-item>
+            <ion-label position="floating">Floating Label</ion-label>
+            <ion-input></ion-input>
+          </ion-item>
+        </ion-row>
+      </ion-col>
+
+      <!-- Descrição -->
+      <ion-col size=12>
+        <ion-row>
+          <ion-item>
+            <ion-label position="fixed">Fixed Label</ion-label>
+            <ion-input></ion-input>
+          </ion-item>
+        </ion-row>
+      </ion-col>
+
+      <!-- Fornecedor -->
+      <ion-col size=12>
+        <ion-row>
+          <ion-item>
+            <ion-label position="stacked">Stacked Label</ion-label>
+            <ion-input></ion-input>
+          </ion-item>
+        </ion-row>
+      </ion-col>
+
+      <!-- Modelo -->
+      <ion-col size=12>
+        
+      </ion-col>
+
+      <!-- Linha -->
+      <ion-col size=12>
+        
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+
+    </ion-row>
+  </ion-grid>
 
 </ion-content>

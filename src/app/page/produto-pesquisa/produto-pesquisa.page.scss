@@ -1,3 +1,8 @@
+.header-md:after {
+    height: 0 !important;
+    background-image: none !important;
+}
+
 .scanner {
     position: fixed;
     top: -50px !important;
