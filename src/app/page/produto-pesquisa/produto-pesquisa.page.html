@@ -1,12 +1,10 @@
 <ion-header>
-  <ion-toolbar color="fc">
+  <ion-toolbar color="primary" [hidden]="pesquisaDetalhada">
     <ion-buttons slot="start">
       <ion-back-button defaultHref="pedido-atalhos"></ion-back-button>
     </ion-buttons>
 
-    <ion-title [hidden]="!pesquisaDetalhada">Pesquisa Detalhada</ion-title>
-
-    <ion-buttons slot="end" [hidden]="pesquisaDetalhada">
+    <ion-buttons slot="end">
       <ion-button (click)="showPesquisa()">
         <ion-icon name="search-sharp"></ion-icon>
       </ion-button>
@@ -28,6 +26,16 @@
         </ion-badge>
       </ion-button>
     </ion-buttons>
+  </ion-toolbar>
+
+  <ion-toolbar color="primary" [hidden]="!pesquisaDetalhada">
+    <ion-buttons slot="start">
+      <ion-button (click)="pesquisaDetalhada = false">
+        <ion-icon name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <ion-title>Pesquisa Detalhada</ion-title>
   </ion-toolbar>
 </ion-header>
 
