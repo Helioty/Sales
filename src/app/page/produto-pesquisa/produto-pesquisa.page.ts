@@ -10,11 +10,11 @@ import { NavigationExtras } from '@angular/router';
   styleUrls: ['./produto-pesquisa.page.scss'],
 })
 export class ProdutoPesquisaPage implements OnInit {
-  @ViewChild('ip1', { static: false }) input1: IonInput;
-  @ViewChild('ip2', { static: false }) input2: IonInput;
-  @ViewChild('ip3', { static: false }) input3: IonInput;
-  @ViewChild('ip4', { static: false }) input4: IonInput;
-  @ViewChild('ip5', { static: false }) input5: IonInput;
+  @ViewChild('ip1', { static: true }) input1: IonInput;
+  @ViewChild('ip2', { static: true }) input2: IonInput;
+  @ViewChild('ip3', { static: true }) input3: IonInput;
+  @ViewChild('ip4', { static: true }) input4: IonInput;
+  @ViewChild('ip5', { static: true }) input5: IonInput;
 
   public taskScanner: any;
   public valorScanner: string;
@@ -151,30 +151,36 @@ export class ProdutoPesquisaPage implements OnInit {
       case '1':
         this.inputFoco = 1;
         this.input1.setFocus();
+        console.log('case1');
         break;
 
       case '2':
         this.inputFoco = 2;
         this.input2.setFocus();
+        console.log('case2');
         break;
 
       case '3':
         this.inputFoco = 3;
         this.input3.setFocus();
+        console.log('case3');
         break;
 
       case '4':
         this.inputFoco = 4;
         this.input4.setFocus();
+        console.log('case4');
         break;
 
       case '5':
         this.inputFoco = 5;
         this.input5.setFocus();
+        console.log('case5');
         break;
 
       default:
         this.inputFoco = 0;
+        console.log('case-default');
         break;
     }
   }
