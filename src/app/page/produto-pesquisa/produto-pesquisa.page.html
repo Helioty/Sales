@@ -92,7 +92,7 @@
 </ion-content>
 
 <ion-footer>
-  <ion-grid [hidden]="!pesquisaDetalhada && !foco" class="grid-foco-change">
+  <ion-grid [hidden]="!foco" *ngIf="pesquisaDetalhada" class="grid-foco-change">
     <ion-row>
       <ion-col size="6">
         <ion-button fill="clear" expand="full">
