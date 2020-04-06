@@ -11,6 +11,35 @@
 
 ion-content {
 
+    ion-grid.noItens {
+        position: fixed;
+        height: 100%;
+        width: 100%;
+        
+        .topHeading {
+            h3 {
+                text-align: center;
+                font-size: 18px;
+                color: #3f3f3f;
+            }
+        }
+        .noImg {
+            text-align: center;
+            img {
+                width: 200px;
+                height: auto;
+            }
+        }
+        .bottomHeading {
+            h3 {
+                text-align: center;
+                font-size: 18px;
+                color: #8f8f8f;
+                font-weight: normal;
+            }
+        }
+    }
+
     ion-grid.pesquisa-detalhada-grid {
 
         ion-row.pesquisa-input-row {

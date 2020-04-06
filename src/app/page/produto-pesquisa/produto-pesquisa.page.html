@@ -34,6 +34,26 @@
 <ion-content>
   <input id="scanner" hideKeyboard class="scanner" [(ngModel)]="valorScanner" (keyup.enter)="scaneado($event)">
 
+  <ion-grid [hidden]="pesquisaItems.length == 0" class="noItens">
+    <ion-row class="topHeading">
+      <ion-col>
+        <h3>Escaneie um produto ou pesquise em nosso catálogo</h3>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="noImg">
+      <ion-col>
+        <img src="assets/images/08-catalogo/pedido-nao-encontrado.png" />
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="bottomHeading">
+      <ion-col>
+        <h3>Sem resultados para exibir...</h3>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
   <!-- Grid pesquisa detalhada -->
   <ion-grid [hidden]="!pesquisaDetalhada" class="pesquisa-detalhada-grid">
     <ion-row class="pesquisa-input-row">

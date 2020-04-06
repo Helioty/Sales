@@ -26,6 +26,9 @@ export class ProdutoPesquisaPage implements OnInit {
   public foco = false;
   public inputFoco = 0;
 
+
+  public pesquisaItems: any[] = [];
+
   constructor(
     public alertCtrl: AlertController,
     public common: CommonService,
@@ -138,10 +141,6 @@ export class ProdutoPesquisaPage implements OnInit {
 
   showPesquisa() {
     this.pesquisaDetalhada = !this.pesquisaDetalhada;
-  }
-
-  informaFoco() {
-    this.foco = !this.foco;
   }
 
   setInputComFoco(acao: string) {
