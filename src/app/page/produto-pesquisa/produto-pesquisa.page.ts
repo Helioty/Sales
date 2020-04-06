@@ -19,6 +19,7 @@ export class ProdutoPesquisaPage implements OnInit {
   // controle de exibição
   public pesquisaDetalhada = false;
   public foco = false;
+  public inputFoco = 0;
 
   constructor(
     public alertCtrl: AlertController,
