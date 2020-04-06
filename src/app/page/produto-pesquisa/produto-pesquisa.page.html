@@ -100,7 +100,7 @@
   <ion-grid [hidden]="!pesquisaDetalhada" class="grid-foco-change">
     <ion-row>
       <ion-col size="6">
-        <ion-button fill="clear" expand="full" [disabled]="!foco || inputFoco > 1" (click)="setInputComFoco('menos')">
+        <ion-button fill="clear" expand="full" [disabled]="inputFoco < 2" (click)="setInputComFoco('menos')">
           <ion-icon name="chevron-back" slot="start"></ion-icon>
           Anterior
         </ion-button>
