@@ -34,7 +34,7 @@
 <ion-content>
   <input id="scanner" hideKeyboard class="scanner" [(ngModel)]="valorScanner" (keyup.enter)="scaneado($event)">
 
-  <ion-grid [hidden]="pesquisaItems.length > 0 && pesquisaDetalhada" class="noItens">
+  <ion-grid [hidden]="pesquisaDetalhada " *ngIf="pesquisaItems.length == 0" class="noItens">
     <ion-row class="topHeading">
       <ion-col>
         <h3>Escaneie um produto ou pesquise em nosso catálogo</h3>
