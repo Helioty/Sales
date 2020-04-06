@@ -238,6 +238,12 @@ ion-header {
           position: absolute;
         }
       }
+
+      ion-back-button {
+        ion-icon {
+          font-size: 200%;
+        }
+      }
     }
   }
 }
