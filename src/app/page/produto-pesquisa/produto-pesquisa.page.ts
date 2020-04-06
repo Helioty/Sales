@@ -158,35 +158,31 @@ export class ProdutoPesquisaPage implements OnInit {
       case '1':
         this.inputFoco = 1;
         this.input1.setFocus();
-        console.log('case1');
         break;
 
       case '2':
         this.inputFoco = 2;
         this.input2.setFocus();
-        console.log('case2');
         break;
 
       case '3':
         this.inputFoco = 3;
         this.input3.setFocus();
-        console.log('case3');
         break;
 
       case '4':
         this.inputFoco = 4;
         this.input4.setFocus();
-        console.log('case4');
         break;
 
       case '5':
         this.inputFoco = 5;
         this.input5.setFocus();
-        console.log('case5');
         break;
 
       default:
         this.inputFoco = 0;
+        this.common.goToFullScreen();
         console.log('case-default');
         break;
     }
