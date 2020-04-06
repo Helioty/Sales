@@ -149,11 +149,11 @@ export class ProdutoPesquisaPage implements OnInit {
     if (acao === 'mais') {
       console.log('mais');
       input = (this.inputFoco++).toString();
-      console.log('input');
+      console.log(input);
     } else if (acao === 'menos') {
       console.log('menos');
       input = (this.inputFoco--).toString();
-      console.log('input');
+      console.log(input);
     }
 
     switch (input) {
