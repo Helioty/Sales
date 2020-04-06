@@ -38,42 +38,47 @@
   <ion-grid [hidden]="!pesquisaDetalhada" class="pesquisa-detalhada-grid">
     <ion-row class="pesquisa-input-row">
       <!-- Codigo -->
-      <ion-col size=12 class="pesquisa-input-col">
+      <ion-col size="12" class="pesquisa-input-col">
         <ion-item lines="none">
           <ion-label position="stacked">Codigo</ion-label>
-          <ion-input type="tel" (ionFocus)="foco = true" (ionBlur)="foco = false"></ion-input>
+          <ion-input #ip1 type="tel" (ionFocus)="setInputComFoco('1'); foco = true" (ionBlur)="foco = false">
+          </ion-input>
         </ion-item>
       </ion-col>
 
       <!-- Descrição -->
-      <ion-col size=12 class="pesquisa-input-col">
+      <ion-col size="12" class="pesquisa-input-col">
         <ion-item lines="none">
           <ion-label position="stacked">Descrição</ion-label>
-          <ion-input type="text" (ionFocus)="foco = true" (ionBlur)="foco = false"></ion-input>
+          <ion-input #ip2 type="text" (ionFocus)="setInputComFoco('2'); foco = true" (ionBlur)="foco = false">
+          </ion-input>
         </ion-item>
       </ion-col>
 
       <!-- Fornecedor -->
-      <ion-col size=12 class="pesquisa-input-col">
+      <ion-col size="12" class="pesquisa-input-col">
         <ion-item lines="none">
           <ion-label position="stacked">Fornecedor</ion-label>
-          <ion-input type="text" (ionFocus)="foco = true" (ionBlur)="foco = false"></ion-input>
+          <ion-input #ip3 type="text" (ionFocus)="setInputComFoco('3'); foco = true" (ionBlur)="foco = false">
+          </ion-input>
         </ion-item>
       </ion-col>
 
       <!-- Modelo -->
-      <ion-col size=6 class="pesquisa-input-col">
+      <ion-col size="6" class="pesquisa-input-col">
         <ion-item lines="none">
           <ion-label position="stacked">Modelo</ion-label>
-          <ion-input type="text" (ionFocus)="foco = true" (ionBlur)="foco = false"></ion-input>
+          <ion-input #ip4 type="text" (ionFocus)="setInputComFoco('4'); foco = true" (ionBlur)="foco = false">
+          </ion-input>
         </ion-item>
       </ion-col>
 
       <!-- Linha -->
-      <ion-col size=6 class="pesquisa-input-col">
+      <ion-col size="6" class="pesquisa-input-col">
         <ion-item lines="none">
           <ion-label position="stacked">Linha</ion-label>
-          <ion-input type="text" (ionFocus)="foco = true" (ionBlur)="foco = false"></ion-input>
+          <ion-input #ip5 type="text" (ionFocus)="setInputComFoco('5'); foco = true" (ionBlur)="foco = false">
+          </ion-input>
         </ion-item>
       </ion-col>
     </ion-row>
@@ -95,7 +100,7 @@
   <ion-grid [hidden]="!pesquisaDetalhada" class="grid-foco-change">
     <ion-row>
       <ion-col size="6">
-        <ion-button fill="clear" expand="full" [disabled]="!foco">
+        <ion-button fill="clear" expand="full" [disabled]="!foco && inputFoco > 1">
           Anterior
           <ion-icon name="chevron-back" slot="start"></ion-icon>
         </ion-button>

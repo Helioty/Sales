@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Platform, AlertController, NavController } from '@ionic/angular';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { Platform, AlertController, NavController, IonInput } from '@ionic/angular';
 import { CommonService } from 'src/app/services/common/common.service';
 import { PedidoService } from 'src/app/services/pedido/pedido.service';
 import { NavigationExtras } from '@angular/router';
@@ -10,6 +10,11 @@ import { NavigationExtras } from '@angular/router';
   styleUrls: ['./produto-pesquisa.page.scss'],
 })
 export class ProdutoPesquisaPage implements OnInit {
+  @ViewChild('ip1', { static: false }) input1: IonInput;
+  @ViewChild('ip2', { static: false }) input2: IonInput;
+  @ViewChild('ip3', { static: false }) input3: IonInput;
+  @ViewChild('ip4', { static: false }) input4: IonInput;
+  @ViewChild('ip5', { static: false }) input5: IonInput;
 
   public taskScanner: any;
   public valorScanner: string;
@@ -133,6 +138,45 @@ export class ProdutoPesquisaPage implements OnInit {
 
   showPesquisa() {
     this.pesquisaDetalhada = !this.pesquisaDetalhada;
+  }
+
+  informaFoco() {
+    this.foco = !this.foco;
+  }
+
+  setInputComFoco(inputNumber: number) {
+    const input = inputNumber.toString();
+
+    switch (input) {
+      case '1':
+        this.inputFoco = 1;
+        this.input1.setFocus();
+        break;
+
+      case '2':
+        this.inputFoco = 2;
+        this.input2.setFocus();
+        break;
+
+      case '3':
+        this.inputFoco = 3;
+        this.input3.setFocus();
+        break;
+
+      case '4':
+        this.inputFoco = 4;
+        this.input4.setFocus();
+        break;
+
+      case '5':
+        this.inputFoco = 5;
+        this.input5.setFocus();
+        break;
+
+      default:
+        this.inputFoco = 0;
+        break;
+    }
   }
 
 }
