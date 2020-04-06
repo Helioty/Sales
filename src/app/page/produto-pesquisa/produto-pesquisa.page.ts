@@ -144,8 +144,13 @@ export class ProdutoPesquisaPage implements OnInit {
     this.foco = !this.foco;
   }
 
-  setInputComFoco(inputNumber: number) {
-    const input = inputNumber.toString();
+  setInputComFoco(acao: string) {
+    let input = '';
+    if (acao === 'mais') {
+      input = (this.inputFoco + 1).toString();
+    } else if (acao === 'menos') {
+      input = (this.inputFoco - 1).toString();
+    }
 
     switch (input) {
       case '1':

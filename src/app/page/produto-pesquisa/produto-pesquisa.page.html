@@ -100,15 +100,14 @@
   <ion-grid [hidden]="!pesquisaDetalhada" class="grid-foco-change">
     <ion-row>
       <ion-col size="6">
-        <ion-button fill="clear" expand="full" [disabled]="!foco || inputFoco > 1"
-          (click)="setInputComFoco(inputFoco - 1)">
+        <ion-button fill="clear" expand="full" [disabled]="!foco || inputFoco > 1" (click)="setInputComFoco('menos')">
           <ion-icon name="chevron-back" slot="start"></ion-icon>
           Anterior
         </ion-button>
       </ion-col>
 
       <ion-col size="6">
-        <ion-button fill="clear" expand="full" [disabled]="!foco" (click)="setInputComFoco(inputFoco + 1)">
+        <ion-button fill="clear" expand="full" [disabled]="!foco" (click)="setInputComFoco('mais')">
           <ion-icon name="chevron-forward" slot="end"></ion-icon>
           Próximo
         </ion-button>
