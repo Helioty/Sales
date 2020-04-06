@@ -4,9 +4,9 @@
       <ion-back-button defaultHref="pedido-atalhos"></ion-back-button>
     </ion-buttons>
 
-    <ion-title>Pesquisa</ion-title>
+    <ion-title [hidden]="!pesquisaDetalhada">Pesquisa Detalhada</ion-title>
 
-    <ion-buttons slot="end">
+    <ion-buttons slot="end" [hidden]="pesquisaDetalhada">
       <ion-button (click)="showPesquisa()">
         <ion-icon name="search-sharp"></ion-icon>
       </ion-button>
@@ -36,7 +36,7 @@
 
   <!-- Grid pesquisa detalhada -->
   <ion-grid [hidden]="!pesquisaDetalhada" class="pesquisa-detalhada-grid">
-    <ion-row>
+    <ion-row class="pesquisa-input-row">
       <!-- Codigo -->
       <ion-col size=12 class="pesquisa-input-col">
         <ion-item lines="none">

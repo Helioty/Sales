@@ -10,8 +10,18 @@
 }
 
 ion-content {
-    
+
     ion-grid.pesquisa-detalhada-grid {
+
+        ion-row.pesquisa-input-row {
+            ion-col {
+                ion-item {
+                    border: 1px solid silver;
+                    border-radius: 6px;
+                    overflow: hidden;
+                }
+            }
+        }
 
         ion-row.pesquisa-button-row {
             ion-col {
