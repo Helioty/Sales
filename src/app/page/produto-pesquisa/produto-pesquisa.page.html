@@ -38,53 +38,59 @@
   <ion-grid [hidden]="!pesquisaDetalhada">
     <ion-row>
       <!-- Codigo -->
-      <ion-col size=12>
+      <ion-col size=12 class="pesquisa-input-col">
         <ion-item>
           <ion-label position="stacked">Codigo</ion-label>
-          <ion-input></ion-input>
+          <ion-input type="tel"></ion-input>
         </ion-item>
       </ion-col>
 
       <!-- Descrição -->
-      <ion-col size=12>
+      <ion-col size=12 class="pesquisa-input-col">
         <ion-item>
           <ion-label position="stacked">Descrição</ion-label>
-          <ion-input></ion-input>
+          <ion-input type="text"></ion-input>
         </ion-item>
       </ion-col>
 
       <!-- Fornecedor -->
-      <ion-col size=12>
+      <ion-col size=12 class="pesquisa-input-col">
         <ion-item>
           <ion-label position="stacked">Stacked Label</ion-label>
-          <ion-input></ion-input>
+          <ion-input type="text"></ion-input>
         </ion-item>
       </ion-col>
 
       <!-- Modelo -->
-      <ion-col size=6>
+      <ion-col size=6 class="pesquisa-input-col">
         <ion-item>
           <ion-label position="stacked">Modelo</ion-label>
-          <ion-input></ion-input>
+          <ion-input type="text"></ion-input>
         </ion-item>
       </ion-col>
 
       <!-- Linha -->
-      <ion-col size=6>
+      <ion-col size=6 class="pesquisa-input-col">
         <ion-item>
           <ion-label position="stacked">Linha</ion-label>
-          <ion-input></ion-input>
+          <ion-input type="text"></ion-input>
         </ion-item>
       </ion-col>
     </ion-row>
 
     <ion-row>
+      <ion-col size="6">
+        <ion-button>LIMPAR</ion-button>
+      </ion-col>
 
+      <ion-col size="6">
+        <ion-button>PESQUISAR</ion-button>
+      </ion-col>
     </ion-row>
   </ion-grid>
 
 </ion-content>
 
 <ion-footer>
-  
+
 </ion-footer>
