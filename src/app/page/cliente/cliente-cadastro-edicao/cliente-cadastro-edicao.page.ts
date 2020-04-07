@@ -94,6 +94,7 @@ export class ClienteCadastroEdicaoPage implements OnInit {
     this.navControl.navigateForward(['/consulta-cep/pesquisa'], navigationExtras);
   }
 
+  // by Helio, usado para retornar os dados de um endereço da tela 'consulta-cep'
   getExiteEnderecoSelecionado() {
     const existeEndereco = this.data['exiteEnderecoSelecionado'];
     if (existeEndereco) {

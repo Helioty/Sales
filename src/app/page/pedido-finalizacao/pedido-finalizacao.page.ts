@@ -74,20 +74,30 @@ export class PedidoFinalizacaoPage implements OnInit {
       this.parcela = this.pedido.pedidoHeader.valorParcela;
       this.entrada = this.pedido.pedidoHeader.valorEntrada;
       this.existeParcela = true;
+    } else {
+      this.qtdParcelas = 0;
+      this.parcela = 0;
+      this.existeParcela = false;
     }
 
     // by Ryuge 11/12/2018
     if (this.pedido.pedidoHeader.descontoBrinde > 0) {
       this.descontoBrinde = this.pedido.pedidoHeader.descontoBrinde;
+    } else {
+      this.descontoBrinde = 0;
     }
 
     // by Ryuge 11/12/2018
     if (this.pedido.pedidoHeader.valorDesconto > 0) {
       this.desconto = this.pedido.pedidoHeader.valorDesconto;
+    } else {
+      this.desconto = 0;
     }
 
     if (this.pedido.pedidoHeader.icmsRetido > 0) {
       this.icmsRetido = this.pedido.pedidoHeader.icmsRetido;
+    } else {
+      this.icmsRetido = 0;
     }
 
     this.getItemPedido();

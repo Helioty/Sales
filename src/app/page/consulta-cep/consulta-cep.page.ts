@@ -181,7 +181,7 @@ export class ConsultaCepPage implements OnInit {
       this.progressBar = true;
       this.getAddressGoogleMap();
     } else {
-      this.retornaEndereco()
+      this.retornaEndereco();
     }
   }
 
