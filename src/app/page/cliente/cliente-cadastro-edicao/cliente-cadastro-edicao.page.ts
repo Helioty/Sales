@@ -1,3 +1,4 @@
+import { DataService } from './../../../services/data/data.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { CommonService } from 'src/app/services/common/common.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -33,6 +34,7 @@ export class ClienteCadastroEdicaoPage implements OnInit {
     private activatedRoute: ActivatedRoute,
     private formBuilder: FormBuilder,
     private navControl: NavController,
+    private data: DataService
   ) {
     this.formCliente = this.formBuilder.group({
       nome: ['', Validators.required],
@@ -69,7 +71,7 @@ export class ClienteCadastroEdicaoPage implements OnInit {
 
   ionViewWillEnter() {
     this.common.goToFullScreen();
-
+    this.getExiteEnderecoSelecionado();
   }
 
   ionViewDidEnter() {
@@ -92,5 +94,12 @@ export class ClienteCadastroEdicaoPage implements OnInit {
     this.navControl.navigateForward(['/consulta-cep/pesquisa'], navigationExtras);
   }
 
+  getExiteEnderecoSelecionado() {
+    const existeEndereco = this.data['exiteEnderecoSelecionado'];
+    if (existeEndereco) {
+      console.log('Exite um endereço selecionado');
+      console.log(this.data['enderecoSelecionado']);
+    }
+  }
 
 }
