@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { CommonService } from 'src/app/services/common/common.service';
-import { IonSearchbar, IonSlides } from '@ionic/angular';
+import { IonSearchbar, IonSlides, MenuController } from '@ionic/angular';
 import { ActivatedRoute } from '@angular/router';
 import { CamposParaNovoEndereco } from 'src/app/class/cliente';
 
@@ -37,6 +37,8 @@ export class ConsultaCepPage implements OnInit {
   public googleAutocomplete = new google.maps.places.AutocompleteService();
   public geocoder = new google.maps.Geocoder();;
 
+  // Controla a barra de pesquisa
+  public hideSearch = false;
   public foco = false; // controla o foco no searchbar
 
   public modoConsulta = true; // controla o modo da pagina se é apenas consulta ou não.
@@ -48,6 +50,7 @@ export class ConsultaCepPage implements OnInit {
     private router: ActivatedRoute,
     public common: CommonService,
     private geolocation: Geolocation,
+    private menu: MenuController,
   ) {
     this.enderecoSelecionado = new CamposParaNovoEndereco;
   }
@@ -57,6 +60,8 @@ export class ConsultaCepPage implements OnInit {
       console.log(params.params.mode);
       if (params.params.mode !== 'consulta') {
         this.modoConsulta = false;
+      } else {
+        this.menu.enable(true);
       }
     });
   }
@@ -81,10 +86,25 @@ export class ConsultaCepPage implements OnInit {
     this.common.goToFullScreen();
   }
 
+  ionViewWillLeave() {
+    this.menu.enable(false);
+    console.clear();
+  }
+
+  ionViewDidLeave() {
+
+  }
+
+  // by Helio
   changeSlide(slide: number) {
     this.slides.lockSwipes(false);
     this.slides.slideTo(slide);
     this.slides.lockSwipes(true);
+    if (slide === 1) {
+      this.hideSearch = true;
+    } else {
+      this.hideSearch = false;
+    }
   }
 
   // edit by Helio 25/03/2020

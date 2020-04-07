@@ -8,7 +8,7 @@
     <ion-title>Consulta CEP</ion-title>
   </ion-toolbar>
 
-  <ion-toolbar color="primary">
+  <ion-toolbar color="primary" [hidden]="hideSearch">
     <ion-searchbar #searchbar placeholder="Pesquise seu endereço aqui!" (ionFocus)="foco = true"
       (ionBlur)="foco = false" (keyup)="updateSearchResults()" showCancelButton="never">
     </ion-searchbar>
