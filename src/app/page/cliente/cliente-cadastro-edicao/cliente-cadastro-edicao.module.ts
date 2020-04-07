@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
-import { ConsultaCepPage } from 'src/app/page/consulta-cep/consulta-cep.page';
+import {  ConsultaCepPageModule } from 'src/app/page/consulta-cep/consulta-cep.module';
 import { ClienteCadastroEdicaoPage } from './cliente-cadastro-edicao.page';
 
 const routes: Routes = [
@@ -19,7 +19,7 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     IonicModule,
-    ConsultaCepPage,
+    ConsultaCepPageModule,
     ReactiveFormsModule,
     RouterModule.forChild(routes)
   ],
