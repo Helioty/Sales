@@ -1,9 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { CommonService } from 'src/app/services/common/common.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { IonContent, IonSlides, ModalController } from '@ionic/angular';
-import { ConsultaCepPage } from 'src/app/page/consulta-cep/consulta-cep.page';
-import { ActivatedRoute } from '@angular/router';
+import { IonContent, IonSlides, NavController } from '@ionic/angular';
+import { ActivatedRoute, NavigationExtras } from '@angular/router';
 
 @Component({
   selector: 'app-cliente-cadastro-edicao',
@@ -33,7 +32,7 @@ export class ClienteCadastroEdicaoPage implements OnInit {
     public common: CommonService,
     private activatedRoute: ActivatedRoute,
     private formBuilder: FormBuilder,
-    private modal: ModalController
+    private navControl: NavController,
   ) {
     this.formCliente = this.formBuilder.group({
       nome: ['', Validators.required],
@@ -82,11 +81,14 @@ export class ClienteCadastroEdicaoPage implements OnInit {
     this.slides.lockSwipes(true);
   }
 
-  async pesquisaCep() {
-    const modal = await this.modal.create({
-      component: ConsultaCepPage
-    });
-    return await modal.present();
+  pesquisaCep() {
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        paginaSeguinte: 'back',
+        paginaAnterior: 'cliente-cadastro-edicao'
+      }
+    };
+    this.navControl.navigateForward(['/consulta-cep/pesquisa'], navigationExtras);
   }
 
 
