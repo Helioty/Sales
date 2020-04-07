@@ -1,7 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { CommonService } from 'src/app/services/common/common.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { IonContent, IonSlides } from '@ionic/angular';
+import { IonContent, IonSlides, ModalController } from '@ionic/angular';
+import { ConsultaCepPage } from 'src/app/page/consulta-cep/consulta-cep.page';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -13,7 +14,6 @@ export class ClienteCadastroEdicaoPage implements OnInit {
 
   @ViewChild(IonContent, { static: true }) content: IonContent;
   @ViewChild(IonSlides, { static: true }) slides: IonSlides;
-  @ViewChild('slidesFooter', { static: true }) slidesFooter: IonSlides;
 
   // Controle do formulario
   public formCliente: FormGroup;
@@ -32,7 +32,8 @@ export class ClienteCadastroEdicaoPage implements OnInit {
   constructor(
     public common: CommonService,
     private activatedRoute: ActivatedRoute,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private modal: ModalController
   ) {
     this.formCliente = this.formBuilder.group({
       nome: ['', Validators.required],
@@ -75,13 +76,18 @@ export class ClienteCadastroEdicaoPage implements OnInit {
     this.common.goToFullScreen();
   }
 
-  async mudaSlide(slide: number) {
+  changeSlide(slide: number) {
     this.slides.lockSwipes(false);
     this.slides.slideTo(slide);
     this.slides.lockSwipes(true);
-    this.slidesFooter.lockSwipes(false);
-    this.slidesFooter.slideTo(slide);
-    this.slidesFooter.lockSwipes(true);
   }
+
+  async pesquisaCep() {
+    const modal = await this.modal.create({
+      component: ConsultaCepPage
+    });
+    return await modal.present();
+  }
+
 
 }
