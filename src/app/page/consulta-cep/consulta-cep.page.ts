@@ -1,9 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { CommonService } from 'src/app/services/common/common.service';
-import { IonSearchbar, IonSlides, MenuController } from '@ionic/angular';
-import { ActivatedRoute } from '@angular/router';
+import { IonSearchbar, IonSlides, MenuController, NavController } from '@ionic/angular';
+import { DataService } from 'src/app/services/data/data.service';
 import { CamposParaNovoEndereco } from 'src/app/class/cliente';
+import { ActivatedRoute } from '@angular/router';
 
 declare var google: any;
 
@@ -35,7 +36,7 @@ export class ConsultaCepPage implements OnInit {
   public markers: any[] = [];
 
   public googleAutocomplete = new google.maps.places.AutocompleteService();
-  public geocoder = new google.maps.Geocoder();;
+  public geocoder = new google.maps.Geocoder();
 
   // Controla a barra de pesquisa
   public hideSearch = false;
@@ -45,12 +46,15 @@ export class ConsultaCepPage implements OnInit {
   public progressBar = false; // controla o a barra de progresso.
 
   public enderecoSelecionado: CamposParaNovoEndereco;
+  public selecionado = false;
 
   constructor(
     private router: ActivatedRoute,
     public common: CommonService,
     private geolocation: Geolocation,
     private menu: MenuController,
+    private navControl: NavController,
+    private data: DataService
   ) {
     this.enderecoSelecionado = new CamposParaNovoEndereco;
   }
@@ -69,13 +73,14 @@ export class ConsultaCepPage implements OnInit {
   ionViewWillEnter() {
     this.common.goToFullScreen();
     this.slides.lockSwipes(true);
+    this.selecionado = false;
     this.map = new google.maps.Map(this.mapElement.nativeElement, {
       center: { lat: -8.1129892, lng: -34.9126349 },
       disableDefaultUI: true,
       zoom: 15
     });
 
-    google.maps.event.addListener(this.map, "click", (event: any) => {
+    google.maps.event.addListener(this.map, 'click', (event: any) => {
       this.progressBar = true;
       this.insereMarker(event.latLng);
       this.progressBar = false;
@@ -119,7 +124,7 @@ export class ConsultaCepPage implements OnInit {
     this.googleAutocomplete.getPlacePredictions(
       {
         input: this.searchbar.value,
-        componentRestrictions: { country: ["br"] }
+        componentRestrictions: { country: ['br'] }
       },
       (predictions: any, status) => {
         this.autoCompleteList = [];
@@ -171,10 +176,23 @@ export class ConsultaCepPage implements OnInit {
   }
 
   confirmaLocal() {
-    this.progressBar = true;
-    this.getAddressGoogleMap();
+    if (!this.selecionado) {
+      this.selecionado = true;
+      this.progressBar = true;
+      this.getAddressGoogleMap();
+    } else {
+      this.retornaEndereco()
+    }
   }
 
+  // by Helio 07/04/2020
+  retornaEndereco() {
+    this.data['exiteEnderecoSelecionado'] = true;
+    this.data['enderecoSelecionado'] = this.enderecoSelecionado;
+    this.navControl.pop();
+  }
+
+  // edit by Helio
   getAddressGoogleMap() {
     this.geocoder.geocode(
       { latLng: this.markers[this.markers.length - 1].getPosition() },
@@ -216,7 +234,6 @@ export class ConsultaCepPage implements OnInit {
       console.log(item);
 
       this.enderecoSelecionado.endereco = item[1].long_name;
-      // this.enderecoSelecionado.bairro = item[2].long_name;
       this.enderecoSelecionado.cidade = item[2].long_name;
       this.enderecoSelecionado.uf = item[3].short_name;
       this.enderecoSelecionado.cep = item[4].long_name;

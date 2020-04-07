@@ -69,7 +69,7 @@ export class ClienteCadastroEdicaoPage implements OnInit {
 
   ionViewWillEnter() {
     this.common.goToFullScreen();
-    
+
   }
 
   ionViewDidEnter() {
