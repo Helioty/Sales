@@ -19,7 +19,7 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     IonicModule,
-    ConsultaCepPageModule,
+    // ConsultaCepPageModule,
     ReactiveFormsModule,
     RouterModule.forChild(routes)
   ],

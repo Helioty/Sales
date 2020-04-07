@@ -21,13 +21,13 @@ import { AppRoutingModule } from './app-routing.module';
 import { ENV, environment } from '../environments/environment';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { ServicesModule } from './services/services.module';
-import { ConsultaCepPageModule } from './page/consulta-cep/consulta-cep.module';
+import { ConsultaCepPage } from './page/consulta-cep/consulta-cep.page';
 console.log(ENV.mode);
 
 
 @NgModule({
-  declarations: [AppComponent, ConsultaCepPageModule],
-  entryComponents: [ConsultaCepPageModule],
+  declarations: [AppComponent, ConsultaCepPage],
+  entryComponents: [ConsultaCepPage],
   imports: [
     BrowserModule,
     HttpClientModule,
