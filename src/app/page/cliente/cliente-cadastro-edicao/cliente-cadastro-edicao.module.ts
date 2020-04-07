@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
-import {  ConsultaCepPageModule } from 'src/app/page/consulta-cep/consulta-cep.module';
+import { ConsultaCepPageModule } from 'src/app/page/consulta-cep/consulta-cep.module';
 import { ClienteCadastroEdicaoPage } from './cliente-cadastro-edicao.page';
 
 const routes: Routes = [
@@ -25,4 +25,4 @@ const routes: Routes = [
   ],
   declarations: [ClienteCadastroEdicaoPage]
 })
-export class ClienteCadastroEdicaoPageModule {}
+export class ClienteCadastroEdicaoPageModule { }
