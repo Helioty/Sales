@@ -57,10 +57,6 @@ export class ClienteCadastroEdicaoPage implements OnInit {
       this.situacao = params.situacao;
       this.cliente = params.cliente;
     });
-  }
-
-  ionViewWillEnter() {
-    this.common.goToFullScreen();
     if (this.situacao === 'edicao') {
       this.activatedRoute.queryParams.subscribe((params: any) => {
         this.clienteDadosOld = JSON.parse(params.dados);
@@ -69,6 +65,11 @@ export class ClienteCadastroEdicaoPage implements OnInit {
     } else {
 
     }
+  }
+
+  ionViewWillEnter() {
+    this.common.goToFullScreen();
+    
   }
 
   ionViewDidEnter() {

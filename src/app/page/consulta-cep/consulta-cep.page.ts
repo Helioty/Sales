@@ -69,6 +69,12 @@ export class ConsultaCepPage implements OnInit {
       disableDefaultUI: true,
       zoom: 15
     });
+
+    google.maps.event.addListener(this.map, "click", (event: any) => {
+      this.progressBar = true;
+      this.insereMarker(event.latLng);
+      this.progressBar = false;
+    });
   }
 
   ionViewDidEnter() {
