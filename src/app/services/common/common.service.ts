@@ -168,6 +168,7 @@ export class CommonService {
   }
 
   public formataFONE(value: string): string {
+    value = value.replace(/\D/g, '');
     if (value.length === 11) {
       value = value.replace(/^(\d{2})(\d{5})(\d{4})/, '($1) $2-$3');
     } else if (value.length < 11 && value.length > 6) {
