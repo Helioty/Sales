@@ -7,4 +7,5 @@ export interface Environment {
   WS_PUBLIC: string;
   WS_COMMONS: string;
   WS_TMS: string;
+  WS_PESQUISA: string;
 }
