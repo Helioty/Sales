@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
 import { HideKeyboardModule } from 'hide-keyboard';
+import { PipesModule } from 'src/app/pipes/pipes.module';
 import { IonicModule } from '@ionic/angular';
 
 import { ProdutoPage } from './produto.page';
@@ -19,6 +20,7 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     IonicModule,
+    PipesModule,
     HideKeyboardModule,
     RouterModule.forChild(routes)
   ],

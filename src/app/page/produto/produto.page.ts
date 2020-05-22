@@ -4,7 +4,9 @@ import { CommonService } from 'src/app/services/common/common.service';
 import { DataService } from 'src/app/services/data/data.service';
 import { PedidoService } from 'src/app/services/pedido/pedido.service';
 import { ProdutoService } from 'src/app/services/produto/produto.service';
-import { NavigationExtras } from '@angular/router';
+import { NavigationExtras, ActivatedRoute } from '@angular/router';
+import { Produto } from 'src/app/class/produto';
+
 
 @Component({
   selector: 'app-produto',
@@ -17,12 +19,15 @@ export class ProdutoPage implements OnInit {
   public valorScanner: string;
   public focusStatus = true;
 
+  // controla os dados do produto
+  public produto = new Produto();
 
   // controla a exibição do botão que leva a tela de mais informações
   public showMoreInfo = false;
   private moreInfo = [];
 
   constructor(
+    private activatedRoute: ActivatedRoute,
     public alertCtrl: AlertController,
     public common: CommonService,
     public pedidoService: PedidoService,
@@ -34,11 +39,15 @@ export class ProdutoPage implements OnInit {
 
   ngOnInit() {
     this.getProdutoInformacao('40464550');
+    this.activatedRoute.queryParams.subscribe((params: any) => {
+      this.produto = JSON.parse(params.produto);
+    });
   }
-
+  
   ionViewWillEnter() {
     this.focusOn();
     this.common.goToFullScreen();
+    this.getImage(this.produto.codigo);
   }
 
   ionViewDidEnter() {
@@ -82,7 +91,7 @@ export class ProdutoPage implements OnInit {
     }, 150);
   }
 
-  async scaneado(evento: any) {
+  scaneado(evento: any) {
     try {
       if (evento.target && evento.target.value.length >= 2) {
         this.focusPause();
@@ -172,6 +181,15 @@ export class ProdutoPage implements OnInit {
     }, (error) => {
       console.log(error);
       this.common.loading.dismiss();
+    });
+  }
+
+  async getImage(codigoDigitoEmb: string) {
+    console.log(codigoDigitoEmb)
+    await this.produtoService.getFirstImage(codigoDigitoEmb).then((result) => {
+      console.log('img')
+      console.log(result)
+      this.produto.imagem = result[0].imageGrande;
     });
   }
 

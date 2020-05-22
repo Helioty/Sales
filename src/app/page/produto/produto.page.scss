@@ -5,7 +5,6 @@
 }
 
 ion-header {
-
     ion-toolbar {
 
         ion-title {
@@ -31,6 +30,84 @@ ion-header {
                     border-radius: 50%;
                     position: absolute;
                     width: 20px;
+                }
+            }
+        }
+    }
+}
+
+ion-content {
+
+    ion-grid {
+        ion-row {
+            ion-col.imgProduto {
+                ion-row {
+                    width: fit-content;
+                    margin: auto;
+
+                    img {
+                        width: 220px;
+                    }
+                }
+            }
+
+            ion-col.descricaoProduto {
+                ion-row.fantasiaEsituacao {
+                    ion-col.fantasia {
+                        ion-label {
+                            color: #999999;
+                            font-size: 15px;
+                            font-weight: 500;
+                        }
+                    }
+                }
+
+                ion-row.descricao {
+                    ion-label {
+                        color: #212121;
+                        font-size: 18px;
+                        font-weight: 500;
+                    }
+                    
+                }
+            }
+
+            ion-col.infoProduto {
+                ion-row {
+                    ion-item {
+                        --min-height: 0;
+                        background: #F4F4F4bd;
+                        border: 2px solid #C4C5C6;
+                        border-radius: 6px;
+                        width: 100%;
+                    }
+                }
+            }
+        }
+    }
+}
+
+ion-footer {
+
+    ion-grid {
+        ion-row {
+
+            ion-col.colunaDePrecos {
+                
+                ion-row.precoPrincipal {
+                    ion-col {
+                        color: #C00D0E;
+                        font-weight: 500;
+                        font-size: 22px;
+                    }
+                }
+
+                ion-row.precoParcelas {
+                    ion-col {
+                        color: #C00D0E;
+                        font-weight: normal;
+                        font-size: 13px;
+                    }
                 }
             }
         }

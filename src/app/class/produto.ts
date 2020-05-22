@@ -1,0 +1,37 @@
+export class Produto {
+    cod_produto: string;
+    codigo: string;
+    descricao: string;
+    linha: string;
+    codigoForn: string;
+    descricaoForn: string;
+    fantas: string;
+    unidade: string;
+    prvd1: number;
+    codbarean13: string;
+    qtd_imagens: number;
+    qtdpages: number;
+    totalElements: number;
+    avariadoStatus: any;
+    qtdMaxParcelas: number;
+    valorParcela: number;
+    formaParcelamento: string;
+    imagem: string;
+    inalante: null;
+    codigoFC: string;
+    codigodigito: string;
+    codigodigitoembalagem: string;
+    estoque: number;
+    situacao: string;
+    precoSemDesconto: number;
+    descricao_prod: string;
+    descricao_situacao: string;
+    desconto: number;
+    qtdDecimal: number;
+    precoPorUnidade: number;
+    link: string;
+    isProdutoBase: string;
+    cgc_fornecedor: string;
+    codigoBase: string;
+    codigoFornecedorBase: string;
+}

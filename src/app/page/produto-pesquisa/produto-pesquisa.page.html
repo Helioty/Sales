@@ -36,13 +36,15 @@
     </ion-buttons>
 
     <ion-title>Pesquisa Detalhada</ion-title>
+
+    <ion-spinner slot="end" style="margin-right: 10px;"></ion-spinner>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <input id="scanner" hideKeyboard class="scanner" [(ngModel)]="valorScanner" (keyup.enter)="scaneado($event)">
 
-  <ion-grid [hidden]="pesquisaDetalhada " *ngIf="pesquisaItems.length == 0" class="noItens">
+  <ion-grid [hidden]="pesquisaDetalhada" *ngIf="pesquisaItems.length == 0" class="noItens">
     <ion-row class="topHeading">
       <ion-col>
         <h3>Escaneie um produto ou pesquise em nosso catálogo</h3>
@@ -58,6 +60,51 @@
     <ion-row class="bottomHeading">
       <ion-col>
         <h3>Sem resultados para exibir...</h3>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-grid [hidden]="pesquisaDetalhada" *ngIf="pesquisaItems.length != 0">
+    <ion-row>
+      <ion-col *ngFor="let item of pesquisaItems; let i of index;">
+        <ion-item lines="none" class="produto" (click)="goToProdutoPage(item)">
+          <ion-thumbnail slot="start">
+            <ion-img src="data:image/jpeg;base64,{{item?.imagem}}"></ion-img>
+          </ion-thumbnail>
+
+          <ion-grid>
+            <ion-row class="produtoRow">
+              <ion-col size="8.5" class="produtoInformacao">
+                <ion-row class="produtoDescri">
+                  {{ item.idProduto }} - {{ item.descricao }}
+                </ion-row>
+
+                <ion-row class="produtoPreco">
+                  {{ item.prcTotal | formatarString: 'VALOR' }}
+                </ion-row>
+
+                <ion-row class="produtoPrecoUnidade" *ngIf="item.qtdTotal > 1">
+                  {{ item.prcUnitario | formatarString: 'VALOR' }} cada
+                </ion-row>
+              </ion-col>
+
+              <ion-col size="3.5" class="produtoManutencao">
+                <ion-row class="produtoManutencaoTop ion-justify-content-center ion-align-items-center">
+                  {{ item.qtdTotal }}
+                </ion-row>
+
+                <ion-row class="produtoManutencaoBottom ion-justify-content-center ion-align-items-center">
+                  <ion-col class="ion-no-padding" size="12">
+                    <ion-button expand="full" fill="clear" color="dark" class="ion-no-margin"
+                      (click)="removerProduto(item)">
+                      <ion-icon slot="icon-only" size="large" name="trash-bin-outline"></ion-icon>
+                    </ion-button>
+                  </ion-col>
+                </ion-row>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-item>
       </ion-col>
     </ion-row>
   </ion-grid>

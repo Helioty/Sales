@@ -17,12 +17,12 @@
         <ion-badge color="success" class="badge-position" *ngIf="pedidoService.clientSelected">✔</ion-badge>
       </ion-button>
 
-      <ion-button *ngIf="pedidoService.qtdItensSacola > 0">
+      <!-- <ion-button *ngIf="pedidoService.qtdItensSacola > 0">
         <ion-icon name="basket"></ion-icon>
         <ion-badge color="fc-cinza-vermelho" class="badge-position">
           {{pedidoService.qtdItensSacola}}
         </ion-badge>
-      </ion-button>
+      </ion-button> -->
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -30,11 +30,79 @@
 <ion-content>
   <input id="scanner" hideKeyboard class="scanner" [(ngModel)]="valorScanner" (keyup.enter)="scaneado($event)">
 
-  <ion-button (click)="openProdutoDetalhe()" *ngIf="showMoreInfo">teste tela detalhes</ion-button>
+  <!-- <ion-button (click)="openProdutoDetalhe()" *ngIf="showMoreInfo">teste tela detalhes</ion-button> -->
 
-  <ion-button (click)="openProdutoImagens('4046455')">teste tela imagens</ion-button>
+  <!-- <ion-button (click)="openProdutoImagens('4046455')">teste tela imagens</ion-button> -->
+
+  <ion-grid>
+    <ion-row>
+      <ion-col size="12" class="imgProduto ion-no-padding">
+        <ion-row>
+          <img src="data:image/jpeg;base64,{{produto.imagem}}" (click)="openProdutoImagens(produto.codigo)">
+        </ion-row>
+      </ion-col>
+
+      <ion-col size="12" class="descricaoProduto">
+        <ion-row class="fantasiaEsituacao">
+          <ion-col size="6" class="fantasia ion-no-padding">
+            <ion-label>
+              {{ produto.fantas }}
+            </ion-label>
+          </ion-col>
+        </ion-row>
+
+        <ion-row class="descricao">
+          <ion-label>
+            {{ produto.descricao }}
+          </ion-label>
+        </ion-row>
+
+        <ion-row>
+          <ion-label>
+            {{ produto.codigodigitoembalagem }}
+          </ion-label>
+        </ion-row>
+      </ion-col>
+
+      <ion-col size="12" *ngIf="showMoreInfo" class="infoProduto">
+        <ion-row>
+          <ion-item detail button lines="none" (click)="openProdutoDetalhe()" color="cinza">
+            <ion-label>
+              Informações do produto
+            </ion-label>
+          </ion-item>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>
 
 <ion-footer>
-  
+  <ion-grid>
+    <ion-row>
+      <ion-col size="7" class="colunaDePrecos ion-no-padding">
+        <ion-row>
+
+        </ion-row>
+
+        <ion-row class="precoPrincipal">
+          <ion-col size="12" class="ion-no-padding">
+            {{ produto.prvd1 | formatarString: 'VALOR' }}
+          </ion-col>
+        </ion-row>
+
+        <ion-row class="precoParcelas">
+          <ion-col size="12" class="ion-no-padding">
+            {{ produto.qtdMaxParcelas }} x de {{ produto.valorParcela | formatarString: 'VALOR' }}
+          </ion-col>
+        </ion-row>
+      </ion-col>
+
+      <ion-col size="5" class="ion-no-padding">
+        <ion-button color="fc-button-green" expand="full">
+          COMPRAR
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-footer>

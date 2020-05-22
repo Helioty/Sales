@@ -54,7 +54,8 @@ const routes: Routes = [
   },
   {
     path: 'produto',
-    loadChildren: './page/produto/produto.module#ProdutoPageModule'
+    loadChildren: './page/produto/produto.module#ProdutoPageModule',
+    canActivate: [AuthGuard]
   },
   {
     path: 'produto-imagens',

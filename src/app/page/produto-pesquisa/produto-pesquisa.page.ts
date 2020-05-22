@@ -1,10 +1,10 @@
-
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Platform, AlertController, NavController, IonInput } from '@ionic/angular';
 import { CommonService } from 'src/app/services/common/common.service';
 import { PedidoService } from 'src/app/services/pedido/pedido.service';
 import { NavigationExtras } from '@angular/router';
 import { ProdutoPesquisaService } from 'src/app/services/produto-pesquisa/produto-pesquisa.service';
+import { Produto } from 'src/app/class/produto';
 
 @Component({
   selector: 'app-produto-pesquisa',
@@ -34,7 +34,7 @@ export class ProdutoPesquisaPage implements OnInit {
   public p2: number = 20;
 
 
-  public pesquisaItems: any[] = [];
+  public pesquisaItems: Produto[] = [];
 
   constructor(
     public alertCtrl: AlertController,
@@ -195,19 +195,40 @@ export class ProdutoPesquisaPage implements OnInit {
     }
   }
 
-  async pesquisar(){
+  async pesquisar() {
     let value = this.input1.value.toString();
     let codigo;
-    if(value == "" || value == undefined){
+    if (value == "" || value == undefined) {
       codigo = null;
     } else {
       codigo = parseInt(value);
     }
-    await this.pesquisa.getPesquisaDetalhada({ codEmpresa: localStorage.getItem("empresa"), codigo, descricao: this.input2.value.toString(), fornecedor: this.input3.value.toString(), modelo: this.input4.value.toString(), linha: this.input5.value.toString(), p1: parseInt(this.p1.toString()), p2: parseInt(this.p2.toString()), soComEstoque: this.soComEstoque }).then( result => {
+    await this.pesquisa.getPesquisaDetalhada({
+      codEmpresa: localStorage.getItem("empresa"),
+      codigo, descricao: this.input2.value.toString(),
+      fornecedor: this.input3.value.toString(),
+      modelo: this.input4.value.toString(),
+      linha: this.input5.value.toString(),
+      p1: parseInt(this.p1.toString()),
+      p2: parseInt(this.p2.toString()),
+      soComEstoque: this.soComEstoque
+    }).then((result: any) => {
       console.log(result);
-    }).catch(err=>{
+      this.pesquisaItems = result.content;
+    }).catch(err => {
       console.log(err);
     })
+  }
+
+  goToProdutoPage(produto: Produto) {
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        paginaSeguinte: 'pedido-sacola',
+        paginaAnterior: 'produto-pesquisa',
+        produto: JSON.stringify(produto)
+      }
+    };
+    this.navControl.navigateForward(['/produto'], navigationExtras);
   }
 
 }
