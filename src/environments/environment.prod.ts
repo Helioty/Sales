@@ -12,5 +12,6 @@ export const ENV: Environment = {
   WS_VENDAS: 'https://vendas.',
   WS_PUBLIC: 'https://publico.',
   WS_COMMONS: 'https://comum.',
-  WS_TMS: 'https://tms.'
+  WS_TMS: 'https://tms.',
+  WS_PESQUISA: 'https://pesquisaproduto.'
 };

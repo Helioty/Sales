@@ -1,8 +1,10 @@
+
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Platform, AlertController, NavController, IonInput } from '@ionic/angular';
 import { CommonService } from 'src/app/services/common/common.service';
 import { PedidoService } from 'src/app/services/pedido/pedido.service';
 import { NavigationExtras } from '@angular/router';
+import { ProdutoPesquisaService } from 'src/app/services/produto-pesquisa/produto-pesquisa.service';
 
 @Component({
   selector: 'app-produto-pesquisa',
@@ -26,6 +28,11 @@ export class ProdutoPesquisaPage implements OnInit {
   public foco = false;
   public inputFoco = 0;
 
+  // propriedades da pesquisa
+  public soComEstoque: boolean = true;
+  public p1: number = 1;
+  public p2: number = 20;
+
 
   public pesquisaItems: any[] = [];
 
@@ -33,6 +40,7 @@ export class ProdutoPesquisaPage implements OnInit {
     public alertCtrl: AlertController,
     public common: CommonService,
     public pedido: PedidoService,
+    public pesquisa: ProdutoPesquisaService,
     private navControl: NavController,
     private platform: Platform,
   ) { }
@@ -185,6 +193,21 @@ export class ProdutoPesquisaPage implements OnInit {
         console.log('case-default');
         break;
     }
+  }
+
+  async pesquisar(){
+    let value = this.input1.value.toString();
+    let codigo;
+    if(value == "" || value == undefined){
+      codigo = null;
+    } else {
+      codigo = parseInt(value);
+    }
+    await this.pesquisa.getPesquisaDetalhada({ codEmpresa: localStorage.getItem("empresa"), codigo, descricao: this.input2.value.toString(), fornecedor: this.input3.value.toString(), modelo: this.input4.value.toString(), linha: this.input5.value.toString(), p1: parseInt(this.p1.toString()), p2: parseInt(this.p2.toString()), soComEstoque: this.soComEstoque }).then( result => {
+      console.log(result);
+    }).catch(err=>{
+      console.log(err);
+    })
   }
 
 }
