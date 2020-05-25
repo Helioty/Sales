@@ -37,7 +37,7 @@
 
     <ion-title>Pesquisa Detalhada</ion-title>
 
-    <ion-spinner slot="end" style="margin-right: 10px;"></ion-spinner>
+    <ion-spinner slot="end" color="cinza" style="margin-right: 10px;" *ngIf="pesquisando"></ion-spinner>
   </ion-toolbar>
 </ion-header>
 
@@ -74,7 +74,7 @@
 
           <ion-grid>
             <ion-row class="produtoRow">
-              <ion-col size="8.5" class="produtoInformacao">
+              <ion-col size="12" class="produtoInformacao">
                 <ion-row class="produtoDescri">
                   {{ item.idProduto }} - {{ item.descricao }}
                 </ion-row>
@@ -88,7 +88,7 @@
                 </ion-row>
               </ion-col>
 
-              <ion-col size="3.5" class="produtoManutencao">
+              <!-- <ion-col size="3.5" class="produtoManutencao">
                 <ion-row class="produtoManutencaoTop ion-justify-content-center ion-align-items-center">
                   {{ item.qtdTotal }}
                 </ion-row>
@@ -101,7 +101,7 @@
                     </ion-button>
                   </ion-col>
                 </ion-row>
-              </ion-col>
+              </ion-col> -->
             </ion-row>
           </ion-grid>
         </ion-item>

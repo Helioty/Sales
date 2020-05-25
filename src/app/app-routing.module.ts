@@ -69,7 +69,10 @@ const routes: Routes = [
     ).then(m => m.ProdutoDetalhesPageModule),
     canActivate: [AuthGuard]
   },
-
+  {
+    path: 'produto-adicionar-sacola',
+    loadChildren: './page/produto-adicionar-sacola/produto-adicionar-sacola.module#ProdutoAdicionarSacolaPageModule'
+  },
 
   {
     path: 'new-tms',
@@ -135,7 +138,8 @@ const routes: Routes = [
     path: 'parcelamento',
     loadChildren: './page/formas-pagamento/parcelamento/parcelamento.module#ParcelamentoPageModule',
     canActivate: [AuthGuard]
-  }
+  },
+
 
 
 

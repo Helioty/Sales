@@ -7,7 +7,6 @@ import { ProdutoService } from 'src/app/services/produto/produto.service';
 import { NavigationExtras, ActivatedRoute } from '@angular/router';
 import { Produto } from 'src/app/class/produto';
 
-
 @Component({
   selector: 'app-produto',
   templateUrl: './produto.page.html',
@@ -21,10 +20,11 @@ export class ProdutoPage implements OnInit {
 
   // controla os dados do produto
   public produto = new Produto();
+  public produtoFamilia: any[] = [];
 
   // controla a exibição do botão que leva a tela de mais informações
-  public showMoreInfo = false;
-  private moreInfo = [];
+  public showMaisInfo = false;
+  private maisInfo = [];
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -38,16 +38,17 @@ export class ProdutoPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.getProdutoInformacao('40464550');
     this.activatedRoute.queryParams.subscribe((params: any) => {
       this.produto = JSON.parse(params.produto);
     });
   }
-  
+
   ionViewWillEnter() {
     this.focusOn();
     this.common.goToFullScreen();
     this.getImage(this.produto.codigo);
+    this.getFamilia(this.produto.codigodigitoembalagem);
+    this.getProdutoInformacao(this.produto.codigodigitoembalagem);
   }
 
   ionViewDidEnter() {
@@ -145,24 +146,34 @@ export class ProdutoPage implements OnInit {
 
   // pega as informações do produto
   async getProdutoInformacao(codigo: string) {
-    this.produtoService.getProductInfomation(codigo).then((result: any) => {
+    await this.produtoService.getProductInfomation(codigo).then((result: any) => {
       console.log(result);
-      this.showMoreInfo = (result.items.length > 0);
-      this.moreInfo = result.items;
+      this.showMaisInfo = (result.items.length > 0);
+      this.maisInfo = result.items;
     }, (error) => {
       console.log(error);
     });
   }
 
-  openProdutoDetalhe() {
+  // pega as informações do produto
+  async getFamilia(codigo: string) {
+    await this.produtoService.getFamilia(codigo).then((result: any) => {
+      console.log('familia');
+      console.log(result);
+      this.produtoFamilia = result;
+    }, (error) => {
+      console.log(error);
+    });
+  }
+
+  openProdutoDetalhe(produto: Produto) {
     const navigationExtras: NavigationExtras = {
       queryParams: {
-        produto: 'produtoObject',
+        produto: JSON.stringify(produto),
         info: 'produtoInformacao'
       }
     };
-    this.dataService.setData('produto', '40464550');
-    this.dataService.setData('produtoInformacao', this.moreInfo);
+    this.dataService.setData('produtoInformacao', this.maisInfo);
     this.navControl.navigateForward(['/produto-detalhes'], navigationExtras);
   }
 
@@ -179,19 +190,27 @@ export class ProdutoPage implements OnInit {
       this.navControl.navigateForward(['/produto-imagens'], navigationExtras);
       this.common.loading.dismiss();
     }, (error) => {
-      console.log(error);
       this.common.loading.dismiss();
+      console.log(error);
     });
   }
 
   async getImage(codigoDigitoEmb: string) {
     console.log(codigoDigitoEmb)
-    await this.produtoService.getFirstImage(codigoDigitoEmb).then((result) => {
-      console.log('img')
-      console.log(result)
+    await this.produtoService.getFirstImage(codigoDigitoEmb).then((result: any) => {
       this.produto.imagem = result[0].imageGrande;
     });
   }
 
+  goToAddSacola(produto: Produto) {
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        paginaSeguinte: 'pedido-sacola',
+        paginaAnterior: 'produto',
+        produto: JSON.stringify(produto)
+      }
+    };
+    this.navControl.navigateForward(['/produto-adicionar-sacola'], navigationExtras);
+  }
 
 }

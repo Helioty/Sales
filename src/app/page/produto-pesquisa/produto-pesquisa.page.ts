@@ -25,6 +25,7 @@ export class ProdutoPesquisaPage implements OnInit {
 
   // controle de exibição
   public pesquisaDetalhada = false;
+  public pesquisando = false;
   public foco = false;
   public inputFoco = 0;
 
@@ -197,12 +198,13 @@ export class ProdutoPesquisaPage implements OnInit {
 
   async pesquisar() {
     let value = this.input1.value.toString();
-    let codigo;
-    if (value == "" || value == undefined) {
+    let codigo: number;
+    if (value === '' || value === undefined) {
       codigo = null;
     } else {
       codigo = parseInt(value);
     }
+    this.pesquisando = true;
     await this.pesquisa.getPesquisaDetalhada({
       codEmpresa: localStorage.getItem("empresa"),
       codigo, descricao: this.input2.value.toString(),
@@ -215,9 +217,12 @@ export class ProdutoPesquisaPage implements OnInit {
     }).then((result: any) => {
       console.log(result);
       this.pesquisaItems = result.content;
+      this.pesquisaDetalhada = false;
+      this.pesquisando = false;
     }).catch(err => {
+      this.pesquisando = false;
       console.log(err);
-    })
+    });
   }
 
   goToProdutoPage(produto: Produto) {

@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { CommonService } from 'src/app/services/common/common.service';
 import { ProdutoService } from 'src/app/services/produto/produto.service';
 import { DataService } from 'src/app/services/data/data.service';
+import { Produto } from 'src/app/class/produto';
 
 @Component({
   selector: 'app-produto-detalhes',
@@ -11,7 +12,7 @@ import { DataService } from 'src/app/services/data/data.service';
 })
 export class ProdutoDetalhesPage implements OnInit {
 
-  public produto: any;
+  public produto = new Produto();
   public info = [];
 
   constructor(
@@ -28,7 +29,7 @@ export class ProdutoDetalhesPage implements OnInit {
   ionViewWillEnter() {
     this.common.goToFullScreen();
     this.activatedRoute.queryParams.subscribe((params: any) => {
-      this.produto = this.dataService.getData(params.produto);
+      this.produto = JSON.parse(params.produto);
       this.info = this.dataService.getData(params.info);
     });
   }

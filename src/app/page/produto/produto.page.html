@@ -30,7 +30,7 @@
 <ion-content>
   <input id="scanner" hideKeyboard class="scanner" [(ngModel)]="valorScanner" (keyup.enter)="scaneado($event)">
 
-  <!-- <ion-button (click)="openProdutoDetalhe()" *ngIf="showMoreInfo">teste tela detalhes</ion-button> -->
+  <!-- <ion-button (click)="openProdutoDetalhe()" *ngIf="showMaisInfo">teste tela detalhes</ion-button> -->
 
   <!-- <ion-button (click)="openProdutoImagens('4046455')">teste tela imagens</ion-button> -->
 
@@ -64,7 +64,7 @@
         </ion-row>
       </ion-col>
 
-      <ion-col size="12" *ngIf="showMoreInfo" class="infoProduto">
+      <ion-col size="12" *ngIf="showMaisInfo" class="infoProduto">
         <ion-row>
           <ion-item detail button lines="none" (click)="openProdutoDetalhe()" color="cinza">
             <ion-label>
@@ -98,7 +98,7 @@
         </ion-row>
       </ion-col>
 
-      <ion-col size="5" class="ion-no-padding">
+      <ion-col size="5" class="colunaBtn ion-no-padding">
         <ion-button color="fc-button-green" expand="full">
           COMPRAR
         </ion-button>
