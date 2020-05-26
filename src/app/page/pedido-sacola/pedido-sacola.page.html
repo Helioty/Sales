@@ -144,7 +144,64 @@
 
 <ion-footer>
   <ion-toolbar>
+    <ion-grid class="footerGrid">
+      <ion-row class="addButton">
+        <ion-col size="2"></ion-col>
 
+        <ion-col size="8">
+          <ion-button>
+            <ion-icon color="addBtn" name="add-circle" (click)="addProduto()"></ion-icon>
+          </ion-button>
+        </ion-col>
+
+        <ion-col size="2">
+          <ion-button>
+            <ion-icon *ngIf="!showInfo" color="addBtn" name="arrow-round-up" (click)="showInfos()"></ion-icon>
+            <ion-icon *ngIf="showInfo" color="addBtn" name="arrow-round-down" (click)="showInfos()"></ion-icon>
+          </ion-button>
+        </ion-col>
+      </ion-row>
+
+      <ion-row *ngIf="showInfo" class="infos">
+        <ion-col size="12" class="esquerda">
+          <!-- <ion-row class="orderId">
+            <ion-col>Pedido ({{totalPages | formatarString: 'FORMAT':'2' }}):</ion-col>
+          </ion-row>
+          <ion-row class="pesoTotal">
+            <ion-col>Peso total:</ion-col>
+          </ion-row>
+          <ion-row *ngIf="existeFrete" class="freight">
+            <ion-col>Frete
+              <br>
+            </ion-col>
+          </ion-row>
+          <ion-row *ngIf="existeDescontoBrinde" class="pesoTotal">
+            <ion-col>Brinde:</ion-col>
+          </ion-row>
+          <ion-row class="total">
+            <ion-col>Total :</ion-col>
+          </ion-row> -->
+        </ion-col>
+
+        <ion-col size="12" class="direita">
+          <!-- <ion-row class="orderId">
+            <ion-col>{{valorTotalItem | formatarString: 'VALOR'}}</ion-col>
+          </ion-row>
+          <ion-row class="pesoTotal">
+            <ion-col>{{pesoTotal}} kg</ion-col>
+          </ion-row>
+          <ion-row *ngIf="existeFrete" class="freight">
+            <ion-col>{{valorFrete | formatarString: 'VALOR' }} </ion-col>
+          </ion-row>
+          <ion-row *ngIf="existeDescontoBrinde" class="pesoTotal">
+            <ion-col>{{descontoBrinde | formatarString: 'VALOR'}}</ion-col>
+          </ion-row>
+          <ion-row class="total">
+            <ion-col>{{totalPedido | formatarString: 'VALOR'}}</ion-col>
+          </ion-row> -->
+        </ion-col>
+      </ion-row>
+    </ion-grid>
   </ion-toolbar>
 
   <ion-item button lines="none" color="fc-button-green" (click)="finalizarPedido();">

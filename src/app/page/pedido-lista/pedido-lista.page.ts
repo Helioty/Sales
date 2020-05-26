@@ -45,7 +45,7 @@ export class PedidoListaPage implements OnInit {
 
   ionViewWillLeave() {
     this.menu.enable(false);
-    //console.clear();
+    // console.clear();
   }
 
   ionViewDidLeave() {

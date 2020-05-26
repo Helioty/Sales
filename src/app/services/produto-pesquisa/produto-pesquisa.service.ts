@@ -13,7 +13,7 @@ export class ProdutoPesquisaService {
   ) { }
 
   public getPesquisaDetalhada({ codEmpresa, codigo, descricao, fornecedor, modelo, linha, p1, p2, soComEstoque }: { codEmpresa: string; codigo: number; descricao: string; fornecedor: string; modelo: string; linha: string; p1: number; p2: number; soComEstoque: boolean; }) {
-    const link = ENV.WS_PESQUISA + API_URL + "api/pesquisa/getPesquisaDetalhada/" + codEmpresa + "&" + codigo + "&" + descricao + "&" + fornecedor + "&" + modelo + "&" + linha + "&" + p1 + "&" + p2 + "&" + soComEstoque;
+    const link = ENV.WS_PESQUISA + API_URL + 'api/pesquisa/getPesquisaDetalhada/' + codEmpresa + '&' + codigo + '&' + descricao + '&' + fornecedor + '&' + modelo + '&' + linha + '&' + p1 + '&' + p2 + '&' + soComEstoque;
     console.log(link);
 
     return new Promise((resolve, reject) => {

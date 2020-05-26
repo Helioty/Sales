@@ -197,7 +197,7 @@ export class ProdutoPesquisaPage implements OnInit {
   }
 
   async pesquisar() {
-    let value = this.input1.value.toString();
+    const value = this.input1.value.toString();
     let codigo: number;
     if (value === '' || value === undefined) {
       codigo = null;
@@ -206,7 +206,7 @@ export class ProdutoPesquisaPage implements OnInit {
     }
     this.pesquisando = true;
     await this.pesquisa.getPesquisaDetalhada({
-      codEmpresa: localStorage.getItem("empresa"),
+      codEmpresa: localStorage.getItem('empresa'),
       codigo, descricao: this.input2.value.toString(),
       fornecedor: this.input3.value.toString(),
       modelo: this.input4.value.toString(),

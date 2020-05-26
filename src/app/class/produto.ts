@@ -37,10 +37,10 @@ export class Produto {
 }
 
 export class ProdutoFamilia {
-    id: number
-    items: any[]
-    nome: string
-    qtdItems: string
-    sqltypeName: string
-    valor: string
+    id: number;
+    items: any[];
+    nome: string;
+    qtdItems: string;
+    sqltypeName: string;
+    valor: string;
 }
