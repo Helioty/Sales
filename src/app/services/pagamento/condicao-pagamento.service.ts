@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BaseService } from '../base-service.service';
+import { BaseService } from '../HTTP/base-service.service';
 import { CommonService } from '../common/common.service';
 import { PedidoService } from 'src/app/services/pedido/pedido.service';
 import { API_URL } from 'src/app/config/app.config.service';

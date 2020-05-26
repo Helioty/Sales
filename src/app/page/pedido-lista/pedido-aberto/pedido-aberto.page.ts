@@ -6,7 +6,7 @@ import { ENV } from 'src/environments/environment';
 import { API_URL } from 'src/app/config/app.config.service';
 
 import { CommonService } from 'src/app/services/common/common.service';
-import { BaseService } from 'src/app/services/base-service.service';
+import { BaseService } from 'src/app/services/HTTP/base-service.service';
 
 import { PedidoListaPage } from '../pedido-lista.page';
 import { PedidoManutencaoService } from 'src/app/services/pedido/pedido-manutencao.service';

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { AlertController, NavController } from '@ionic/angular';
-import { BaseService } from '../base-service.service';
+import { NavController } from '@ionic/angular';
+import { BaseService } from '../HTTP/base-service.service';
 import { CommonService } from '../common/common.service';
 import { PedidoService } from './pedido.service';
 import { ClienteService } from '../cliente/cliente.service';
@@ -13,7 +13,6 @@ export class PedidoManutencaoService {
   // private requestCliente = 0;
 
   constructor(
-    private alertCtrl: AlertController,
     private baseService: BaseService,
     private common: CommonService,
     private pedidoService: PedidoService,

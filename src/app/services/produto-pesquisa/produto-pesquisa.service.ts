@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BaseService } from './../base-service.service';
+import { BaseService } from '../HTTP/base-service.service';
 import { API_URL } from './../../config/app.config.service';
 import { ENV } from 'src/environments/environment';
 

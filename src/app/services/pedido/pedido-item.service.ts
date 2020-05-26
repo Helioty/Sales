@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AlertController, NavController } from '@ionic/angular';
-import { BaseService } from '../base-service.service';
+import { BaseService } from '../HTTP/base-service.service';
 import { CommonService } from '../common/common.service';
 import { PedidoService } from 'src/app/services/pedido/pedido.service';
 import { PedidoTable, PedidoItens } from 'src/app/class/pedido';

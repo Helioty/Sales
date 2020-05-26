@@ -1,12 +1,10 @@
 import { Component, OnInit, ViewChild, Renderer } from '@angular/core';
 import { IonInput, NavController, AlertController } from '@ionic/angular';
 import { CommonService } from 'src/app/services/common/common.service';
-import { BaseService } from 'src/app/services/base-service.service';
+import { BaseService } from 'src/app/services/HTTP/base-service.service';
 import { ClienteService } from 'src/app/services/cliente/cliente.service';
 import { PedidoService } from 'src/app/services/pedido/pedido.service';
 import { ActivatedRoute, NavigationExtras } from '@angular/router';
-import { API_URL } from 'src/app/config/app.config.service';
-import { ENV } from 'src/environments/environment';
 
 @Component({
   selector: 'app-cliente',

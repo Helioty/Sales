@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { AuthService } from './auth/auth.service';
-import { BaseService } from './base-service.service';
+import { BaseService } from './HTTP/base-service.service';
 import { ClienteService } from './cliente/cliente.service';
 import { CommonService } from './common/common.service';
 import { DataService } from './data/data.service';
@@ -12,6 +12,7 @@ import { PedidoService } from './pedido/pedido.service';
 import { PedidoItemService } from './pedido/pedido-item.service';
 import { PedidoManutencaoService } from './pedido/pedido-manutencao.service';
 import { ProdutoService } from './produto/produto.service';
+import { ProdutoPesquisaService } from './produto-pesquisa/produto-pesquisa.service';
 
 
 @NgModule({
@@ -30,7 +31,8 @@ import { ProdutoService } from './produto/produto.service';
     PedidoService,
     PedidoItemService,
     PedidoManutencaoService,
-    ProdutoService
+    ProdutoService,
+    ProdutoPesquisaService
   ]
 })
 export class ServicesModule { }

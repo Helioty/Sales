@@ -40,7 +40,7 @@ export class ProdutoPesquisaPage implements OnInit {
   constructor(
     public alertCtrl: AlertController,
     public common: CommonService,
-    public pedido: PedidoService,
+    public pedidoS: PedidoService,
     public pesquisa: ProdutoPesquisaService,
     private navControl: NavController,
     private platform: Platform,
@@ -103,7 +103,7 @@ export class ProdutoPesquisaPage implements OnInit {
         const codigo: string = evento.target.value;
 
         if (codigo.substring(0, 1) === 'P') {
-          this.pedido.setCardPedido(codigo);
+          this.pedidoS.setCardPedido(codigo);
           this.focusPlay();
         } else {
           this.focusPlay();
@@ -128,7 +128,7 @@ export class ProdutoPesquisaPage implements OnInit {
       buttons: ['CANCELAR', {
         text: 'ADICIONAR',
         handler: (data: any) => {
-          this.pedido.setCardPedido(data.codigo);
+          this.pedidoS.setCardPedido(data.codigo);
         }
       }]
     });

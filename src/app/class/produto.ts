@@ -35,3 +35,12 @@ export class Produto {
     codigoBase: string;
     codigoFornecedorBase: string;
 }
+
+export class ProdutoFamilia {
+    id: number
+    items: any[]
+    nome: string
+    qtdItems: string
+    sqltypeName: string
+    valor: string
+}

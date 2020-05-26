@@ -11,18 +11,18 @@
 
       <ion-button (click)="adicionarCartaoPedido()">
         <ion-icon name="card"></ion-icon>
-        <ion-badge color="success" class="badge-position" *ngIf="pedido.cardSelected">✔</ion-badge>
+        <ion-badge color="success" class="badge-position" *ngIf="pedidoS.cardSelected">✔</ion-badge>
       </ion-button>
 
       <ion-button (click)="openClientePage()">
         <ion-icon name="person"></ion-icon>
-        <ion-badge color="success" class="badge-position" *ngIf="pedido.clientSelected">✔</ion-badge>
+        <ion-badge color="success" class="badge-position" *ngIf="pedidoS.clientSelected">✔</ion-badge>
       </ion-button>
 
-      <ion-button *ngIf="pedido.qtdItensSacola > 0">
+      <ion-button *ngIf="pedidoS.qtdItensSacola > 0" [routerLink]="['/pedido-sacola']" routerDirection="forward">
         <ion-icon name="basket"></ion-icon>
         <ion-badge color="fc-cinza-vermelho" class="badge-position">
-          {{ pedido.qtdItensSacola }}
+          {{ pedidoS.qtdItensSacola }}
         </ion-badge>
       </ion-button>
     </ion-buttons>

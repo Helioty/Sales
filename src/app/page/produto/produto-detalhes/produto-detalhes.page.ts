@@ -29,6 +29,7 @@ export class ProdutoDetalhesPage implements OnInit {
   ionViewWillEnter() {
     this.common.goToFullScreen();
     this.activatedRoute.queryParams.subscribe((params: any) => {
+      console.log(params)
       this.produto = JSON.parse(params.produto);
       this.info = this.dataService.getData(params.info);
     });

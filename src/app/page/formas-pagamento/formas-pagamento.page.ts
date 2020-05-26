@@ -16,7 +16,7 @@ export class FormasPagamentoPage implements OnInit {
 
   constructor(
     public common: CommonService,
-    private pedido: PedidoService,
+    public pedidoS: PedidoService,
     private pagamento: CondicaoPagamentoService,
     private navControl: NavController
   ) { }
@@ -27,7 +27,7 @@ export class FormasPagamentoPage implements OnInit {
 
   ionViewWillEnter() {
     this.common.goToFullScreen();
-    this.pagamento.getFormaPagamento(this.pedido.numPedido).then((result: any) => {
+    this.pagamento.getFormaPagamento(this.pedidoS.numPedido).then((result: any) => {
       this.opcoesPagamento = result;
       console.log(result);
     });

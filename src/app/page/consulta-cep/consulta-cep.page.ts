@@ -64,8 +64,12 @@ export class ConsultaCepPage implements OnInit {
       console.log(params.params.mode);
       if (params.params.mode !== 'consulta') {
         this.modoConsulta = false;
+        this.menu.enable(false);
       } else {
-        this.menu.enable(true);
+        this.modoConsulta = true;
+        setTimeout(() => {
+          this.menu.enable(true);
+        }, 100);
       }
     });
   }

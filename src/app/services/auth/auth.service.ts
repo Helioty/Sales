@@ -3,7 +3,7 @@ import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { AuthGuard } from '../../guards/auth/auth.guard';
 import { API_URL } from 'src/app/config/app.config.service';
 import { ENV } from 'src/environments/environment';
-import { BaseService } from '../base-service.service';
+import { BaseService } from '../HTTP/base-service.service';
 
 @Injectable({
   providedIn: 'root'

@@ -17,6 +17,7 @@ ion-header {
             ion-button {
                 min-width: 48px !important;
                 min-height: 48px !important;
+                --border-radius: 50% !important;
                 --overflow: visible !important;
                 margin: 2px 4px;
 
@@ -91,8 +92,10 @@ ion-footer {
     min-height: 80px;
 
     ion-grid {
-        ion-row {
+        height: 100% !important;
+        background: #F5F5F5;
 
+        ion-row {
             ion-col.colunaDePrecos {
                 
                 ion-row.precoPrincipal {
