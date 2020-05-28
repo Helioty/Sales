@@ -56,9 +56,9 @@ export class AppComponent {
 
   initializeApp() {
     this.platform.ready().then(() => {
-      // this.statusBar.styleDefault();
       this.splashScreen.hide();
       this.statusBar.backgroundColorByHexString('#C40318');
+      this.statusBar.hide();
       this.menu.enable(false);
     });
   }

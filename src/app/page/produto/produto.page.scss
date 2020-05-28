@@ -47,7 +47,7 @@ ion-content {
                     margin: auto;
 
                     img {
-                        width: 170px;
+                        width: 150px;
                     }
                 }
             }
@@ -69,7 +69,14 @@ ion-content {
                         font-size: 18px;
                         font-weight: 500;
                     }
-                    
+                }
+
+                ion-row.codigodigitoembalagem {
+                    ion-label {
+                        color: #999999;
+                        font-size: 13px;
+                        font-weight: 500;
+                    }
                 }
             }
 

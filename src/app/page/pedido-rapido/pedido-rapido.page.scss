@@ -122,4 +122,32 @@ ion-content {
 
 ion-footer {
     background-color: #F4F4F4;
+
+    ion-grid {
+        ion-row {
+
+            ion-col.colunaPreco {
+                ion-row.titulo {
+                    font-size: 14px;
+                    font-weight: bold;
+                    color: #7e7e7e;
+                }
+                
+                ion-row.valor {
+                    font-size: 18px;
+                    font-weight: bold;
+                    color: #4d4d4d;
+                }
+            }
+            
+            ion-col.colunaBtn {
+                ion-button {
+                    margin: 3px 0;
+                    height: 42px;
+                    font-size: 17px;
+                    font-weight: bold;
+                }
+            }
+        }
+    }
 }

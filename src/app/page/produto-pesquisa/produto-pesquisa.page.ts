@@ -31,8 +31,8 @@ export class ProdutoPesquisaPage implements OnInit {
 
   // propriedades da pesquisa
   public soComEstoque: boolean = true;
-  public p1: number = 1;
-  public p2: number = 20;
+  public p1 = 1;
+  public p2 = 20;
 
 
   public pesquisaItems: Produto[] = [];

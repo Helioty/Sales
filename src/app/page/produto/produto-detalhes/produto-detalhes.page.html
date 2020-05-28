@@ -11,8 +11,24 @@
 <ion-content>
   <ion-grid>
     <ion-row>
-      <ion-col size="12">
+      <ion-col size="12" class="descricaoProduto">
+        <ion-row class="fantasiaEsituacao">
+          <ion-label>
+            {{ produto.fantas }}
+          </ion-label>
+        </ion-row>
 
+        <ion-row class="descricao">
+          <ion-label>
+            {{ produto.descricao }}
+          </ion-label>
+        </ion-row>
+
+        <ion-row class="codigodigitoembalagem">
+          <ion-label>
+            {{ produto.codigodigitoembalagem }}
+          </ion-label>
+        </ion-row>
       </ion-col>
     </ion-row>
 

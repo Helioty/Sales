@@ -45,7 +45,6 @@ export class PedidoRapidoPage implements OnInit {
 
   ionViewWillEnter() {
     this.focusOn();
-    console.log('WillEnter Rapido');
     this.common.goToFullScreen();
   }
 

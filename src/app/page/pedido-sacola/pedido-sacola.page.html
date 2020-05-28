@@ -24,7 +24,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content (click)="showInfo = false">
   <input id="scanner" hideKeyboard class="scanner" [(ngModel)]="valorScanner" (keyup.enter)="scaneado($event)">
 
 
@@ -144,61 +144,78 @@
 
 <ion-footer>
   <ion-toolbar>
-    <ion-grid class="footerGrid">
-      <ion-row class="addButton">
-        <ion-col size="2"></ion-col>
+    <ion-grid>
+      <ion-row class="buttons">
+        <ion-col size="2.5" class="ion-no-padding"></ion-col>
 
-        <ion-col size="8">
-          <ion-button>
-            <ion-icon color="addBtn" name="add-circle" (click)="addProduto()"></ion-icon>
+        <ion-col size="7" class="ion-no-padding">
+          <ion-button fill="clear" color="fc-cinza-vermelho" [routerLink]="['/produto-pesquisa']"
+            routerDirection="forward">
+            <ion-icon slot="icon-only" name="add-circle"></ion-icon>
           </ion-button>
         </ion-col>
 
-        <ion-col size="2">
-          <ion-button>
-            <ion-icon *ngIf="!showInfo" color="addBtn" name="arrow-round-up" (click)="showInfos()"></ion-icon>
-            <ion-icon *ngIf="showInfo" color="addBtn" name="arrow-round-down" (click)="showInfos()"></ion-icon>
+        <ion-col size="2.5" class="ion-no-padding">
+          <ion-button fill="clear" color="fc-cinza-vermelho" (click)="showInfo = !showInfo">
+            <ion-icon slot="icon-only" *ngIf="!showInfo" name="arrow-up-circle"></ion-icon>
+            <ion-icon slot="icon-only" *ngIf="showInfo" name="arrow-down-circle"></ion-icon>
           </ion-button>
         </ion-col>
       </ion-row>
 
       <ion-row *ngIf="showInfo" class="infos">
-        <ion-col size="12" class="esquerda">
-          <!-- <ion-row class="orderId">
-            <ion-col>Pedido ({{totalPages | formatarString: 'FORMAT':'2' }}):</ion-col>
+        <ion-col size="6" class="esquerda">
+          <ion-row>
+            <ion-col>Pedido ({{ pedido.qtdItensSacola | formatarString: 'FORMAT':'2' }}):</ion-col>
           </ion-row>
-          <ion-row class="pesoTotal">
+
+          <ion-row>
             <ion-col>Peso total:</ion-col>
           </ion-row>
-          <ion-row *ngIf="existeFrete" class="freight">
-            <ion-col>Frete
-              <br>
-            </ion-col>
+
+          <ion-row *ngIf="pedido.pedidoHeader.frete.valor > 0">
+            <ion-col>Frete: </ion-col>
           </ion-row>
-          <ion-row *ngIf="existeDescontoBrinde" class="pesoTotal">
-            <ion-col>Brinde:</ion-col>
+
+          <ion-row *ngIf="pedido.pedidoHeader.descontoBrinde > 0">
+            <ion-col>Brinde: </ion-col>
           </ion-row>
-          <ion-row class="total">
-            <ion-col>Total :</ion-col>
-          </ion-row> -->
+
+          <ion-row>
+            <ion-col>Total: </ion-col>
+          </ion-row>
         </ion-col>
 
-        <ion-col size="12" class="direita">
-          <!-- <ion-row class="orderId">
-            <ion-col>{{valorTotalItem | formatarString: 'VALOR'}}</ion-col>
+        <ion-col size="6" class="direita">
+          <ion-row class="orderId">
+            <ion-col>
+              {{ (pedido.pedidoHeader.totpedido - pedido.pedidoHeader.frete.valor + pedido.pedidoHeader.descontoBrinde) | formatarString: 'VALOR' }}
+            </ion-col>
           </ion-row>
-          <ion-row class="pesoTotal">
-            <ion-col>{{pesoTotal}} kg</ion-col>
+
+          <ion-row>
+            <ion-col>
+              {{ pedido.pedidoHeader.pesoTotal }} kg
+            </ion-col>
           </ion-row>
-          <ion-row *ngIf="existeFrete" class="freight">
-            <ion-col>{{valorFrete | formatarString: 'VALOR' }} </ion-col>
+
+          <ion-row *ngIf="pedido.pedidoHeader.frete.valor > 0">
+            <ion-col>
+              {{ pedido.pedidoHeader.frete.valor | formatarString: 'VALOR' }}
+            </ion-col>
           </ion-row>
-          <ion-row *ngIf="existeDescontoBrinde" class="pesoTotal">
-            <ion-col>{{descontoBrinde | formatarString: 'VALOR'}}</ion-col>
+
+          <ion-row *ngIf="pedido.pedidoHeader.descontoBrinde > 0">
+            <ion-col>
+              {{ pedido.pedidoHeader.descontoBrinde | formatarString: 'VALOR'}}
+            </ion-col>
           </ion-row>
-          <ion-row class="total">
-            <ion-col>{{totalPedido | formatarString: 'VALOR'}}</ion-col>
-          </ion-row> -->
+
+          <ion-row>
+            <ion-col>
+              {{ pedido.pedidoHeader.totpedido | formatarString: 'VALOR' }}
+            </ion-col>
+          </ion-row>
         </ion-col>
       </ion-row>
     </ion-grid>
