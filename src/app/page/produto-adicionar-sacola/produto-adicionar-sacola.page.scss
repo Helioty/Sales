@@ -1,0 +1,166 @@
+ion-content {
+    ion-grid {
+
+        ion-row {
+            ion-col.descricaoProduto {
+                ion-row.descricao {
+                    ion-label {
+                        color: #212121;
+                        font-size: 18px;
+                        font-weight: 500;
+                    }
+                }
+
+                ion-row.codigodigitoembalagem {
+                    border-bottom: solid 2px rgba(0, 0, 0, 0.3) !important;
+                    padding-bottom: 5px !important;
+
+                    ion-label {
+                        color: #999999;
+                        font-size: 13px;
+                        font-weight: 500;
+                    }
+                }
+            }
+        }
+
+        ion-row {
+            ion-col {
+                ion-item.produto {
+                    width: 100% !important;
+                    border-radius: 6px;
+                    border: 1px solid rgba(0, 0, 0, 0.2);
+                    box-shadow: 1px 2px 5px 0 rgba(0, 0, 0, 0.4);
+                    --inner-padding-end: none !important;
+                    --padding-start: 0;
+
+                    ion-grid {
+                        padding: 0 !important;
+
+                        ion-row.depositoRow {
+                            min-height: 50px !important;
+                            height: 100% !important;
+        
+                            ion-col.colunaInformacao {
+                                margin: auto !important;
+                                padding-bottom: 2px;
+
+                                .produtoDescri {
+                                    color: #808080;
+                                    font-size: 14px;
+                                    font-weight: 400;
+                                    white-space: normal;
+                                }
+                                .estoque {
+                                    color: #4d4d4d;
+                                    font-size: 14px;
+                                    font-weight: bold;
+                                }
+
+                                ion-row.linhaCima {
+                                    border-bottom: solid 1px rgba(0, 0, 0, 0.3) !important;
+                                    padding-bottom: 5px !important;
+
+                                }
+    
+                                ion-row.linhaBaixo {
+                                    border-top: solid 1px rgba(0, 0, 0, 0.3) !important;
+                                    padding-top: 5px !important;
+
+                                    ion-input {
+                                        --padding-bottom: 7px;
+                                        --padding-top: 7px;
+                                        font-size: 22px;
+                                        text-align: center;
+                                        margin: auto;
+                                    }
+                                }
+                            }
+        
+                            ion-col.colunaDeposito {
+                                background-color: #f4f4f4;
+                                border-right: 2px solid rgba(0, 0, 0, 0.1);
+
+                                ion-row {
+                                    background-color: #f4f4f4;
+                                    min-height: 50px !important;
+                                    height: 100% !important;
+                                    border-bottom: none;
+                                    border-top: none;
+                                    font-size: 25px;
+                                    font-weight: bold;
+                                    padding: 5px 0;
+
+                                    ion-col {
+                                        margin: auto;
+                                    }
+                                }
+                            }
+
+                            ion-col.colunaQuantidade {
+                                margin: auto !important;
+
+                                ion-button {
+                                    margin: 0 !important;
+                                    width: 100% !important;
+                                    --background: transparent !important;
+                                    --border-color: transparent !important;
+                                    --border-width: 0 !important;
+                                    min-height: 38px !important;
+
+                                    ion-icon {
+                                        font-size: 32px;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+ion-footer {
+    ion-toolbar {
+        --min-height: 0;
+
+        ion-grid {
+            padding: 0 !important;
+            background: #fafafa;
+
+            ion-row.infos {
+                ion-col.esquerda {
+                    text-align: end;
+                    color: #3d3d3d;
+                    font-size: 15px;
+                    padding: 10px;
+                    margin: auto;
+                }
+                ion-col.direita {
+                    text-align: start;
+                    color: #3d3d3d;
+                    font-size: 18px;
+                    font-weight: bold;
+                    padding: 10px;
+                    margin: auto;
+                }
+            }
+        }
+    }
+
+    ion-item {
+        width: 100% !important;
+        margin: auto !important;
+
+        ion-icon {
+            margin-right: -10px;
+            margin-left: 20px;
+        }
+
+        ion-text {
+            margin: auto !important;
+            font-size: 110%;
+        }
+    }
+}

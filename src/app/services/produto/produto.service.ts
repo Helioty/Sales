@@ -51,7 +51,7 @@ export class ProdutoService {
     });
   }
 
-  // edit by Helio 19/03/2020
+  // edit by Helio 20/05/2020
   public getFamilia(codigoProduto: string) {
     const link = ENV.WS_PRODUTO + API_URL + 'familia/' + localStorage.getItem('empresa') + '/' + codigoProduto;
 
@@ -63,5 +63,35 @@ export class ProdutoService {
       });
     });
   }
+
+  // edit by Helio 29/05/2020
+  public getDeposito(codigoProduto: string, codigoPedido: string) {
+    const link = ENV.WS_PRODUTO + API_URL + 'estoque/' + localStorage.getItem('empresa') + '/' + codigoProduto + '?pedido=' + codigoPedido;
+
+    return new Promise((resolve, reject) => {
+      this.baseService.get(link).then((result: any) => {
+        resolve(result);
+      }, (error) => {
+        reject(error);
+      });
+    });
+  }
+
+
+  // Chamadas em JAVA ----------------------------------------------------------------------------------------------------------------------------
+
+  // edit by Helio 29/05/2020
+  public getProduto(codigo: string) {
+    const link = ENV.WS_PRODUTO + API_URL + 'list/' + localStorage.getItem('empresa') + '?filter=' + codigo;
+
+    return new Promise((resolve, reject) => {
+      this.baseService.get(link).then((result: any) => {
+        resolve(result);
+      }, (error) => {
+        reject(error);
+      });
+    });
+  }
+
 
 }

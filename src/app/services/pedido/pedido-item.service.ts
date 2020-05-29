@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { AlertController, NavController } from '@ionic/angular';
 import { BaseService } from '../HTTP/base-service.service';
 import { CommonService } from '../common/common.service';
 import { PedidoService } from 'src/app/services/pedido/pedido.service';
@@ -15,11 +14,9 @@ export class PedidoItemService {
   public pedidoItens: any[] = [];
 
   constructor(
-    private alertCtrl: AlertController,
     private baseService: BaseService,
     private common: CommonService,
     private pedidoService: PedidoService,
-    private navControl: NavController
   ) { }
 
   // edit by Helio 10/03/2020

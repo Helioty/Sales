@@ -311,6 +311,7 @@ export class PedidoService {
           text: 'SIM',
           handler: () => {
             if (this.qtdItensSacola === 0) {
+              this.limpaDadosPedido();
               this.apagarPedido(this.numPedido).then(() => {
                 this.navControl.navigateRoot('/pedido-lista');
                 console.clear();

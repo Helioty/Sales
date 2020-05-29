@@ -1,9 +1,104 @@
 <ion-header>
   <ion-toolbar color="primary">
-    <ion-title>produto-adicionar-sacola</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+
+    <ion-title>Depositos</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
 
+  <ion-grid>
+    <ion-row>
+      <ion-col size="12" class="descricaoProduto">
+        <ion-row class="descricao">
+          <ion-label>
+            {{ produto.descricao }}
+          </ion-label>
+        </ion-row>
+
+        <ion-row class="codigodigitoembalagem">
+          <ion-label>
+            {{ produto.codigodigitoembalagem }}
+          </ion-label>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col size="12" *ngFor="let item of depositos; let i = index">
+        <ion-item lines="none" class="produto">
+          <ion-grid>
+            <ion-row class="depositoRow">
+              <ion-col size="2" class="colunaDeposito">
+                <ion-row class="ion-justify-content-center ion-align-items-center">
+                  <ion-col size="12" class="ion-no-padding">
+                    <ion-row class="ion-justify-content-center ion-align-items-center">
+                      {{ item.deposito }}
+                    </ion-row>
+                  </ion-col>
+                </ion-row>
+              </ion-col>
+
+              <ion-col size="10" class="colunaInformacao">
+                <ion-row class="produtoDescri">
+                  {{ item.encarregado }}
+                </ion-row>
+
+                <ion-row class="estoque linhaCima">
+                  Estoque: {{ item.estoque }}
+                </ion-row>
+
+                <ion-row class="linhaBaixo">
+                  <ion-col size="12" class="colunaQuantidade ion-no-padding">
+                    <ion-row>
+                      <ion-col size="3.5" class="ion-no-padding">
+                        <ion-button fill="clear" color="fc-button">
+                          <ion-icon slot="icon-only" name="remove-circle-outline"></ion-icon>
+                        </ion-button>
+                      </ion-col>
+
+                      <ion-col size="5" class="ion-no-padding">
+                        <ion-input [(ngModel)]="depositos[i].qtdPedido"></ion-input>
+                      </ion-col>
+
+                      <ion-col size="3.5" class="ion-no-padding">
+                        <ion-button fill="clear" color="fc-button-green">
+                          <ion-icon slot="icon-only" name="add-circle-outline"></ion-icon>
+                        </ion-button>
+                      </ion-col>
+                    </ion-row>
+                  </ion-col>
+                </ion-row>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
 </ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-grid>
+      <ion-row class="infos">
+        <ion-col size="6" class="esquerda">
+          Valor do produto:
+        </ion-col>
+
+        <ion-col size="6" class="direita">
+          {{ produto.prvd1| formatarString: 'VALOR' }}
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+
+  <ion-item button lines="none" color="fc-button-green">
+    <ion-icon slot="start" name="basket"></ion-icon>
+    <ion-text>ADICIONAR AO PEDIDO</ion-text>
+  </ion-item>
+</ion-footer>

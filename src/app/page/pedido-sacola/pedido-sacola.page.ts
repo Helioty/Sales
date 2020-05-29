@@ -3,6 +3,7 @@ import { AlertController, NavController, Platform } from '@ionic/angular';
 import { CommonService } from 'src/app/services/common/common.service';
 import { PedidoService } from 'src/app/services/pedido/pedido.service';
 import { PedidoItemService } from 'src/app/services/pedido/pedido-item.service';
+import { ProdutoService } from 'src/app/services/produto/produto.service';
 import { NavigationExtras } from '@angular/router';
 
 @Component({
@@ -22,12 +23,13 @@ export class PedidoSacolaPage implements OnInit {
     private common: CommonService,
     public pedido: PedidoService,
     public pedidoIt: PedidoItemService,
+    private produtoS: ProdutoService,
     private navControl: NavController,
     private platform: Platform
   ) { }
 
-  async ngOnInit() {
-    await this.pedidoIt.getItemPedido().then((result: any) => {
+  ngOnInit() {
+    this.pedidoIt.getItemPedido().then((result: any) => {
       console.log(result);
     });
   }
@@ -170,6 +172,23 @@ export class PedidoSacolaPage implements OnInit {
       }
     };
     this.navControl.navigateForward(['/cliente'], navigationExtras);
+  }
+
+  openProdutoAddSacolaPage(prod: any) {
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        paginaSeguinte: 'back',
+        paginaAnterior: 'pedido-sacola',
+        produto: JSON.stringify(prod)
+      }
+    };
+    this.navControl.navigateForward(['/produto-adicionar-sacola'], navigationExtras);
+  }
+
+  getProduto(codigo: string) {
+    this.produtoS.getProduto(codigo).then((result: any) => {
+      this.openProdutoAddSacolaPage(result.content[0]);
+    });
   }
 
   // finalização do pedido

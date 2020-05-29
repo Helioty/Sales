@@ -15,9 +15,7 @@ const routes: Routes = [
   },
   {
     path: 'pedido-lista',
-    loadChildren: () => import(
-      './page/pedido-lista/pedido-lista.module'
-    ).then(m => m.PedidoListaPageModule),
+    loadChildren: () => import('./page/pedido-lista/pedido-lista.module').then(m => m.PedidoListaPageModule),
     canActivate: [AuthGuard]
   },
   {
@@ -64,14 +62,13 @@ const routes: Routes = [
   },
   {
     path: 'produto-detalhes',
-    loadChildren: () => import(
-      './page/produto/produto-detalhes/produto-detalhes.module'
-    ).then(m => m.ProdutoDetalhesPageModule),
+    loadChildren: () => import('./page/produto/produto-detalhes/produto-detalhes.module').then(m => m.ProdutoDetalhesPageModule),
     canActivate: [AuthGuard]
   },
   {
     path: 'produto-adicionar-sacola',
-    loadChildren: './page/produto-adicionar-sacola/produto-adicionar-sacola.module#ProdutoAdicionarSacolaPageModule'
+    loadChildren: './page/produto-adicionar-sacola/produto-adicionar-sacola.module#ProdutoAdicionarSacolaPageModule',
+    canActivate: [AuthGuard]
   },
 
   {
@@ -91,9 +88,7 @@ const routes: Routes = [
   },
   {
     path: 'endereco-entrega-old',
-    loadChildren: () => import(
-      './page/endereco-entrega-old/endereco-entrega-old.module'
-    ).then(m => m.EnderecoEntregaOldPageModule),
+    loadChildren: () => import('./page/endereco-entrega-old/endereco-entrega-old.module').then(m => m.EnderecoEntregaOldPageModule),
   },
   {
     path: 'pedido-finalizacao',
@@ -113,9 +108,7 @@ const routes: Routes = [
   },
   {
     path: 'cliente-cadastro-edicao',
-    loadChildren: () => import(
-      './page/cliente/cliente-cadastro-edicao/cliente-cadastro-edicao.module'
-    ).then(m => m.ClienteCadastroEdicaoPageModule),
+    loadChildren: () => import('./page/cliente/cliente-cadastro-edicao/cliente-cadastro-edicao.module').then(m => m.ClienteCadastroEdicaoPageModule),
     canActivate: [AuthGuard]
   },
 
@@ -139,11 +132,6 @@ const routes: Routes = [
     loadChildren: './page/formas-pagamento/parcelamento/parcelamento.module#ParcelamentoPageModule',
     canActivate: [AuthGuard]
   },
-
-
-
-
-
 
 
 ];

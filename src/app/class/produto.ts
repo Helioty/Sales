@@ -44,3 +44,20 @@ export class ProdutoFamilia {
     sqltypeName: string;
     valor: string;
 }
+
+export class ProdutoDepositoRetirada {
+    cdIndLoja: any;
+    deposito: string;
+    descricao: string;
+    empresa: string;
+    encarregado: string;
+    estoque: number;
+    impressora: string;
+    opcaoRetirada: any;
+    ordem: string;
+    qtdMovimentada: number;
+    qtdPedido: number;
+    siglafilial: string;
+    tipoEntrega: string;
+    transfereAutomatico: string;
+}

@@ -32,7 +32,7 @@ export class ProdutoPage implements OnInit {
     public common: CommonService,
     public pedidoService: PedidoService,
     private dataService: DataService,
-    private produtoService: ProdutoService,
+    private produtoS: ProdutoService,
     private navControl: NavController,
     private platform: Platform,
   ) { }
@@ -146,7 +146,7 @@ export class ProdutoPage implements OnInit {
 
   // pega as informações do produto
   async getProdutoInformacao(codigo: string) {
-    await this.produtoService.getProductInfomation(codigo).then((result: any) => {
+    await this.produtoS.getProductInfomation(codigo).then((result: any) => {
       console.log(result);
       this.showMaisInfo = (result.items.length > 0);
       this.maisInfo = result.items;
@@ -157,7 +157,7 @@ export class ProdutoPage implements OnInit {
 
   // pega as informações do produto
   async getFamilia(codigo: string) {
-    await this.produtoService.getFamilia(codigo).then((result: any) => {
+    await this.produtoS.getFamilia(codigo).then((result: any) => {
       console.log('familia');
       console.log(result);
       this.produtoFamilia = result;
@@ -184,7 +184,7 @@ export class ProdutoPage implements OnInit {
         dataId: 'produtoListImage'
       }
     };
-    await this.produtoService.getAllListImage(codigoNoEmbalagem).then((result: any) => {
+    await this.produtoS.getAllListImage(codigoNoEmbalagem).then((result: any) => {
       // console.log(result);
       this.dataService.setData('produtoListImage', result);
       this.navControl.navigateForward(['/produto-imagens'], navigationExtras);
@@ -197,17 +197,17 @@ export class ProdutoPage implements OnInit {
 
   async getImage(codigoDigitoEmb: string) {
     console.log(codigoDigitoEmb)
-    await this.produtoService.getFirstImage(codigoDigitoEmb).then((result: any) => {
+    await this.produtoS.getFirstImage(codigoDigitoEmb).then((result: any) => {
       this.produto.imagem = result[0].imageGrande;
     });
   }
 
-  goToAddSacola(produto: Produto) {
+  goToAddSacola(prod: Produto) {
     const navigationExtras: NavigationExtras = {
       queryParams: {
         paginaSeguinte: 'pedido-sacola',
         paginaAnterior: 'produto',
-        produto: JSON.stringify(produto)
+        produto: JSON.stringify(prod)
       }
     };
     this.navControl.navigateForward(['/produto-adicionar-sacola'], navigationExtras);
