@@ -93,5 +93,18 @@ export class ProdutoService {
     });
   }
 
+  // edit by Helio 01/06/2020
+  public addProdutoSacola(codigo: string) {
+    const link = ENV.WS_PRODUTO + API_URL + 'list/' + localStorage.getItem('empresa') + '?filter=' + codigo;
+
+    return new Promise((resolve, reject) => {
+      this.baseService.get(link).then((result: any) => {
+        resolve(result);
+      }, (error) => {
+        reject(error);
+      });
+    });
+  }
+
 
 }
