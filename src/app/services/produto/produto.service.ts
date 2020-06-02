@@ -77,9 +77,6 @@ export class ProdutoService {
     });
   }
 
-
-  // Chamadas em JAVA ----------------------------------------------------------------------------------------------------------------------------
-
   // edit by Helio 29/05/2020
   public getProduto(codigo: string) {
     const link = ENV.WS_PRODUTO + API_URL + 'list/' + localStorage.getItem('empresa') + '?filter=' + codigo;

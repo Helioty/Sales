@@ -30,10 +30,6 @@
 <ion-content>
   <input id="scanner" hideKeyboard class="scanner" [(ngModel)]="valorScanner" (keyup.enter)="scaneado($event)">
 
-  <!-- <ion-button (click)="openProdutoDetalhe()" *ngIf="showMaisInfo">teste tela detalhes</ion-button> -->
-
-  <!-- <ion-button (click)="openProdutoImagens('4046455')">teste tela imagens</ion-button> -->
-
   <ion-grid>
     <ion-row>
       <ion-col size="12" class="imgProduto ion-no-padding">
@@ -61,6 +57,36 @@
           <ion-label>
             {{ produto.codigodigitoembalagem }}
           </ion-label>
+        </ion-row>
+      </ion-col>
+
+      <ion-col size="12">
+        <ion-row *ngFor="let familia of produtoFamilia; let i = index">
+          <ion-label *ngIf="familia.qtdItems == 1">
+            {{ familia.nome }}:
+            <span style="color:#969696; font-size:15px"> {{ familia.valor }} </span>
+          </ion-label>
+
+          <ion-label *ngIf="familia.qtdItems > 1">{{ familia.nome }}:</ion-label>
+
+          <ion-segment scrollable [value]="familiaSelecionada" *ngIf="familia.qtdItems > 1"
+            (ionChange)="changeFamilia($event.target.value, i)">
+            <ion-segment-button *ngFor="let familiaIt of familia?.items" value="{{familiaIt.valor_atributo}}">
+              <ion-label>
+                <span class="span1">{{ familiaIt.valor_atributo }}</span>
+              </ion-label>
+
+              <ion-label>
+                <span class="span2">{{ familiaIt.preco | formatarString: 'VALOR' }}</span>
+              </ion-label>
+
+              <ion-label *ngIf="familiaIt.preco != familiaIt.preco_unitario">
+                <span class="span3">
+                  {{ familiaIt.preco_unitario | formatarString: 'VALOR' }}
+                </span>
+              </ion-label>
+            </ion-segment-button>
+          </ion-segment>
         </ion-row>
       </ion-col>
 

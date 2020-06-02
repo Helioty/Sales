@@ -21,6 +21,7 @@ export class ProdutoPage implements OnInit {
   // controla os dados do produto
   public produto = new Produto();
   public produtoFamilia: any[] = [];
+  public familiaSelecionada: any;
 
   // controla a exibição do botão que leva a tela de mais informações
   public showMaisInfo = false;
@@ -59,9 +60,7 @@ export class ProdutoPage implements OnInit {
     this.focusOff();
   }
 
-  ionViewDidLeave() {
-
-  }
+  ionViewDidLeave() { }
 
   // Cria o loop que da foco no input
   focusOn() {
@@ -158,11 +157,39 @@ export class ProdutoPage implements OnInit {
   // pega as informações do produto
   async getFamilia(codigo: string) {
     await this.produtoS.getFamilia(codigo).then((result: any) => {
-      console.log('familia');
+      console.log('Familia do produto');
       console.log(result);
       this.produtoFamilia = result;
+      for (var i in result) {
+        for (var x in result[i].items) {
+          result[i].qtdItems = x + 1;
+
+          if (result[i].items[x].selected == 1 && result[i].items[x].id_produto == this.produto.codigodigitoembalagem) {
+            result[i].valor = result[i].items[x].valor_atributo;
+            console.log("Valor da familia")
+            console.log(result[i].valor);
+            this.familiaSelecionada = result[i].items[x].valor_atributo;
+          } else {
+            result[i].valor = '';
+          }
+        }
+      }
     }, (error) => {
       console.log(error);
+    });
+  }
+
+  changeFamilia(valor: string, index: number) {
+    this.produtoFamilia[index].items.forEach((element: any) => {
+      if (element.valor_atributo === valor) {
+        this.produtoS.getProduto(element.id_produto).then((result: any) => {
+          console.log(result);
+          this.produto = result.content[0];
+          this.getImage(this.produto.codigo);
+          this.getFamilia(this.produto.codigodigitoembalagem);
+          this.getProdutoInformacao(this.produto.codigodigitoembalagem);
+        });
+      }
     });
   }
 
