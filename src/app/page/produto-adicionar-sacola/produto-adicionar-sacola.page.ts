@@ -1,9 +1,10 @@
-import { Component, OnInit, ViewChildren, QueryList } from '@angular/core';
+import { Component, OnInit, ViewChildren, QueryList, ViewChild } from '@angular/core';
 import { CommonService } from 'src/app/services/common/common.service';
 import { PedidoService } from 'src/app/services/pedido/pedido.service';
 import { ProdutoService } from 'src/app/services/produto/produto.service';
 import { Produto, ProdutoDepositoRetirada } from 'src/app/class/produto';
 import { ActivatedRoute } from '@angular/router';
+import { IonSlides } from '@ionic/angular';
 
 @Component({
   selector: 'app-produto-adicionar-sacola',
@@ -12,6 +13,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ProdutoAdicionarSacolaPage implements OnInit {
 
+  @ViewChild(IonSlides, { static: true }) slides: IonSlides;
   @ViewChildren("input") input: QueryList<any>;
 
   public produto = new Produto();
@@ -25,6 +27,7 @@ export class ProdutoAdicionarSacolaPage implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.slides.lockSwipes(true);
     this.activatedRoute.queryParams.subscribe((params: any) => {
       this.produto = JSON.parse(params.produto);
       console.log('a')
@@ -55,6 +58,29 @@ export class ProdutoAdicionarSacolaPage implements OnInit {
 
   ionViewDidLeave() { }
 
+  goToSlide(slide: number) {
+    this.slides.lockSwipes(false);
+    this.slides.slideTo(slide);
+    this.slides.lockSwipes(true);
+  }
+
+
+
+
+
+
+
+
+
+
+  // edit by Helio 03/06/2020
+  validateField(): boolean {
+    for (var i in this.depositos) {
+      if (this.depositos[i].qtdPedido > 0) {
+        return true;
+      }
+    };
+  }
 
   addItemSacola(itemSacola) {
 

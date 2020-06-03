@@ -18,6 +18,11 @@ export class PedidoSacolaPage implements OnInit {
 
   public showInfo = false;
 
+  // by Helio 11/12/2019
+  public existeProdEntrega = false;
+  public existeProdRetirada = false;
+  public existeProdRetiradaDepo = false;
+
   constructor(
     private alertCtrl: AlertController,
     private common: CommonService,
@@ -31,6 +36,14 @@ export class PedidoSacolaPage implements OnInit {
   ngOnInit() {
     this.pedidoIt.getItemPedido().then((result: any) => {
       console.log(result);
+      for (let i = 0; i < result.content.length; i++) {
+        if (result.content[i].retiradas[0].tipoRetirada == 9997) {
+          this.existeProdEntrega = true;
+        }
+        else if (result.content[i].retiradas[0].tipoRetirada != 9997) {
+          this.existeProdRetirada = true;
+        }
+      };
     });
   }
 

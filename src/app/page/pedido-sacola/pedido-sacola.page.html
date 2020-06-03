@@ -30,13 +30,13 @@
   <!-- Item Dividers in a List -->
   <ion-list *ngIf="pedidoIt.pedidoItens.length > 0">
 
-    <ion-item-divider sticky>
+    <ion-item-divider sticky *ngIf="existeProdRetirada">
       <ion-label>
         Levar da loja
       </ion-label>
     </ion-item-divider>
 
-    <ion-grid>
+    <ion-grid *ngIf="existeProdRetirada">
       <ion-row>
         <ion-col size="12" *ngFor="let item of pedidoIt.pedidoItens; let i = index;" style="padding: 0 !important;">
           <ion-row *ngIf="item?.retiradas[0].tipoRetirada != 9997" style="padding: 5px !important;">
@@ -88,13 +88,13 @@
     </ion-grid>
 
 
-    <ion-item-divider sticky>
+    <ion-item-divider sticky *ngIf="existeProdEntrega">
       <ion-label>
         Receber em casa
       </ion-label>
     </ion-item-divider>
 
-    <ion-grid>
+    <ion-grid *ngIf="existeProdEntrega">
       <ion-row>
         <ion-col size="12" *ngFor="let item of pedidoIt.pedidoItens; let i of index;" style="padding: 0 !important;">
           <ion-row *ngIf="item?.retiradas[0].tipoRetirada == 9997" style="padding: 5px !important;">

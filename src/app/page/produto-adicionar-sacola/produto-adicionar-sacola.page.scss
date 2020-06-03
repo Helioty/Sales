@@ -1,4 +1,16 @@
 ion-content {
+    ion-slides {
+        height: 100% !important;
+    
+        ion-slide {
+            height: 100% !important;
+
+            ion-grid {
+                height: 100% !important;
+            }
+        }
+    }
+
     ion-grid {
 
         ion-row {
@@ -8,6 +20,7 @@ ion-content {
                         color: #212121;
                         font-size: 18px;
                         font-weight: 500;
+                        text-align: start;
                     }
                 }
 
@@ -19,6 +32,20 @@ ion-content {
                         color: #999999;
                         font-size: 13px;
                         font-weight: 500;
+                    }
+                }
+            }
+        }
+
+        ion-row.opcao-entrega {
+            ion-col {
+                ion-item {
+                    border-radius: 6px;
+                    border: 1px solid rgba(0, 0, 0, 0.2);
+                    box-shadow: 1px 2px 5px 0 rgba(0, 0, 0, 0.4);
+
+                    p {
+                        margin: auto;
                     }
                 }
             }
