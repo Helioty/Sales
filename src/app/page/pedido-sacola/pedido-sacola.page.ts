@@ -39,8 +39,7 @@ export class PedidoSacolaPage implements OnInit {
       for (let i = 0; i < result.content.length; i++) {
         if (result.content[i].retiradas[0].tipoRetirada == 9997) {
           this.existeProdEntrega = true;
-        }
-        else if (result.content[i].retiradas[0].tipoRetirada != 9997) {
+        } else if (result.content[i].retiradas[0].tipoRetirada != 9997) {
           this.existeProdRetirada = true;
         }
       };

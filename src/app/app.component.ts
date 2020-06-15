@@ -25,6 +25,11 @@ export class AppComponent {
       icon: 'location-outline'
     },
     {
+      title: 'Consulta Produtos',
+      url: '/indicador-vendedor',
+      icon: 'cube-outline'
+    },
+    {
       title: 'Desempenho',
       url: '/indicador-vendedor',
       icon: 'stats-chart'
