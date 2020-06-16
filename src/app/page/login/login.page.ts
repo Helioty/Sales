@@ -6,7 +6,7 @@ import { CommonService } from 'src/app/services/common/common.service';
 import { AuthService } from 'src/app/services/auth/auth.service';
 
 import { ENV } from 'src/environments/environment';
-import { AppConfigService } from 'src/app/config/app.config.service';
+import { AppConfigService, API_URL } from 'src/app/config/app.config.service';
 import { AppComponent } from '../../app.component';
 
 @Component({
@@ -101,6 +101,7 @@ export class LoginPage implements OnInit {
           localStorage.setItem('foto', this.data.foto);
           localStorage.setItem('empresa', this.data.empresa.id);
           localStorage.setItem('nome', this.data.nomeDisplay);
+          localStorage.setItem('host', API_URL);
           localStorage.setItem('isLoggedIn', 'true');
           localStorage.setItem('tms', this.data.empresa.usaFreteTMS);
 

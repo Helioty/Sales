@@ -121,7 +121,11 @@
 
                   <ion-col size="4" class="produtoManutencao">
                     <ion-row class="produtoManutencaoTop ion-justify-content-center ion-align-items-center">
-                      {{ item.qtdTotal }}
+                      <ion-col class="ion-no-padding" size="12">
+                        <ion-button expand="full" fill="clear" color="dark" class="ion-no-margin" (click)="getProduto(item.idProduto)">
+                          {{ item.qtdTotal }}
+                        </ion-button>
+                      </ion-col>
                     </ion-row>
 
                     <ion-row class="produtoManutencaoBottom ion-justify-content-center ion-align-items-center">
