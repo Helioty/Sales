@@ -36,13 +36,20 @@ export class PedidoSacolaPage implements OnInit {
   ngOnInit() {
     this.pedidoIt.getItemPedido().then((result: any) => {
       console.log(result);
-      for (let i = 0; i < result.content.length; i++) {
-        if (result.content[i].retiradas[0].tipoRetirada == 9997) {
+      result.content.forEach(el => {
+        if (el.retiradas[0].tipoRetirada == 9997) {
           this.existeProdEntrega = true;
-        } else if (result.content[i].retiradas[0].tipoRetirada != 9997) {
+        } else if (el.retiradas[0].tipoRetirada != 9997) {
           this.existeProdRetirada = true;
         }
-      };
+      });
+      // for (let i = 0; i < result.content.length; i++) {
+      //   if (result.content[i].retiradas[0].tipoRetirada == 9997) {
+      //     this.existeProdEntrega = true;
+      //   } else if (result.content[i].retiradas[0].tipoRetirada != 9997) {
+      //     this.existeProdRetirada = true;
+      //   }
+      // }
     });
   }
 

@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild, Renderer } from '@angular/core';
-import { IonInput, NavController, AlertController } from '@ionic/angular';
+import { IonInput, NavController, AlertController, ModalController } from '@ionic/angular';
+import { PesquisaClienteComponent } from 'src/app/components/pesquisa-cliente/pesquisa-cliente.component';
 import { CommonService } from 'src/app/services/common/common.service';
 import { BaseService } from 'src/app/services/HTTP/base-service.service';
 import { ClienteService } from 'src/app/services/cliente/cliente.service';
@@ -43,6 +44,7 @@ export class ClientePage implements OnInit {
     private common: CommonService,
     private baseService: BaseService,
     private clienteService: ClienteService,
+    private modalCtrl: ModalController,
     private navControl: NavController,
     private pedido: PedidoService,
     private renderer: Renderer
@@ -377,6 +379,19 @@ export class ClientePage implements OnInit {
         this.navControl.navigateForward(['/' + paginaSeguinte]);
         break;
     }
+  }
+
+  async buscaCliente() {
+    const modal = await this.modalCtrl.create({
+      component: PesquisaClienteComponent,
+      componentProps: {
+        'firstName': 'Douglas',
+        'lastName': 'Adams'
+      }
+    });
+    await modal.present();
+    const { data } = await modal.onWillDismiss();
+    console.log(data);
   }
 
 }

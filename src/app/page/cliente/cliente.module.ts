@@ -6,6 +6,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { ClientePage } from './cliente.page';
+import { PesquisaClienteComponent } from 'src/app/components/pesquisa-cliente/pesquisa-cliente.component';
 
 const routes: Routes = [
   {
@@ -21,6 +22,7 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [ClientePage]
+  declarations: [ClientePage, PesquisaClienteComponent],
+  entryComponents: [PesquisaClienteComponent]
 })
 export class ClientePageModule {}

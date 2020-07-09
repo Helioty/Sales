@@ -18,7 +18,6 @@ ion-header {
                 min-width: 48px !important;
                 min-height: 48px !important;
                 --border-radius: 50% !important;
-                --overflow: visible !important;
                 margin: 2px 4px;
 
                 ion-icon {
@@ -30,7 +29,7 @@ ion-header {
                     margin-top: 8px;
                     border-radius: 50%;
                     position: absolute;
-                    width: 20px;
+                    min-width: 20px;
                 }
             }
         }

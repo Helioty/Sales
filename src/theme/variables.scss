@@ -223,7 +223,7 @@ ion-header {
       ion-button {
         min-width: 48px !important;
         min-height: 48px !important;
-        --overflow: visible !important;
+        // --overflow: visible !important;
         --border-radius: 50% !important;
         margin: 2px 4px;
 
@@ -236,7 +236,7 @@ ion-header {
           margin-top: 8px;
           border-radius: 50%;
           position: absolute;
-          width: 20px;
+          min-width: 20px;
         }
       }
 

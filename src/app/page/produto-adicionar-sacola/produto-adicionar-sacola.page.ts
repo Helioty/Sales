@@ -1,10 +1,13 @@
-import { Component, OnInit, ViewChildren, QueryList, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewChildren, QueryList } from '@angular/core';
 import { CommonService } from 'src/app/services/common/common.service';
 import { PedidoService } from 'src/app/services/pedido/pedido.service';
 import { ProdutoService } from 'src/app/services/produto/produto.service';
+import { PedidoItemService } from 'src/app/services/pedido/pedido-item.service';
+import { TMSService } from 'src/app/services/TMS/tms.service';
 import { Produto, ProdutoDepositoRetirada } from 'src/app/class/produto';
 import { ActivatedRoute } from '@angular/router';
-import { IonSlides } from '@ionic/angular';
+import { IonSlides, IonInput, NavController } from '@ionic/angular';
+import { Retiradas, PedidoItens } from 'src/app/class/pedido';
 
 @Component({
   selector: 'app-produto-adicionar-sacola',
@@ -13,31 +16,60 @@ import { IonSlides } from '@ionic/angular';
 })
 export class ProdutoAdicionarSacolaPage implements OnInit {
 
+  // Slide da pagina
   @ViewChild(IonSlides, { static: true }) slides: IonSlides;
-  @ViewChildren("input") input: QueryList<any>;
 
+  // Lista de inputs dos depositos
+  @ViewChildren('input') input: QueryList<IonInput>;
+
+  // Input do TMS
+  @ViewChild('inputTMS', { static: true }) inputTMS: IonInput;
+  public inputTMSvalue = 0;
+
+  // Produto e depositos de retirada
   public produto = new Produto();
   public depositos: ProdutoDepositoRetirada[] = [];
 
+  // Controle de adicionar a sacola
+  private entregaTMSselecionada = false;
+
+  // Controle dos itens do pedido
+  private pedidoItens: PedidoItens;
+
+  // Retiradas
+  private retiradas: Retiradas[] = [];
+
+  // Controle de navegacao
+  private navParams: any;
+
   constructor(
     private activatedRoute: ActivatedRoute,
+    private navControl: NavController,
     public common: CommonService,
     public pedidoS: PedidoService,
+    private pedidoIt: PedidoItemService,
     private produtoS: ProdutoService,
+    private tms: TMSService
   ) { }
 
   ngOnInit() {
     this.slides.lockSwipes(true);
     this.activatedRoute.queryParams.subscribe((params: any) => {
       this.produto = JSON.parse(params.produto);
-      console.log('a')
-      console.log(this.produto)
+      this.navParams = params;
     });
   }
 
   ionViewWillEnter() {
-    // this.focusOn();
     this.common.goToFullScreen();
+    this.pedidoItens = new PedidoItens(localStorage.getItem('empresa'), this.pedidoS.pedidoHeader.numpedido);
+    this.pedidoItens.idEmpresa = parseInt(localStorage.getItem('empresa'));
+    this.pedidoItens.numPedido = this.pedidoS.pedidoHeader.numpedido;
+    this.pedidoItens.idProduto = this.produto.codigodigitoembalagem;
+    this.pedidoItens.embalagem = 0;
+    this.pedidoItens.qtdTotal = 0;
+    this.pedidoItens.prcUnitario = 0;
+    this.pedidoItens.prcTotal = 0;
   }
 
   ionViewDidEnter() {
@@ -52,9 +84,7 @@ export class ProdutoAdicionarSacolaPage implements OnInit {
     });
   }
 
-  ionViewWillLeave() {
-    // this.focusOff();
-  }
+  ionViewWillLeave() { }
 
   ionViewDidLeave() { }
 
@@ -71,70 +101,137 @@ export class ProdutoAdicionarSacolaPage implements OnInit {
 
 
 
-
-
-  // edit by Helio 03/06/2020
+  // edit by Helio 09/07/2020
   validateField(): boolean {
-    for (var i in this.depositos) {
-      if (this.depositos[i].qtdPedido > 0) {
+    if (this.entregaTMSselecionada && this.inputTMSvalue > 0) {
+      return true;
+    } else {
+      return this.validaQtdRetiradaLoja();
+    }
+  }
+
+  validaQtdRetiradaLoja(): boolean {
+    for (const el in this.depositos) {
+      if (this.depositos[el].qtdPedido > 0) {
         return true;
       }
     };
   }
 
-  addItemSacola(itemSacola) {
+  zeroQtd() {
+    this.common.showAlert('Atenção!', 'Informar quantidade retirada.');
+  }
 
-    let aRetiradas: any[] = [];
+  async adicionar() {
+    // Chama a gravação do TMS
+    if (this.entregaTMSselecionada && this.inputTMSvalue > 0) {
+      await this.adicionarComTMS();
+    }
+    //  Chama a gracação da retirada em Loja
+    if (this.validaQtdRetiradaLoja()) {
+      await this.adicionarLocal(this.depositos);
+    } else {
+      this.prosseguir();
+    }
+  }
 
-    for (var i in itemSacola) {
-      if (itemSacola[i].estoque < itemSacola[i].qtdPedido) {
-        // console.log("itemSacola");
-        // console.log(document.getElementById(id));
-        // this.SetFocusOn2(i);
-        // this.alertEstoque(i, itemSacola[i].estoque, itemSacola[i].deposito);
-        break;
-      } else {
-        if (parseInt(itemSacola[i].qtdPedido) > 0) {
-          // this.retiradas = new Retiradas();
-          // this.retiradas.empresaRetirada = parseInt(itemSacola[i].empresa);
-          // this.retiradas.idDeposito = parseInt(itemSacola[i].deposito);
-          // this.retiradas.tipoRetirada = parseInt(itemSacola[i].tipoEntrega);
+  prosseguir() {
+    if (this.navParams.paginaAnterior) {
+      switch (this.navParams.paginaAnterior) {
+        case 'pedido-sacola':
+          this.navControl.pop();
+          break;
 
-          // this.retiradas.qtd = parseFloat(itemSacola[i].qtdPedido);
-          // this.retiradas.precoUnitario = this.item.prvd1;
-
-          //add array
-          // aRetiradas.push(this.retiradas);
-        }
-
-        // this.isenabled = parseInt(itemSacola[i].qtdPedido) > 0;
-
+        default:
+          break;
       }
+    } else {
+      this.navControl.navigateRoot('pedido-sacola');
+    }
+    // this.navCtrl.push("PedidoSacola");
+    // if (this.type == "N") {
+    //   // this.mode = 0;
+    //   this.commonServices.exibeBotaoComprar = true;
+    //   this.navCtrl.push("ProdutoLista", {
+    //     basket: this.existQtdBasket,
+    //     mode: 0
+    //   });
+    // } else if (this.pedidoRapido) {
+    //   this.navCtrl.pop();
+    // } else {
+    //   this.openPedidoSacola();
+    // }
+
+    // this.navControl.pop();
+  }
+
+  async adicionarLocal(depositos: ProdutoDepositoRetirada[]) {
+    for (const el in depositos) {
+      if (depositos[el].qtdPedido > depositos[el].estoque) {
+        this.common.showToast('Estoque insuficiente');
+        this.input.toArray()[el].setFocus();
+        return
+      } else if (depositos[el].qtdPedido > 0) {
+        const retirada = new Retiradas();
+        retirada.empresaRetirada = parseInt(depositos[el].empresa);
+        retirada.idDeposito = parseInt(depositos[el].deposito);
+        retirada.tipoRetirada = parseInt(depositos[el].tipoEntrega);
+        retirada.qtd = depositos[el].qtdPedido;
+        retirada.precoUnitario = this.produto.prvd1;
+
+        this.retiradas.push(retirada);
+      }
+    };
+    this.pedidoItens.retiradas = this.retiradas;
+    this.pedidoIt.addItemPedido(this.pedidoItens).then((result) => {
+      console.log('Resultado');
+      console.log(result);
+      this.prosseguir();
+    });
+  }
+
+  async adicionarComTMS() {
+
+  }
+
+
+  async ende(seq: any, enderecos: any[]) {
+    for (const el in enderecos) {
+      if (enderecos[el].id.sequencialId === seq) {
+        return enderecos[el];
+      }
+    };
+  }
+
+  async getOpcoes(qtd: number) {
+    let precolocal: string;
+    if (this.validaQtdRetiradaLoja()) {
+      precolocal = 'S';
+    } else {
+      precolocal = 'N';
     }
 
-    try {
-      // if (this.exibeFinalizacao) {
-      // this.pedidoItens.retiradas = aRetiradas;
+    const enderecos = this.pedidoS.dadosCliente.enderecos;
+    const sequen = this.pedidoS.pedidoHeader.seqEnderecoEntrega;
+    const ende = await this.ende(sequen, enderecos);
 
-      // if (this.pedidoItens.numPedido == 0 || this.pedidoItens.numPedido == null) {
-      // this.commonServices.showToast('ATENÇÃO! ' + this.pedidoItens.numPedido);
-      // }
+    this.tms.getOpcoesTMS(
+      ende, String(qtd), this.produto.codigodigitoembalagem, precolocal
+    ).then((result: any) => {
+      console.log('opcoes entrega');
+      console.log(result);
 
-      console.log('SACOLA');
-      // console.log(this.pedidoItens);
-
-      // this.addItemPedido(this.pedidoItens);
-
-      // this.qtdeItemPedido = this.retiradas.qtd;
-      // this.commonServices.sistuacaoPedido = "A"; // altera situação do pedido
-
-      // let qtd: number = this.commonServices.qtdBasketItens;
-      // this.navCtrl.push("ProdutoLista", { basket: this.existQtdBasket, mode: 1 });
-      // }
-    } catch (error) {
+      // by Helio 09/01/2020
+      // Seleciona automaticamente caso exista apenas uma opção de entrega
+      if (result.length === 1) {
+        // this.vendedorSelecionado = this.dadosTMS[0];
+        // if (this.vendedorSelecionado.opcoes.length == 1) {
+        // this.opcSelecionada = this.vendedorSelecionado.opcoes[0]
+        // }
+      }
+    }, (error) => {
       console.log(error);
-      // this.commonServices.showToast(error);
-    }
+    });
   }
 
 }

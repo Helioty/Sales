@@ -71,4 +71,31 @@ export class PedidoItemService {
     });
   }
 
+  // by Helio 09/07/2020
+  public addItemPedido(body: PedidoItens) {
+    const link =
+      ENV.WS_VENDAS + API_URL + 'PedidoVendaItem/' +
+      localStorage.getItem('empresa') + '/' +
+      this.pedidoService.numPedido + '?update=S';
+
+    return new Promise((resolve) => {
+      this.baseService.post(link, body).then((result: any) => {
+        this.pedidoService.atualizaPedidoHeader(result);
+        resolve(result);
+      }, (error) => {
+        console.log(error);
+      });
+    });
+    // try {
+
+
+    //   this.commonServices.ItensPedidoAdd = resut;
+
+    //   this.addItem(resut.numitens);
+    //   // this.commonServices.showToast(resut);
+    // } catch (error) {
+    //   this.commonServices.showToast(error.json().detail);
+    // }
+  }
+
 }

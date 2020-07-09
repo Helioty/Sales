@@ -72,7 +72,7 @@
                           </ion-col>
 
                           <ion-col size="5" class="ion-no-padding">
-                            <ion-input id={{i}} #input [(ngModel)]="depositos[i].qtdPedido"></ion-input>
+                            <ion-input id={{i}} #input type="number" [(ngModel)]="depositos[i].qtdPedido"></ion-input>
                           </ion-col>
 
                           <ion-col size="3.5" class="ion-no-padding">
@@ -94,7 +94,31 @@
     </ion-slide>
 
     <ion-slide>
+      <ion-grid>
+        <ion-row>
+          <ion-col size="12" class="descricaoProduto">
+            <ion-row class="descricao">
+              <ion-label>
+                {{ produto.descricao }}
+              </ion-label>
+            </ion-row>
 
+            <ion-row class="codigodigitoembalagem">
+              <ion-label>
+                {{ produto.codigodigitoembalagem }}
+              </ion-label>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col size="12">
+            <ion-item lines="none">
+              <ion-input #inputTMS [(ngModel)]="inputTMSvalue"></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
     </ion-slide>
   </ion-slides>
 
@@ -109,13 +133,13 @@
         </ion-col>
 
         <ion-col size="6" class="direita">
-          {{ produto.prvd1| formatarString: 'VALOR' }}
+          {{ produto.prvd1 | formatarString: 'VALOR' }}
         </ion-col>
       </ion-row>
     </ion-grid>
   </ion-toolbar>
 
-  <ion-item button lines="none" color="fc-button-green" (click)="validateField() ? adicionarSacola(dados) :  msgErro()">
+  <ion-item button lines="none" color="fc-button-green" (click)="validateField() ? adicionar() : zeroQtd()">
     <ion-icon slot="start" name="basket"></ion-icon>
     <ion-text>ADICIONAR AO PEDIDO</ion-text>
   </ion-item>
