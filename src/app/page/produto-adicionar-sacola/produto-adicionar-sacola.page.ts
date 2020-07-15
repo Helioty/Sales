@@ -8,6 +8,7 @@ import { Produto, ProdutoDepositoRetirada } from 'src/app/class/produto';
 import { ActivatedRoute } from '@angular/router';
 import { IonSlides, IonInput, NavController } from '@ionic/angular';
 import { Retiradas, PedidoItens } from 'src/app/class/pedido';
+import { DataService } from 'src/app/services/data/data.service';
 
 @Component({
   selector: 'app-produto-adicionar-sacola',
@@ -29,6 +30,13 @@ export class ProdutoAdicionarSacolaPage implements OnInit {
   // Produto e depositos de retirada
   public produto = new Produto();
   public depositos: ProdutoDepositoRetirada[] = [];
+  public showDepositos = false;
+
+  // Dados do TMS
+  public dadosRetornoTMS: any[] = [];
+  public vendedorSelecionado: any;
+  public opcaoSelecionada: any;
+  public loadingTMS = false;
 
   // Controle de adicionar a sacola
   private entregaTMSselecionada = false;
@@ -45,6 +53,7 @@ export class ProdutoAdicionarSacolaPage implements OnInit {
   constructor(
     private activatedRoute: ActivatedRoute,
     private navControl: NavController,
+    private dataService: DataService,
     public common: CommonService,
     public pedidoS: PedidoService,
     private pedidoIt: PedidoItemService,
@@ -54,8 +63,8 @@ export class ProdutoAdicionarSacolaPage implements OnInit {
 
   ngOnInit() {
     this.slides.lockSwipes(true);
+    this.produto = this.dataService.getData('produto-adicionar-sacola');
     this.activatedRoute.queryParams.subscribe((params: any) => {
-      this.produto = JSON.parse(params.produto);
       this.navParams = params;
     });
   }
@@ -79,8 +88,11 @@ export class ProdutoAdicionarSacolaPage implements OnInit {
       String(this.pedidoS.pedidoHeader.numpedido)
     ).then((result: any) => {
       this.depositos = result;
+      this.showDepositos = true;
       console.log('depositos');
       console.log(result);
+    }, () => {
+      this.showDepositos = true;
     });
   }
 
@@ -92,6 +104,26 @@ export class ProdutoAdicionarSacolaPage implements OnInit {
     this.slides.lockSwipes(false);
     this.slides.slideTo(slide);
     this.slides.lockSwipes(true);
+    this.atualizaBySlide();
+  }
+
+  atualizaBySlide() {
+    this.slides.getActiveIndex().then((result: number) => {
+      switch (result) {
+        case 0:
+
+          break;
+
+        case 1:
+          setTimeout(() => {
+            this.inputTMS.setFocus();
+          }, 200);
+          break;
+
+        default:
+          break;
+      }
+    });
   }
 
 
@@ -115,7 +147,7 @@ export class ProdutoAdicionarSacolaPage implements OnInit {
       if (this.depositos[el].qtdPedido > 0) {
         return true;
       }
-    };
+    }
   }
 
   zeroQtd() {
@@ -143,26 +175,12 @@ export class ProdutoAdicionarSacolaPage implements OnInit {
           break;
 
         default:
+          this.navControl.navigateRoot('pedido-sacola');
           break;
       }
     } else {
       this.navControl.navigateRoot('pedido-sacola');
     }
-    // this.navCtrl.push("PedidoSacola");
-    // if (this.type == "N") {
-    //   // this.mode = 0;
-    //   this.commonServices.exibeBotaoComprar = true;
-    //   this.navCtrl.push("ProdutoLista", {
-    //     basket: this.existQtdBasket,
-    //     mode: 0
-    //   });
-    // } else if (this.pedidoRapido) {
-    //   this.navCtrl.pop();
-    // } else {
-    //   this.openPedidoSacola();
-    // }
-
-    // this.navControl.pop();
   }
 
   async adicionarLocal(depositos: ProdutoDepositoRetirada[]) {
@@ -181,9 +199,9 @@ export class ProdutoAdicionarSacolaPage implements OnInit {
 
         this.retiradas.push(retirada);
       }
-    };
+    }
     this.pedidoItens.retiradas = this.retiradas;
-    this.pedidoIt.addItemPedido(this.pedidoItens).then((result) => {
+    await this.pedidoIt.addItemPedido(this.pedidoItens).then((result) => {
       console.log('Resultado');
       console.log(result);
       this.prosseguir();
@@ -200,7 +218,7 @@ export class ProdutoAdicionarSacolaPage implements OnInit {
       if (enderecos[el].id.sequencialId === seq) {
         return enderecos[el];
       }
-    };
+    }
   }
 
   async getOpcoes(qtd: number) {
@@ -215,21 +233,25 @@ export class ProdutoAdicionarSacolaPage implements OnInit {
     const sequen = this.pedidoS.pedidoHeader.seqEnderecoEntrega;
     const ende = await this.ende(sequen, enderecos);
 
+    this.loadingTMS = true;
     this.tms.getOpcoesTMS(
       ende, String(qtd), this.produto.codigodigitoembalagem, precolocal
     ).then((result: any) => {
+      this.dadosRetornoTMS = result;
+      this.loadingTMS = false;
       console.log('opcoes entrega');
       console.log(result);
 
       // by Helio 09/01/2020
       // Seleciona automaticamente caso exista apenas uma opção de entrega
       if (result.length === 1) {
-        // this.vendedorSelecionado = this.dadosTMS[0];
-        // if (this.vendedorSelecionado.opcoes.length == 1) {
-        // this.opcSelecionada = this.vendedorSelecionado.opcoes[0]
-        // }
+        this.vendedorSelecionado = this.dadosRetornoTMS[0];
+        if (this.vendedorSelecionado.opcoes.length == 1) {
+          this.opcaoSelecionada = this.vendedorSelecionado.opcoes[0];
+        }
       }
     }, (error) => {
+      this.loadingTMS = false;
       console.log(error);
     });
   }

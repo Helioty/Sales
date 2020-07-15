@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { ModalController } from '@ionic/angular';
 
 @Component({
   selector: 'app-selecionar-endereco',
@@ -7,8 +8,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SelecionarEnderecoComponent implements OnInit {
 
-  constructor() { }
+  // Data passed in by componentProps
+  @Input() firstName: string;
+  @Input() lastName: string;
+
+  constructor(
+    private modalCtrl: ModalController
+  ) { }
 
   ngOnInit() { }
+
+  close() {
+    this.modalCtrl.dismiss({
+      existePesquisa: true,
+      retorna: 'retorno aqui!'
+    });
+  }
 
 }

@@ -125,7 +125,20 @@ export class EnderecoEntregaPage implements OnInit {
     });
   }
 
-  async prosseguir() {
+  // by Helio 15/07/2020
+  async selecionaEndereco(end: any) {
+    await this.common.showLoader();
+    this.pedidoService.selecionaEndereco(end).then(() => {
+      console.log('ENDEREÇO SELECIONADO');
+      this.common.loading.dismiss();
+      this.prosseguir();
+    }, (error) => {
+      this.common.loading.dismiss();
+      console.log(error);
+    });
+  }
+
+  prosseguir() {
     let paginaSeguinte: any;
     this.activatedRoute.queryParams.subscribe((params: any) => {
       paginaSeguinte = params.paginaSeguinte;

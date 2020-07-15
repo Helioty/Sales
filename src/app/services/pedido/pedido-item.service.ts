@@ -86,16 +86,6 @@ export class PedidoItemService {
         console.log(error);
       });
     });
-    // try {
-
-
-    //   this.commonServices.ItensPedidoAdd = resut;
-
-    //   this.addItem(resut.numitens);
-    //   // this.commonServices.showToast(resut);
-    // } catch (error) {
-    //   this.commonServices.showToast(error.json().detail);
-    // }
   }
 
 }

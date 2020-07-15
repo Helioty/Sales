@@ -4,6 +4,7 @@ import { CommonService } from 'src/app/services/common/common.service';
 import { PedidoService } from 'src/app/services/pedido/pedido.service';
 import { PedidoItemService } from 'src/app/services/pedido/pedido-item.service';
 import { ProdutoService } from 'src/app/services/produto/produto.service';
+import { DataService } from 'src/app/services/data/data.service';
 import { NavigationExtras } from '@angular/router';
 
 @Component({
@@ -25,6 +26,7 @@ export class PedidoSacolaPage implements OnInit {
 
   constructor(
     private alertCtrl: AlertController,
+    private dataService: DataService,
     private common: CommonService,
     public pedido: PedidoService,
     public pedidoIt: PedidoItemService,
@@ -197,10 +199,10 @@ export class PedidoSacolaPage implements OnInit {
     const navigationExtras: NavigationExtras = {
       queryParams: {
         paginaSeguinte: 'back',
-        paginaAnterior: 'pedido-sacola',
-        produto: JSON.stringify(prod)
+        paginaAnterior: 'pedido-sacola'
       }
     };
+    this.dataService.setData('produto-adicionar-sacola', prod);
     this.navControl.navigateForward(['/produto-adicionar-sacola'], navigationExtras);
   }
 

@@ -160,8 +160,8 @@ export class ProdutoPage implements OnInit {
       console.log('Familia do produto');
       console.log(result);
       this.produtoFamilia = result;
-      for (var i in result) {
-        for (var x in result[i].items) {
+      for (const i in result) {
+        for (const x in result[i].items) {
           result[i].qtdItems = x + 1;
 
           if (result[i].items[x].selected == 1 && result[i].items[x].id_produto == this.produto.codigodigitoembalagem) {
@@ -233,10 +233,10 @@ export class ProdutoPage implements OnInit {
     const navigationExtras: NavigationExtras = {
       queryParams: {
         paginaSeguinte: 'pedido-sacola',
-        paginaAnterior: 'produto',
-        produto: JSON.stringify(prod)
+        paginaAnterior: 'produto'
       }
     };
+    this.dataService.setData('produto-adicionar-sacola', prod);
     this.navControl.navigateForward(['/produto-adicionar-sacola'], navigationExtras);
   }
 

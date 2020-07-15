@@ -28,13 +28,19 @@
           </ion-col>
         </ion-row>
 
-        <ion-row class="opcao-entrega">
+        <ion-row class="opcao-entrega" *ngIf="pedidoS.tipoRetirada == 'ENTREGA'">
           <ion-col size="12">
             <ion-item button detail (click)="goToSlide(1)" lines="none">
               <p>
                 VER OPÇÕES DE ENTREGA
               </p>
             </ion-item>
+          </ion-col>
+        </ion-row>
+
+        <ion-row *ngIf="depositos.length == 0 && !showDepositos">
+          <ion-col size="12">
+            <ion-spinner></ion-spinner>
           </ion-col>
         </ion-row>
 
@@ -111,11 +117,68 @@
           </ion-col>
         </ion-row>
 
-        <ion-row>
+        <ion-row class="opcao-entrega">
           <ion-col size="12">
             <ion-item lines="none">
-              <ion-input #inputTMS [(ngModel)]="inputTMSvalue"></ion-input>
+              <ion-label position="stacked">Quantidade</ion-label>
+              <ion-input #inputTMS type="number" [(ngModel)]="inputTMSvalue" (keyup.enter)="getOpcoes(inputTMSvalue)">
+              </ion-input>
             </ion-item>
+          </ion-col>
+        </ion-row>
+
+        <ion-row *ngIf="loadingTMS">
+          <ion-col size="12">
+            <ion-spinner></ion-spinner>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col size="12">
+            <ion-row class="opcoesTMS" *ngFor="let vendedor of dadosRetornoTMS">
+              <ion-col size="12">
+                <ion-list lines="none">
+                  <ion-radio-group [(ngModel)]="vendedorSelecionado">
+                    <ion-item class="item-vendedor">
+                      <ion-note slot="start">
+                        {{ vendedor.fantasia }}
+                      </ion-note>
+
+                      <ion-label>{{ vendedor.preco | formatarString: 'VALOR' }}</ion-label>
+
+                      <ion-radio slot="end" [value]="vendedor"></ion-radio>
+                    </ion-item>
+                  </ion-radio-group>
+                </ion-list>
+              </ion-col>
+
+              <ion-col size="12"
+                *ngIf="vendedorSelecionado.fantasia && vendedorSelecionado.fantasia == vendedor.fantasia">
+                <ion-row *ngFor="let opcao of vendedor.opcoes; let i = index">
+                  <ion-col size="12" style="padding-bottom: 0 !important;">
+                    <ion-list lines="none">
+                      <ion-radio-group [(ngModel)]="opcaoSelecionada">
+                        <ion-item class="item-opcao">
+                          <ion-note slot="start">
+                            {{ opcao.descricaoTipoEntrega }} ({{ opcao.prazo_entrega }})
+                          </ion-note>
+
+                          <ion-label>
+                            <span *ngIf="opcao.valorFreteCalculado == 0.0 || opcao.valorFreteCalculado == 0"
+                              class="precoEntregaFree">GRÁTIS</span>
+                            <span *ngIf="opcao.valorFreteCalculado != 0.0 && opcao.valorFreteCalculado != 0">
+                              {{ opcao.valorTotalFreteCalculado | formatarString: 'VALOR' }}
+                            </span>
+                          </ion-label>
+
+                          <ion-radio slot="end" [value]="opcao"></ion-radio>
+                        </ion-item>
+                      </ion-radio-group>
+                    </ion-list>
+                  </ion-col>
+                </ion-row>
+              </ion-col>
+            </ion-row>
           </ion-col>
         </ion-row>
       </ion-grid>

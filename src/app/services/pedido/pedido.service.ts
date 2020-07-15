@@ -50,7 +50,7 @@ export class PedidoService {
 
   // Verdadeiro se o pedido em manutenção tiver um endereco selecionado.
   public enderecoSelected = false;
-  public sequencialEndereco = 0;
+  public sequencialEndereco: number = null;
 
   constructor(
     private alertCtrl: AlertController,
@@ -73,8 +73,11 @@ export class PedidoService {
     this.cardSelected = false;
     this.codigoCartaoPedido = '';
 
-    this.valorFrete = 0;
+    // Limpando endereco de entrega
     this.enderecoSelected = false;
+    this.sequencialEndereco = null;
+
+    this.valorFrete = 0;
 
     this.alteracaoItemPedido = false;
     this.digitoPedido = null;
@@ -164,7 +167,7 @@ export class PedidoService {
 
   // by Hélio 11/03/2020
   public async alterarTipoRetirada(retirada: string) {
-    if (retirada !== this.codigoTipoRetirada) {
+    if (retirada === this.codigoTipoRetirada) {
       const aResult: any = await this.atualizaPedido(
         'entrega',
         this.opcaoRetirada[retirada]
@@ -179,7 +182,8 @@ export class PedidoService {
         this.numPedido;
 
       return new Promise((resolve, reject) => {
-        this.baseService.post(link, aResult).then(() => {
+        this.baseService.post(link, aResult).then((result: any) => {
+          this.atualizaPedidoHeader(result);
           resolve();
         }, (error: any) => {
           console.log(error);
@@ -323,6 +327,27 @@ export class PedidoService {
     await this.baseService.post(link, {}).then(() => {
       this.limpaDadosPedido();
       this.common.showToast('Pedido apagado!');
+    }, (error: any) => {
+      console.log(error);
+    });
+  }
+
+  // by Helio 15/07/2020
+  public async selecionaEndereco(endereco) {
+    const aResult: any = await this.atualizaPedido('seq_endereco_entrega', endereco.id.sequencialId);
+
+    const link =
+      ENV.WS_VENDAS +
+      API_URL +
+      'PedidoVenda/update/' +
+      localStorage.getItem('empresa') +
+      '/' +
+      this.numPedido;
+
+    await this.baseService.post(link, aResult).then((result: any) => {
+      this.atualizaPedidoHeader(result);
+      this.enderecoSelected = true;
+      this.sequencialEndereco = this.pedidoHeader.seqEnderecoEntrega;
     }, (error: any) => {
       console.log(error);
     });
