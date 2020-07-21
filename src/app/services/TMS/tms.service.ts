@@ -49,7 +49,6 @@ export class TMSService {
 
     //   // atualizando pedido para o tipo entrega // 31/01/2020
     //   await this.atualizarPedidoHearder();
-
     //   this.opcSelecionada.dataPrevista = null;
 
     return new Promise((resolve, reject) => {

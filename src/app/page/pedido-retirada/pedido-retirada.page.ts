@@ -42,7 +42,9 @@ export class PedidoRetiradaPage implements OnInit {
     this.pedidoService.codigoTipoRetirada = tipoRetirada;
     this.pedidoService.tipoRetirada = this.pedidoService.opcaoRetirada[tipoRetirada];
 
+    await this.common.showLoader();
     await this.pedidoService.alterarTipoRetirada(tipoRetirada).then(() => {
+      this.common.loading.dismiss();
       // by Ryuge 14/11/2019
       // edit by Helio 14/02/2020
       if (this.pedidoService.tipoRetirada === 'ENTREGA') {
@@ -57,6 +59,7 @@ export class PedidoRetiradaPage implements OnInit {
         this.navControl.navigateRoot(['/pedido-atalhos']);
       }
     }, (error) => {
+      this.common.loading.dismiss();
       console.log(error);
     });
   }

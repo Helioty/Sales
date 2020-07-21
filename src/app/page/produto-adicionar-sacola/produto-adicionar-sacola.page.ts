@@ -157,7 +157,7 @@ export class ProdutoAdicionarSacolaPage implements OnInit {
   async adicionar() {
     // Chama a gravação do TMS
     if (this.entregaTMSselecionada && this.inputTMSvalue > 0) {
-      await this.adicionarComTMS();
+      await this.adicionarComTMS(this.inputTMSvalue, this.produto);
     }
     //  Chama a gracação da retirada em Loja
     if (this.validaQtdRetiradaLoja()) {
@@ -208,10 +208,15 @@ export class ProdutoAdicionarSacolaPage implements OnInit {
     });
   }
 
-  async adicionarComTMS() {
+  async adicionarComTMS(qtd: number, prod: any) {
+    await this.tms.gravaOpcoesTMS(
+      String(this.pedidoS.pedidoHeader.numpedido), String(qtd), this.produto.codigodigitoembalagem, prod.conversao
+    ).then((result: any) => {
 
+    }, (error) => {
+      console.log(error);
+    });
   }
-
 
   async ende(seq: any, enderecos: any[]) {
     for (const el in enderecos) {
@@ -248,6 +253,7 @@ export class ProdutoAdicionarSacolaPage implements OnInit {
         this.vendedorSelecionado = this.dadosRetornoTMS[0];
         if (this.vendedorSelecionado.opcoes.length == 1) {
           this.opcaoSelecionada = this.vendedorSelecionado.opcoes[0];
+          this.entregaTMSselecionada = true;
         }
       }
     }, (error) => {
