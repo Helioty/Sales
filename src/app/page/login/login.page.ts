@@ -2,11 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { MenuController, Platform, NavController } from '@ionic/angular';
 import { Router } from '@angular/router';
 
+import { AppConfigService, API_URL } from 'src/app/config/app.config.service';
 import { CommonService } from 'src/app/services/common/common.service';
 import { AuthService } from 'src/app/services/auth/auth.service';
-
 import { ENV } from 'src/environments/environment';
-import { AppConfigService, API_URL } from 'src/app/config/app.config.service';
 import { AppComponent } from '../../app.component';
 
 @Component({
@@ -71,13 +70,9 @@ export class LoginPage implements OnInit {
     this.common.goToFullScreen();
   }
 
-  ionViewWillLeave() {
+  ionViewWillLeave() { }
 
-  }
-
-  ionViewDidLeave() {
-
-  }
+  ionViewDidLeave() { }
 
   showVersion() {
     this.common.showVersion();

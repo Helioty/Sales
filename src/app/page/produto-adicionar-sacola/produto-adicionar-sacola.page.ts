@@ -50,6 +50,9 @@ export class ProdutoAdicionarSacolaPage implements OnInit {
   // Controle de navegacao
   private navParams: any;
 
+  // Controla a gravação da opção de TMS para poder prosseguir
+  private statusGravacao = false;
+
   constructor(
     private activatedRoute: ActivatedRoute,
     private navControl: NavController,
@@ -163,7 +166,9 @@ export class ProdutoAdicionarSacolaPage implements OnInit {
     if (this.validaQtdRetiradaLoja()) {
       await this.adicionarLocal(this.depositos);
     } else {
-      this.prosseguir();
+      if (this.statusGravacao) {
+        this.prosseguir();
+      }
     }
   }
 
@@ -211,9 +216,10 @@ export class ProdutoAdicionarSacolaPage implements OnInit {
   async adicionarComTMS(qtd: number, prod: any) {
     await this.tms.gravaOpcoesTMS(
       String(this.pedidoS.pedidoHeader.numpedido), String(qtd), this.produto.codigodigitoembalagem, prod.conversao
-    ).then((result: any) => {
-
+    ).then(() => {
+      this.statusGravacao = true;
     }, (error) => {
+      this.statusGravacao = false;
       console.log(error);
     });
   }
@@ -234,7 +240,12 @@ export class ProdutoAdicionarSacolaPage implements OnInit {
       precolocal = 'N';
     }
 
-    const enderecos = this.pedidoS.dadosCliente.enderecos;
+    let enderecos: any;
+    await this.pedidoS.retornaDadosCliente().then(() => {
+      enderecos = this.pedidoS.dadosCliente.enderecos;
+    }, () => {
+      return this.getOpcoes(qtd);
+    });
     const sequen = this.pedidoS.pedidoHeader.seqEnderecoEntrega;
     const ende = await this.ende(sequen, enderecos);
 

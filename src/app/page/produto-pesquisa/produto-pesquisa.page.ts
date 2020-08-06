@@ -46,9 +46,7 @@ export class ProdutoPesquisaPage implements OnInit {
     private platform: Platform,
   ) { }
 
-  ngOnInit() {
-
-  }
+  ngOnInit() { }
 
   ionViewWillEnter() {
     this.focusOn();
@@ -63,9 +61,7 @@ export class ProdutoPesquisaPage implements OnInit {
     this.focusOff();
   }
 
-  ionViewDidLeave() {
-
-  }
+  ionViewDidLeave() { }
 
   // Cria o loop que da foco no input
   focusOn() {
