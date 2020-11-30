@@ -3,7 +3,6 @@ import { Pipe, PipeTransform } from '@angular/core';
 @Pipe({
   name: 'formatarString'
 })
-
 export class FormatarStringPipe implements PipeTransform {
   transform(value: any, ...args) {
     const filter = args[0];

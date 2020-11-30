@@ -111,7 +111,7 @@ export class PedidoRapidoPage implements OnInit {
 
   // by Ryuge
   // edit by Helio 10/03/2020
-  addItem(codigo: string) {
+  addItem(codigo: string | number) {
     // by Ryuge 27/11/2019 - Não permitir gravar item com pedido = '0';
     if (this.pedido.numPedido !== '0' || this.pedido.numPedido !== undefined) {
       const tipo = this.pedido.codigoTipoRetirada;
@@ -126,13 +126,13 @@ export class PedidoRapidoPage implements OnInit {
       this.pedidoItens.idEmpresa = parseInt(localStorage.getItem('empresa'));
       // tslint:disable-next-line: radix
       this.pedidoItens.numPedido = parseInt(this.pedido.numPedido);
-      this.pedidoItens.idProduto = codigo;
+      this.pedidoItens.idProduto = String(codigo);
       this.pedidoItens.embalagem = 0;
       this.pedidoItens.qtdTotal = 0;
       this.pedidoItens.prcUnitario = 0;
       this.pedidoItens.prcTotal = 0;
 
-      this.adicionarSacola(tipo, valor, codigo);
+      this.adicionarSacola(tipo, valor, String(codigo));
     }
   }
 

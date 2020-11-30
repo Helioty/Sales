@@ -1,10 +1,9 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Routes, RouterModule } from '@angular/router';
-import { PipesModule } from 'src/app/pipes/pipes.module';
+import { RouterModule, Routes } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
-
+import { PipesModule } from 'src/app/pipes/pipes.module';
 import { FormasPagamentoPage } from './formas-pagamento.page';
 
 const routes: Routes = [
@@ -24,4 +23,4 @@ const routes: Routes = [
   ],
   declarations: [FormasPagamentoPage]
 })
-export class FormasPagamentoPageModule {}
+export class FormasPagamentoPageModule { }

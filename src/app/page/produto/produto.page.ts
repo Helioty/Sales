@@ -164,9 +164,9 @@ export class ProdutoPage implements OnInit {
         for (const x in result[i].items) {
           result[i].qtdItems = x + 1;
 
-          if (result[i].items[x].selected == 1 && result[i].items[x].id_produto == this.produto.codigodigitoembalagem) {
+          if (result[i].items[x].selected === 1 && result[i].items[x].id_produto === this.produto.codigodigitoembalagem) {
             result[i].valor = result[i].items[x].valor_atributo;
-            console.log("Valor da familia")
+            console.log('Valor da familia');
             console.log(result[i].valor);
             this.familiaSelecionada = result[i].items[x].valor_atributo;
           } else {
@@ -223,7 +223,7 @@ export class ProdutoPage implements OnInit {
   }
 
   async getImage(codigoDigitoEmb: string) {
-    console.log(codigoDigitoEmb)
+    console.log(codigoDigitoEmb);
     await this.produtoS.getFirstImage(codigoDigitoEmb).then((result: any) => {
       this.produto.imagem = result[0].imageGrande;
     });

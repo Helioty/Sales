@@ -30,7 +30,7 @@ export class ProdutoPesquisaPage implements OnInit {
   public inputFoco = 0;
 
   // propriedades da pesquisa
-  public soComEstoque: boolean = true;
+  public soComEstoque = true;
   public p1 = 1;
   public p2 = 20;
 

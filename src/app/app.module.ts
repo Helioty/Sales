@@ -11,7 +11,6 @@ import { Network } from '@ionic-native/network/ngx';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
-import { HideKeyboardModule } from 'hide-keyboard';
 import { AppConfigService } from 'src/app/config/app.config.service';
 import { ENV, environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
@@ -22,13 +21,11 @@ console.log(ENV.mode);
 
 @NgModule({
   declarations: [AppComponent],
-  entryComponents: [],
   imports: [
     BrowserModule,
     HttpClientModule,
     IonicModule.forRoot(),
     AppRoutingModule,
-    HideKeyboardModule,
     ReactiveFormsModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     ServicesModule,

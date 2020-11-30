@@ -44,9 +44,9 @@ export class PedidoFinalizacaoPage implements OnInit {
     private platform: Platform,
   ) { }
 
-  ngOnInit() {
+  ngOnInit() { }
 
-  }
+  adicionarCartaoPedido() { }
 
   ionViewWillEnter() {
     console.log('ionViewWillEnter');
