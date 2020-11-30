@@ -11,7 +11,7 @@ const routes: Routes = [
   },
   {
     path: 'login',
-    loadChildren: './page/login/login.module#LoginPageModule'
+    loadChildren: () => import('./page/login/login.module').then(m => m.LoginPageModule)
   },
   {
     path: 'pedido-lista',
@@ -20,44 +20,44 @@ const routes: Routes = [
   },
   {
     path: 'pedido-resumo',
-    loadChildren: './page/pedido-lista/pedido-resumo/pedido-resumo.module#PedidoResumoPageModule',
+    loadChildren: () => import('./page/pedido-lista/pedido-resumo/pedido-resumo.module').then(m => m.PedidoResumoPageModule),
     canActivate: [AuthGuard]
   },
   {
     path: 'pedido-retirada',
-    loadChildren: './page/pedido-retirada/pedido-retirada.module#PedidoRetiradaPageModule',
+    loadChildren: () => import('./page/pedido-retirada/pedido-retirada.module').then(m => m.PedidoRetiradaPageModule),
     canActivate: [AuthGuard]
   },
   {
     path: 'pedido-atalhos',
-    loadChildren: './page/pedido-atalhos/pedido-atalhos.module#PedidoAtalhosPageModule',
+    loadChildren: () => import('./page/pedido-atalhos/pedido-atalhos.module').then(m => m.PedidoAtalhosPageModule),
     canActivate: [AuthGuard]
   },
   {
     path: 'pedido-sacola',
-    loadChildren: './page/pedido-sacola/pedido-sacola.module#PedidoSacolaPageModule',
+    loadChildren: () => import('./page/pedido-sacola/pedido-sacola.module').then(m => m.PedidoSacolaPageModule),
     canActivate: [AuthGuard]
   },
   {
     path: 'pedido-rapido',
-    loadChildren: './page/pedido-rapido/pedido-rapido.module#PedidoRapidoPageModule',
+    loadChildren: () => import('./page/pedido-rapido/pedido-rapido.module').then(m => m.PedidoRapidoPageModule),
     canActivate: [AuthGuard]
   },
 
 
   {
     path: 'produto-pesquisa',
-    loadChildren: './page/produto-pesquisa/produto-pesquisa.module#ProdutoPesquisaPageModule',
+    loadChildren: () => import('./page/produto-pesquisa/produto-pesquisa.module').then(m => m.ProdutoPesquisaPageModule),
     canActivate: [AuthGuard]
   },
   {
     path: 'produto',
-    loadChildren: './page/produto/produto.module#ProdutoPageModule',
+    loadChildren: () => import('./page/produto/produto.module').then(m => m.ProdutoPageModule),
     canActivate: [AuthGuard]
   },
   {
     path: 'produto-imagens',
-    loadChildren: './page/produto/produto-imagens/produto-imagens.module#ProdutoImagensPageModule',
+    loadChildren: () => import('./page/produto/produto-imagens/produto-imagens.module').then(m => m.ProdutoImagensPageModule),
     canActivate: [AuthGuard]
   },
   {
@@ -67,23 +67,23 @@ const routes: Routes = [
   },
   {
     path: 'produto-adicionar-sacola',
-    loadChildren: './page/produto-adicionar-sacola/produto-adicionar-sacola.module#ProdutoAdicionarSacolaPageModule',
+    loadChildren: () => import('./page/produto-adicionar-sacola/produto-adicionar-sacola.module').then(m => m.ProdutoAdicionarSacolaPageModule),
     canActivate: [AuthGuard]
   },
 
   {
     path: 'new-tms',
-    loadChildren: './page/new-tms/new-tms.module#NewTMSPageModule'
+    loadChildren: () => import('./page/new-tms/new-tms.module').then(m => m.NewTMSPageModule)
   },
   {
     path: 'indicador-vendedor',
-    loadChildren: './page/indicador-vendedor/indicador-vendedor.module#IndicadorVendedorPageModule'
+    loadChildren: () => import('./page/indicador-vendedor/indicador-vendedor.module').then(m => m.IndicadorVendedorPageModule)
   },
 
 
   {
     path: 'endereco-entrega',
-    loadChildren: './page/endereco-entrega/endereco-entrega.module#EnderecoEntregaPageModule',
+    loadChildren: () => import('./page/endereco-entrega/endereco-entrega.module').then(m => m.EnderecoEntregaPageModule),
     canActivate: [AuthGuard, ListaEnderecoGuard]
   },
   {
@@ -92,18 +92,18 @@ const routes: Routes = [
   },
   {
     path: 'pedido-finalizacao',
-    loadChildren: './page/pedido-finalizacao/pedido-finalizacao.module#PedidoFinalizacaoPageModule',
+    loadChildren: () => import('./page/pedido-finalizacao/pedido-finalizacao.module').then(m => m.PedidoFinalizacaoPageModule),
     canActivate: [AuthGuard]
   },
   {
     path: 'consulta-cep/:mode',
-    loadChildren: './page/consulta-cep/consulta-cep.module#ConsultaCepPageModule'
+    loadChildren: () => import('./page/consulta-cep/consulta-cep.module').then(m => m.ConsultaCepPageModule)
   },
 
 
   {
     path: 'cliente',
-    loadChildren: './page/cliente/cliente.module#ClientePageModule',
+    loadChildren: () => import('./page/cliente/cliente.module').then(m => m.ClientePageModule),
     canActivate: [AuthGuard]
   },
   {
@@ -115,21 +115,21 @@ const routes: Routes = [
 
   {
     path: 'tinta-alterada',
-    loadChildren: './page/tinta-alterada/tinta-alterada.module#TintaAlteradaPageModule'
+    loadChildren: () => import('./page/tinta-alterada/tinta-alterada.module').then(m => m.TintaAlteradaPageModule)
   },
   {
     path: 'lista-tintas',
-    loadChildren: './page/tinta-alterada/lista-tintas/lista-tintas.module#ListaTintasPageModule'
+    loadChildren: () => import('./page/tinta-alterada/lista-tintas/lista-tintas.module').then(m => m.ListaTintasPageModule)
   },
 
   {
     path: 'formas-pagamento',
-    loadChildren: './page/formas-pagamento/formas-pagamento.module#FormasPagamentoPageModule',
+    loadChildren: () => import('./page/formas-pagamento/formas-pagamento.module').then(m => m.FormasPagamentoPageModule),
     canActivate: [AuthGuard]
   },
   {
     path: 'parcelamento',
-    loadChildren: './page/formas-pagamento/parcelamento/parcelamento.module#ParcelamentoPageModule',
+    loadChildren: () => import('./page/formas-pagamento/parcelamento/parcelamento.module').then(m => m.ParcelamentoPageModule),
     canActivate: [AuthGuard]
   },
 
@@ -138,7 +138,7 @@ const routes: Routes = [
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })
+    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules, relativeLinkResolution: 'legacy' })
   ],
   exports: [RouterModule]
 })

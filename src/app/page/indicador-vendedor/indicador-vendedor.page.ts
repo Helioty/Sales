@@ -8,10 +8,10 @@ import * as Chart from 'chart.js';
 })
 export class IndicadorVendedorPage implements OnInit {
 
-  @ViewChild('barCanvas', { static: false }) barCanvas: ElementRef;
-  @ViewChild('doughnutCanvas', { static: false }) doughnutCanvas: ElementRef;
-  @ViewChild('lineCanvas', { static: false }) lineCanvas: ElementRef;
-  @ViewChild('mixedCanvas', { static: false }) mixedCanvas: ElementRef;
+  @ViewChild('barCanvas') barCanvas: ElementRef;
+  @ViewChild('doughnutCanvas') doughnutCanvas: ElementRef;
+  @ViewChild('lineCanvas') lineCanvas: ElementRef;
+  @ViewChild('mixedCanvas') mixedCanvas: ElementRef;
 
   public barChart: Chart;
   public doughnutChart: Chart;

@@ -1,5 +1,5 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { NewTMSPage } from './new-tms.page';
 
@@ -7,7 +7,7 @@ describe('NewTMSPage', () => {
   let component: NewTMSPage;
   let fixture: ComponentFixture<NewTMSPage>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ NewTMSPage ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],

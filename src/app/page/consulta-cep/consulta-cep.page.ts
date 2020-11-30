@@ -17,7 +17,7 @@ export class ConsultaCepPage implements OnInit {
 
   @ViewChild(IonSlides, { static: true }) slides: IonSlides;
 
-  @ViewChild('mapElement', { static: false }) mapElement: { nativeElement: any; };
+  @ViewChild('mapElement') mapElement: { nativeElement: any; };
 
   public map: any;
   // public start: string;
@@ -31,7 +31,7 @@ export class ConsultaCepPage implements OnInit {
   // public latLng: any;
 
 
-  @ViewChild('searchbar', { static: false }) searchbar: IonSearchbar;
+  @ViewChild('searchbar') searchbar: IonSearchbar;
   public autoCompleteList: any[] = [];
   public markers: any[] = [];
 

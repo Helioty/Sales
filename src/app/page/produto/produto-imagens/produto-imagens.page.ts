@@ -12,7 +12,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ProdutoImagensPage implements OnInit {
 
-  @ViewChild('imgSlides', { static: false }) slides: IonSlides;
+  @ViewChild('imgSlides') slides: IonSlides;
 
   public imagens = [];
 
