@@ -48,16 +48,19 @@ export class PedidoAtalhosPage implements OnInit {
 
   // Cria o loop que da foco no input
   focusOn() {
-    if (this.platform.is('cordova')) {
-      this.taskScanner = setInterval(() => {
-        try {
-          this.valorScanner = '';
-          if (this.focusStatus) {
-            document.getElementById('scanner').focus();
+    this.taskScanner = setInterval(() => {
+      try {
+        this.valorScanner = '';
+        if (this.focusStatus) {
+          const scanners = document.body.getElementsByClassName('scanner');
+          for (const i in scanners) {
+            if (Number(i) === (scanners.length - 1)) {
+              (scanners[i] as HTMLInputElement).focus();
+            }
           }
-        } catch (error) { }
-      }, 300);
-    }
+        }
+      } catch (error) { }
+    }, 350);
   }
 
   focusPlay() {
@@ -66,13 +69,17 @@ export class PedidoAtalhosPage implements OnInit {
 
   focusPause() {
     this.focusStatus = false;
+    const scanners = document.body.getElementsByClassName('scanner');
+    for (const i in scanners) {
+      if (Number(i) === (scanners.length - 1)) {
+        (scanners[i] as HTMLInputElement).blur();
+      }
+    }
   }
 
   // Encerra o loop de foco no input
   focusOff() {
-    setTimeout(() => {
-      clearInterval(this.taskScanner);
-    }, 150);
+    clearInterval(this.taskScanner);
   }
 
   scaneado(evento: any) {
