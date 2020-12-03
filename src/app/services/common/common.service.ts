@@ -8,10 +8,10 @@ import { AppVersion } from '@ionic-native/app-version/ngx';
 })
 export class CommonService {
 
-  public loading: any;
+  public loading: HTMLIonLoadingElement;
 
-  public appName = '';
-  public version = '';
+  public appName = 'VENDAS';
+  public version = '0.0.1';
 
   constructor(
     private androidFullScreen: AndroidFullScreen,
@@ -22,7 +22,6 @@ export class CommonService {
     private platform: Platform
   ) { }
 
-
   // Funções comuns
   public goToFullScreen() {
     if (this.platform.is('cordova')) {
@@ -31,7 +30,6 @@ export class CommonService {
         .catch(err => console.log(err));
     }
   }
-
 
   // Version
   async getAppName() {
@@ -66,7 +64,6 @@ export class CommonService {
     }
   }
 
-
   // Loading
   async showLoader() {
     this.loading = await this.loadingCtrl.create({
@@ -83,7 +80,6 @@ export class CommonService {
     this.loading.present();
   }
 
-
   // Toast's
   async showToast(msg: string) {
     const toast = await this.toastCtrl.create({
@@ -99,6 +95,19 @@ export class CommonService {
     toast.present();
   }
 
+  async showToastCustom(msg: string, duration: number, position: 'bottom' | 'top' | 'middle') {
+    const toast = await this.toastCtrl.create({
+      message: msg,
+      duration,
+      position,
+      buttons: [{
+        side: 'end',
+        icon: 'close',
+        role: 'cancel'
+      }]
+    });
+    toast.present();
+  }
 
   // Alert's
   async showAlert(titulo: string, msg: string) {
@@ -119,15 +128,33 @@ export class CommonService {
     await alert.present();
   }
 
-  async showAlertError(erro: string) {
+  async showAlertError(titulo: string, error: string) {
     const alert = await this.alertCtrl.create({
-      header: 'ERRO!',
-      message: erro,
-      buttons: ['OK']
+      header: titulo,
+      subHeader: this.appName + ' V: ' + this.version,
+      message: error,
+      buttons: ['OK'],
+      cssClass: 'alertError'
     });
     await alert.present();
   }
 
+  async showAlertAction(titulo: string, message: string, handler: () => void) {
+    const alert = await this.alertCtrl.create({
+      header: titulo,
+      message,
+      buttons: [{
+        text: 'CANCELAR',
+        cssClass: ['alertButtonCenter'],
+        role: 'cancel'
+      }, {
+        text: 'CONFIRMAR',
+        cssClass: ['alertButtonFcGreen', 'alertButtonCenter'],
+        handler
+      }]
+    });
+    await alert.present();
+  }
 
   // formatação de string
   public formataCEP(value: string): string {

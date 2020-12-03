@@ -1,5 +1,5 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { TintaAlteradaPage } from './tinta-alterada.page';
 
@@ -7,7 +7,7 @@ describe('TintaAlteradaPage', () => {
   let component: TintaAlteradaPage;
   let fixture: ComponentFixture<TintaAlteradaPage>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ TintaAlteradaPage ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],

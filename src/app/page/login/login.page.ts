@@ -42,7 +42,7 @@ export class LoginPage implements OnInit {
     } else {
       this.common.showToast(ENV.mode);
       this.loginData.login = 'R6543MRM';
-      this.loginData.senha = 'japa1966';
+      this.loginData.senha = 'R6543MRM';
     }
 
     if (localStorage.getItem('token')) {

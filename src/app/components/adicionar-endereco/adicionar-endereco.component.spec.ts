@@ -1,5 +1,5 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { AdicionarEnderecoComponent } from './adicionar-endereco.component';
 
@@ -7,7 +7,7 @@ describe('AdicionarEnderecoComponent', () => {
   let component: AdicionarEnderecoComponent;
   let fixture: ComponentFixture<AdicionarEnderecoComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ AdicionarEnderecoComponent ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],

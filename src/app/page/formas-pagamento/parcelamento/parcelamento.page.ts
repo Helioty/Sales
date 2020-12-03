@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Renderer } from '@angular/core';
+import { Component, OnInit, ViewChild, Renderer2 } from '@angular/core';
 import { CondicaoPagamentoService } from 'src/app/services/pagamento/condicao-pagamento.service';
 import { PedidoService } from 'src/app/services/pedido/pedido.service';
 import { CommonService } from 'src/app/services/common/common.service';
@@ -11,7 +11,7 @@ import { OpcaoParcela } from 'src/app/class/pedido';
   styleUrls: ['./parcelamento.page.scss'],
 })
 export class ParcelamentoPage implements OnInit {
-  @ViewChild(IonInput, { static: false }) input: IonInput;
+  @ViewChild(IonInput) input: IonInput;
 
   public opcoesList: any[] = [];
 
@@ -29,7 +29,7 @@ export class ParcelamentoPage implements OnInit {
     private pagamento: CondicaoPagamentoService,
     private alertCtrl: AlertController,
     private navControl: NavController,
-    private renderer: Renderer
+    private renderer: Renderer2
   ) {
     this.opcaoSelect = new OpcaoParcela();
   }
@@ -97,7 +97,7 @@ export class ParcelamentoPage implements OnInit {
   verificaEntrada(evento: any) {
     if (this.entradaValue > 0) {
       this.getCondicaoPagamentoComEntrada(this.entradaValue);
-      this.renderer.invokeElementMethod(evento.target, 'blur');
+      evento.target.blur();
     }
   }
 

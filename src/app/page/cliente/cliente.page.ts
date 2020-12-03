@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Renderer } from '@angular/core';
+import { Component, OnInit, ViewChild, Renderer2 } from '@angular/core';
 import { IonInput, NavController, AlertController, ModalController } from '@ionic/angular';
 import { PesquisaClienteComponent } from 'src/app/components/pesquisa-cliente/pesquisa-cliente.component';
 import { CommonService } from 'src/app/services/common/common.service';
@@ -14,7 +14,7 @@ import { ActivatedRoute, NavigationExtras } from '@angular/router';
 })
 export class ClientePage implements OnInit {
 
-  @ViewChild('input', { static: false }) search: IonInput;
+  @ViewChild('input') search: IonInput;
 
   // Valor digitado no input de CPF/CNPJ
   public valorDigitado = '';
@@ -47,7 +47,7 @@ export class ClientePage implements OnInit {
     private modalCtrl: ModalController,
     private navControl: NavController,
     private pedido: PedidoService,
-    private renderer: Renderer
+    private renderer: Renderer2
   ) { }
 
   ngOnInit() {
@@ -85,7 +85,7 @@ export class ClientePage implements OnInit {
   }
 
   blur(evento: any) {
-    this.renderer.invokeElementMethod(evento.target, 'blur');
+    evento.target.blur();
   }
 
   // by Helio 12/02/2020

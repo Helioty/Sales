@@ -1,5 +1,5 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { EnderecoEntregaOldPage } from './endereco-entrega-old.page';
 
@@ -7,7 +7,7 @@ describe('EnderecoEntregaOldPage', () => {
   let component: EnderecoEntregaOldPage;
   let fixture: ComponentFixture<EnderecoEntregaOldPage>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ EnderecoEntregaOldPage ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],

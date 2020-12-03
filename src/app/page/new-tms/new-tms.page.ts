@@ -85,4 +85,12 @@ export class NewTMSPage implements OnInit {
     console.log(this.dados[I]);
   }
 
+  rmQtd(i) { }
+
+  addQtd(i) { }
+
+  closeKeyboard() { }
+
+  setValue(event, i) { }
+
 }
