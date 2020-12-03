@@ -183,7 +183,7 @@ export class PedidoRapidoPage implements OnInit {
         }
       }
     } catch (error) {
-      this.common.showAlertError('erro no adicionar sacola');
+      this.common.showAlertInfo('Erro no adicionar sacola');
       // by Ryuge 28/11/2019
       if (error.status === 400) {
         // await this.showMessage(error.json().title, error.json().detail);

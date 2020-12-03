@@ -25,7 +25,7 @@
 </ion-header>
 
 <ion-content (click)="showInfo = false">
-  <input id="scanner" hideKeyboard class="scanner" [(ngModel)]="valorScanner" (keyup.enter)="scaneado($event)">
+  <input id="scanner" appHideKeyboard class="scanner" [(ngModel)]="valorScanner" (keyup.enter)="scaneado($event)">
 
   <ion-grid [hidden]="pedido.tipoRetirada == 'ENTREGA'">
     <ion-row>

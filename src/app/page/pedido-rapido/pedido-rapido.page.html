@@ -4,12 +4,12 @@
       <ion-back-button></ion-back-button>
     </ion-buttons>
 
-    <ion-title>Pedido Rapido</ion-title>
+    <ion-title>Pedido Rápido</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <input id="scanner" hideKeyboard class="scanner" [(ngModel)]="valorScanner" (keyup.enter)="scaneado($event)">
+  <input id="scanner" appHideKeyboard class="scanner" [(ngModel)]="valorScanner" (keyup.enter)="scaneado($event)">
 
   <ion-input #teste></ion-input>
   <ion-button (click)="addItem(teste.value)">teste de pedido rapido</ion-button>
@@ -20,11 +20,13 @@
         <h3>Seus produtos selecionados vão ficar aqui...</h3>
       </ion-col>
     </ion-row>
+
     <ion-row class="noImg">
       <ion-col>
         <img src="assets/images/13-pedido_rapido/pedido-rapido.png" />
       </ion-col>
     </ion-row>
+
     <ion-row class="bottomHeading">
       <ion-col>
         <h3>Sem resultados para exibir...</h3>

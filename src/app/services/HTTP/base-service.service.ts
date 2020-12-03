@@ -1,11 +1,6 @@
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { CommonService } from 'src/app/services/common/common.service';
-import { environment } from 'src/environments/environment';
-
-import { Observable, Subject, asapScheduler, pipe, of, from, interval, merge, fromEvent } from 'rxjs';
-import { map, filter, scan } from 'rxjs/operators';
-
 
 @Injectable({
   providedIn: 'root'
@@ -58,29 +53,36 @@ export class BaseService {
 
   }
 
-  showError(error: any) {
-    console.log(error);
+  showError(error: HttpErrorResponse) {
     // by Ryuge 28/11/2019
     // edit by Helio 18/03/2020
     if (error.status === 400) {
       if (error.error && error.error.detail) {
-        this.common.showAlert(error.error.title, error.error.detail);
+        this.common.showAlertError(error.error.title, error.error.detail);
       } else {
-        this.common.showAlert('Atenção!', JSON.stringify(error));
+        this.common.showAlertError('Erro desconhecido.', JSON.stringify(error));
+      }
+    } else if (error.status === 404) {
+      if (error.error && error.error.detail) {
+        this.common.showAlertError(error.error.title, error.error.detail);
+      } else if (error.error && error.error.error) {
+        this.common.showAlertError(error.error.error, error.error.message);
+      } else {
+        this.common.showAlertError('Erro desconhecido.', JSON.stringify(error));
       }
     } else if (error.status === 503) {
       if (error.error && error.error.detail) {
-        this.common.showAlert(error.error.title, error.error.detail);
+        this.common.showAlertError(error.error.title, error.error.detail);
       } else {
-        this.common.showAlert('Atenção!', JSON.stringify(error));
+        this.common.showAlertError('Erro desconhecido.', JSON.stringify(error));
       }
     } else if (error.status === 0) {
-      this.common.showAlert(error.statusText, error.message);
+      this.common.showAlertError(error.statusText, error.message);
     } else {
       if (error.error && error.error.detail) {
-        this.common.showAlert(error.error.title, error.error.detail);
+        this.common.showAlertError(error.error.title, error.error.detail);
       } else {
-        this.common.showAlert('Atenção!', JSON.stringify(error));
+        this.common.showAlertError('Erro desconhecido.', JSON.stringify(error));
       }
     }
   }

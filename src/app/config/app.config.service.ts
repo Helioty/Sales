@@ -46,7 +46,7 @@ export class AppConfigService {
         resolve(link);
       }, error => {
         console.log(error);
-        this.common.showAlertError(JSON.stringify(error));
+        this.common.showAlertError('ERROR ON GET LINK!', JSON.stringify(error));
         reject(error);
       });
     });

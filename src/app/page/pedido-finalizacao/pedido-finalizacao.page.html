@@ -17,7 +17,7 @@
 </ion-header>
 
 <ion-content>
-  <input id="scanner" hideKeyboard class="scanner" [(ngModel)]="valorScanner" (keyup.enter)="scaneado($event)">
+  <input id="scanner" appHideKeyboard class="scanner" [(ngModel)]="valorScanner" (keyup.enter)="scaneado($event)">
 
   <!-- grid com as informações do pedido -->
   <ion-grid class="grid1">

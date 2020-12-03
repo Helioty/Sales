@@ -232,8 +232,8 @@ ion-header {
         }
 
         .badge-position {
-          margin-left: 8px;
-          margin-top: 8px;
+          margin-left: 15px;
+          margin-top: 15px;
           border-radius: 50%;
           position: absolute;
           min-width: 20px;
@@ -251,5 +251,14 @@ ion-header {
 ion-searchbar[no-shadow] {
   & input {
     box-shadow: none !important;
+  }
+}
+
+.alertError {
+  color: var(--ion-color-fc-button-green) !important;
+
+  .alert-sub-title.sc-ion-alert-md {
+    font-weight: 600 !important;
+    font-size: 14px !important;
   }
 }
