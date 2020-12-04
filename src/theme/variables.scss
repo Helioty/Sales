@@ -232,11 +232,11 @@ ion-header {
         }
 
         .badge-position {
-          margin-left: 50%;
-          margin-top: 50%;
           border-radius: 50%;
           position: absolute;
           min-width: 20px;
+          bottom: 5px;
+          right: 0;
         }
       }
 
