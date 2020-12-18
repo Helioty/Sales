@@ -385,8 +385,8 @@ export class ClientePage implements OnInit {
     const modal = await this.modalCtrl.create({
       component: PesquisaClienteComponent,
       componentProps: {
-        'firstName': 'Douglas',
-        'lastName': 'Adams'
+        firstName: 'Douglas',
+        lastName: 'Adams'
       }
     });
     await modal.present();

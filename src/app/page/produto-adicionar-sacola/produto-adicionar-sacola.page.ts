@@ -193,7 +193,7 @@ export class ProdutoAdicionarSacolaPage implements OnInit {
       if (depositos[el].qtdPedido > depositos[el].estoque) {
         this.common.showToast('Estoque insuficiente');
         this.input.toArray()[el].setFocus();
-        return
+        return;
       } else if (depositos[el].qtdPedido > 0) {
         const retirada = new Retiradas();
         retirada.empresaRetirada = parseInt(depositos[el].empresa);
@@ -262,7 +262,7 @@ export class ProdutoAdicionarSacolaPage implements OnInit {
       // Seleciona automaticamente caso exista apenas uma opção de entrega
       if (result.length === 1) {
         this.vendedorSelecionado = this.dadosRetornoTMS[0];
-        if (this.vendedorSelecionado.opcoes.length == 1) {
+        if (this.vendedorSelecionado.opcoes.length === 1) {
           this.opcaoSelecionada = this.vendedorSelecionado.opcoes[0];
           this.entregaTMSselecionada = true;
         }

@@ -39,9 +39,9 @@ export class PedidoSacolaPage implements OnInit {
     this.pedidoIt.getItemPedido().then((result: any) => {
       console.log(result);
       result.content.forEach(el => {
-        if (el.retiradas[0].tipoRetirada == 9997) {
+        if (el.retiradas[0].tipoRetirada === 9997) {
           this.existeProdEntrega = true;
-        } else if (el.retiradas[0].tipoRetirada != 9997) {
+        } else if (el.retiradas[0].tipoRetirada !== 9997) {
           this.existeProdRetirada = true;
         }
       });

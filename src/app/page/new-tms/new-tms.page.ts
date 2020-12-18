@@ -63,7 +63,7 @@ export class NewTMSPage implements OnInit {
     let running = false;
 
     // Para evitar conflito entre o blur e o keyup
-    if (running) return;
+    if (running) { return; }
 
     // Bloqueia multiplas chamadas do blur e keyup
     running = true;

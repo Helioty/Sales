@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { ENV } from 'src/environments/environment';
 import { BaseService } from '../HTTP/base-service.service';
 import { API_URL } from './../../config/app.config.service';
+import { PesquisaObejct } from './Ipesquisa-produto.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -12,10 +13,10 @@ export class ProdutoPesquisaService {
     private baseService: BaseService
   ) { }
 
-  public getPesquisaDetalhada({ codEmpresa, codigo, descricao, fornecedor, modelo, linha, p1, p2, soComEstoque }: { codEmpresa: string; codigo: number; descricao: string; fornecedor: string; modelo: string; linha: string; p1: number; p2: number; soComEstoque: boolean; }) {
+  public getPesquisaDetalhada(objeto: PesquisaObejct) {
     const link = ENV.WS_PESQUISA + API_URL + 'api/pesquisa/getPesquisaDetalhada/' +
-      codEmpresa + '&' + codigo + '&' + descricao + '&' + fornecedor + '&' +
-      modelo + '&' + linha + '&' + p1 + '&' + p2 + '&' + soComEstoque;
+      objeto.codEmpresa + '&' + objeto.codigo + '&' + objeto.descricao + '&' + objeto.fornecedor + '&' +
+      objeto.modelo + '&' + objeto.linha + '&' + objeto.p1 + '&' + objeto.p2 + '&' + objeto.soComEstoque;
     console.log(link);
 
     return new Promise((resolve, reject) => {
