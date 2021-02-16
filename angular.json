@@ -38,7 +38,7 @@
                 "inject": true
               },
               {
-                "input": "src/theme/alerts.scss",
+                "input": "src/theme/common.scss",
                 "inject": true
               },
               {
