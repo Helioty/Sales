@@ -130,7 +130,7 @@ export class PedidoService {
       this.baseService.post(link, {}).then((result: any) => {
         this.atualizaPedidoHeader(result);
         console.log('Pedido criado!');
-        resolve();
+        resolve(result);
       }, (error: any) => {
         console.log(error);
         reject();
@@ -184,7 +184,7 @@ export class PedidoService {
       return new Promise((resolve, reject) => {
         this.baseService.post(link, aResult).then((result: any) => {
           this.atualizaPedidoHeader(result);
-          resolve();
+          resolve(result);
         }, (error: any) => {
           console.log(error);
           reject();

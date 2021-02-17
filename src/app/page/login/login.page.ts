@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { MenuController, Platform, NavController } from '@ionic/angular';
-import { Router } from '@angular/router';
-
-import { AppConfigService, API_URL } from 'src/app/config/app.config.service';
-import { CommonService } from 'src/app/services/common/common.service';
+import { MenuController, NavController, Platform } from '@ionic/angular';
+import { API_URL, AppConfigService } from 'src/app/config/app.config.service';
 import { AuthService } from 'src/app/services/auth/auth.service';
+import { CommonService } from 'src/app/services/common/common.service';
 import { ENV } from 'src/environments/environment';
 import { AppComponent } from '../../app.component';
 
@@ -32,8 +30,7 @@ export class LoginPage implements OnInit {
     public common: CommonService,
     private menu: MenuController,
     private platform: Platform,
-    private navControl: NavController,
-    private router: Router
+    private navControl: NavController
   ) {
 
     if (ENV.mode === 'Production') {

@@ -35,8 +35,4 @@ export class AuthService {
 
   }
 
-  checkVersion(appName: string) {
-
-  }
-
 }
