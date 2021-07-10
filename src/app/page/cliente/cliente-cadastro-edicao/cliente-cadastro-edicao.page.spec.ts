@@ -7,13 +7,14 @@ describe('ClienteCadastroEdicaoPage', () => {
   let component: ClienteCadastroEdicaoPage;
   let fixture: ComponentFixture<ClienteCadastroEdicaoPage>;
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      declarations: [ ClienteCadastroEdicaoPage ],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [ClienteCadastroEdicaoPage],
+        schemas: [CUSTOM_ELEMENTS_SCHEMA],
+      }).compileComponents();
     })
-    .compileComponents();
-  }));
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ClienteCadastroEdicaoPage);

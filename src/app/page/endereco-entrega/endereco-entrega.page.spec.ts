@@ -7,13 +7,14 @@ describe('EnderecoEntregaPage', () => {
   let component: EnderecoEntregaPage;
   let fixture: ComponentFixture<EnderecoEntregaPage>;
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      declarations: [ EnderecoEntregaPage ],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [EnderecoEntregaPage],
+        schemas: [CUSTOM_ELEMENTS_SCHEMA],
+      }).compileComponents();
     })
-    .compileComponents();
-  }));
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(EnderecoEntregaPage);

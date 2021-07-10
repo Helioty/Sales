@@ -10,7 +10,6 @@ import { NavigationExtras } from '@angular/router';
   styleUrls: ['./pedido-atalhos.page.scss'],
 })
 export class PedidoAtalhosPage implements OnInit {
-
   @ViewChild(IonSlides, { static: true }) slides: IonSlides;
 
   public taskScanner: any;
@@ -22,8 +21,8 @@ export class PedidoAtalhosPage implements OnInit {
     public common: CommonService,
     public pedidoService: PedidoService,
     private navControl: NavController,
-    private platform: Platform,
-  ) { }
+    private platform: Platform
+  ) {}
 
   ngOnInit() {
     this.slides.lockSwipes(true);
@@ -42,9 +41,7 @@ export class PedidoAtalhosPage implements OnInit {
     this.focusOff();
   }
 
-  ionViewDidLeave() {
-
-  }
+  ionViewDidLeave() {}
 
   // Cria o loop que da foco no input
   focusOn() {
@@ -54,12 +51,12 @@ export class PedidoAtalhosPage implements OnInit {
         if (this.focusStatus) {
           const scanners = document.body.getElementsByClassName('scanner');
           for (const i in scanners) {
-            if (Number(i) === (scanners.length - 1)) {
+            if (Number(i) === scanners.length - 1) {
               (scanners[i] as HTMLInputElement).focus();
             }
           }
         }
-      } catch (error) { }
+      } catch (error) {}
     }, 350);
   }
 
@@ -71,7 +68,7 @@ export class PedidoAtalhosPage implements OnInit {
     this.focusStatus = false;
     const scanners = document.body.getElementsByClassName('scanner');
     for (const i in scanners) {
-      if (Number(i) === (scanners.length - 1)) {
+      if (Number(i) === scanners.length - 1) {
         (scanners[i] as HTMLInputElement).blur();
       }
     }
@@ -108,17 +105,22 @@ export class PedidoAtalhosPage implements OnInit {
         {
           name: 'codigo',
           type: 'text',
-          placeholder: 'Digite o codigo do cartão!'
-        }
+          placeholder: 'Digite o codigo do cartão!',
+        },
       ],
-      buttons: ['CANCELAR', {
-        text: 'ADICIONAR',
-        handler: (data: any) => {
-          this.pedidoService.setCardPedido(data.codigo);
-        }
-      }]
+      buttons: [
+        'CANCELAR',
+        {
+          text: 'ADICIONAR',
+          handler: (data: any) => {
+            this.pedidoService.setCardPedido(data.codigo);
+          },
+        },
+      ],
     });
-    alert.onDidDismiss().finally(() => { this.focusPlay(); });
+    alert.onDidDismiss().finally(() => {
+      this.focusPlay();
+    });
     await alert.present().then(() => {
       this.focusPause();
     });
@@ -128,10 +130,9 @@ export class PedidoAtalhosPage implements OnInit {
     const navigationExtras: NavigationExtras = {
       queryParams: {
         paginaSeguinte: 'back',
-        paginaAnterior: 'produto-atalhos'
-      }
+        paginaAnterior: 'produto-atalhos',
+      },
     };
     this.navControl.navigateForward(['/cliente'], navigationExtras);
   }
-
 }

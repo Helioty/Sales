@@ -11,7 +11,6 @@ import { PedidoItens, Retiradas } from 'src/app/class/pedido';
   styleUrls: ['./pedido-rapido.page.scss'],
 })
 export class PedidoRapidoPage implements OnInit {
-
   public taskScanner: any;
   public valorScanner: string;
   public focusStatus = true;
@@ -20,7 +19,6 @@ export class PedidoRapidoPage implements OnInit {
 
   public pedidoItens: PedidoItens;
   public retiradas: Retiradas;
-
 
   // controle de requisições by Ryuge 28/11/2019
   private maxRequest = 10;
@@ -33,8 +31,8 @@ export class PedidoRapidoPage implements OnInit {
     public pedidoIt: PedidoItemService,
     private alertCtrl: AlertController,
     private navControl: NavController,
-    private platform: Platform,
-  ) { }
+    private platform: Platform
+  ) {}
 
   async ngOnInit() {
     await this.pedidoIt.getItemPedido().then((result: any) => {
@@ -68,12 +66,12 @@ export class PedidoRapidoPage implements OnInit {
         if (this.focusStatus) {
           const scanners = document.body.getElementsByClassName('scanner');
           for (const i in scanners) {
-            if (Number(i) === (scanners.length - 1)) {
+            if (Number(i) === scanners.length - 1) {
               (scanners[i] as HTMLInputElement).focus();
             }
           }
         }
-      } catch (error) { }
+      } catch (error) {}
     }, 350);
   }
 
@@ -85,7 +83,7 @@ export class PedidoRapidoPage implements OnInit {
     this.focusStatus = false;
     const scanners = document.body.getElementsByClassName('scanner');
     for (const i in scanners) {
-      if (Number(i) === (scanners.length - 1)) {
+      if (Number(i) === scanners.length - 1) {
         (scanners[i] as HTMLInputElement).blur();
       }
     }
@@ -125,12 +123,12 @@ export class PedidoRapidoPage implements OnInit {
 
       this.pedidoItens = new PedidoItens(
         localStorage.getItem('empresa'),
-        // tslint:disable-next-line: radix
+        // eslint-disable-next-line radix
         parseInt(this.pedido.numPedido)
       );
-      // tslint:disable-next-line: radix
+      // eslint-disable-next-line radix
       this.pedidoItens.idEmpresa = parseInt(localStorage.getItem('empresa'));
-      // tslint:disable-next-line: radix
+      // eslint-disable-next-line radix
       this.pedidoItens.numPedido = parseInt(this.pedido.numPedido);
       this.pedidoItens.idProduto = String(codigo);
       this.pedidoItens.embalagem = 0;
@@ -146,10 +144,10 @@ export class PedidoRapidoPage implements OnInit {
     const aRetiradas: any[] = [];
     try {
       this.retiradas = new Retiradas();
-      // tslint:disable-next-line: radix
+      // eslint-disable-next-line radix
       this.retiradas.empresaRetirada = parseInt(localStorage.getItem('empresa'));
       this.retiradas.idDeposito = 8;
-      // tslint:disable-next-line: radix
+      // eslint-disable-next-line radix
       this.retiradas.tipoRetirada = parseInt(tipo);
       this.retiradas.qtd = 1;
       this.retiradas.precoUnitario = parseFloat(valor);
@@ -167,8 +165,10 @@ export class PedidoRapidoPage implements OnInit {
       if (this.codProdRequest === codigo) {
         this.numRequest += 1;
         if (this.numRequest <= this.maxRequest) {
-          if (this.pedidoItens.retiradas !== [] &&
-            (this.pedidoItens.idProduto !== null || this.pedidoItens.idProduto !== '')) {
+          if (
+            this.pedidoItens.retiradas !== [] &&
+            (this.pedidoItens.idProduto !== null || this.pedidoItens.idProduto !== '')
+          ) {
             this.addItemPedido(this.pedidoItens);
           }
         } else {
@@ -183,8 +183,10 @@ export class PedidoRapidoPage implements OnInit {
       } else {
         this.numRequest = 0;
         this.codProdRequest = codigo;
-        if (this.pedidoItens.retiradas !== [] &&
-          (this.pedidoItens.idProduto !== null || this.pedidoItens.idProduto !== '')) {
+        if (
+          this.pedidoItens.retiradas !== [] &&
+          (this.pedidoItens.idProduto !== null || this.pedidoItens.idProduto !== '')
+        ) {
           this.addItemPedido(this.pedidoItens);
         }
       }
@@ -208,37 +210,45 @@ export class PedidoRapidoPage implements OnInit {
   // by Ryuge
   // edit by Helio 10/03/2020
   async addItemPedido(body: PedidoItens) {
-    await this.pedidoIt.addFast(body).then((result: any) => {
-      this.itens = result.content;
-      if (this.numRequest > 1) {
-        this.numRequest -= 1;
+    await this.pedidoIt.addFast(body).then(
+      (result: any) => {
+        this.itens = result.content;
+        if (this.numRequest > 1) {
+          this.numRequest -= 1;
+        }
+        console.log(result);
+      },
+      (error) => {
+        console.log(error);
       }
-      console.log(result);
-    }, (error) => {
-      console.log(error);
-    });
+    );
 
     // this.commonServices.ItensPedidoAdd = result.pedido; // cabeçalho dp pedido
     // this.totalPedido = result.pedido.totpedido;
-
   }
 
   // by Hélio 11/03/2020
   async removerProduto(produto: any) {
     const alert = await this.alertCtrl.create({
       header: 'Remover produto',
-      message: 'Tem certeza que deseja remover o produto ' + produto.descricao + ' do pedido?',
-      buttons: [{
-        text: 'CANCELAR',
-        role: 'cancel'
-      }, {
-        text: 'REMOVER',
-        handler: () => {
-          this.deleteItemPedido(produto.idProduto);
-        }
-      }]
+      message:
+        'Tem certeza que deseja remover o produto ' + produto.descricao + ' do pedido?',
+      buttons: [
+        {
+          text: 'CANCELAR',
+          role: 'cancel',
+        },
+        {
+          text: 'REMOVER',
+          handler: () => {
+            this.deleteItemPedido(produto.idProduto);
+          },
+        },
+      ],
     });
-    alert.onDidDismiss().finally(() => { this.focusPlay(); });
+    alert.onDidDismiss().finally(() => {
+      this.focusPlay();
+    });
     await alert.present().then(() => {
       this.focusPause();
     });
@@ -253,5 +263,4 @@ export class PedidoRapidoPage implements OnInit {
       console.log(result);
     });
   }
-
 }

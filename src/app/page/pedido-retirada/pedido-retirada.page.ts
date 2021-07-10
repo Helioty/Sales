@@ -11,7 +11,6 @@ import { NavigationExtras } from '@angular/router';
   styleUrls: ['./pedido-retirada.page.scss'],
 })
 export class PedidoRetiradaPage implements OnInit {
-
   public disableButton = false;
 
   constructor(
@@ -20,12 +19,10 @@ export class PedidoRetiradaPage implements OnInit {
     private navControl: NavController,
     public baseService: BaseService,
     public pedidoService: PedidoService,
-    public platform: Platform,
-  ) { }
+    public platform: Platform
+  ) {}
 
-  ngOnInit() {
-
-  }
+  ngOnInit() {}
 
   ionViewWillEnter() {
     this.menu.enable(false);
@@ -43,25 +40,27 @@ export class PedidoRetiradaPage implements OnInit {
     this.pedidoService.tipoRetirada = this.pedidoService.opcaoRetirada[tipoRetirada];
 
     await this.common.showLoader();
-    await this.pedidoService.alterarTipoRetirada(tipoRetirada).then(() => {
-      this.common.loading.dismiss();
-      // by Ryuge 14/11/2019
-      // edit by Helio 14/02/2020
-      if (this.pedidoService.tipoRetirada === 'ENTREGA') {
-        const navigationExtras: NavigationExtras = {
-          queryParams: {
-            paginaSeguinte: 'endereco-entrega',
-            paginaAnterior: 'pedido-retirada'
-          }
-        };
-        this.navControl.navigateForward(['/cliente'], navigationExtras);
-      } else {
-        this.navControl.navigateRoot(['/pedido-atalhos']);
+    await this.pedidoService.alterarTipoRetirada(tipoRetirada).then(
+      () => {
+        this.common.loading.dismiss();
+        // by Ryuge 14/11/2019
+        // edit by Helio 14/02/2020
+        if (this.pedidoService.tipoRetirada === 'ENTREGA') {
+          const navigationExtras: NavigationExtras = {
+            queryParams: {
+              paginaSeguinte: 'endereco-entrega',
+              paginaAnterior: 'pedido-retirada',
+            },
+          };
+          this.navControl.navigateForward(['/cliente'], navigationExtras);
+        } else {
+          this.navControl.navigateRoot(['/pedido-atalhos']);
+        }
+      },
+      (error) => {
+        this.common.loading.dismiss();
+        console.log(error);
       }
-    }, (error) => {
-      this.common.loading.dismiss();
-      console.log(error);
-    });
+    );
   }
-
 }

@@ -5,7 +5,7 @@ import { ListaEnderecoGuard } from './lista-endereco.guard';
 describe('ListaEnderecoGuard', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [ListaEnderecoGuard]
+      providers: [ListaEnderecoGuard],
     });
   });
 

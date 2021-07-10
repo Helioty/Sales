@@ -8,17 +8,12 @@ import { IndicadorVendedorPage } from './indicador-vendedor.page';
 const routes: Routes = [
   {
     path: '',
-    component: IndicadorVendedorPage
-  }
+    component: IndicadorVendedorPage,
+  },
 ];
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    RouterModule.forChild(routes)
-  ],
-  declarations: [IndicadorVendedorPage]
+  imports: [CommonModule, FormsModule, IonicModule, RouterModule.forChild(routes)],
+  declarations: [IndicadorVendedorPage],
 })
-export class IndicadorVendedorPageModule { }
+export class IndicadorVendedorPageModule {}

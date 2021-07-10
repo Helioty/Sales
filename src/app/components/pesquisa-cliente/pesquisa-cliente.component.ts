@@ -7,22 +7,18 @@ import { ModalController } from '@ionic/angular';
   styleUrls: ['./pesquisa-cliente.component.scss'],
 })
 export class PesquisaClienteComponent implements OnInit {
-
   // Data passed in by componentProps
   @Input() firstName: string;
   @Input() lastName: string;
 
-  constructor(
-    private modalCtrl: ModalController
-  ) { }
+  constructor(private modalCtrl: ModalController) {}
 
-  ngOnInit() { }
+  ngOnInit() {}
 
   close() {
     this.modalCtrl.dismiss({
       existePesquisa: true,
-      retorna: 'retorno aqui!'
+      retorna: 'retorno aqui!',
     });
   }
-
 }

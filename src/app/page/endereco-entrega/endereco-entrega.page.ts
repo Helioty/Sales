@@ -13,7 +13,6 @@ import { ConsultaEnderecoService } from 'src/app/services/entrega/consulta-ender
   styleUrls: ['./endereco-entrega.page.scss'],
 })
 export class EnderecoEntregaPage implements OnInit {
-
   @ViewChild(IonSlides, { static: true }) slides: IonSlides;
 
   public novoEndereco: CamposParaNovoEndereco;
@@ -27,7 +26,7 @@ export class EnderecoEntregaPage implements OnInit {
     private consultaEnderecoService: ConsultaEnderecoService,
     private navControl: NavController
   ) {
-    this.novoEndereco = new CamposParaNovoEndereco;
+    this.novoEndereco = new CamposParaNovoEndereco();
   }
 
   ngOnInit() {
@@ -42,13 +41,9 @@ export class EnderecoEntregaPage implements OnInit {
     this.common.goToFullScreen();
   }
 
-  ionViewWillLeave() {
+  ionViewWillLeave() {}
 
-  }
-
-  ionViewDidLeave() {
-
-  }
+  ionViewDidLeave() {}
 
   changeSlide(slide: number) {
     this.slides.lockSwipes(false);
@@ -90,7 +85,7 @@ export class EnderecoEntregaPage implements OnInit {
       usuario_cadastrou: '',
       latitude: '',
       longitude: '',
-      cidade: this.novoEndereco.cidade
+      cidade: this.novoEndereco.cidade,
     };
 
     console.log('novoEndereco');
@@ -105,37 +100,46 @@ export class EnderecoEntregaPage implements OnInit {
 
   // by Hélio, cadastra o novo endereco do cliente
   gravaNovoEndereco(cliente: any) {
-    this.clienteService.postClienteAlteracao(cliente).then((result: any) => {
-      console.log('RETORNO DO ATUALIZA CLIENTE');
-      console.log(result);
-      this.atualizaDadosCliente(this.pedidoService.pedidoHeader.cgccpf_cliente);
-    }, () => {
-      this.common.loading.dismiss();
-    });
+    this.clienteService.postClienteAlteracao(cliente).then(
+      (result: any) => {
+        console.log('RETORNO DO ATUALIZA CLIENTE');
+        console.log(result);
+        this.atualizaDadosCliente(this.pedidoService.pedidoHeader.cgccpf_cliente);
+      },
+      () => {
+        this.common.loading.dismiss();
+      }
+    );
   }
 
   // by Hélio, pega os dados atualizados do cliente
   async atualizaDadosCliente(docCliente: string) {
-    await this.clienteService.getClienteNoAlert(docCliente).then((result) => {
-      this.pedidoService.dadosCliente = result;
-      this.common.loading.dismiss();
-      this.changeSlide(0);
-    }, (error) => {
-      this.common.loading.dismiss();
-    });
+    await this.clienteService.getClienteNoAlert(docCliente).then(
+      (result) => {
+        this.pedidoService.dadosCliente = result;
+        this.common.loading.dismiss();
+        this.changeSlide(0);
+      },
+      (error) => {
+        this.common.loading.dismiss();
+      }
+    );
   }
 
   // by Helio 15/07/2020
   async selecionaEndereco(end: any) {
     await this.common.showLoader();
-    this.pedidoService.selecionaEndereco(end).then(() => {
-      console.log('ENDEREÇO SELECIONADO');
-      this.common.loading.dismiss();
-      this.prosseguir();
-    }, (error) => {
-      this.common.loading.dismiss();
-      console.log(error);
-    });
+    this.pedidoService.selecionaEndereco(end).then(
+      () => {
+        console.log('ENDEREÇO SELECIONADO');
+        this.common.loading.dismiss();
+        this.prosseguir();
+      },
+      (error) => {
+        this.common.loading.dismiss();
+        console.log(error);
+      }
+    );
   }
 
   prosseguir() {
@@ -157,5 +161,4 @@ export class EnderecoEntregaPage implements OnInit {
         break;
     }
   }
-
 }

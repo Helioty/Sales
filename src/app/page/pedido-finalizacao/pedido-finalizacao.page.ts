@@ -11,7 +11,6 @@ import { NavigationExtras } from '@angular/router';
   styleUrls: ['./pedido-finalizacao.page.scss'],
 })
 export class PedidoFinalizacaoPage implements OnInit {
-
   public taskScanner: any;
   public valorScanner: string;
   public focusStatus = true;
@@ -31,35 +30,36 @@ export class PedidoFinalizacaoPage implements OnInit {
   public pesoPedido: any;
   public totalPedido: any;
 
-
   // Produtos
   public itens: any[] = [];
-
 
   constructor(
     public common: CommonService,
     public pedido: PedidoService,
     public pedidoIt: PedidoItemService,
     private navControl: NavController,
-    private platform: Platform,
-  ) { }
+    private platform: Platform
+  ) {}
 
-  ngOnInit() { }
+  ngOnInit() {}
 
-  adicionarCartaoPedido() { }
+  adicionarCartaoPedido() {}
 
   ionViewWillEnter() {
     console.log('ionViewWillEnter');
     this.focusOn();
     this.common.goToFullScreen();
     this.numeroPedido =
-      this.pedido.pedidoHeader.numpedido + '-' +
+      this.pedido.pedidoHeader.numpedido +
+      '-' +
       this.pedido.pedidoHeader.digito.toString();
 
     // by Ryuge 12/12/2018
     this.totalProdutos =
-      this.pedido.pedidoHeader.totpedido - this.pedido.pedidoHeader.frete.valor +
-      this.pedido.pedidoHeader.descontoBrinde + this.pedido.pedidoHeader.valorDesconto;
+      this.pedido.pedidoHeader.totpedido -
+      this.pedido.pedidoHeader.frete.valor +
+      this.pedido.pedidoHeader.descontoBrinde +
+      this.pedido.pedidoHeader.valorDesconto;
 
     this.pesoPedido = this.pedido.pedidoHeader.pesoTotal;
     this.totalPedido = this.pedido.pedidoHeader.valorTotalPedido;
@@ -123,12 +123,12 @@ export class PedidoFinalizacaoPage implements OnInit {
         if (this.focusStatus) {
           const scanners = document.body.getElementsByClassName('scanner');
           for (const i in scanners) {
-            if (Number(i) === (scanners.length - 1)) {
+            if (Number(i) === scanners.length - 1) {
               (scanners[i] as HTMLInputElement).focus();
             }
           }
         }
-      } catch (error) { }
+      } catch (error) {}
     }, 350);
   }
 
@@ -140,7 +140,7 @@ export class PedidoFinalizacaoPage implements OnInit {
     this.focusStatus = false;
     const scanners = document.body.getElementsByClassName('scanner');
     for (const i in scanners) {
-      if (Number(i) === (scanners.length - 1)) {
+      if (Number(i) === scanners.length - 1) {
         (scanners[i] as HTMLInputElement).blur();
       }
     }
@@ -180,8 +180,8 @@ export class PedidoFinalizacaoPage implements OnInit {
     const navigationExtras: NavigationExtras = {
       queryParams: {
         paginaSeguinte: 'back',
-        paginaAnterior: 'pedido-finalizacao'
-      }
+        paginaAnterior: 'pedido-finalizacao',
+      },
     };
     this.navControl.navigateForward(['/cliente'], navigationExtras);
   }
@@ -191,10 +191,9 @@ export class PedidoFinalizacaoPage implements OnInit {
     const navigationExtras: NavigationExtras = {
       queryParams: {
         paginaSeguinte: 'back',
-        paginaAnterior: 'pedido-finalizacao'
-      }
+        paginaAnterior: 'pedido-finalizacao',
+      },
     };
     this.navControl.navigateForward(['/formas-pagamento'], navigationExtras);
   }
-
 }

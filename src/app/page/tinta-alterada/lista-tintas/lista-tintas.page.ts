@@ -8,14 +8,13 @@ import { CommonService } from 'src/app/services/common/common.service';
   styleUrls: ['./lista-tintas.page.scss'],
 })
 export class ListaTintasPage implements OnInit {
-
   public tintas: any;
 
   constructor(
     private activatedRoute: ActivatedRoute,
     public common: CommonService,
     public router: Router
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.activatedRoute.queryParams.subscribe((params: any) => {
@@ -32,5 +31,4 @@ export class ListaTintasPage implements OnInit {
     console.log('ionViewDidEnter');
     this.common.goToFullScreen();
   }
-
 }

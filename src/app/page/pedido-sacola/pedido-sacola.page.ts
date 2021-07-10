@@ -10,7 +10,7 @@ import { NavigationExtras } from '@angular/router';
 @Component({
   selector: 'app-pedido-sacola',
   templateUrl: './pedido-sacola.page.html',
-  styleUrls: ['./pedido-sacola.page.scss']
+  styleUrls: ['./pedido-sacola.page.scss'],
 })
 export class PedidoSacolaPage implements OnInit {
   public taskScanner: any;
@@ -33,12 +33,12 @@ export class PedidoSacolaPage implements OnInit {
     private produtoS: ProdutoService,
     private navControl: NavController,
     private platform: Platform
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.pedidoIt.getItemPedido().then((result: any) => {
       console.log(result);
-      result.content.forEach(el => {
+      result.content.forEach((el) => {
         if (el.retiradas[0].tipoRetirada === 9997) {
           this.existeProdEntrega = true;
         } else if (el.retiradas[0].tipoRetirada !== 9997) {
@@ -68,7 +68,7 @@ export class PedidoSacolaPage implements OnInit {
     this.focusOff();
   }
 
-  ionViewDidLeave() { }
+  ionViewDidLeave() {}
 
   // Cria o loop que da foco no input
   focusOn() {
@@ -78,12 +78,12 @@ export class PedidoSacolaPage implements OnInit {
         if (this.focusStatus) {
           const scanners = document.body.getElementsByClassName('scanner');
           for (const i in scanners) {
-            if (Number(i) === (scanners.length - 1)) {
+            if (Number(i) === scanners.length - 1) {
               (scanners[i] as HTMLInputElement).focus();
             }
           }
         }
-      } catch (error) { }
+      } catch (error) {}
     }, 350);
   }
 
@@ -95,7 +95,7 @@ export class PedidoSacolaPage implements OnInit {
     this.focusStatus = false;
     const scanners = document.body.getElementsByClassName('scanner');
     for (const i in scanners) {
-      if (Number(i) === (scanners.length - 1)) {
+      if (Number(i) === scanners.length - 1) {
         (scanners[i] as HTMLInputElement).blur();
       }
     }
@@ -132,8 +132,8 @@ export class PedidoSacolaPage implements OnInit {
         {
           name: 'codigo',
           type: 'text',
-          placeholder: 'Digite o codigo do cartão!'
-        }
+          placeholder: 'Digite o codigo do cartão!',
+        },
       ],
       buttons: [
         'CANCELAR',
@@ -141,9 +141,9 @@ export class PedidoSacolaPage implements OnInit {
           text: 'ADICIONAR',
           handler: (data: any) => {
             this.pedido.setCardPedido(data.codigo);
-          }
-        }
-      ]
+          },
+        },
+      ],
     });
     alert.onDidDismiss().finally(() => {
       this.focusPlay();
@@ -158,21 +158,19 @@ export class PedidoSacolaPage implements OnInit {
     const alert = await this.alertCtrl.create({
       header: 'Remover produto',
       message:
-        'Tem certeza que deseja remover o produto ' +
-        produto.descricao +
-        ' do pedido?',
+        'Tem certeza que deseja remover o produto ' + produto.descricao + ' do pedido?',
       buttons: [
         {
           text: 'CANCELAR',
-          role: 'cancel'
+          role: 'cancel',
         },
         {
           text: 'REMOVER',
           handler: () => {
             this.deleteItemPedido(produto.idProduto);
-          }
-        }
-      ]
+          },
+        },
+      ],
     });
     alert.onDidDismiss().finally(() => {
       this.focusPlay();
@@ -196,8 +194,8 @@ export class PedidoSacolaPage implements OnInit {
     const navigationExtras: NavigationExtras = {
       queryParams: {
         paginaSeguinte: 'back',
-        paginaAnterior: 'pedido-sacola'
-      }
+        paginaAnterior: 'pedido-sacola',
+      },
     };
     this.navControl.navigateForward(['/cliente'], navigationExtras);
   }
@@ -206,8 +204,8 @@ export class PedidoSacolaPage implements OnInit {
     const navigationExtras: NavigationExtras = {
       queryParams: {
         paginaSeguinte: 'back',
-        paginaAnterior: 'pedido-sacola'
-      }
+        paginaAnterior: 'pedido-sacola',
+      },
     };
     this.dataService.setData('produto-adicionar-sacola', prod);
     this.navControl.navigateForward(['/produto-adicionar-sacola'], navigationExtras);
@@ -223,5 +221,4 @@ export class PedidoSacolaPage implements OnInit {
   finalizarPedido() {
     this.pedido.goToFinalizacao('pedido-sacola');
   }
-
 }

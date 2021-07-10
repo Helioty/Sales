@@ -13,21 +13,31 @@
     <ion-buttons slot="end">
       <ion-button (click)="adicionarCartaoPedido()">
         <ion-icon name="card"></ion-icon>
-        <ion-badge color="success" class="badge-position" *ngIf="pedido.cardSelected">✔</ion-badge>
+        <ion-badge color="success" class="badge-position" *ngIf="pedido.cardSelected"
+          >✔</ion-badge
+        >
       </ion-button>
 
       <ion-button (click)="openClientePage()">
         <ion-icon name="person"></ion-icon>
-        <ion-badge color="success" class="badge-position" *ngIf="pedido.clientSelected">✔</ion-badge>
+        <ion-badge color="success" class="badge-position" *ngIf="pedido.clientSelected"
+          >✔</ion-badge
+        >
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content (click)="showInfo = false">
-  <input id="scanner" appHideKeyboard class="scanner" [(ngModel)]="valorScanner" (keyup.enter)="scaneado($event)">
+  <input
+    id="scanner"
+    appHideKeyboard
+    class="scanner"
+    [(ngModel)]="valorScanner"
+    (keyup.enter)="scaneado($event)"
+  />
 
-  <ion-grid [hidden]="pedido.tipoRetirada == 'ENTREGA'">
+  <ion-grid [hidden]="pedido.tipoRetirada === 'ENTREGA'">
     <ion-row>
       <ion-col size="12">
         <ion-item lines="none" class="tipoEntrega">
@@ -39,20 +49,24 @@
 
   <!-- Item Dividers in a List -->
   <ion-list *ngIf="pedidoIt.pedidoItens.length > 0">
-
     <ion-item-divider sticky *ngIf="existeProdRetirada">
-      <ion-label>
-        Levar da loja
-      </ion-label>
+      <ion-label> Levar da loja </ion-label>
     </ion-item-divider>
 
     <ion-grid *ngIf="existeProdRetirada">
       <ion-row>
-        <ion-col size="12" *ngFor="let item of pedidoIt.pedidoItens; let i = index;" style="padding: 0 !important;">
-          <ion-row *ngIf="item?.retiradas[0].tipoRetirada != 9997" style="padding: 5px !important;">
+        <ion-col
+          size="12"
+          *ngFor="let item of pedidoIt.pedidoItens; let i = index"
+          style="padding: 0 !important"
+        >
+          <ion-row
+            *ngIf="item?.retiradas[0].tipoRetirada != 9997"
+            style="padding: 5px !important"
+          >
             <ion-item lines="none" class="produto">
               <ion-thumbnail slot="start">
-                <ion-img src="data:image/jpeg;base64,{{item?.imagem}}"></ion-img>
+                <ion-img src="data:image/jpeg;base64,{{ item?.imagem }}"></ion-img>
               </ion-thumbnail>
 
               <ion-grid>
@@ -72,20 +86,44 @@
                   </ion-col>
 
                   <ion-col size="3.5" class="produtoManutencao">
-                    <ion-row class="produtoManutencaoTop ion-justify-content-center ion-align-items-center">
+                    <ion-row
+                      class="
+                        produtoManutencaoTop
+                        ion-justify-content-center ion-align-items-center
+                      "
+                    >
                       <ion-col class="ion-no-padding" size="12">
-                        <ion-button expand="full" fill="clear" color="dark" class="ion-no-margin"
-                          (click)="getProduto(item.idProduto)">
+                        <ion-button
+                          expand="full"
+                          fill="clear"
+                          color="dark"
+                          class="ion-no-margin"
+                          (click)="getProduto(item.idProduto)"
+                        >
                           {{ item.qtdTotal }}
                         </ion-button>
                       </ion-col>
                     </ion-row>
 
-                    <ion-row class="produtoManutencaoBottom ion-justify-content-center ion-align-items-center">
+                    <ion-row
+                      class="
+                        produtoManutencaoBottom
+                        ion-justify-content-center ion-align-items-center
+                      "
+                    >
                       <ion-col class="ion-no-padding" size="12">
-                        <ion-button expand="full" fill="clear" color="dark" class="ion-no-margin"
-                          (click)="removerProduto(item)">
-                          <ion-icon slot="icon-only" size="large" name="trash-bin-outline"></ion-icon>
+                        <ion-button
+                          expand="full"
+                          fill="clear"
+                          color="dark"
+                          class="ion-no-margin"
+                          (click)="removerProduto(item)"
+                        >
+                          <ion-icon
+                            slot="icon-only"
+                            size="large"
+                            name="trash-bin-outline"
+                          ></ion-icon>
                         </ion-button>
                       </ion-col>
                     </ion-row>
@@ -98,20 +136,24 @@
       </ion-row>
     </ion-grid>
 
-
     <ion-item-divider sticky *ngIf="existeProdEntrega">
-      <ion-label>
-        Receber em casa
-      </ion-label>
+      <ion-label> Receber em casa </ion-label>
     </ion-item-divider>
 
     <ion-grid *ngIf="existeProdEntrega">
       <ion-row>
-        <ion-col size="12" *ngFor="let item of pedidoIt.pedidoItens; let i = index;" style="padding: 0 !important;">
-          <ion-row *ngIf="item?.retiradas[0].tipoRetirada == 9997" style="padding: 5px !important;">
+        <ion-col
+          size="12"
+          *ngFor="let item of pedidoIt.pedidoItens; let i = index"
+          style="padding: 0 !important"
+        >
+          <ion-row
+            *ngIf="item?.retiradas[0].tipoRetirada == 9997"
+            style="padding: 5px !important"
+          >
             <ion-item lines="none" class="produto">
               <ion-thumbnail slot="start">
-                <ion-img src="data:image/jpeg;base64,{{item?.imagem}}"></ion-img>
+                <ion-img src="data:image/jpeg;base64,{{ item?.imagem }}"></ion-img>
               </ion-thumbnail>
 
               <ion-grid>
@@ -131,20 +173,44 @@
                   </ion-col>
 
                   <ion-col size="4" class="produtoManutencao">
-                    <ion-row class="produtoManutencaoTop ion-justify-content-center ion-align-items-center">
+                    <ion-row
+                      class="
+                        produtoManutencaoTop
+                        ion-justify-content-center ion-align-items-center
+                      "
+                    >
                       <ion-col class="ion-no-padding" size="12">
-                        <ion-button expand="full" fill="clear" color="dark" class="ion-no-margin"
-                          (click)="getProduto(item.idProduto)">
+                        <ion-button
+                          expand="full"
+                          fill="clear"
+                          color="dark"
+                          class="ion-no-margin"
+                          (click)="getProduto(item.idProduto)"
+                        >
                           {{ item.qtdTotal }}
                         </ion-button>
                       </ion-col>
                     </ion-row>
 
-                    <ion-row class="produtoManutencaoBottom ion-justify-content-center ion-align-items-center">
+                    <ion-row
+                      class="
+                        produtoManutencaoBottom
+                        ion-justify-content-center ion-align-items-center
+                      "
+                    >
                       <ion-col class="ion-no-padding" size="12">
-                        <ion-button expand="full" fill="clear" color="dark" class="ion-no-margin"
-                          (click)="removerProduto(item)">
-                          <ion-icon slot="icon-only" size="large" name="trash-bin-outline"></ion-icon>
+                        <ion-button
+                          expand="full"
+                          fill="clear"
+                          color="dark"
+                          class="ion-no-margin"
+                          (click)="removerProduto(item)"
+                        >
+                          <ion-icon
+                            slot="icon-only"
+                            size="large"
+                            name="trash-bin-outline"
+                          ></ion-icon>
                         </ion-button>
                       </ion-col>
                     </ion-row>
@@ -156,9 +222,7 @@
         </ion-col>
       </ion-row>
     </ion-grid>
-
   </ion-list>
-
 </ion-content>
 
 <ion-footer>
@@ -168,16 +232,32 @@
         <ion-col size="2.5" class="ion-no-padding"></ion-col>
 
         <ion-col size="7" class="ion-no-padding">
-          <ion-button fill="clear" color="fc-cinza-vermelho" [routerLink]="['/produto-pesquisa']"
-            routerDirection="forward">
+          <ion-button
+            fill="clear"
+            color="fc-cinza-vermelho"
+            [routerLink]="['/produto-pesquisa']"
+            routerDirection="forward"
+          >
             <ion-icon slot="icon-only" name="add-circle"></ion-icon>
           </ion-button>
         </ion-col>
 
         <ion-col size="2.5" class="ion-no-padding">
-          <ion-button fill="clear" color="fc-cinza-vermelho" (click)="showInfo = !showInfo">
-            <ion-icon slot="icon-only" *ngIf="!showInfo" name="arrow-up-circle"></ion-icon>
-            <ion-icon slot="icon-only" *ngIf="showInfo" name="arrow-down-circle"></ion-icon>
+          <ion-button
+            fill="clear"
+            color="fc-cinza-vermelho"
+            (click)="showInfo = !showInfo"
+          >
+            <ion-icon
+              slot="icon-only"
+              *ngIf="!showInfo"
+              name="arrow-up-circle"
+            ></ion-icon>
+            <ion-icon
+              slot="icon-only"
+              *ngIf="showInfo"
+              name="arrow-down-circle"
+            ></ion-icon>
           </ion-button>
         </ion-col>
       </ion-row>
@@ -185,7 +265,11 @@
       <ion-row *ngIf="showInfo" class="infos">
         <ion-col size="6" class="esquerda">
           <ion-row>
-            <ion-col>Pedido ({{ pedido.qtdItensSacola | formatarString: 'FORMAT':'2' }}):</ion-col>
+            <ion-col
+              >Pedido ({{
+                pedido.qtdItensSacola | formatarString: 'FORMAT':'2'
+              }}):</ion-col
+            >
           </ion-row>
 
           <ion-row>
@@ -208,14 +292,16 @@
         <ion-col size="6" class="direita">
           <ion-row class="orderId">
             <ion-col>
-              {{ (pedido.pedidoHeader.totpedido - pedido.pedidoHeader.frete.valor + pedido.pedidoHeader.descontoBrinde) | formatarString: 'VALOR' }}
+              {{
+                pedido.pedidoHeader.totpedido -
+                  pedido.pedidoHeader.frete.valor +
+                  pedido.pedidoHeader.descontoBrinde | formatarString: 'VALOR'
+              }}
             </ion-col>
           </ion-row>
 
           <ion-row>
-            <ion-col>
-              {{ pedido.pedidoHeader.pesoTotal }} kg
-            </ion-col>
+            <ion-col> {{ pedido.pedidoHeader.pesoTotal }} kg </ion-col>
           </ion-row>
 
           <ion-row *ngIf="pedido.pedidoHeader.frete.valor > 0">
@@ -226,7 +312,7 @@
 
           <ion-row *ngIf="pedido.pedidoHeader.descontoBrinde > 0">
             <ion-col>
-              {{ pedido.pedidoHeader.descontoBrinde | formatarString: 'VALOR'}}
+              {{ pedido.pedidoHeader.descontoBrinde | formatarString: 'VALOR' }}
             </ion-col>
           </ion-row>
 
@@ -240,7 +326,7 @@
     </ion-grid>
   </ion-toolbar>
 
-  <ion-item button lines="none" color="fc-button-green" (click)="finalizarPedido();">
+  <ion-item button lines="none" color="fc-button-green" (click)="finalizarPedido()">
     <ion-text>FINALIZAR PEDIDO</ion-text>
   </ion-item>
 </ion-footer>

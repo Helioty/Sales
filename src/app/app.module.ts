@@ -12,12 +12,13 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { AppConfigService } from 'src/app/config/app.config.service';
-import { ENV, environment } from '../environments/environment';
+import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { ComponentsModule } from './components/components.module';
 import { ServicesModule } from './services/services.module';
 import { SharedModule } from './shared/shared.module';
-console.log(ENV.mode);
+console.log(environment.production ? 'Production' : 'Development');
 
 @NgModule({
   declarations: [AppComponent],
@@ -28,8 +29,9 @@ console.log(ENV.mode);
     AppRoutingModule,
     ReactiveFormsModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
+    ComponentsModule,
     ServicesModule,
-    SharedModule
+    SharedModule,
   ],
   providers: [
     AndroidFullScreen,
@@ -39,8 +41,8 @@ console.log(ENV.mode);
     SplashScreen,
     Network,
     Geolocation,
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

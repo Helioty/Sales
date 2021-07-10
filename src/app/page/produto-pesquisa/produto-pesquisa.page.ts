@@ -22,7 +22,6 @@ export class ProdutoPesquisaPage implements OnInit {
   public valorScanner: string;
   public focusStatus = true;
 
-
   // controle de exibição
   public pesquisaDetalhada = false;
   public pesquisando = false;
@@ -34,7 +33,6 @@ export class ProdutoPesquisaPage implements OnInit {
   public p1 = 1;
   public p2 = 20;
 
-
   public pesquisaItems: Produto[] = [];
 
   constructor(
@@ -43,10 +41,10 @@ export class ProdutoPesquisaPage implements OnInit {
     public pedidoS: PedidoService,
     public pesquisa: ProdutoPesquisaService,
     private navControl: NavController,
-    private platform: Platform,
-  ) { }
+    private platform: Platform
+  ) {}
 
-  ngOnInit() { }
+  ngOnInit() {}
 
   ionViewWillEnter() {
     this.focusOn();
@@ -61,7 +59,7 @@ export class ProdutoPesquisaPage implements OnInit {
     this.focusOff();
   }
 
-  ionViewDidLeave() { }
+  ionViewDidLeave() {}
 
   // Cria o loop que da foco no input
   focusOn() {
@@ -71,12 +69,12 @@ export class ProdutoPesquisaPage implements OnInit {
         if (this.focusStatus) {
           const scanners = document.body.getElementsByClassName('scanner');
           for (const i in scanners) {
-            if (Number(i) === (scanners.length - 1)) {
+            if (Number(i) === scanners.length - 1) {
               (scanners[i] as HTMLInputElement).focus();
             }
           }
         }
-      } catch (error) { }
+      } catch (error) {}
     }, 350);
   }
 
@@ -88,7 +86,7 @@ export class ProdutoPesquisaPage implements OnInit {
     this.focusStatus = false;
     const scanners = document.body.getElementsByClassName('scanner');
     for (const i in scanners) {
-      if (Number(i) === (scanners.length - 1)) {
+      if (Number(i) === scanners.length - 1) {
         (scanners[i] as HTMLInputElement).blur();
       }
     }
@@ -125,17 +123,22 @@ export class ProdutoPesquisaPage implements OnInit {
         {
           name: 'codigo',
           type: 'text',
-          placeholder: 'Digite o codigo do cartão!'
-        }
+          placeholder: 'Digite o codigo do cartão!',
+        },
       ],
-      buttons: ['CANCELAR', {
-        text: 'ADICIONAR',
-        handler: (data: any) => {
-          this.pedidoS.setCardPedido(data.codigo);
-        }
-      }]
+      buttons: [
+        'CANCELAR',
+        {
+          text: 'ADICIONAR',
+          handler: (data: any) => {
+            this.pedidoS.setCardPedido(data.codigo);
+          },
+        },
+      ],
     });
-    alert.onDidDismiss().finally(() => { this.focusPlay(); });
+    alert.onDidDismiss().finally(() => {
+      this.focusPlay();
+    });
     await alert.present().then(() => {
       this.focusPause();
     });
@@ -145,8 +148,8 @@ export class ProdutoPesquisaPage implements OnInit {
     const navigationExtras: NavigationExtras = {
       queryParams: {
         paginaSeguinte: 'back',
-        paginaAnterior: 'produto-pesquisa'
-      }
+        paginaAnterior: 'produto-pesquisa',
+      },
     };
     this.navControl.navigateForward(['/cliente'], navigationExtras);
   }
@@ -208,24 +211,28 @@ export class ProdutoPesquisaPage implements OnInit {
       codigo = parseInt(value);
     }
     this.pesquisando = true;
-    await this.pesquisa.getPesquisaDetalhada({
-      codEmpresa: localStorage.getItem('empresa'),
-      codigo, descricao: this.input2.value.toString(),
-      fornecedor: this.input3.value.toString(),
-      modelo: this.input4.value.toString(),
-      linha: this.input5.value.toString(),
-      p1: parseInt(this.p1.toString()),
-      p2: parseInt(this.p2.toString()),
-      soComEstoque: this.soComEstoque
-    }).then((result: any) => {
-      console.log(result);
-      this.pesquisaItems = result.content;
-      this.pesquisaDetalhada = false;
-      this.pesquisando = false;
-    }).catch(err => {
-      this.pesquisando = false;
-      console.log(err);
-    });
+    await this.pesquisa
+      .getPesquisaDetalhada({
+        codEmpresa: localStorage.getItem('empresa'),
+        codigo,
+        descricao: this.input2.value.toString(),
+        fornecedor: this.input3.value.toString(),
+        modelo: this.input4.value.toString(),
+        linha: this.input5.value.toString(),
+        p1: parseInt(this.p1.toString()),
+        p2: parseInt(this.p2.toString()),
+        soComEstoque: this.soComEstoque,
+      })
+      .then((result: any) => {
+        console.log(result);
+        this.pesquisaItems = result.content;
+        this.pesquisaDetalhada = false;
+        this.pesquisando = false;
+      })
+      .catch((err) => {
+        this.pesquisando = false;
+        console.log(err);
+      });
   }
 
   goToProdutoPage(produto: Produto) {
@@ -233,10 +240,9 @@ export class ProdutoPesquisaPage implements OnInit {
       queryParams: {
         paginaSeguinte: 'pedido-sacola',
         paginaAnterior: 'produto-pesquisa',
-        produto: JSON.stringify(produto)
-      }
+        produto: JSON.stringify(produto),
+      },
     };
     this.navControl.navigateForward(['/produto'], navigationExtras);
   }
-
 }

@@ -1,159 +1,225 @@
 import { Injectable } from '@angular/core';
-import { AlertController, LoadingController, ToastController, Platform } from '@ionic/angular';
 import { AndroidFullScreen } from '@ionic-native/android-full-screen/ngx';
 import { AppVersion } from '@ionic-native/app-version/ngx';
+import {
+  AlertController,
+  LoadingController,
+  Platform,
+  ToastController,
+} from '@ionic/angular';
+import { ScannerService } from '../scanner/scanner.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CommonService {
-
   public loading: HTMLIonLoadingElement;
-
-  public appName = 'VENDAS';
-  public version = '0.0.1';
+  public appName = 'Pedido de Vendas';
+  public version = '';
 
   constructor(
-    private androidFullScreen: AndroidFullScreen,
-    private appVersion: AppVersion,
-    private toastCtrl: ToastController,
-    private loadingCtrl: LoadingController,
-    private alertCtrl: AlertController,
-    private platform: Platform
-  ) { }
+    private readonly scanner: ScannerService,
+    private readonly androidFullScreen: AndroidFullScreen,
+    private readonly appVersion: AppVersion,
+    private readonly toastCtrl: ToastController,
+    private readonly loadingCtrl: LoadingController,
+    private readonly alertCtrl: AlertController,
+    private readonly platform: Platform
+  ) {
+    this.platform.ready().then(() => {
+      this.getAppInfo();
+    });
+  }
 
-  // Funções comuns
-  public goToFullScreen() {
-    if (this.platform.is('cordova')) {
-      this.androidFullScreen.isImmersiveModeSupported()
+  /**
+   * @author helio.souza
+   * @description Verifica a plataforma e Habilita modo FullScreen.
+   */
+  public goToFullScreen(): void {
+    if (this.platform.is('android')) {
+      this.androidFullScreen
+        .isImmersiveModeSupported()
         .then(() => this.androidFullScreen.immersiveMode())
-        .catch(err => console.log(err));
+        .catch((err) => console.log(err));
     }
   }
 
-  // Version
-  async getAppName() {
+  /**
+   * @author helio.souza
+   * @description Pega as informações basicas da aplicação.
+   */
+  async getAppInfo(): Promise<void> {
     if (this.platform.is('cordova')) {
       this.appName = await this.appVersion.getAppName();
-    }
-  }
-
-  async getVersionNumber() {
-    if (this.platform.is('cordova')) {
       this.version = await this.appVersion.getVersionNumber();
     }
   }
 
-  async getVersionCode() {
-    const versionCode = await this.appVersion.getVersionCode();
-    const vCode = versionCode.toString();
-    return vCode.replace(/^(\d{1})(\d)/, '$1.$2');
-  }
-
-  async showVersion() {
+  /**
+   * @author helio.souza
+   * @description Exibe um IonAlert com a versão instalada.
+   */
+  async showVersion(): Promise<void> {
     if (this.platform.is('cordova')) {
-      if (this.appName === '') {
-        await this.getAppName();
-      }
-      if (this.version === '') {
-        await this.getVersionNumber();
-      }
-      const versionCode = await this.getVersionCode();
-      const V = 'Versão: ' + this.version + '<br> Version Code: ' + versionCode;
-      this.showAlert(this.appName, V);
+      const versionToShow = 'Versão instalada: ' + this.version;
+      this.showAlert(this.appName, versionToShow);
     }
   }
 
-  // Loading
-  async showLoader() {
-    this.loading = await this.loadingCtrl.create({
-      spinner: 'circular'
-    });
-    this.loading.present();
-  }
-
-  async showLoaderCustom(msg: string) {
+  /**
+   * @author helio.souza
+   * @description Pausa o foco do Scanner e exibe um IonLoadingElement, ao desativar o Loading o foco do Scanner é reativado.
+   */
+  async showLoader(): Promise<void> {
+    this.scanner.focusPause();
     this.loading = await this.loadingCtrl.create({
       spinner: 'circular',
-      message: msg
+    });
+    this.loading.onWillDismiss().then(() => {
+      this.scanner.focusPlay();
     });
     this.loading.present();
   }
 
-  // Toast's
-  async showToast(msg: string) {
+  /**
+   * @author helio.souza
+   * @description Pausa o foco do Scanner e exibe um IonLoadingElement, ao desativar o Loading o foco do Scanner é reativado.
+   * @param msg Mensagem para ser exibida no Loading.
+   */
+  async showLoaderCustom(msg: string): Promise<void> {
+    this.scanner.focusPause();
+    this.loading = await this.loadingCtrl.create({
+      spinner: 'circular',
+      message: msg,
+    });
+    this.loading.onWillDismiss().then(() => {
+      this.scanner.focusPlay();
+    });
+    this.loading.present();
+  }
+
+  /**
+   * @author helio.souza
+   * @description Exibe um IonToastElement com uma mensagem personalizada.
+   * @param msg Mensagem para ser exibida no Toast.
+   */
+  async showToast(msg: string): Promise<void> {
     const toast = await this.toastCtrl.create({
       message: msg,
       duration: 2000,
       position: 'bottom',
-      buttons: [{
-        side: 'end',
-        icon: 'close',
-        role: 'cancel'
-      }]
+      buttons: [
+        {
+          side: 'end',
+          icon: 'close',
+          role: 'cancel',
+        },
+      ],
     });
     toast.present();
   }
 
-  async showToastCustom(msg: string, duration: number, position: 'bottom' | 'top' | 'middle') {
-    const toast = await this.toastCtrl.create({
-      message: msg,
-      duration,
-      position,
-      buttons: [{
-        side: 'end',
-        icon: 'close',
-        role: 'cancel'
-      }]
-    });
-    toast.present();
-  }
-
-  // Alert's
-  async showAlert(titulo: string, msg: string) {
+  /**
+   * @author helio.souza
+   * @description Exibe um IonAlert com titulo e mensagem personalizadas, ativa e desativar o Alert o foco do Scanner.
+   * @param titulo Title do IonAlert.
+   * @param msg Mensagem do IonAlert.
+   */
+  async showAlert(titulo: string, msg: string): Promise<void> {
+    this.scanner.focusPause();
     const alert = await this.alertCtrl.create({
       header: titulo,
       message: msg,
-      buttons: ['OK']
-    });
-    await alert.present();
-  }
-
-  async showAlertInfo(msg: string) {
-    const alert = await this.alertCtrl.create({
-      header: 'Info',
-      message: msg,
-      buttons: ['OK']
-    });
-    await alert.present();
-  }
-
-  async showAlertError(titulo: string, error: string) {
-    const alert = await this.alertCtrl.create({
-      header: titulo,
-      subHeader: this.appName + ' V: ' + this.version,
-      message: error,
       buttons: ['OK'],
-      cssClass: 'alertError'
+    });
+    alert.onWillDismiss().then(() => {
+      this.scanner.focusPlay();
     });
     await alert.present();
   }
 
-  async showAlertAction(titulo: string, message: string, handler: () => void) {
+  /**
+   * @author helio.souza
+   * @description Exibe um IonAlert com titulo, mensagem, nome e versão da aplicação, ativa e desativar o Alert o foco do Scanner.
+   * @param titulo Title do IonAlert.
+   * @param erro Mensagem de erro.
+   */
+  async showAlertError(titulo: string, erro: string): Promise<void> {
+    this.scanner.focusPause();
     const alert = await this.alertCtrl.create({
       header: titulo,
-      message,
-      buttons: [{
-        text: 'CANCELAR',
-        cssClass: ['alertButtonCenter'],
-        role: 'cancel'
-      }, {
-        text: 'CONFIRMAR',
-        cssClass: ['alertButtonFcGreen', 'alertButtonCenter'],
-        handler
-      }]
+      subHeader: this.appName + (this.version !== '' ? ' - Versão: ' + this.version : ''),
+      message: erro,
+      buttons: ['FECHAR'],
+      cssClass: 'alertError',
+    });
+    alert.onWillDismiss().then(() => {
+      this.scanner.focusPlay();
     });
     await alert.present();
+  }
+
+  /**
+   * @author helio.souza
+   * @description Exibe um IonAlert com titulo e mensagem personalizadas, ativa e desativar o Alert o foco do Scanner.
+   * @param titulo Title do IonAlert.
+   * @param message Mensagem do IonAlert.
+   * @param handler Arrow Function contendo ação para o botão confirmar.
+   * @param allowClose Controla o dismiss do IonAlert. Default: true.
+   * @param showCancel Controla a exibição do botão cancelar. Default: true.
+   * @param cssClasses Array de classes CSS para estilizar o Alert.
+   * @param inputs Array de Inputs.
+   */
+  async showAlertAction(
+    base: { titulo: string; message: string; handler: (data: any) => any },
+    options = {
+      allowClose: true,
+      showCancel: true,
+      cssClasses: [''] || null,
+      inputs: [] || null,
+    }
+  ): Promise<void> {
+    this.scanner.focusPause();
+    const buttons = [];
+    if (options.showCancel) {
+      buttons.push(this.getCancelBtn());
+    }
+    buttons.push(this.getConfirmaBtn(base.handler));
+    const alert = await this.alertCtrl.create({
+      backdropDismiss: options.allowClose,
+      cssClass: options?.cssClasses || [],
+      inputs: options?.inputs || [],
+      message: base.message,
+      header: base.titulo,
+      buttons: buttons,
+    });
+    alert.onWillDismiss().then(() => this.scanner.focusPlay());
+    await alert.present();
+  }
+
+  /**
+   * @description Retorna AlertButton.
+   * @returns AlertButton.
+   */
+  getCancelBtn(): any {
+    return {
+      text: 'CANCELAR',
+      cssClass: ['alertButtonCenter'],
+      role: 'cancel',
+    };
+  }
+
+  /**
+   * @description Retorna um AlertButton com ação.
+   * @param handler Ação do botão.
+   * @returns AlertButton.
+   */
+  getConfirmaBtn(handler: (data: any) => any): any {
+    return {
+      text: 'CONFIRMAR',
+      cssClass: ['alertButtonFcGreen', 'alertButtonCenter'],
+      handler,
+    };
   }
 
   // formatação de string
@@ -195,7 +261,6 @@ export class CommonService {
   }
 
   public formataFONE(value: string): string {
-    value = value.replace(/\D/g, '');
     if (value.length === 11) {
       value = value.replace(/^(\d{2})(\d{5})(\d{4})/, '($1) $2-$3');
     } else if (value.length < 11 && value.length > 6) {
@@ -207,11 +272,4 @@ export class CommonService {
     }
     return value;
   }
-
-  // formata de forma generica os campos
-  public currency(n: any) {
-    n = parseFloat(n);
-    return isNaN(n) ? false : n.toFixed(2);
-  }
-
 }

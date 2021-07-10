@@ -8,17 +8,12 @@ import { EnderecoEntregaPage } from './endereco-entrega.page';
 const routes: Routes = [
   {
     path: '',
-    component: EnderecoEntregaPage
-  }
+    component: EnderecoEntregaPage,
+  },
 ];
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    RouterModule.forChild(routes)
-  ],
-  declarations: [EnderecoEntregaPage]
+  imports: [CommonModule, FormsModule, IonicModule, RouterModule.forChild(routes)],
+  declarations: [EnderecoEntregaPage],
 })
-export class EnderecoEntregaPageModule { }
+export class EnderecoEntregaPageModule {}

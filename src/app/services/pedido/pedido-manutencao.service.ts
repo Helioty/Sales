@@ -1,24 +1,21 @@
 import { Injectable } from '@angular/core';
 import { NavController } from '@ionic/angular';
-import { BaseService } from '../HTTP/base-service.service';
+import { ClienteService } from '../cliente/cliente.service';
 import { CommonService } from '../common/common.service';
 import { PedidoService } from './pedido.service';
-import { ClienteService } from '../cliente/cliente.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class PedidoManutencaoService {
-
   // private requestCliente = 0;
 
   constructor(
-    private baseService: BaseService,
     private common: CommonService,
     private pedidoService: PedidoService,
     private clienteService: ClienteService,
     private navControl: NavController
-  ) { }
+  ) {}
 
   // by Helio 20/03/2020, ajusta as informações do pedido para fazer manutenção
   async reabrirPedido(pedido: any) {
@@ -37,7 +34,6 @@ export class PedidoManutencaoService {
     this.navControl.navigateRoot(['/pedido-atalhos']).then(() => {
       this.common.loading.dismiss();
     });
-
   }
 
   // async reGetCliente(clie: string) {
@@ -49,5 +45,4 @@ export class PedidoManutencaoService {
   //     }, 500);
   //   });
   // }
-
 }

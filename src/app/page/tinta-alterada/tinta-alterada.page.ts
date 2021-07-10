@@ -8,11 +8,10 @@ import { CommonService } from 'src/app/services/common/common.service';
   templateUrl: './tinta-alterada.page.html',
   styleUrls: [
     './styles/tinta-alterada.page.scss',
-    './styles/tinta-alterada-desktop.page.scss'
+    './styles/tinta-alterada-desktop.page.scss',
   ],
 })
 export class TintaAlteradaPage implements OnInit {
-
   @ViewChild(IonContent, { static: true }) content: IonContent;
   @ViewChild(IonSlides, { static: true }) slides: IonSlides;
 
@@ -23,12 +22,10 @@ export class TintaAlteradaPage implements OnInit {
     { a: 'cA', b: 'cA' },
     { a: 'cB', b: 'cB' },
     { a: 'cC', b: 'cC' },
-    { a: 'cA', b: 'cA' }];
+    { a: 'cA', b: 'cA' },
+  ];
 
-  constructor(
-    public common: CommonService,
-    private navControl: NavController,
-  ) { }
+  constructor(public common: CommonService, private navControl: NavController) {}
 
   ngOnInit() {
     this.slides.lockSwipes(true);
@@ -58,11 +55,10 @@ export class TintaAlteradaPage implements OnInit {
   listaTintas(list: any) {
     const navigationExtras: NavigationExtras = {
       queryParams: {
-        tintas: JSON.stringify(list)
+        tintas: JSON.stringify(list),
       },
-      skipLocationChange: true
+      skipLocationChange: true,
     };
     this.navControl.navigateForward(['/lista-tintas'], navigationExtras);
   }
-
 }

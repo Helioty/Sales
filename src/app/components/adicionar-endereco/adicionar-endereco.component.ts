@@ -7,15 +7,11 @@ import { ModalController } from '@ionic/angular';
   styleUrls: ['./adicionar-endereco.component.scss'],
 })
 export class AdicionarEnderecoComponent implements OnInit {
+  constructor(private modalCtrl: ModalController) {}
 
-  constructor(
-    private modalCtrl: ModalController
-  ) { }
-
-  ngOnInit() { }
+  ngOnInit() {}
 
   close() {
     this.modalCtrl.dismiss();
   }
-
 }

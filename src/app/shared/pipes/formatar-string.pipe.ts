@@ -1,7 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'formatarString'
+  name: 'formatarString',
 })
 export class FormatarStringPipe implements PipeTransform {
   transform(value: any, ...args) {
@@ -13,12 +13,12 @@ export class FormatarStringPipe implements PipeTransform {
       return new Intl.NumberFormat('pt-BR', {
         style: 'decimal',
         minimumFractionDigits: 2,
-        maximumFractionDigits: 2
+        maximumFractionDigits: 2,
       }).format(value);
     } else if (filter === 'VALOR') {
       return new Intl.NumberFormat('pt-BR', {
         style: 'currency',
-        currency: 'BRL'
+        currency: 'BRL',
       }).format(value);
     } else if (filter === 'PERCENT') {
       const val = value.toFixed(mask);
@@ -87,9 +87,7 @@ export class FormatarStringPipe implements PipeTransform {
   }
 
   private captilizeString(text) {
-    return !!text
-      ? text.charAt(0).toUpperCase() + text.substr(1).toLowerCase()
-      : '';
+    return !!text ? text.charAt(0).toUpperCase() + text.substr(1).toLowerCase() : '';
   }
 
   private StrFormatPipe(value, args: any) {

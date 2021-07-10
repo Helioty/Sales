@@ -13,10 +13,10 @@
 
 <ion-content>
   <ion-list class="lista-produtos">
-    <ion-list-header style="min-height: 30px; padding: 0; margin-bottom: 10px;">
+    <ion-list-header style="min-height: 30px; padding: 0; margin-bottom: 10px">
       <ion-label *ngIf="showPedido" class="list-header-label">
         N° Cartão: {{ cartaoPedido }}
-        <br>
+        <br />
         {{ docTipo }} {{ docCliente | formatarString: 'CPFCGC' }}
       </ion-label>
 
@@ -26,14 +26,22 @@
       </ion-label>
     </ion-list-header>
 
-    <ion-item lines="none" class="produto-item-card" *ngFor="let item of pedidoItens; let i = index">
+    <ion-item
+      lines="none"
+      class="produto-item-card"
+      *ngFor="let item of pedidoItens; let i = index"
+    >
       <ion-grid>
         <ion-row>
-          <ion-col size="2" class="img" style="margin: auto;">
-            <img src="data:image/jpeg;base64,{{item.imagem}}" />
+          <ion-col size="2" class="img" style="margin: auto">
+            <img src="data:image/jpeg;base64,{{ item.imagem }}" />
           </ion-col>
 
-          <ion-col size="7" class="section ion-no-padding" style="padding-bottom: 5px !important">
+          <ion-col
+            size="7"
+            class="section ion-no-padding"
+            style="padding-bottom: 5px !important"
+          >
             <!-- Product Name -->
             <ion-row class="produtoNome">
               <ion-col>
@@ -55,7 +63,7 @@
             </ion-row>
           </ion-col>
 
-          <ion-col size="3" class="colQtde" style="padding-bottom: 0 !important;">
+          <ion-col size="3" class="colQtde" style="padding-bottom: 0 !important">
             <div class="divQtde">
               <ion-row class="produtoQuantidade">
                 <span>{{ item.qtdTotal }}</span>
@@ -78,6 +86,5 @@
         </ion-row> -->
       </ion-grid>
     </ion-item>
-
   </ion-list>
 </ion-content>

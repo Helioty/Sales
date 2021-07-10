@@ -9,18 +9,32 @@
     <ion-buttons slot="end">
       <ion-button (click)="adicionarCartaoPedido()">
         <ion-icon name="card"></ion-icon>
-        <ion-badge color="success" class="badge-position" *ngIf="pedidoService.cardSelected">✔</ion-badge>
+        <ion-badge
+          color="success"
+          class="badge-position"
+          *ngIf="pedidoService.cardSelected"
+          >✔</ion-badge
+        >
       </ion-button>
 
       <ion-button (click)="openClientePage()">
         <ion-icon name="person"></ion-icon>
-        <ion-badge color="success" class="badge-position" *ngIf="pedidoService.clientSelected">✔</ion-badge>
+        <ion-badge
+          color="success"
+          class="badge-position"
+          *ngIf="pedidoService.clientSelected"
+          >✔</ion-badge
+        >
       </ion-button>
 
-      <ion-button *ngIf="pedidoService.qtdItensSacola > 0" [routerLink]="['/pedido-sacola']" routerDirection="forward">
+      <ion-button
+        *ngIf="pedidoService.qtdItensSacola > 0"
+        [routerLink]="['/pedido-sacola']"
+        routerDirection="forward"
+      >
         <ion-icon name="basket"></ion-icon>
         <ion-badge color="fc-cinza-vermelho" class="badge-position">
-          {{pedidoService.qtdItensSacola}}
+          {{ pedidoService.qtdItensSacola }}
         </ion-badge>
       </ion-button>
     </ion-buttons>
@@ -28,13 +42,22 @@
 </ion-header>
 
 <ion-content>
-  <input id="scanner" appHideKeyboard class="scanner" [(ngModel)]="valorScanner" (keyup.enter)="scaneado($event)">
+  <input
+    id="scanner"
+    appHideKeyboard
+    class="scanner"
+    [(ngModel)]="valorScanner"
+    (keyup.enter)="scaneado($event)"
+  />
 
   <ion-grid>
     <ion-row>
       <ion-col size="12" class="imgProduto ion-no-padding">
         <ion-row>
-          <img src="data:image/jpeg;base64,{{produto.imagem}}" (click)="openProdutoImagens(produto.codigo)">
+          <img
+            src="data:image/jpeg;base64,{{ produto.imagem }}"
+            (click)="openProdutoImagens(produto.codigo)"
+          />
         </ion-row>
       </ion-col>
 
@@ -64,14 +87,21 @@
         <ion-row *ngFor="let familia of produtoFamilia; let i = index">
           <ion-label *ngIf="familia.qtdItems == 1">
             {{ familia.nome }}:
-            <span style="color:#969696; font-size:15px"> {{ familia.valor }} </span>
+            <span style="color: #969696; font-size: 15px"> {{ familia.valor }} </span>
           </ion-label>
 
           <ion-label *ngIf="familia.qtdItems > 1">{{ familia.nome }}:</ion-label>
 
-          <ion-segment scrollable [value]="familiaSelecionada" *ngIf="familia.qtdItems > 1"
-            (ionChange)="changeFamilia($event.target.value, i)">
-            <ion-segment-button *ngFor="let familiaIt of familia?.items" value="{{familiaIt.valor_atributo}}">
+          <ion-segment
+            scrollable
+            [value]="familiaSelecionada"
+            *ngIf="familia.qtdItems > 1"
+            (ionChange)="changeFamilia($event.target.value, i)"
+          >
+            <ion-segment-button
+              *ngFor="let familiaIt of familia?.items"
+              value="{{ familiaIt.valor_atributo }}"
+            >
               <ion-label>
                 <span class="span1">{{ familiaIt.valor_atributo }}</span>
               </ion-label>
@@ -92,10 +122,14 @@
 
       <ion-col size="12" *ngIf="showMaisInfo" class="infoProduto">
         <ion-row>
-          <ion-item detail button lines="none" (click)="openProdutoDetalhe(produto)" color="cinza">
-            <ion-label>
-              Informações do produto
-            </ion-label>
+          <ion-item
+            detail
+            button
+            lines="none"
+            (click)="openProdutoDetalhe(produto)"
+            color="cinza"
+          >
+            <ion-label> Informações do produto </ion-label>
           </ion-item>
         </ion-row>
       </ion-col>
@@ -107,9 +141,7 @@
   <ion-grid>
     <ion-row *ngIf="produto.estoque > 0">
       <ion-col size="7" class="colunaDePrecos">
-        <ion-row>
-
-        </ion-row>
+        <ion-row> </ion-row>
 
         <ion-row class="precoPrincipal">
           <ion-col size="12" class="ion-no-padding">
@@ -119,24 +151,27 @@
 
         <ion-row class="precoParcelas">
           <ion-col size="12" class="ion-no-padding">
-            {{ produto.qtdMaxParcelas }} x de {{ produto.valorParcela | formatarString: 'VALOR' }}
+            {{ produto.qtdMaxParcelas }} x de
+            {{ produto.valorParcela | formatarString: 'VALOR' }}
           </ion-col>
         </ion-row>
       </ion-col>
 
       <ion-col size="5" class="colunaBtn ion-no-padding">
-        <ion-button color="fc-button-green" expand="full" (click)="goToAddSacola(produto)">
+        <ion-button
+          color="fc-button-green"
+          expand="full"
+          (click)="goToAddSacola(produto)"
+        >
           COMPRAR
         </ion-button>
       </ion-col>
     </ion-row>
 
-    <ion-row *ngIf="produto.estoque == 0" style="height: 100% !important;">
-      <ion-col size="12" class="ion-padding" style="margin: auto;">
+    <ion-row *ngIf="produto.estoque == 0" style="height: 100% !important">
+      <ion-col size="12" class="ion-padding" style="margin: auto">
         <ion-row>
-          <ion-label>
-            PRODUTO SEM ESTOQUE
-          </ion-label>
+          <ion-label> PRODUTO SEM ESTOQUE </ion-label>
         </ion-row>
       </ion-col>
     </ion-row>

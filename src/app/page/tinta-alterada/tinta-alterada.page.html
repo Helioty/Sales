@@ -7,26 +7,37 @@
     <ion-title>Tintas</ion-title>
 
     <ion-buttons slot="end">
-      <ion-button fill="solid" color="ligth" style="--border-radius: 3px">Finalizar</ion-button>
+      <ion-button fill="solid" color="ligth" style="--border-radius: 3px"
+        >Finalizar</ion-button
+      >
     </ion-buttons>
   </ion-toolbar>
 
   <ion-toolbar color="fc">
     <ion-segment color="light" #seg value="0" (ionChange)="mudaSlide($event)">
       <ion-segment-button checked value="0">
-        <ion-icon class="icon-size" src="..\..\..\assets\imagens\tintas\paint-bucket.svg"></ion-icon>
+        <ion-icon
+          class="icon-size"
+          src="..\..\..\assets\imagens\tintas\paint-bucket.svg"
+        ></ion-icon>
         <ion-label>BASE</ion-label>
         <!-- <ion-badge color="success" class="badge-position">OK</ion-badge> -->
       </ion-segment-button>
 
       <ion-segment-button value="1">
-        <ion-icon class="icon-size" src="..\..\..\assets\imagens\tintas\canned-food.svg"></ion-icon>
+        <ion-icon
+          class="icon-size"
+          src="..\..\..\assets\imagens\tintas\canned-food.svg"
+        ></ion-icon>
         <ion-label>GALÃO</ion-label>
         <!-- <ion-badge color="success" class="badge-position">OK</ion-badge> -->
       </ion-segment-button>
 
       <ion-segment-button value="2">
-        <ion-icon class="icon-size" src="..\..\..\assets\imagens\tintas\paint3.svg"></ion-icon>
+        <ion-icon
+          class="icon-size"
+          src="..\..\..\assets\imagens\tintas\paint3.svg"
+        ></ion-icon>
         <ion-label>COR</ion-label>
         <!-- <ion-badge color="success" class="badge-position">OK</ion-badge> -->
       </ion-segment-button>
@@ -35,12 +46,17 @@
 </ion-header>
 
 <ion-content>
-  <ion-slides style="width: 100%; height: 100%;">
+  <ion-slides style="width: 100%; height: 100%">
     <ion-slide>
       <ion-grid class="slide-grid">
-        <ion-row style="padding: 5px;">
-          <ion-searchbar no-shadow class="search" showCancelButton="never" animated="true"
-            placeholder="Pesquisar Bases"></ion-searchbar>
+        <ion-row style="padding: 5px">
+          <ion-searchbar
+            no-shadow
+            class="search"
+            showCancelButton="never"
+            animated="true"
+            placeholder="Pesquisar Bases"
+          ></ion-searchbar>
         </ion-row>
         <ion-row>
           <ion-col size="12" size-xs *ngFor="let for of fors; let i = index">
@@ -54,9 +70,14 @@
 
     <ion-slide>
       <ion-grid class="slide-grid">
-        <ion-row style="padding: 5px;">
-          <ion-searchbar no-shadow class="search" showCancelButton="never" animated="true"
-            placeholder="Pesquisar Galões"></ion-searchbar>
+        <ion-row style="padding: 5px">
+          <ion-searchbar
+            no-shadow
+            class="search"
+            showCancelButton="never"
+            animated="true"
+            placeholder="Pesquisar Galões"
+          ></ion-searchbar>
         </ion-row>
         <ion-row>
           <ion-col size="12" size-xs *ngFor="let for of fors; let i = index">
@@ -70,9 +91,14 @@
 
     <ion-slide>
       <ion-grid class="slide-grid">
-        <ion-row style="padding: 5px;">
-          <ion-searchbar no-shadow class="search" showCancelButton="never" animated="true"
-            placeholder="Pesquisar cores"></ion-searchbar>
+        <ion-row style="padding: 5px">
+          <ion-searchbar
+            no-shadow
+            class="search"
+            showCancelButton="never"
+            animated="true"
+            placeholder="Pesquisar cores"
+          ></ion-searchbar>
         </ion-row>
         <ion-row>
           <ion-col size="12" size-xs *ngFor="let for of fors; let i = index">
@@ -80,18 +106,23 @@
               <ion-grid class="ion-no-padding">
                 <ion-row>
                   <ion-col size="4">
-                    <div class="div-cor" [style.background-color]="seg.value == '2' ? 'orange' : 'transparent'"></div>
+                    <div
+                      class="div-cor"
+                      [style.background-color]="
+                        seg.value == '2' ? 'orange' : 'transparent'
+                      "
+                    ></div>
                   </ion-col>
 
                   <ion-col size="8">
                     teste
-                    <br>
+                    <br />
                     teste
-                    <br>
+                    <br />
                     teste
-                    <br>
+                    <br />
                     teste
-                    <br>
+                    <br />
                   </ion-col>
                 </ion-row>
               </ion-grid>
@@ -109,25 +140,32 @@
 <ion-footer>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-button color="fc-blue" (click)="listaTintas(fors)" style="--padding-top: 3px; --padding-end: 3px; --padding-bottom: 3px; --padding-start: 3px; font-size: 500%;">
-        <ion-icon src="../../assets/imagens/07-formas_de_retirada/imediata@1x.svg" slot="icon-only"></ion-icon>
+      <ion-button
+        color="fc-blue"
+        (click)="listaTintas(fors)"
+        style="
+          --padding-top: 3px;
+          --padding-end: 3px;
+          --padding-bottom: 3px;
+          --padding-start: 3px;
+          font-size: 500%;
+        "
+      >
+        <ion-icon
+          src="../../assets/imagens/07-formas_de_retirada/imediata@1x.svg"
+          slot="icon-only"
+        ></ion-icon>
       </ion-button>
     </ion-buttons>
 
     <ion-item lines="none" class="tinta-em-foco">
-      <ion-grid class="ion-no-padding" style="height: 100%;">
+      <ion-grid class="ion-no-padding" style="height: 100%">
         <ion-row>
-          <ion-col size="4">
+          <ion-col size="4"> </ion-col>
 
-          </ion-col>
+          <ion-col size="4"> </ion-col>
 
-          <ion-col size="4">
-
-          </ion-col>
-
-          <ion-col size="4">
-
-          </ion-col>
+          <ion-col size="4"> </ion-col>
         </ion-row>
       </ion-grid>
 

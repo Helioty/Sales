@@ -7,13 +7,14 @@ describe('PesquisaClienteComponent', () => {
   let component: PesquisaClienteComponent;
   let fixture: ComponentFixture<PesquisaClienteComponent>;
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      declarations: [ PesquisaClienteComponent ],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [PesquisaClienteComponent],
+        schemas: [CUSTOM_ELEMENTS_SCHEMA],
+      }).compileComponents();
     })
-    .compileComponents();
-  }));
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(PesquisaClienteComponent);

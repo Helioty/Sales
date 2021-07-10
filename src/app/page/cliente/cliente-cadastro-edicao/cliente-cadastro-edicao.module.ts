@@ -8,8 +8,8 @@ import { ClienteCadastroEdicaoPage } from './cliente-cadastro-edicao.page';
 const routes: Routes = [
   {
     path: '',
-    component: ClienteCadastroEdicaoPage
-  }
+    component: ClienteCadastroEdicaoPage,
+  },
 ];
 
 @NgModule({
@@ -18,8 +18,8 @@ const routes: Routes = [
     FormsModule,
     IonicModule,
     ReactiveFormsModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
   ],
-  declarations: [ClienteCadastroEdicaoPage]
+  declarations: [ClienteCadastroEdicaoPage],
 })
-export class ClienteCadastroEdicaoPageModule { }
+export class ClienteCadastroEdicaoPageModule {}

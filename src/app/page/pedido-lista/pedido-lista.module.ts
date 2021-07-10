@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { PedidoListaPage } from './pedido-lista.page';
+import { PedidoListaService } from './pedido-lista.service';
 
 const routes: Routes = [
   {
@@ -16,10 +17,11 @@ const routes: Routes = [
           {
             path: '',
             loadChildren: () =>
-              import('./pedido-aberto/pedido-aberto.module')
-                .then(m => m.PedidoAbertoPageModule)
-          }
-        ]
+              import('./pedido-aberto/pedido-aberto.module').then(
+                (m) => m.PedidoAbertoPageModule
+              ),
+          },
+        ],
       },
       {
         path: 'pedido-finalizado',
@@ -27,28 +29,25 @@ const routes: Routes = [
           {
             path: '',
             loadChildren: () =>
-              import('./pedido-finalizado/pedido-finalizado.module')
-                .then(m => m.PedidoFinalizadoPageModule)
-          }
-        ]
+              import('./pedido-finalizado/pedido-finalizado.module').then(
+                (m) => m.PedidoFinalizadoPageModule
+              ),
+          },
+        ],
       },
       {
         path: '',
         redirectTo: '/pedido-lista/pedido-aberto',
-        pathMatch: 'full'
-      }
-    ]
-  }
+        pathMatch: 'full',
+      },
+    ],
+  },
 ];
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    RouterModule.forChild(routes)
-  ],
+  imports: [CommonModule, FormsModule, IonicModule, RouterModule.forChild(routes)],
   exports: [RouterModule],
-  declarations: [PedidoListaPage]
+  declarations: [PedidoListaPage],
+  providers: [PedidoListaService],
 })
-export class PedidoListaPageModule { }
+export class PedidoListaPageModule {}

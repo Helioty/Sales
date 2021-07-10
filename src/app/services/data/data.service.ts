@@ -1,13 +1,12 @@
 import { Injectable } from '@angular/core';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class DataService {
-
   private data: any[] = [];
 
-  constructor() { }
+  constructor() {}
 
   setData(id: any, data: any) {
     this.data[id] = data;
@@ -20,5 +19,4 @@ export class DataService {
   resetData() {
     this.data = [];
   }
-
 }

@@ -3,15 +3,15 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
-import { PipesModule } from 'src/app/pipes/pipes.module';
+import { PipesModule } from 'src/app/shared/pipes/pipes.module';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { ProdutoPage } from './produto.page';
 
 const routes: Routes = [
   {
     path: '',
-    component: ProdutoPage
-  }
+    component: ProdutoPage,
+  },
 ];
 
 @NgModule({
@@ -21,8 +21,8 @@ const routes: Routes = [
     IonicModule,
     PipesModule,
     SharedModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
   ],
-  declarations: [ProdutoPage]
+  declarations: [ProdutoPage],
 })
-export class ProdutoPageModule { }
+export class ProdutoPageModule {}

@@ -1,10 +1,9 @@
 import { Directive, ElementRef, HostListener } from '@angular/core';
 
 @Directive({
-  selector: '[appHideKeyboard]'
+  selector: '[appHideKeyboard]',
 })
 export class HideKeyboardDirective {
-
   private readonly: boolean;
   constructor(private el: ElementRef) {
     this.readonly = true;
@@ -46,5 +45,4 @@ export class HideKeyboardDirective {
       this.el.nativeElement.children[1].readOnly = value;
     }
   }
-
 }

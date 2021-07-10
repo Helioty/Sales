@@ -8,17 +8,12 @@ import { NewTMSPage } from './new-tms.page';
 const routes: Routes = [
   {
     path: '',
-    component: NewTMSPage
-  }
+    component: NewTMSPage,
+  },
 ];
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    RouterModule.forChild(routes)
-  ],
-  declarations: [NewTMSPage]
+  imports: [CommonModule, FormsModule, IonicModule, RouterModule.forChild(routes)],
+  declarations: [NewTMSPage],
 })
-export class NewTMSPageModule { }
+export class NewTMSPageModule {}

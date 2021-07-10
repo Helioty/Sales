@@ -11,15 +11,23 @@
 
       <ion-button (click)="adicionarCartaoPedido()">
         <ion-icon name="card"></ion-icon>
-        <ion-badge color="success" class="badge-position" *ngIf="pedidoS.cardSelected">✔</ion-badge>
+        <ion-badge color="success" class="badge-position" *ngIf="pedidoS.cardSelected"
+          >✔</ion-badge
+        >
       </ion-button>
 
       <ion-button (click)="openClientePage()">
         <ion-icon name="person"></ion-icon>
-        <ion-badge color="success" class="badge-position" *ngIf="pedidoS.clientSelected">✔</ion-badge>
+        <ion-badge color="success" class="badge-position" *ngIf="pedidoS.clientSelected"
+          >✔</ion-badge
+        >
       </ion-button>
 
-      <ion-button *ngIf="pedidoS.qtdItensSacola > 0" [routerLink]="['/pedido-sacola']" routerDirection="forward">
+      <ion-button
+        *ngIf="pedidoS.qtdItensSacola > 0"
+        [routerLink]="['/pedido-sacola']"
+        routerDirection="forward"
+      >
         <ion-icon name="basket"></ion-icon>
         <ion-badge color="fc-cinza-vermelho" class="badge-position">
           {{ pedidoS.qtdItensSacola }}
@@ -37,14 +45,29 @@
 
     <ion-title>Pesquisa Detalhada</ion-title>
 
-    <ion-spinner slot="end" color="cinza" style="margin-right: 10px;" *ngIf="pesquisando"></ion-spinner>
+    <ion-spinner
+      slot="end"
+      color="cinza"
+      style="margin-right: 10px"
+      *ngIf="pesquisando"
+    ></ion-spinner>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <input id="scanner" appHideKeyboard class="scanner" [(ngModel)]="valorScanner" (keyup.enter)="scaneado($event)">
+  <input
+    id="scanner"
+    appHideKeyboard
+    class="scanner"
+    [(ngModel)]="valorScanner"
+    (keyup.enter)="scaneado($event)"
+  />
 
-  <ion-grid [hidden]="pesquisaDetalhada" *ngIf="pesquisaItems.length == 0" class="noItens">
+  <ion-grid
+    [hidden]="pesquisaDetalhada"
+    *ngIf="pesquisaItems.length == 0"
+    class="noItens"
+  >
     <ion-row class="topHeading">
       <ion-col>
         <h3>Escaneie um produto ou pesquise em nosso catálogo</h3>
@@ -66,10 +89,10 @@
 
   <ion-grid [hidden]="pesquisaDetalhada" *ngIf="pesquisaItems.length != 0">
     <ion-row>
-      <ion-col *ngFor="let item of pesquisaItems; let i = index;">
+      <ion-col *ngFor="let item of pesquisaItems; let i = index">
         <ion-item lines="none" class="produto" (click)="goToProdutoPage(item)">
           <ion-thumbnail slot="start">
-            <ion-img src="data:image/jpeg;base64,{{item?.imagem}}"></ion-img>
+            <ion-img src="data:image/jpeg;base64,{{ item?.imagem }}"></ion-img>
           </ion-thumbnail>
 
           <ion-grid>
@@ -116,7 +139,12 @@
       <ion-col size="12" class="pesquisa-input-col">
         <ion-item lines="none">
           <ion-label position="stacked">Codigo</ion-label>
-          <ion-input #ip1 type="tel" (ionFocus)="inputFoco = 1; foco = true" (ionBlur)="foco = false">
+          <ion-input
+            #ip1
+            type="tel"
+            (ionFocus)="inputFoco = 1; foco = true"
+            (ionBlur)="foco = false"
+          >
           </ion-input>
         </ion-item>
       </ion-col>
@@ -125,7 +153,12 @@
       <ion-col size="12" class="pesquisa-input-col">
         <ion-item lines="none">
           <ion-label position="stacked">Descrição</ion-label>
-          <ion-input #ip2 type="text" (ionFocus)="inputFoco = 2; foco = true" (ionBlur)="foco = false">
+          <ion-input
+            #ip2
+            type="text"
+            (ionFocus)="inputFoco = 2; foco = true"
+            (ionBlur)="foco = false"
+          >
           </ion-input>
         </ion-item>
       </ion-col>
@@ -134,7 +167,12 @@
       <ion-col size="12" class="pesquisa-input-col">
         <ion-item lines="none">
           <ion-label position="stacked">Fornecedor</ion-label>
-          <ion-input #ip3 type="text" (ionFocus)="inputFoco = 3; foco = true" (ionBlur)="foco = false">
+          <ion-input
+            #ip3
+            type="text"
+            (ionFocus)="inputFoco = 3; foco = true"
+            (ionBlur)="foco = false"
+          >
           </ion-input>
         </ion-item>
       </ion-col>
@@ -143,7 +181,12 @@
       <ion-col size="6" class="pesquisa-input-col">
         <ion-item lines="none">
           <ion-label position="stacked">Modelo</ion-label>
-          <ion-input #ip4 type="text" (ionFocus)="inputFoco = 4; foco = true" (ionBlur)="foco = false">
+          <ion-input
+            #ip4
+            type="text"
+            (ionFocus)="inputFoco = 4; foco = true"
+            (ionBlur)="foco = false"
+          >
           </ion-input>
         </ion-item>
       </ion-col>
@@ -152,7 +195,12 @@
       <ion-col size="6" class="pesquisa-input-col">
         <ion-item lines="none">
           <ion-label position="stacked">Linha</ion-label>
-          <ion-input #ip5 type="text" (ionFocus)="inputFoco = 5; foco = true" (ionBlur)="foco = false">
+          <ion-input
+            #ip5
+            type="text"
+            (ionFocus)="inputFoco = 5; foco = true"
+            (ionBlur)="foco = false"
+          >
           </ion-input>
         </ion-item>
       </ion-col>
@@ -168,14 +216,18 @@
       </ion-col>
     </ion-row>
   </ion-grid>
-
 </ion-content>
 
 <ion-footer>
   <ion-grid [hidden]="!pesquisaDetalhada" class="grid-foco-change">
     <ion-row>
       <ion-col size="6">
-        <ion-button fill="clear" expand="full" [disabled]="inputFoco < 2" (click)="setInputComFoco('menos')">
+        <ion-button
+          fill="clear"
+          expand="full"
+          [disabled]="inputFoco < 2"
+          (click)="setInputComFoco('menos')"
+        >
           <ion-icon name="chevron-back" slot="start"></ion-icon>
           Anterior
         </ion-button>

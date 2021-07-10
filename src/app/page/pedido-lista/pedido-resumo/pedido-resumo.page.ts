@@ -1,12 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-
-import { ENV } from 'src/environments/environment';
-import { API_URL } from 'src/app/config/app.config.service';
-
+import { ActivatedRoute, Router } from '@angular/router';
 import { CommonService } from 'src/app/services/common/common.service';
-import { BaseService } from 'src/app/services/HTTP/base-service.service';
-
 
 @Component({
   selector: 'app-pedido-resumo',
@@ -14,7 +8,6 @@ import { BaseService } from 'src/app/services/HTTP/base-service.service';
   styleUrls: ['./pedido-resumo.page.scss'],
 })
 export class PedidoResumoPage implements OnInit {
-
   public pedido: any;
   public showPedido = false;
 
@@ -27,15 +20,12 @@ export class PedidoResumoPage implements OnInit {
   public endereco: any;
 
   constructor(
-    public baseService: BaseService,
     public common: CommonService,
     private activatedRoute: ActivatedRoute,
     private router: Router
-  ) { }
+  ) {}
 
-  ngOnInit() {
-
-  }
+  ngOnInit() {}
 
   async ionViewWillEnter() {
     this.common.goToFullScreen();
@@ -86,36 +76,44 @@ export class PedidoResumoPage implements OnInit {
       // }
       // cabeçalho do pedido
       // item do pedido
-      const link = ENV.WS_VENDAS + API_URL + 'PedidoVendaItem/' + localStorage.getItem('empresa') + '/' + nuPedido + '/itens';
-      await this.baseService.get(link).then((result: any) => {
-        console.log(result);
-        this.pedidoItens = result.content;
-      });
+      // const link =
+      //   ENV.WS_VENDAS +
+      //   API_URL +
+      //   'PedidoVendaItem/' +
+      //   localStorage.getItem('empresa') +
+      //   '/' +
+      //   nuPedido +
+      //   '/itens';
+      // await this.baseService.get(link).then((result: any) => {
+      //   console.log(result);
+      //   this.pedidoItens = result.content;
+      // });
 
-      if (this.pedido.frete.valor > 0) {
-        let enderecos: any;
-        const linkEndereco =
-          ENV.WS_VENDAS + API_URL + 'PedidoVenda/' +
-          localStorage.getItem('empresa') + '/' + nuPedido + '/listEnderecos';
-
-        await this.baseService.get(linkEndereco).then((result: any) => {
-          console.log(result);
-          enderecos = result;
-        });
-
-        if (enderecos.length > 0) {
-          for (const end of enderecos) {
-            if (end.seq_endereco === this.pedido.seqEnderecoEntrega) {
-              this.endereco = end.dsc_endereco;
-            }
-          }
-        }
-      }
-
+      // if (this.pedido.frete.valor > 0) {
+      //   let enderecos: any;
+      //   const linkEndereco =
+      //     ENV.WS_VENDAS +
+      //     API_URL +
+      //     'PedidoVenda/' +
+      //     localStorage.getItem('empresa') +
+      //     '/' +
+      //     nuPedido +
+      //     '/listEnderecos';
+      //   await this.baseService.get(linkEndereco).then((result: any) => {
+      //     console.log(result);
+      //     enderecos = result;
+      //   });
+      //   if (enderecos.length > 0) {
+      //     for (const end of enderecos) {
+      //       if (end.seq_endereco === this.pedido.seqEnderecoEntrega) {
+      //         this.endereco = end.dsc_endereco;
+      //       }
+      //     }
+      //   }
+      // }
       // if (this.show.length != this.produtos.totalElements) {
       //   this.show = new Array<boolean>(this.produtos.totalElements);
       // }
-
     } catch (error) {
       // this.exibeProdutosPedido = false;
       // this.exibeProdutos = true;
@@ -125,5 +123,4 @@ export class PedidoResumoPage implements OnInit {
     //   this.skeletonLoading = false;
     // });
   }
-
 }

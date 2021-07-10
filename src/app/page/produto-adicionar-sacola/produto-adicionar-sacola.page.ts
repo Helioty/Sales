@@ -16,7 +16,6 @@ import { DataService } from 'src/app/services/data/data.service';
   styleUrls: ['./produto-adicionar-sacola.page.scss'],
 })
 export class ProdutoAdicionarSacolaPage implements OnInit {
-
   // Slide da pagina
   @ViewChild(IonSlides, { static: true }) slides: IonSlides;
 
@@ -62,7 +61,7 @@ export class ProdutoAdicionarSacolaPage implements OnInit {
     private pedidoIt: PedidoItemService,
     private produtoS: ProdutoService,
     private tms: TMSService
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.slides.lockSwipes(true);
@@ -74,7 +73,10 @@ export class ProdutoAdicionarSacolaPage implements OnInit {
 
   ionViewWillEnter() {
     this.common.goToFullScreen();
-    this.pedidoItens = new PedidoItens(localStorage.getItem('empresa'), this.pedidoS.pedidoHeader.numpedido);
+    this.pedidoItens = new PedidoItens(
+      localStorage.getItem('empresa'),
+      this.pedidoS.pedidoHeader.numpedido
+    );
     this.pedidoItens.idEmpresa = parseInt(localStorage.getItem('empresa'));
     this.pedidoItens.numPedido = this.pedidoS.pedidoHeader.numpedido;
     this.pedidoItens.idProduto = this.produto.codigodigitoembalagem;
@@ -86,22 +88,27 @@ export class ProdutoAdicionarSacolaPage implements OnInit {
 
   ionViewDidEnter() {
     this.common.goToFullScreen();
-    this.produtoS.getDeposito(
-      this.produto.codigodigitoembalagem,
-      String(this.pedidoS.pedidoHeader.numpedido)
-    ).then((result: any) => {
-      this.depositos = result;
-      this.showDepositos = true;
-      console.log('depositos');
-      console.log(result);
-    }, () => {
-      this.showDepositos = true;
-    });
+    this.produtoS
+      .getDeposito(
+        this.produto.codigodigitoembalagem,
+        String(this.pedidoS.pedidoHeader.numpedido)
+      )
+      .then(
+        (result: any) => {
+          this.depositos = result;
+          this.showDepositos = true;
+          console.log('depositos');
+          console.log(result);
+        },
+        () => {
+          this.showDepositos = true;
+        }
+      );
   }
 
-  ionViewWillLeave() { }
+  ionViewWillLeave() {}
 
-  ionViewDidLeave() { }
+  ionViewDidLeave() {}
 
   goToSlide(slide: number) {
     this.slides.lockSwipes(false);
@@ -114,7 +121,6 @@ export class ProdutoAdicionarSacolaPage implements OnInit {
     this.slides.getActiveIndex().then((result: number) => {
       switch (result) {
         case 0:
-
           break;
 
         case 1:
@@ -128,13 +134,6 @@ export class ProdutoAdicionarSacolaPage implements OnInit {
       }
     });
   }
-
-
-
-
-
-
-
 
   // edit by Helio 09/07/2020
   validateField(): boolean {
@@ -214,14 +213,22 @@ export class ProdutoAdicionarSacolaPage implements OnInit {
   }
 
   async adicionarComTMS(qtd: number, prod: any) {
-    await this.tms.gravaOpcoesTMS(
-      String(this.pedidoS.pedidoHeader.numpedido), String(qtd), this.produto.codigodigitoembalagem, prod.conversao
-    ).then(() => {
-      this.statusGravacao = true;
-    }, (error) => {
-      this.statusGravacao = false;
-      console.log(error);
-    });
+    await this.tms
+      .gravaOpcoesTMS(
+        String(this.pedidoS.pedidoHeader.numpedido),
+        String(qtd),
+        this.produto.codigodigitoembalagem,
+        prod.conversao
+      )
+      .then(
+        () => {
+          this.statusGravacao = true;
+        },
+        (error) => {
+          this.statusGravacao = false;
+          console.log(error);
+        }
+      );
   }
 
   async ende(seq: any, enderecos: any[]) {
@@ -241,36 +248,41 @@ export class ProdutoAdicionarSacolaPage implements OnInit {
     }
 
     let enderecos: any;
-    await this.pedidoS.retornaDadosCliente().then(() => {
-      enderecos = this.pedidoS.dadosCliente.enderecos;
-    }, () => {
-      return this.getOpcoes(qtd);
-    });
+    await this.pedidoS.retornaDadosCliente().then(
+      () => {
+        enderecos = this.pedidoS.dadosCliente.enderecos;
+      },
+      () => {
+        return this.getOpcoes(qtd);
+      }
+    );
     const sequen = this.pedidoS.pedidoHeader.seqEnderecoEntrega;
     const ende = await this.ende(sequen, enderecos);
 
     this.loadingTMS = true;
-    this.tms.getOpcoesTMS(
-      ende, String(qtd), this.produto.codigodigitoembalagem, precolocal
-    ).then((result: any) => {
-      this.dadosRetornoTMS = result;
-      this.loadingTMS = false;
-      console.log('opcoes entrega');
-      console.log(result);
+    this.tms
+      .getOpcoesTMS(ende, String(qtd), this.produto.codigodigitoembalagem, precolocal)
+      .then(
+        (result: any) => {
+          this.dadosRetornoTMS = result;
+          this.loadingTMS = false;
+          console.log('opcoes entrega');
+          console.log(result);
 
-      // by Helio 09/01/2020
-      // Seleciona automaticamente caso exista apenas uma opção de entrega
-      if (result.length === 1) {
-        this.vendedorSelecionado = this.dadosRetornoTMS[0];
-        if (this.vendedorSelecionado.opcoes.length === 1) {
-          this.opcaoSelecionada = this.vendedorSelecionado.opcoes[0];
-          this.entregaTMSselecionada = true;
+          // by Helio 09/01/2020
+          // Seleciona automaticamente caso exista apenas uma opção de entrega
+          if (result.length === 1) {
+            this.vendedorSelecionado = this.dadosRetornoTMS[0];
+            if (this.vendedorSelecionado.opcoes.length === 1) {
+              this.opcaoSelecionada = this.vendedorSelecionado.opcoes[0];
+              this.entregaTMSselecionada = true;
+            }
+          }
+        },
+        (error) => {
+          this.loadingTMS = false;
+          console.log(error);
         }
-      }
-    }, (error) => {
-      this.loadingTMS = false;
-      console.log(error);
-    });
+      );
   }
-
 }

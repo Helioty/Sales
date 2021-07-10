@@ -11,7 +11,6 @@ import { Produto } from 'src/app/class/produto';
   styleUrls: ['./produto-detalhes.page.scss'],
 })
 export class ProdutoDetalhesPage implements OnInit {
-
   public produto = new Produto();
   public info = [];
 
@@ -20,11 +19,9 @@ export class ProdutoDetalhesPage implements OnInit {
     private dataService: DataService,
     public common: CommonService,
     public produtoService: ProdutoService
-  ) { }
+  ) {}
 
-  ngOnInit() {
-
-  }
+  ngOnInit() {}
 
   ionViewWillEnter() {
     this.common.goToFullScreen();
@@ -43,8 +40,5 @@ export class ProdutoDetalhesPage implements OnInit {
     console.clear();
   }
 
-  ionViewDidLeave() {
-
-  }
-
+  ionViewDidLeave() {}
 }

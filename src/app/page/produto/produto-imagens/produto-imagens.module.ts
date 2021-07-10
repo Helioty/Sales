@@ -8,17 +8,12 @@ import { ProdutoImagensPage } from './produto-imagens.page';
 const routes: Routes = [
   {
     path: '',
-    component: ProdutoImagensPage
-  }
+    component: ProdutoImagensPage,
+  },
 ];
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    RouterModule.forChild(routes)
-  ],
-  declarations: [ProdutoImagensPage]
+  imports: [CommonModule, FormsModule, IonicModule, RouterModule.forChild(routes)],
+  declarations: [ProdutoImagensPage],
 })
-export class ProdutoImagensPageModule { }
+export class ProdutoImagensPageModule {}

@@ -7,13 +7,14 @@ describe('EnderecoEntregaOldPage', () => {
   let component: EnderecoEntregaOldPage;
   let fixture: ComponentFixture<EnderecoEntregaOldPage>;
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      declarations: [ EnderecoEntregaOldPage ],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [EnderecoEntregaOldPage],
+        schemas: [CUSTOM_ELEMENTS_SCHEMA],
+      }).compileComponents();
     })
-    .compileComponents();
-  }));
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(EnderecoEntregaOldPage);

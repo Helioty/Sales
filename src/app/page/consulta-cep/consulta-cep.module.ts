@@ -9,8 +9,8 @@ import { ConsultaCepPage } from './consulta-cep.page';
 const routes: Routes = [
   {
     path: '',
-    component: ConsultaCepPage
-  }
+    component: ConsultaCepPage,
+  },
 ];
 
 @NgModule({
@@ -19,9 +19,9 @@ const routes: Routes = [
     FormsModule,
     IonicModule,
     RouterModule.forChild(routes),
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   declarations: [ConsultaCepPage],
-  providers: [Geolocation]
+  providers: [Geolocation],
 })
-export class ConsultaCepPageModule { }
+export class ConsultaCepPageModule {}

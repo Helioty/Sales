@@ -7,25 +7,28 @@ import { IonSlides } from '@ionic/angular';
   styleUrls: ['./new-tms.page.scss'],
 })
 export class NewTMSPage implements OnInit {
-
   @ViewChild(IonSlides, { static: true }) slides: IonSlides;
 
   public slideOpts = {
     slidesPerView: 1,
     initialSlide: 0,
-    autoHeight: true
+    autoHeight: true,
   };
 
-  public dados: any = [{
-    encarregado: 'LOJA',
-    estoque: 10
-  }, {
-    encarregado: 'DISTRIBUIÇÃO',
-    estoque: 100
-  }, {
-    encarregado: 'SA',
-    estoque: 30
-  }];
+  public dados: any = [
+    {
+      encarregado: 'LOJA',
+      estoque: 10,
+    },
+    {
+      encarregado: 'DISTRIBUIÇÃO',
+      estoque: 100,
+    },
+    {
+      encarregado: 'SA',
+      estoque: 30,
+    },
+  ];
 
   public toggleTeste = false;
 
@@ -36,10 +39,9 @@ export class NewTMSPage implements OnInit {
 
   public indexSeller: number;
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   aqui() {
     console.log('aqui');
@@ -57,13 +59,14 @@ export class NewTMSPage implements OnInit {
     }
   }
 
-
   validaNumero(qtd: any) {
     const max = 9999;
     let running = false;
 
     // Para evitar conflito entre o blur e o keyup
-    if (running) { return; }
+    if (running) {
+      return;
+    }
 
     // Bloqueia multiplas chamadas do blur e keyup
     running = true;
@@ -85,12 +88,11 @@ export class NewTMSPage implements OnInit {
     console.log(this.dados[I]);
   }
 
-  rmQtd(i) { }
+  rmQtd(i) {}
 
-  addQtd(i) { }
+  addQtd(i) {}
 
-  closeKeyboard() { }
+  closeKeyboard() {}
 
-  setValue(event, i) { }
-
+  setValue(event, i) {}
 }

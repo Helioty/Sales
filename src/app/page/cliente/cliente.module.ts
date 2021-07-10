@@ -9,18 +9,13 @@ import { ClientePage } from './cliente.page';
 const routes: Routes = [
   {
     path: '',
-    component: ClientePage
-  }
+    component: ClientePage,
+  },
 ];
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    RouterModule.forChild(routes)
-  ],
+  imports: [CommonModule, FormsModule, IonicModule, RouterModule.forChild(routes)],
   declarations: [ClientePage, PesquisaClienteComponent],
-  entryComponents: [PesquisaClienteComponent]
+  entryComponents: [PesquisaClienteComponent],
 })
-export class ClientePageModule { }
+export class ClientePageModule {}

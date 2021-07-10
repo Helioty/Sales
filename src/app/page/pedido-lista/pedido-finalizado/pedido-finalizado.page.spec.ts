@@ -7,13 +7,14 @@ describe('PedidoFinalizadoPage', () => {
   let component: PedidoFinalizadoPage;
   let fixture: ComponentFixture<PedidoFinalizadoPage>;
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      declarations: [ PedidoFinalizadoPage ],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [PedidoFinalizadoPage],
+        schemas: [CUSTOM_ELEMENTS_SCHEMA],
+      }).compileComponents();
     })
-    .compileComponents();
-  }));
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(PedidoFinalizadoPage);

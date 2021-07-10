@@ -7,13 +7,14 @@ describe('AdicionarEnderecoComponent', () => {
   let component: AdicionarEnderecoComponent;
   let fixture: ComponentFixture<AdicionarEnderecoComponent>;
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      declarations: [ AdicionarEnderecoComponent ],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [AdicionarEnderecoComponent],
+        schemas: [CUSTOM_ELEMENTS_SCHEMA],
+      }).compileComponents();
     })
-    .compileComponents();
-  }));
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(AdicionarEnderecoComponent);

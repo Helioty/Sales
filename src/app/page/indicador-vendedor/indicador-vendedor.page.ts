@@ -7,7 +7,6 @@ import * as Chart from 'chart.js';
   styleUrls: ['./indicador-vendedor.page.scss'],
 })
 export class IndicadorVendedorPage implements OnInit {
-
   // @ViewChild('barCanvas') barCanvas: ElementRef;
   // @ViewChild('doughnutCanvas') doughnutCanvas: ElementRef;
   // @ViewChild('lineCanvas') lineCanvas: ElementRef;
@@ -18,7 +17,7 @@ export class IndicadorVendedorPage implements OnInit {
   // public lineChart: Chart;
   // public mixedChart: Chart;
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit() {
     // setTimeout(() => {
@@ -62,7 +61,6 @@ export class IndicadorVendedorPage implements OnInit {
     //       }
     //     }
     //   });
-
     //   this.doughnutChart = new Chart(this.doughnutCanvas.nativeElement, {
     //     type: 'doughnut',
     //     data: {
@@ -89,7 +87,6 @@ export class IndicadorVendedorPage implements OnInit {
     //       }
     //     }
     //   });
-
     //   this.lineChart = new Chart(this.lineCanvas.nativeElement, {
     //     type: 'line',
     //     data: {
@@ -120,7 +117,6 @@ export class IndicadorVendedorPage implements OnInit {
     //       ]
     //     }
     //   });
-
     //   this.mixedChart = new Chart(this.mixedCanvas.nativeElement, {
     //     type: 'bar',
     //     data: {
@@ -130,7 +126,6 @@ export class IndicadorVendedorPage implements OnInit {
     //       }, {
     //         label: 'Line Dataset',
     //         data: [50, 50, 50, 50],
-
     //         // Changes this dataset to become a line
     //         type: 'line'
     //       }],
@@ -143,6 +138,5 @@ export class IndicadorVendedorPage implements OnInit {
     //     }
     //   });
     // }, 300);
-
   }
 }

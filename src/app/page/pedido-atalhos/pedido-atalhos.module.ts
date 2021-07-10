@@ -9,8 +9,8 @@ import { PedidoAtalhosPage } from './pedido-atalhos.page';
 const routes: Routes = [
   {
     path: '',
-    component: PedidoAtalhosPage
-  }
+    component: PedidoAtalhosPage,
+  },
 ];
 
 @NgModule({
@@ -19,8 +19,8 @@ const routes: Routes = [
     FormsModule,
     IonicModule,
     SharedModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
   ],
-  declarations: [PedidoAtalhosPage]
+  declarations: [PedidoAtalhosPage],
 })
-export class PedidoAtalhosPageModule { }
+export class PedidoAtalhosPageModule {}

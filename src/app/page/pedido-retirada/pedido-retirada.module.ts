@@ -8,17 +8,12 @@ import { PedidoRetiradaPage } from './pedido-retirada.page';
 const routes: Routes = [
   {
     path: '',
-    component: PedidoRetiradaPage
-  }
+    component: PedidoRetiradaPage,
+  },
 ];
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    RouterModule.forChild(routes)
-  ],
-  declarations: [PedidoRetiradaPage]
+  imports: [CommonModule, FormsModule, IonicModule, RouterModule.forChild(routes)],
+  declarations: [PedidoRetiradaPage],
 })
-export class PedidoRetiradaPageModule { }
+export class PedidoRetiradaPageModule {}

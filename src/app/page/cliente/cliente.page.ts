@@ -1,5 +1,10 @@
 import { Component, OnInit, ViewChild, Renderer2 } from '@angular/core';
-import { IonInput, NavController, AlertController, ModalController } from '@ionic/angular';
+import {
+  IonInput,
+  NavController,
+  AlertController,
+  ModalController,
+} from '@ionic/angular';
 import { PesquisaClienteComponent } from 'src/app/components/pesquisa-cliente/pesquisa-cliente.component';
 import { CommonService } from 'src/app/services/common/common.service';
 import { BaseService } from 'src/app/services/HTTP/base-service.service';
@@ -13,7 +18,6 @@ import { ActivatedRoute, NavigationExtras } from '@angular/router';
   styleUrls: ['./cliente.page.scss'],
 })
 export class ClientePage implements OnInit {
-
   @ViewChild('input') search: IonInput;
 
   // Valor digitado no input de CPF/CNPJ
@@ -48,11 +52,9 @@ export class ClientePage implements OnInit {
     private navControl: NavController,
     private pedido: PedidoService,
     private renderer: Renderer2
-  ) { }
+  ) {}
 
-  ngOnInit() {
-
-  }
+  ngOnInit() {}
 
   ionViewWillEnter() {
     this.common.goToFullScreen();
@@ -70,13 +72,9 @@ export class ClientePage implements OnInit {
     }
   }
 
-  ionViewWillLeave() {
+  ionViewWillLeave() {}
 
-  }
-
-  ionViewDidLeave() {
-
-  }
+  ionViewDidLeave() {}
 
   foco() {
     setTimeout(() => {
@@ -203,34 +201,37 @@ export class ClientePage implements OnInit {
   async getCliente(doc: string) {
     this.skeletonAni = true;
 
-    await this.clienteService.getCliente(doc).then((result: any) => {
-      this.dados = result;
-      console.log('DADOS DO CLIENTE');
-      console.log(this.dados);
-      if (this.dados !== undefined || this.dados !== [] || this.dados !== '') {
-        this.isCNPJ = this.dados.natureza !== 'FISICA';
-        this.isActive = this.dados.ativo;
-        this.atualizaCadastro = this.dados.atualizaCadastro;
-        this.showDados(this.dados);
-        if (this.atualizaCadastro) {
-          this.setEstado('atualizacao');
+    await this.clienteService.getCliente(doc).then(
+      (result: any) => {
+        this.dados = result;
+        console.log('DADOS DO CLIENTE');
+        console.log(this.dados);
+        if (this.dados !== undefined || this.dados !== [] || this.dados !== '') {
+          this.isCNPJ = this.dados.natureza !== 'FISICA';
+          this.isActive = this.dados.ativo;
+          this.atualizaCadastro = this.dados.atualizaCadastro;
+          this.showDados(this.dados);
+          if (this.atualizaCadastro) {
+            this.setEstado('atualizacao');
+          } else {
+            this.setEstado('confirmacao');
+          }
         } else {
-          this.setEstado('confirmacao');
+          this.dados = undefined;
+          this.skeletonAni = false;
         }
-      } else {
-        this.dados = undefined;
-        this.skeletonAni = false;
+      },
+      (error: any) => {
+        if (error.error.detail) {
+          this.mensagem = 'Não encontramos o cadastro do cliente!';
+          this.skeletonAni = false;
+          this.setEstado('novo');
+        } else {
+          this.skeletonAni = false;
+          this.setEstado('reset');
+        }
       }
-    }, (error: any) => {
-      if (error.error.detail) {
-        this.mensagem = 'Não encontramos o cadastro do cliente!';
-        this.skeletonAni = false;
-        this.setEstado('novo');
-      } else {
-        this.skeletonAni = false;
-        this.setEstado('reset');
-      }
-    });
+    );
   }
 
   showDados(dados: any) {
@@ -256,8 +257,9 @@ export class ClientePage implements OnInit {
       const valor1: any = String(dados.celulares[0].numero);
 
       if (valor1.length > 8) {
-        this.dadosShow.celular =
-          this.common.formataFONE(dados.celulares[0].ddd + dados.celulares[0].numero);
+        this.dadosShow.celular = this.common.formataFONE(
+          dados.celulares[0].ddd + dados.celulares[0].numero
+        );
       } else {
         this.dadosShow.celular = '';
       }
@@ -269,16 +271,19 @@ export class ClientePage implements OnInit {
       const alert = await this.alertCtrl.create({
         header: 'Remover cliente?',
         message: 'Deseja remover o cliente do pedido atual?',
-        buttons: ['NÃO', {
-          text: 'SIM',
-          handler: () => {
-            this.common.showLoader();
-            this.pedido.removerCliente().then(() => {
-              this.setEstado('reset');
-              this.common.loading.dismiss();
-            });
-          }
-        }]
+        buttons: [
+          'NÃO',
+          {
+            text: 'SIM',
+            handler: () => {
+              this.common.showLoader();
+              this.pedido.removerCliente().then(() => {
+                this.setEstado('reset');
+                this.common.loading.dismiss();
+              });
+            },
+          },
+        ],
       });
       await alert.present();
     } else {
@@ -288,7 +293,7 @@ export class ClientePage implements OnInit {
 
   async cadastrarNovo() {
     let navParams: any;
-    this.activatedRoute.queryParams.subscribe(params => {
+    this.activatedRoute.queryParams.subscribe((params) => {
       navParams = params;
     });
     this.toCadastroEdicao(navParams, 'novo');
@@ -296,7 +301,7 @@ export class ClientePage implements OnInit {
 
   async editarCadastro() {
     let navParams: any;
-    this.activatedRoute.queryParams.subscribe(params => {
+    this.activatedRoute.queryParams.subscribe((params) => {
       navParams = params;
     });
     this.toCadastroEdicao(navParams, 'edicao');
@@ -310,8 +315,8 @@ export class ClientePage implements OnInit {
         paginaAnterior: '',
         situacao: situacao,
         cliente: this.valorDigitado,
-        dados: ''
-      }
+        dados: '',
+      },
     };
     if (situacao === 'edicao') {
       navigationExtras.queryParams.dados = JSON.stringify(this.dados);
@@ -335,20 +340,22 @@ export class ClientePage implements OnInit {
     await this.common.showLoader();
     const doc: string = this.valorDigitado.replace(/\D/g, '');
     if (doc !== this.pedido.docCliente) {
-      this.pedido.adicionarCliente(doc, this.dados).then(() => {
-        if (this.pedido.clientSelected) {
-          this.prosseguir();
+      this.pedido.adicionarCliente(doc, this.dados).then(
+        () => {
+          if (this.pedido.clientSelected) {
+            this.prosseguir();
+          }
+          this.common.loading.dismiss();
+        },
+        (error) => {
+          console.log(error);
+          this.common.loading.dismiss();
         }
-        this.common.loading.dismiss();
-      }, (error) => {
-        console.log(error);
-        this.common.loading.dismiss();
-      });
+      );
     } else {
       await this.prosseguir();
       this.common.loading.dismiss();
     }
-
   }
 
   async prosseguir() {
@@ -365,8 +372,8 @@ export class ClientePage implements OnInit {
         const navigationExtras: NavigationExtras = {
           queryParams: {
             paginaSeguinte: 'pedido-atalhos',
-            paginaAnterior: 'cliente'
-          }
+            paginaAnterior: 'cliente',
+          },
         };
         this.navControl.navigateForward(['/' + paginaSeguinte], navigationExtras);
         break;
@@ -386,12 +393,11 @@ export class ClientePage implements OnInit {
       component: PesquisaClienteComponent,
       componentProps: {
         firstName: 'Douglas',
-        lastName: 'Adams'
-      }
+        lastName: 'Adams',
+      },
     });
     await modal.present();
     const { data } = await modal.onWillDismiss();
     console.log(data);
   }
-
 }

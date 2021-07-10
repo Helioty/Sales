@@ -9,7 +9,11 @@
 </ion-header>
 
 <ion-content>
-  <ion-progress-bar color="success" *ngIf="loading" type="indeterminate"></ion-progress-bar>
+  <ion-progress-bar
+    color="success"
+    *ngIf="loading"
+    type="indeterminate"
+  ></ion-progress-bar>
   <ion-progress-bar color="success" *ngIf="!loading"></ion-progress-bar>
   <ion-slides>
     <ion-slide>
@@ -59,7 +63,11 @@
                   <ion-item class="cep-item">
                     <ion-label position="stacked">CEP</ion-label>
                     <ion-input formControlName="cep" type="text"></ion-input>
-                    <ion-button slot="end" color="fc-button-green" (click)="pesquisaCep()">
+                    <ion-button
+                      slot="end"
+                      color="fc-button-green"
+                      (click)="pesquisaCep()"
+                    >
                       <ion-icon name="search"></ion-icon>
                     </ion-button>
                   </ion-item>

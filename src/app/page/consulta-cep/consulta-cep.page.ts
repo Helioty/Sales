@@ -14,10 +14,9 @@ declare var google: any;
   styleUrls: ['./consulta-cep.page.scss'],
 })
 export class ConsultaCepPage implements OnInit {
-
   @ViewChild(IonSlides, { static: true }) slides: IonSlides;
 
-  @ViewChild('mapElement') mapElement: { nativeElement: any; };
+  @ViewChild('mapElement') mapElement: { nativeElement: any };
 
   public map: any;
   // public start: string;
@@ -29,7 +28,6 @@ export class ConsultaCepPage implements OnInit {
   // public directionsService = new google.maps.DirectionsService();
   // public directionsDisplay = new google.maps.DirectionsRenderer();
   // public latLng: any;
-
 
   @ViewChild('searchbar') searchbar: IonSearchbar;
   public autoCompleteList: any[] = [];
@@ -56,7 +54,7 @@ export class ConsultaCepPage implements OnInit {
     private navControl: NavController,
     private data: DataService
   ) {
-    this.enderecoSelecionado = new CamposParaNovoEndereco;
+    this.enderecoSelecionado = new CamposParaNovoEndereco();
   }
 
   ngOnInit() {
@@ -81,7 +79,7 @@ export class ConsultaCepPage implements OnInit {
     this.map = new google.maps.Map(this.mapElement.nativeElement, {
       center: { lat: -8.1129892, lng: -34.9126349 },
       disableDefaultUI: true,
-      zoom: 15
+      zoom: 15,
     });
 
     google.maps.event.addListener(this.map, 'click', (event: any) => {
@@ -100,9 +98,7 @@ export class ConsultaCepPage implements OnInit {
     console.clear();
   }
 
-  ionViewDidLeave() {
-
-  }
+  ionViewDidLeave() {}
 
   // by Helio
   changeSlide(slide: number) {
@@ -128,7 +124,7 @@ export class ConsultaCepPage implements OnInit {
     this.googleAutocomplete.getPlacePredictions(
       {
         input: this.searchbar.value,
-        componentRestrictions: { country: ['br'] }
+        componentRestrictions: { country: ['br'] },
       },
       (predictions: any, status) => {
         this.autoCompleteList = [];
@@ -163,7 +159,7 @@ export class ConsultaCepPage implements OnInit {
     const marker = new google.maps.Marker({
       position: latlng,
       map: this.map,
-      visible: true
+      visible: true,
     });
     this.markers.push(marker);
     this.map.setCenter(latlng);
@@ -209,7 +205,8 @@ export class ConsultaCepPage implements OnInit {
         } else {
           this.progressBar = false;
         }
-      });
+      }
+    );
   }
 
   showResultGoogleMap(item: any) {
@@ -243,6 +240,4 @@ export class ConsultaCepPage implements OnInit {
       this.enderecoSelecionado.cep = item[4].long_name;
     }
   }
-
-
 }

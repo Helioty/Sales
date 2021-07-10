@@ -5,15 +5,19 @@
 
   <ion-toolbar color="primary">
     <ion-grid>
-      <ion-row style="width: fit-content; margin: auto;">
-        <ion-col size="12" style="margin: auto;">
-          <ion-thumbnail style="width: 80px; height: 80px;">
-            <img src="assets/images/06-formas_de_pagamento/{{pedido.pedidoHeader.tipodoc}}.png" />
+      <ion-row style="width: fit-content; margin: auto">
+        <ion-col size="12" style="margin: auto">
+          <ion-thumbnail style="width: 80px; height: 80px">
+            <img
+              src="assets/images/06-formas_de_pagamento/{{
+                pedido.pedidoHeader.tipodoc
+              }}.png"
+            />
           </ion-thumbnail>
         </ion-col>
       </ion-row>
-      <ion-row style="width: fit-content; margin: auto;">
-        <ion-col size="12" style="margin: auto;">
+      <ion-row style="width: fit-content; margin: auto">
+        <ion-col size="12" style="margin: auto">
           <ion-label>Parcelas</ion-label>
         </ion-col>
       </ion-row>
@@ -30,9 +34,7 @@
             <ion-grid>
               <ion-row>
                 <ion-col size="6" class="left">
-                  <ion-label>
-                    Entrada
-                  </ion-label>
+                  <ion-label> Entrada </ion-label>
                 </ion-col>
 
                 <ion-col size="6" class="right">
@@ -47,10 +49,16 @@
 
         <ion-row [hidden]="!hasEntrada">
           <ion-col size="7"></ion-col>
-          <ion-col size="2" style="margin: auto; text-align: end;">R$</ion-col>
-          <ion-col size="3" style="padding: 0 !important;">
-            <ion-input type="number" pattern="[0-9]*" placeholder="0,00" (keyup)="keyupEvent()"
-              [(ngModel)]="entradaValue" (keyup.enter)="verificaEntrada($event)">
+          <ion-col size="2" style="margin: auto; text-align: end">R$</ion-col>
+          <ion-col size="3" style="padding: 0 !important">
+            <ion-input
+              type="number"
+              pattern="[0-9]*"
+              placeholder="0,00"
+              (keyup)="keyupEvent()"
+              [(ngModel)]="entradaValue"
+              (keyup.enter)="verificaEntrada($event)"
+            >
             </ion-input>
           </ion-col>
         </ion-row>
@@ -61,19 +69,31 @@
       <ion-col size="12">
         <ion-row class="title">
           <ion-col size="12">
-            <ion-label>
-              Parcelas
-            </ion-label>
+            <ion-label> Parcelas </ion-label>
           </ion-col>
         </ion-row>
 
         <ion-row>
-          <ion-col size="12" button class="opcoes" *ngFor="let op of opcoesList; let i = index">
-            <ion-row id="{{op.status ? 'selectedPaymentValue' : ''}}" [class.selected]="opcaoSelect.id == op.id"
-              (click)="opcaoSelect = op; buttonDisable = false">
-              <ion-col size="2" class="serial" *ngIf="op.isEntrada == 'N'">{{ op.qtdParcelas }}x</ion-col>
-              <ion-col size="2" class="serial" *ngIf="op.isEntrada == 'S'">1 + {{ op.qtdParcelas }}</ion-col>
-              <ion-col size="6" class="txt">{{ op.valorParcelas | formatarString: 'VALOR' }}</ion-col>
+          <ion-col
+            size="12"
+            button
+            class="opcoes"
+            *ngFor="let op of opcoesList; let i = index"
+          >
+            <ion-row
+              id="{{ op.status ? 'selectedPaymentValue' : '' }}"
+              [class.selected]="opcaoSelect.id == op.id"
+              (click)="opcaoSelect = op; buttonDisable = false"
+            >
+              <ion-col size="2" class="serial" *ngIf="op.isEntrada === 'N'"
+                >{{ op.qtdParcelas }}x</ion-col
+              >
+              <ion-col size="2" class="serial" *ngIf="op.isEntrada === 'S'"
+                >1 + {{ op.qtdParcelas }}</ion-col
+              >
+              <ion-col size="6" class="txt">{{
+                op.valorParcelas | formatarString: 'VALOR'
+              }}</ion-col>
               <ion-col size="4" class="val">Sem juros</ion-col>
             </ion-row>
           </ion-col>
@@ -86,13 +106,11 @@
 <ion-footer>
   <ion-grid>
     <ion-row>
-      <ion-col size="6" style="text-align: start;">
-        <ion-label class="title">
-          Pedido:
-        </ion-label>
+      <ion-col size="6" style="text-align: start">
+        <ion-label class="title"> Pedido: </ion-label>
       </ion-col>
 
-      <ion-col size="6" style="text-align: end;">
+      <ion-col size="6" style="text-align: end">
         <ion-label class="valor">
           {{ pedido.pedidoHeader.totpedido | formatarString: 'VALOR' }}
         </ion-label>
@@ -100,7 +118,13 @@
     </ion-row>
   </ion-grid>
 
-  <ion-item button lines="none" color="fc-button-green" (click)="continuar();" [disabled]="buttonDisable">
+  <ion-item
+    button
+    lines="none"
+    color="fc-button-green"
+    (click)="continuar()"
+    [disabled]="buttonDisable"
+  >
     <ion-text>CONTINUAR</ion-text>
   </ion-item>
 </ion-footer>

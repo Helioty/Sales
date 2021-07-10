@@ -13,7 +13,6 @@ import { Produto } from 'src/app/class/produto';
   styleUrls: ['./produto.page.scss'],
 })
 export class ProdutoPage implements OnInit {
-
   public taskScanner: any;
   public valorScanner: string;
   public focusStatus = true;
@@ -35,8 +34,8 @@ export class ProdutoPage implements OnInit {
     private dataService: DataService,
     private produtoS: ProdutoService,
     private navControl: NavController,
-    private platform: Platform,
-  ) { }
+    private platform: Platform
+  ) {}
 
   ngOnInit() {
     this.activatedRoute.queryParams.subscribe((params: any) => {
@@ -60,7 +59,7 @@ export class ProdutoPage implements OnInit {
     this.focusOff();
   }
 
-  ionViewDidLeave() { }
+  ionViewDidLeave() {}
 
   // Cria o loop que da foco no input
   focusOn() {
@@ -70,12 +69,12 @@ export class ProdutoPage implements OnInit {
         if (this.focusStatus) {
           const scanners = document.body.getElementsByClassName('scanner');
           for (const i in scanners) {
-            if (Number(i) === (scanners.length - 1)) {
+            if (Number(i) === scanners.length - 1) {
               (scanners[i] as HTMLInputElement).focus();
             }
           }
         }
-      } catch (error) { }
+      } catch (error) {}
     }, 350);
   }
 
@@ -87,7 +86,7 @@ export class ProdutoPage implements OnInit {
     this.focusStatus = false;
     const scanners = document.body.getElementsByClassName('scanner');
     for (const i in scanners) {
-      if (Number(i) === (scanners.length - 1)) {
+      if (Number(i) === scanners.length - 1) {
         (scanners[i] as HTMLInputElement).blur();
       }
     }
@@ -108,7 +107,6 @@ export class ProdutoPage implements OnInit {
           this.pedidoService.setCardPedido(codigo);
           this.focusPlay();
         } else {
-
         }
       }
     } catch (error) {
@@ -124,17 +122,22 @@ export class ProdutoPage implements OnInit {
         {
           name: 'codigo',
           type: 'text',
-          placeholder: 'Digite o codigo do cartão!'
-        }
+          placeholder: 'Digite o codigo do cartão!',
+        },
       ],
-      buttons: ['CANCELAR', {
-        text: 'ADICIONAR',
-        handler: (data: any) => {
-          this.pedidoService.setCardPedido(data.codigo);
-        }
-      }]
+      buttons: [
+        'CANCELAR',
+        {
+          text: 'ADICIONAR',
+          handler: (data: any) => {
+            this.pedidoService.setCardPedido(data.codigo);
+          },
+        },
+      ],
     });
-    alert.onDidDismiss().finally(() => { this.focusPlay(); });
+    alert.onDidDismiss().finally(() => {
+      this.focusPlay();
+    });
     await alert.present().then(() => {
       this.focusPause();
     });
@@ -144,46 +147,55 @@ export class ProdutoPage implements OnInit {
     const navigationExtras: NavigationExtras = {
       queryParams: {
         paginaSeguinte: 'back',
-        paginaAnterior: 'produto'
-      }
+        paginaAnterior: 'produto',
+      },
     };
     this.navControl.navigateForward(['/cliente'], navigationExtras);
   }
 
   // pega as informações do produto
   async getProdutoInformacao(codigo: string) {
-    await this.produtoS.getProductInfomation(codigo).then((result: any) => {
-      console.log(result);
-      this.showMaisInfo = (result.items.length > 0);
-      this.maisInfo = result.items;
-    }, (error) => {
-      console.log(error);
-    });
+    await this.produtoS.getProductInfomation(codigo).then(
+      (result: any) => {
+        console.log(result);
+        this.showMaisInfo = result.items.length > 0;
+        this.maisInfo = result.items;
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 
   // pega as informações do produto
   async getFamilia(codigo: string) {
-    await this.produtoS.getFamilia(codigo).then((result: any) => {
-      console.log('Familia do produto');
-      console.log(result);
-      this.produtoFamilia = result;
-      for (const i in result) {
-        for (const x in result[i].items) {
-          result[i].qtdItems = x + 1;
+    await this.produtoS.getFamilia(codigo).then(
+      (result: any) => {
+        console.log('Familia do produto');
+        console.log(result);
+        this.produtoFamilia = result;
+        for (const i in result) {
+          for (const x in result[i].items) {
+            result[i].qtdItems = x + 1;
 
-          if (result[i].items[x].selected === 1 && result[i].items[x].id_produto === this.produto.codigodigitoembalagem) {
-            result[i].valor = result[i].items[x].valor_atributo;
-            console.log('Valor da familia');
-            console.log(result[i].valor);
-            this.familiaSelecionada = result[i].items[x].valor_atributo;
-          } else {
-            result[i].valor = '';
+            if (
+              result[i].items[x].selected === 1 &&
+              result[i].items[x].id_produto === this.produto.codigodigitoembalagem
+            ) {
+              result[i].valor = result[i].items[x].valor_atributo;
+              console.log('Valor da familia');
+              console.log(result[i].valor);
+              this.familiaSelecionada = result[i].items[x].valor_atributo;
+            } else {
+              result[i].valor = '';
+            }
           }
         }
+      },
+      (error) => {
+        console.log(error);
       }
-    }, (error) => {
-      console.log(error);
-    });
+    );
   }
 
   changeFamilia(valor: string, index: number) {
@@ -204,8 +216,8 @@ export class ProdutoPage implements OnInit {
     const navigationExtras: NavigationExtras = {
       queryParams: {
         produto: JSON.stringify(produto),
-        info: 'produtoInformacao'
-      }
+        info: 'produtoInformacao',
+      },
     };
     this.dataService.setData('produtoInformacao', this.maisInfo);
     this.navControl.navigateForward(['/produto-detalhes'], navigationExtras);
@@ -215,18 +227,21 @@ export class ProdutoPage implements OnInit {
     await this.common.showLoader();
     const navigationExtras: NavigationExtras = {
       queryParams: {
-        dataId: 'produtoListImage'
-      }
+        dataId: 'produtoListImage',
+      },
     };
-    await this.produtoS.getAllListImage(codigoNoEmbalagem).then((result: any) => {
-      // console.log(result);
-      this.dataService.setData('produtoListImage', result);
-      this.navControl.navigateForward(['/produto-imagens'], navigationExtras);
-      this.common.loading.dismiss();
-    }, (error) => {
-      this.common.loading.dismiss();
-      console.log(error);
-    });
+    await this.produtoS.getAllListImage(codigoNoEmbalagem).then(
+      (result: any) => {
+        // console.log(result);
+        this.dataService.setData('produtoListImage', result);
+        this.navControl.navigateForward(['/produto-imagens'], navigationExtras);
+        this.common.loading.dismiss();
+      },
+      (error) => {
+        this.common.loading.dismiss();
+        console.log(error);
+      }
+    );
   }
 
   async getImage(codigoDigitoEmb: string) {
@@ -240,11 +255,10 @@ export class ProdutoPage implements OnInit {
     const navigationExtras: NavigationExtras = {
       queryParams: {
         paginaSeguinte: 'pedido-sacola',
-        paginaAnterior: 'produto'
-      }
+        paginaAnterior: 'produto',
+      },
     };
     this.dataService.setData('produto-adicionar-sacola', prod);
     this.navControl.navigateForward(['/produto-adicionar-sacola'], navigationExtras);
   }
-
 }

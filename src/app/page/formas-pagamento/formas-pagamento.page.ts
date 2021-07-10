@@ -19,7 +19,7 @@ export class FormasPagamentoPage implements OnInit {
     public pedidoS: PedidoService,
     private pagamento: CondicaoPagamentoService,
     private navControl: NavController
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.slides.lockSwipes(true);
@@ -37,23 +37,22 @@ export class FormasPagamentoPage implements OnInit {
     this.common.goToFullScreen();
   }
 
-  ionViewWillLeave() {
+  ionViewWillLeave() {}
 
-  }
-
-  ionViewDidLeave() {
-
-  }
+  ionViewDidLeave() {}
 
   async goToCondicaoPagamento(opcaoPagamento: any) {
     await this.common.showLoader();
-    this.pagamento.setTipoPagamento(opcaoPagamento.codigo).then((result: any) => {
-      this.prosseguir(opcaoPagamento);
-      this.common.loading.dismiss();
-      console.log(result);
-    }, (error) => {
-      this.common.loading.dismiss();
-    });
+    this.pagamento.setTipoPagamento(opcaoPagamento.codigo).then(
+      (result: any) => {
+        this.prosseguir(opcaoPagamento);
+        this.common.loading.dismiss();
+        console.log(result);
+      },
+      (error) => {
+        this.common.loading.dismiss();
+      }
+    );
   }
 
   prosseguir(opcao: any) {
@@ -65,5 +64,4 @@ export class FormasPagamentoPage implements OnInit {
       this.navControl.navigateRoot(['/pedido-finalizacao']);
     }
   }
-
 }

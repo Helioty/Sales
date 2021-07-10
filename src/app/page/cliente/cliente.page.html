@@ -1,44 +1,77 @@
-<ion-header [ngClass]="{'bg-blue': isBlue, 'bg-orange': isOrange, 'bg-green': isGreen }">
-  <ion-toolbar [ngClass]="{'bg-blue': isBlue, 'bg-orange': isOrange, 'bg-green': isGreen }">
+<ion-header [ngClass]="{ 'bg-blue': isBlue, 'bg-orange': isOrange, 'bg-green': isGreen }">
+  <ion-toolbar
+    [ngClass]="{ 'bg-blue': isBlue, 'bg-orange': isOrange, 'bg-green': isGreen }"
+  >
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
 
     <ion-buttons slot="end">
       <ion-button *ngIf="isGreen" (click)="editarCadastro()">
-        <ion-icon name="create" style="color: white;"></ion-icon>
+        <ion-icon name="create" style="color: white"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [ngClass]="{'bg-blue': isBlue, 'bg-orange': isOrange, 'bg-green': isGreen }">
-
+<ion-content
+  [ngClass]="{ 'bg-blue': isBlue, 'bg-orange': isOrange, 'bg-green': isGreen }"
+>
   <ion-grid>
-    <ion-row style="width: 100%; max-width: 600px; margin: auto;">
+    <ion-row style="width: 100%; max-width: 600px; margin: auto">
       <ion-card class="clie-card">
         <ion-card-content class="ion-no-padding">
-          <ion-item lines="none" [ngClass]="{'card-blue': isBlue, 'card-orange': isOrange, 'card-green': isGreen }">
-            <ion-icon slot="start" src="../../../assets/images/10-cliente/cliente.svg" class="clie-icon"
-              [ngClass]="{'clie-icon-blue': isBlue, 'clie-icon-orange': isOrange, 'clie-icon-green': isGreen }">
+          <ion-item
+            lines="none"
+            [ngClass]="{
+              'card-blue': isBlue,
+              'card-orange': isOrange,
+              'card-green': isGreen
+            }"
+          >
+            <ion-icon
+              slot="start"
+              src="../../../assets/images/10-cliente/cliente.svg"
+              class="clie-icon"
+              [ngClass]="{
+                'clie-icon-blue': isBlue,
+                'clie-icon-orange': isOrange,
+                'clie-icon-green': isGreen
+              }"
+            >
             </ion-icon>
             <ion-grid>
               <ion-row>
                 <ion-col size="12" *ngIf="dados == undefined">
                   <ion-row>
-                    <ion-skeleton-text [animated]="skeletonAni" style="width: 100%"></ion-skeleton-text>
+                    <ion-skeleton-text
+                      [animated]="skeletonAni"
+                      style="width: 100%"
+                    ></ion-skeleton-text>
                   </ion-row>
                   <ion-row>
-                    <ion-skeleton-text [animated]="skeletonAni" style="width: 80%"></ion-skeleton-text>
+                    <ion-skeleton-text
+                      [animated]="skeletonAni"
+                      style="width: 80%"
+                    ></ion-skeleton-text>
                   </ion-row>
                   <ion-row>
-                    <ion-skeleton-text [animated]="skeletonAni" style="width: 50%"></ion-skeleton-text>
+                    <ion-skeleton-text
+                      [animated]="skeletonAni"
+                      style="width: 50%"
+                    ></ion-skeleton-text>
                   </ion-row>
                   <ion-row>
-                    <ion-skeleton-text [animated]="skeletonAni" style="width: 75%"></ion-skeleton-text>
+                    <ion-skeleton-text
+                      [animated]="skeletonAni"
+                      style="width: 75%"
+                    ></ion-skeleton-text>
                   </ion-row>
                   <ion-row>
-                    <ion-skeleton-text [animated]="skeletonAni" style="width: 65%"></ion-skeleton-text>
+                    <ion-skeleton-text
+                      [animated]="skeletonAni"
+                      style="width: 65%"
+                    ></ion-skeleton-text>
                   </ion-row>
                 </ion-col>
 
@@ -72,31 +105,52 @@
     </ion-row>
 
     <ion-row class="clie-input" *ngIf="isBlue">
-      <ion-input #input id="input" placeholder="CPF ou CNPJ do cliente" (ionChange)="dynamicMask('cli')"
-        [(ngModel)]="valorDigitado" style="margin-bottom: 1px; font-size: 20px;" inputmode="numeric"
-        (ionBlur)="checaMinimo(valorDigitado);" (keyup.enter)="blur($event)">
+      <ion-input
+        #input
+        id="input"
+        placeholder="CPF ou CNPJ do cliente"
+        (ionChange)="dynamicMask('cli')"
+        [(ngModel)]="valorDigitado"
+        style="margin-bottom: 1px; font-size: 20px"
+        inputmode="numeric"
+        (ionBlur)="checaMinimo(valorDigitado)"
+        (keyup.enter)="blur($event)"
+      >
       </ion-input>
     </ion-row>
 
     <ion-row class="clie-btn-row" *ngIf="isBlue">
-      <ion-button class="clie-btn-busca" color="fc-blue" fill="clear" (click)="buscaCliente()">Buscar cliente por nome</ion-button>
+      <ion-button
+        class="clie-btn-busca"
+        color="fc-blue"
+        fill="clear"
+        (click)="buscaCliente()"
+        >Buscar cliente por nome</ion-button
+      >
     </ion-row>
 
     <ion-row class="clie-btn-row" *ngIf="isGreen">
-      <ion-button class="clie-btn-confirme" color="light" [disabled]="isActive == 'N'" (click)="confirmaCliente()">
+      <ion-button
+        class="clie-btn-confirme"
+        color="light"
+        [disabled]="isActive === 'N'"
+        (click)="confirmaCliente()"
+      >
         Confirmar
         <ion-icon name="checkmark" slot="start"></ion-icon>
       </ion-button>
     </ion-row>
 
     <ion-row class="clie-btn-row" *ngIf="isGreen && atualizaCadastro">
-      <ion-button class="clie-btn-atualiza" color="white-red">Atualizar Cadastro
+      <ion-button class="clie-btn-atualiza" color="white-red"
+        >Atualizar Cadastro
         <ion-icon name="checkmark" slot="start"></ion-icon>
       </ion-button>
     </ion-row>
 
     <ion-row class="clie-btn-row" *ngIf="isGreen">
-      <ion-button class="clie-btn-confirme" color="fc-orange" (click)="naoCliente()">Não é seu cliente?
+      <ion-button class="clie-btn-confirme" color="fc-orange" (click)="naoCliente()"
+        >Não é seu cliente?
         <ion-icon name="person" slot="start"></ion-icon>
       </ion-button>
     </ion-row>
@@ -106,16 +160,17 @@
     </ion-row>
 
     <ion-row class="clie-btn-row" *ngIf="isOrange">
-      <ion-button class="clie-btn-confirme" color="fc-orange" (click)="cadastrarNovo()">Cadastrar novo Cliente!
+      <ion-button class="clie-btn-confirme" color="fc-orange" (click)="cadastrarNovo()"
+        >Cadastrar novo Cliente!
         <ion-icon name="person" slot="start"></ion-icon>
       </ion-button>
     </ion-row>
 
     <ion-row class="clie-btn-row" *ngIf="isOrange">
-      <ion-button class="clie-btn-confirme" color="white-red" (click)="setEstado('reset')">Digitar novamente.
+      <ion-button class="clie-btn-confirme" color="white-red" (click)="setEstado('reset')"
+        >Digitar novamente.
         <ion-icon name="person" slot="start"></ion-icon>
       </ion-button>
     </ion-row>
   </ion-grid>
-
 </ion-content>

@@ -9,18 +9,33 @@
   </ion-toolbar>
 
   <ion-toolbar color="primary" [hidden]="hideSearch">
-    <ion-searchbar #searchbar placeholder="Pesquise seu endereço aqui!" (ionFocus)="foco = true"
-      (ionBlur)="foco = false" (keyup)="updateSearchResults()" showCancelButton="never">
+    <ion-searchbar
+      #searchbar
+      placeholder="Pesquise seu endereço aqui!"
+      (ionFocus)="foco = true"
+      (ionBlur)="foco = false"
+      (keyup)="updateSearchResults()"
+      showCancelButton="never"
+    >
     </ion-searchbar>
   </ion-toolbar>
 
-  <ion-progress-bar type="indeterminate" color="success" [hidden]="!progressBar"></ion-progress-bar>
+  <ion-progress-bar
+    type="indeterminate"
+    color="success"
+    [hidden]="!progressBar"
+  ></ion-progress-bar>
 </ion-header>
 
 <ion-content>
   <div class="listagem" [hidden]="autoCompleteList.length == 0">
     <ion-list>
-      <ion-item button lines="full" *ngFor="let item of autoCompleteList" (click)="selectSearchResult(item);">
+      <ion-item
+        button
+        lines="full"
+        *ngFor="let item of autoCompleteList"
+        (click)="selectSearchResult(item)"
+      >
         <ion-icon slot="start" name="logo-google"></ion-icon>
         <ion-label>
           {{ item.description }}
@@ -35,7 +50,7 @@
     </ion-slide>
 
     <ion-slide>
-      <ion-grid style="height: 100%;">
+      <ion-grid style="height: 100%">
         <ion-row>
           <ion-col size="12" class="cadastro-campos">
             <ion-row>
@@ -62,7 +77,11 @@
                   <ion-label>Cidade</ion-label>
                 </ion-row>
                 <ion-row>
-                  <ion-input type="text" placeholder="Cidade" [(ngModel)]="enderecoSelecionado.cidade">
+                  <ion-input
+                    type="text"
+                    placeholder="Cidade"
+                    [(ngModel)]="enderecoSelecionado.cidade"
+                  >
                   </ion-input>
                 </ion-row>
               </ion-col>
@@ -72,7 +91,11 @@
                   <ion-label>Bairro</ion-label>
                 </ion-row>
                 <ion-row>
-                  <ion-input type="text" placeholder="Bairro" [(ngModel)]="enderecoSelecionado.bairro">
+                  <ion-input
+                    type="text"
+                    placeholder="Bairro"
+                    [(ngModel)]="enderecoSelecionado.bairro"
+                  >
                   </ion-input>
                 </ion-row>
               </ion-col>
@@ -82,7 +105,11 @@
                   <ion-label>Rua ou Avenida</ion-label>
                 </ion-row>
                 <ion-row>
-                  <ion-input type="text" placeholder="Rua ou Avenida" [(ngModel)]="enderecoSelecionado.endereco">
+                  <ion-input
+                    type="text"
+                    placeholder="Rua ou Avenida"
+                    [(ngModel)]="enderecoSelecionado.endereco"
+                  >
                   </ion-input>
                 </ion-row>
               </ion-col>
@@ -92,7 +119,11 @@
                   <ion-label>Número</ion-label>
                 </ion-row>
                 <ion-row>
-                  <ion-input type="tel" placeholder="Número" [(ngModel)]="enderecoSelecionado.numero">
+                  <ion-input
+                    type="tel"
+                    placeholder="Número"
+                    [(ngModel)]="enderecoSelecionado.numero"
+                  >
                   </ion-input>
                 </ion-row>
               </ion-col>
@@ -102,18 +133,20 @@
                   <ion-label>Complemento (opcional)</ion-label>
                 </ion-row>
                 <ion-row>
-                  <ion-input type="text" placeholder="Complemento" [(ngModel)]="enderecoSelecionado.complemento">
+                  <ion-input
+                    type="text"
+                    placeholder="Complemento"
+                    [(ngModel)]="enderecoSelecionado.complemento"
+                  >
                   </ion-input>
                 </ion-row>
               </ion-col>
             </ion-row>
           </ion-col>
-
         </ion-row>
       </ion-grid>
     </ion-slide>
   </ion-slides>
-
 </ion-content>
 
 <ion-footer *ngIf="!modoConsulta">

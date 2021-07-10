@@ -11,13 +11,12 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./produto-imagens.page.scss'],
 })
 export class ProdutoImagensPage implements OnInit {
-
   @ViewChild('imgSlides') slides: IonSlides;
 
   public imagens = [];
 
   public slideOpts = {
-    slidesPerView: 5
+    slidesPerView: 5,
   };
 
   constructor(
@@ -25,11 +24,9 @@ export class ProdutoImagensPage implements OnInit {
     private dataService: DataService,
     public common: CommonService,
     public produtoService: ProdutoService
-  ) { }
+  ) {}
 
-  ngOnInit() {
-
-  }
+  ngOnInit() {}
 
   ionViewWillEnter() {
     this.common.goToFullScreen();
@@ -46,12 +43,9 @@ export class ProdutoImagensPage implements OnInit {
     console.clear();
   }
 
-  ionViewDidLeave() {
-
-  }
+  ionViewDidLeave() {}
 
   slideTo(slide: number) {
     this.slides.slideTo(slide);
   }
-
 }

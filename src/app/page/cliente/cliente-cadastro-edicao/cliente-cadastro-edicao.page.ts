@@ -11,7 +11,6 @@ import { ActivatedRoute, NavigationExtras } from '@angular/router';
   styleUrls: ['./cliente-cadastro-edicao.page.scss'],
 })
 export class ClienteCadastroEdicaoPage implements OnInit {
-
   @ViewChild(IonContent, { static: true }) content: IonContent;
   @ViewChild(IonSlides, { static: true }) slides: IonSlides;
 
@@ -49,7 +48,7 @@ export class ClienteCadastroEdicaoPage implements OnInit {
       bairro: ['', Validators.required],
       endereco: ['', Validators.required],
       numero: ['', Validators.required],
-      comple: ['']
+      comple: [''],
     });
   }
 
@@ -65,7 +64,6 @@ export class ClienteCadastroEdicaoPage implements OnInit {
       });
       console.log(this.clienteDadosOld);
     } else {
-
     }
   }
 
@@ -88,8 +86,8 @@ export class ClienteCadastroEdicaoPage implements OnInit {
     const navigationExtras: NavigationExtras = {
       queryParams: {
         paginaSeguinte: 'back',
-        paginaAnterior: 'cliente-cadastro-edicao'
-      }
+        paginaAnterior: 'cliente-cadastro-edicao',
+      },
     };
     this.navControl.navigateForward(['/consulta-cep/pesquisa'], navigationExtras);
   }
@@ -102,5 +100,4 @@ export class ClienteCadastroEdicaoPage implements OnInit {
       console.log(this.data['enderecoSelecionado']);
     }
   }
-
 }

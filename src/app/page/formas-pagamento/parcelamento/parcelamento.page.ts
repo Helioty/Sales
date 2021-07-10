@@ -40,28 +40,28 @@ export class ParcelamentoPage implements OnInit {
 
   ionViewWillEnter() {
     this.common.goToFullScreen();
-    this.pagamento.getCondicaoPagamento(this.pedido.pedidoHeader.tipodoc, this.pedido.numPedido)
-      .then((result: any) => {
-        console.log(result);
-        this.opcoesList = result;
-        this.common.loading.dismiss();
-      }, (error) => {
-        console.log(error);
-        this.common.loading.dismiss();
-      });
+    this.pagamento
+      .getCondicaoPagamento(this.pedido.pedidoHeader.tipodoc, this.pedido.numPedido)
+      .then(
+        (result: any) => {
+          console.log(result);
+          this.opcoesList = result;
+          this.common.loading.dismiss();
+        },
+        (error) => {
+          console.log(error);
+          this.common.loading.dismiss();
+        }
+      );
   }
 
   ionViewDidEnter() {
     this.common.goToFullScreen();
   }
 
-  ionViewWillLeave() {
+  ionViewWillLeave() {}
 
-  }
-
-  ionViewDidLeave() {
-
-  }
+  ionViewDidLeave() {}
 
   changeEntrada() {
     this.hasEntrada = !this.hasEntrada;
@@ -83,12 +83,14 @@ export class ParcelamentoPage implements OnInit {
       const alert = await this.alertCtrl.create({
         header: titulo,
         message: msg,
-        buttons: [{
-          text: 'OK',
-          handler: () => {
-            this.input.setFocus();
-          }
-        }]
+        buttons: [
+          {
+            text: 'OK',
+            handler: () => {
+              this.input.setFocus();
+            },
+          },
+        ],
       });
       await alert.present();
     }
@@ -104,38 +106,46 @@ export class ParcelamentoPage implements OnInit {
   async getCondicaoPagamentoComEntrada(valor: number) {
     if (valor > this.pedido.pedidoHeader.totpedido) {
       this.showAlert(
-        'Valor inválido', 'O valor da entrada não pode ser maior que o valor do pedido!'
+        'Valor inválido',
+        'O valor da entrada não pode ser maior que o valor do pedido!'
       );
       return;
     }
     await this.common.showLoader();
-    this.pagamento.getCondicaoPagamentoComEntrada(
-      this.pedido.pedidoHeader.tipodoc, this.pedido.numPedido, valor
-    ).then((result: any) => {
-      console.log(result);
-      this.opcoesList = result;
-      this.common.loading.dismiss();
-      this.opcaoSelect = new OpcaoParcela();
-    }, (error) => {
-      console.log(error);
-      this.common.loading.dismiss();
-    });
+    this.pagamento
+      .getCondicaoPagamentoComEntrada(
+        this.pedido.pedidoHeader.tipodoc,
+        this.pedido.numPedido,
+        valor
+      )
+      .then(
+        (result: any) => {
+          console.log(result);
+          this.opcoesList = result;
+          this.common.loading.dismiss();
+          this.opcaoSelect = new OpcaoParcela();
+        },
+        (error) => {
+          console.log(error);
+          this.common.loading.dismiss();
+        }
+      );
   }
 
   // by Ryuge 18/12/2018
   // edit by Helio 30/03/2020
   async continuar() {
     await this.common.showLoader();
-    this.pagamento.setCondicaoPagamento(
-      this.opcaoSelect, this.input.value
-    ).then((result: any) => {
-      this.pedido.atualizaPedidoHeader(result);
-      this.navControl.navigateRoot(['pedido-finalizacao']);
-      this.common.loading.dismiss();
-    }, (error) => {
-      console.log(error);
-      this.common.loading.dismiss();
-    });
+    this.pagamento.setCondicaoPagamento(this.opcaoSelect, this.input.value).then(
+      (result: any) => {
+        this.pedido.atualizaPedidoHeader(result);
+        this.navControl.navigateRoot(['pedido-finalizacao']);
+        this.common.loading.dismiss();
+      },
+      (error) => {
+        console.log(error);
+        this.common.loading.dismiss();
+      }
+    );
   }
-
 }

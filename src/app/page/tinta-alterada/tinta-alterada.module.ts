@@ -8,17 +8,12 @@ import { TintaAlteradaPage } from './tinta-alterada.page';
 const routes: Routes = [
   {
     path: '',
-    component: TintaAlteradaPage
-  }
+    component: TintaAlteradaPage,
+  },
 ];
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    RouterModule.forChild(routes)
-  ],
-  declarations: [TintaAlteradaPage]
+  imports: [CommonModule, FormsModule, IonicModule, RouterModule.forChild(routes)],
+  declarations: [TintaAlteradaPage],
 })
-export class TintaAlteradaPageModule { }
+export class TintaAlteradaPageModule {}

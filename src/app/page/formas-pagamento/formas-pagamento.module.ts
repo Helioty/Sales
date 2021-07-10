@@ -3,14 +3,14 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
-import { PipesModule } from 'src/app/pipes/pipes.module';
+import { PipesModule } from 'src/app/shared/pipes/pipes.module';
 import { FormasPagamentoPage } from './formas-pagamento.page';
 
 const routes: Routes = [
   {
     path: '',
-    component: FormasPagamentoPage
-  }
+    component: FormasPagamentoPage,
+  },
 ];
 
 @NgModule({
@@ -19,8 +19,8 @@ const routes: Routes = [
     FormsModule,
     IonicModule,
     PipesModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
   ],
-  declarations: [FormasPagamentoPage]
+  declarations: [FormasPagamentoPage],
 })
-export class FormasPagamentoPageModule { }
+export class FormasPagamentoPageModule {}

@@ -9,18 +9,17 @@
 </ion-header>
 
 <ion-content>
-
-  <ion-slides style="width: 100%; height: 100%;">
-    <ion-slide style="overflow-y: scroll;">
-      <ion-grid style="height: 100%;">
+  <ion-slides style="width: 100%; height: 100%">
+    <ion-slide style="overflow-y: scroll">
+      <ion-grid style="height: 100%">
         <ion-row>
           <ion-col size="12">
             <ion-row>
-              <h4 style="margin: 0; font-weight: bold;">Selecione o endereço</h4>
+              <h4 style="margin: 0; font-weight: bold">Selecione o endereço</h4>
             </ion-row>
 
             <ion-row>
-              <p style="text-align: start; font-size: 14px;">
+              <p style="text-align: start; font-size: 14px">
                 Para retirar em loja ou receber, selecione um endereço abaixo.
               </p>
             </ion-row>
@@ -28,9 +27,13 @@
 
           <ion-col size="12">
             <ion-row class="listaEnderecos">
-              <ion-col size="12" *ngFor="let endereco of pedidoService.dadosCliente.enderecos" class="endereco">
+              <ion-col
+                size="12"
+                *ngFor="let endereco of pedidoService.dadosCliente.enderecos"
+                class="endereco"
+              >
                 <ion-row class="text-endereco">
-                  <p style="margin-top: 5px;">Entregar em:</p>
+                  <p style="margin-top: 5px">Entregar em:</p>
                 </ion-row>
 
                 <ion-row class="text-endereco">
@@ -38,25 +41,34 @@
                 </ion-row>
 
                 <ion-row class="text-endereco">
-                  <p class="local">{{ endereco.ds_bairro }} - {{ endereco.cidade }} - {{ endereco.ds_uf }}</p>
+                  <p class="local">
+                    {{ endereco.ds_bairro }} - {{ endereco.cidade }} -
+                    {{ endereco.ds_uf }}
+                  </p>
                 </ion-row>
 
                 <ion-row>
-                  <ion-button color="fc-button-green" (click)="selecionaEndereco(endereco)">Selecionar</ion-button>
+                  <ion-button
+                    color="fc-button-green"
+                    (click)="selecionaEndereco(endereco)"
+                    >Selecionar</ion-button
+                  >
                 </ion-row>
               </ion-col>
             </ion-row>
 
             <ion-row class="novoEndereco">
-              <ion-item lines="none" button detail (click)="changeSlide(1)">Adicionar novo endereço</ion-item>
+              <ion-item lines="none" button detail (click)="changeSlide(1)"
+                >Adicionar novo endereço</ion-item
+              >
             </ion-row>
           </ion-col>
         </ion-row>
       </ion-grid>
     </ion-slide>
 
-    <ion-slide style="overflow-y: scroll;">
-      <ion-grid style="height: 100%;">
+    <ion-slide style="overflow-y: scroll">
+      <ion-grid style="height: 100%">
         <ion-row>
           <!-- <ion-col size="12">
             <ion-row>
@@ -72,12 +84,10 @@
 
           <ion-col size="12">
             <ion-row class="cadastrarNovoEndereco">
-              <p style="margin-top: 0; margin-bottom: 5px;">Cadastrar novo endereço</p>
+              <p style="margin-top: 0; margin-bottom: 5px">Cadastrar novo endereço</p>
             </ion-row>
 
-            <ion-row>
-
-            </ion-row>
+            <ion-row> </ion-row>
 
             <ion-row>
               <ion-col size="12" class="cadastro-campos">
@@ -87,8 +97,13 @@
                       <ion-label>CEP</ion-label>
                     </ion-row>
                     <ion-row>
-                      <ion-input type="tel" placeholder="00000-000" mask="**.***-***" [(ngModel)]="novoEndereco.cep"
-                        (keyup.enter)="getEnderecoByCEP(novoEndereco.cep);">
+                      <ion-input
+                        type="tel"
+                        placeholder="00000-000"
+                        mask="**.***-***"
+                        [(ngModel)]="novoEndereco.cep"
+                        (keyup.enter)="getEnderecoByCEP(novoEndereco.cep)"
+                      >
                       </ion-input>
                     </ion-row>
                   </ion-col>
@@ -107,7 +122,11 @@
                       <ion-label>Cidade</ion-label>
                     </ion-row>
                     <ion-row>
-                      <ion-input type="text" placeholder="Cidade" [(ngModel)]="novoEndereco.cidade">
+                      <ion-input
+                        type="text"
+                        placeholder="Cidade"
+                        [(ngModel)]="novoEndereco.cidade"
+                      >
                       </ion-input>
                     </ion-row>
                   </ion-col>
@@ -117,7 +136,11 @@
                       <ion-label>Bairro</ion-label>
                     </ion-row>
                     <ion-row>
-                      <ion-input type="text" placeholder="Bairro" [(ngModel)]="novoEndereco.bairro">
+                      <ion-input
+                        type="text"
+                        placeholder="Bairro"
+                        [(ngModel)]="novoEndereco.bairro"
+                      >
                       </ion-input>
                     </ion-row>
                   </ion-col>
@@ -127,7 +150,11 @@
                       <ion-label>Rua ou Avenida</ion-label>
                     </ion-row>
                     <ion-row>
-                      <ion-input type="text" placeholder="Rua ou Avenida" [(ngModel)]="novoEndereco.endereco">
+                      <ion-input
+                        type="text"
+                        placeholder="Rua ou Avenida"
+                        [(ngModel)]="novoEndereco.endereco"
+                      >
                       </ion-input>
                     </ion-row>
                   </ion-col>
@@ -137,7 +164,11 @@
                       <ion-label>Número</ion-label>
                     </ion-row>
                     <ion-row>
-                      <ion-input type="tel" placeholder="Número" [(ngModel)]="novoEndereco.numero">
+                      <ion-input
+                        type="tel"
+                        placeholder="Número"
+                        [(ngModel)]="novoEndereco.numero"
+                      >
                       </ion-input>
                     </ion-row>
                   </ion-col>
@@ -147,14 +178,20 @@
                       <ion-label>Complemento (opcional)</ion-label>
                     </ion-row>
                     <ion-row>
-                      <ion-input type="text" placeholder="Complemento" [(ngModel)]="novoEndereco.complemento">
+                      <ion-input
+                        type="text"
+                        placeholder="Complemento"
+                        [(ngModel)]="novoEndereco.complemento"
+                      >
                       </ion-input>
                     </ion-row>
                   </ion-col>
                 </ion-row>
 
                 <ion-row class="cadastrar-button">
-                  <ion-button color="fc-button-green" (click)="saveEndereco()">Cadastrar endereço</ion-button>
+                  <ion-button color="fc-button-green" (click)="saveEndereco()"
+                    >Cadastrar endereço</ion-button
+                  >
                 </ion-row>
               </ion-col>
             </ion-row>
@@ -163,5 +200,4 @@
       </ion-grid>
     </ion-slide>
   </ion-slides>
-
 </ion-content>

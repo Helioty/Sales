@@ -8,17 +8,12 @@ import { ListaTintasPage } from './lista-tintas.page';
 const routes: Routes = [
   {
     path: '',
-    component: ListaTintasPage
-  }
+    component: ListaTintasPage,
+  },
 ];
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    RouterModule.forChild(routes)
-  ],
-  declarations: [ListaTintasPage]
+  imports: [CommonModule, FormsModule, IonicModule, RouterModule.forChild(routes)],
+  declarations: [ListaTintasPage],
 })
-export class ListaTintasPageModule { }
+export class ListaTintasPageModule {}
