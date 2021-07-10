@@ -9,27 +9,28 @@ import { Pagination } from './pedido-lista.interface';
   providedIn: 'root',
 })
 export class PedidoListaService {
+  readonly totalPorPagina = 5;
   constructor(private readonly http: BaseService) {}
 
   /**
    * @author helio.souza
    * @param page Pagina a ser retornada.
-   * @returns 
+   * @returns
    */
   getPedidosEmAberto(page = 1): Observable<Pagination<PedidoHeader>> {
     const empresa = localStorage.getItem('empresa');
-    const url = `${ENV.WS_VENDAS}${API_URL}PedidoVenda/list/${empresa}/abertos?page=${page}`;
+    const url = `${ENV.WS_VENDAS}${API_URL}PedidoVenda/list/${empresa}/abertos?page=${page}&size=${this.totalPorPagina}`;
     return this.http.get(url);
   }
 
   /**
    * @author helio.souza
    * @param page Pagina a ser retornada.
-   * @returns 
+   * @returns
    */
   getPedidosFinalizados(page = 1): Observable<Pagination<PedidoHeader>> {
     const empresa = localStorage.getItem('empresa');
-    const url = `${ENV.WS_VENDAS}${API_URL}PedidoVenda/list/${empresa}/faturados?page=${page}`;
+    const url = `${ENV.WS_VENDAS}${API_URL}PedidoVenda/list/${empresa}/faturados?page=${page}&size=${this.totalPorPagina}`;
     return this.http.get(url);
   }
 }

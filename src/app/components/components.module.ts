@@ -9,6 +9,6 @@ import { FormErrorComponent } from './form-error/form-error.component';
 @NgModule({
   declarations: [MenuComponent, FormErrorComponent],
   imports: [CommonModule, FormsModule, IonicModule, RouterModule],
-  exports: [MenuComponent, FormErrorComponent]
+  exports: [MenuComponent, FormErrorComponent],
 })
 export class ComponentsModule {}

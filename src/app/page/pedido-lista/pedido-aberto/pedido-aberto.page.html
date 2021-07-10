@@ -1,5 +1,5 @@
 <ion-content>
-  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event.target)">
     <ion-refresher-content
       pullingIcon="chevron-down-outline"
       pullingText="Solte para Recarregar!"
@@ -9,7 +9,7 @@
   </ion-refresher>
 
   <!-- Nenhum pedido na lista -->
-  <ion-grid *ngIf="!showSkeleton && pedidos == null" class="noPedidos">
+  <ion-grid *ngIf="!showSkeleton && data == null" class="noPedidos">
     <ion-row class="topHeading">
       <ion-col>
         <h3>Seus pedidos em andamento vão ficar aqui... Inicie um novo pedido</h3>

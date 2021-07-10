@@ -1,11 +1,13 @@
+import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { NavController, AlertController } from '@ionic/angular';
-import { BaseService } from '../http/base.service';
+import { BaseService } from './../http/base.service';
 import { CommonService } from 'src/app/services/common/common.service';
 import { ClienteService } from 'src/app/services/cliente/cliente.service';
 import { PedidoHeader, PedidoTable } from 'src/app/class/pedido';
-import { API_URL } from 'src/app/config/app.config.service';
+import { API_URL, ENV } from 'src/app/config/app.config.service';
 import { NavigationExtras } from '@angular/router';
+import { take, tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -53,7 +55,7 @@ export class PedidoService {
 
   constructor(
     private alertCtrl: AlertController,
-    private baseService: BaseService,
+    private readonly http: BaseService,
     private common: CommonService,
     private clienteService: ClienteService,
     private navControl: NavController
@@ -124,7 +126,6 @@ export class PedidoService {
     //   'PedidoVenda/' +
     //   localStorage.getItem('empresa') +
     //   '/criar';
-
     // return new Promise((resolve, reject) => {
     //   this.baseService.post(link, {}).then(
     //     (result: any) => {
@@ -149,7 +150,6 @@ export class PedidoService {
     //   localStorage.getItem('empresa') +
     //   '/' +
     //   idPedido;
-
     // return new Promise((resolve, reject) => {
     //   this.baseService.get(link).then(
     //     (result: any) => {
@@ -321,10 +321,14 @@ export class PedidoService {
           handler: () => {
             if (this.qtdItensSacola === 0) {
               this.limpaDadosPedido();
-              this.apagarPedido(this.numPedido).then(() => {
-                this.navControl.navigateRoot('/pedido-lista');
-                console.clear();
-              });
+              this.apagarPedido(Number(this.numPedido))
+                .pipe(take(1))
+                .subscribe({
+                  next: () => {
+                    this.navControl.navigateRoot('/pedido-lista');
+                    console.clear();
+                  },
+                });
             } else {
               this.limpaDadosPedido();
               this.navControl.navigateRoot('/pedido-lista');
@@ -337,25 +341,19 @@ export class PedidoService {
     await alert.present();
   }
 
-  // Apagar pedido, alterado por Hélio 14/02/2020
-  public async apagarPedido(pedidoId: any) {
-    // const link =
-    //   ENV.WS_VENDAS +
-    //   API_URL +
-    //   'PedidoVenda/' +
-    //   localStorage.getItem('empresa') +
-    //   '/' +
-    //   pedidoId;
-
-    // await this.baseService.post(link, {}).then(
-    //   () => {
-    //     this.limpaDadosPedido();
-    //     this.common.showToast('Pedido apagado!');
-    //   },
-    //   (error: any) => {
-    //     console.log(error);
-    //   }
-    // );
+  /**
+   * @author helio.souza
+   * @param pedidoId ID do Pedido a ser apagado.
+   * @returns
+   */
+  public apagarPedido(pedidoId: number): Observable<any> {
+    const empresa = localStorage.getItem('empresa');
+    const url = `${ENV.WS_VENDAS}${API_URL}PedidoVenda/${empresa}/${pedidoId}`;
+    return this.http.delete<any>(url).pipe(
+      tap({
+        next: () => console.log('Pedido Apagado!'),
+      })
+    );
   }
 
   // by Helio 15/07/2020

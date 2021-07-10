@@ -88,7 +88,6 @@ export class PedidoResumoPage implements OnInit {
       //   console.log(result);
       //   this.pedidoItens = result.content;
       // });
-
       // if (this.pedido.frete.valor > 0) {
       //   let enderecos: any;
       //   const linkEndereco =
