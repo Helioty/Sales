@@ -1,15 +1,18 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NavigationExtras } from '@angular/router';
 import {
-  AlertController,
   IonInfiniteScroll,
   IonItemSliding,
+  IonRefresher,
   NavController,
 } from '@ionic/angular';
 import { take } from 'rxjs/operators';
 import { CommonService } from 'src/app/services/common/common.service';
 import { PedidoManutencaoService } from 'src/app/services/pedido/pedido-manutencao.service';
-import { PedidoListaService } from '../pedido-lista.service';
+import { PedidoHeader } from 'src/app/services/pedido/pedido.interface';
+import { PedidoService } from 'src/app/services/pedido/pedido.service';
+import { Pagination } from './../pedido-lista.interface';
+import { PedidoListaService } from './../pedido-lista.service';
 
 @Component({
   selector: 'app-pedido-finalizado',
@@ -17,91 +20,102 @@ import { PedidoListaService } from '../pedido-lista.service';
   styleUrls: ['./pedido-finalizado.page.scss'],
 })
 export class PedidoFinalizadoPage implements OnInit {
-  @ViewChild(IonInfiniteScroll, { static: true }) infiniteScroll: IonInfiniteScroll;
-
-  public resultGetPedidos: any;
-  public pedidos: any[] = [];
-
+  @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
+  data: Pagination<PedidoHeader>;
   public showSkeleton = false;
-
-  public paginaAtual = 1;
-  public totalPagina = 0;
-  public lastPage = false;
+  private paginaAtual = 1;
 
   constructor(
-    public common: CommonService,
-    private alertCtrl: AlertController,
-    private navControl: NavController,
-    private pedidoListaService: PedidoListaService,
-    private pedidoManutencaoService: PedidoManutencaoService
+    private readonly common: CommonService,
+    private readonly navControl: NavController,
+    private readonly pedidoService: PedidoService,
+    private readonly pedidoListaService: PedidoListaService,
+    private readonly pedidoManutencaoService: PedidoManutencaoService
   ) {}
 
-  ngOnInit() {}
+  ngOnInit(): void {
+    console.log('Pedidos finalizados OnInit');
+  }
 
-  ionViewWillEnter() {}
-
-  ionViewDidEnter() {
+  ionViewWillEnter(): void {
     this.showSkeleton = true;
-    this.getPedidosFinalizados(1);
   }
 
-  async doRefresh(event: any) {
-    this.paginaAtual = 1;
-    // await this.getPedidosFinalizados(this.paginaAtual).then(
-    //   (res) => {
-    //     event.target.complete();
-    //   },
-    //   (error) => {
-    //     console.log(error);
-    //     event.target.complete();
-    //   }
-    // );
+  ionViewDidEnter(): void {
+    this.doInit();
   }
 
-  async doInfinite(event: any) {
-    // try {
-    //   if (!this.lastPage) {
-    //     await this.getPedidosFinalizados(this.paginaAtual).then((res) => {
-    //       event.target.complete();
-    //       if (this.paginaAtual >= this.totalPagina) {
-    //         this.infiniteScroll.disabled = true;
-    //       }
-    //     });
-    //   } else {
-    //     event.target.complete();
-    //     if (this.paginaAtual >= this.totalPagina) {
-    //       this.infiniteScroll.disabled = true;
-    //     }
-    //   }
-    // } catch (error) {
-    //   console.log(error);
-    // }
+  /**
+   * @author helio.souza
+   */
+  doInit(): void {
+    const event = (data: Pagination<PedidoHeader>) => {
+      if (data) {
+        this.data = data;
+        this.infiniteScroll.disabled = this.data.last;
+        this.showSkeleton = false;
+      } else {
+        this.showSkeleton = false;
+      }
+    };
+    this.getPedidosFinalizados(this.paginaAtual, event);
   }
 
-  getPedidosFinalizados(page: number) {
-    if (page === 1) {
-      this.lastPage = false;
-    }
+  /**
+   * @author helio.souza
+   * @param refresher IonRefresher Element.
+   */
+  doRefresh(refresher: IonRefresher): void {
+    const event = (data: Pagination<PedidoHeader>) => {
+      if (data) {
+        this.paginaAtual = 1;
+        this.data = data;
+        this.infiniteScroll.disabled = this.data.last;
+        refresher.complete();
+      } else {
+        refresher.complete();
+      }
+    };
+    this.getPedidosFinalizados(1, event);
+  }
+
+  /**
+   * @author helio.souza
+   * @param infinite IonInfinite Element.
+   */
+  doInfinite(infinite: IonInfiniteScroll): void {
+    const event = (data: Pagination<PedidoHeader>) => {
+      if (data) {
+        this.paginaAtual = this.paginaAtual + 1;
+        data.content = this.data.content.concat(data.content);
+        this.data = data;
+        infinite.complete();
+        this.infiniteScroll.disabled = this.data.last;
+      } else {
+        infinite.complete();
+      }
+    };
+    this.getPedidosFinalizados(this.paginaAtual + 1, event);
+  }
+
+  /**
+   * @author helio.souza
+   * @param page
+   */
+  getPedidosFinalizados(
+    page: number,
+    event = (data?: Pagination<PedidoHeader>) => {}
+  ): void {
     this.pedidoListaService
       .getPedidosFinalizados(page)
       .pipe(take(1))
       .subscribe({
-        next: (result: any) => {
+        next: (result) => {
           console.log(result);
-          this.resultGetPedidos = result;
-          this.pedidos = result.content;
-          this.totalPagina = this.resultGetPedidos.totalPages;
-          this.paginaAtual = page + 1;
-          this.lastPage = this.resultGetPedidos.last;
-          if (this.pedidos.length === 0) {
-            console.log('Nenhum pedido em finalizado');
-            this.pedidos = null;
-          }
-          console.log(this.pedidos);
-          this.showSkeleton = false;
+          event(result);
         },
-        error: (error: any) => {
-          console.log(error);
+        error: () => {
+          event(null);
         },
       });
   }
@@ -124,52 +138,26 @@ export class PedidoFinalizadoPage implements OnInit {
     this.navControl.navigateForward(['/pedido-resumo'], navigationExtras);
   }
 
-  async apagarPedido(pedido: any) {
-    const alert = await this.alertCtrl.create({
-      header: 'ATENÇÃO!',
-      message:
-        'Tem certeza? Apagando um pedido, os dados inseridos não poderão ser recuperados.',
-      buttons: [
-        {
-          text: 'Voltar',
-          handler: () => {
-            console.log('Cancelado');
-          },
-        },
-        {
-          text: 'APAGAR',
-          handler: () => {
-            this.removePedido(pedido.numpedido);
-          },
-        },
-      ],
-    });
-    await alert.present();
+  /**
+   * @author helio.souza
+   * @param pedido
+   */
+  apagarPedido(pedido: PedidoHeader): void {
+    const props = {
+      titulo: 'ATENÇÃO!',
+      message: `Tem certeza? Apagando um pedido, os dados inseridos não poderão ser recuperados.`,
+      handler: () => {
+        this.pedidoService.apagarPedido(pedido.numpedido);
+      },
+    };
+    this.common.showAlertAction(props);
   }
 
-  async removePedido(pedidoId: any) {
-    // this.common.showLoader()
-    // const link =
-    //   ENV.WS_VENDAS +
-    //   API_URL +
-    //   'PedidoVenda/' +
-    //   localStorage.getItem('empresa') +
-    //   '/' +
-    //   pedidoId;
-    // this.baseService.post(link, {}).then(
-    //   (result: any) => {
-    //     console.log(result);
-    //     this.common.showToast(result.msg);
-    //     this.getPedidosFinalizados(1);
-    //   },
-    //   (error) => {
-    //     console.log(error);
-    //     this.common.loading.dismiss();
-    //   }
-    // );
-  }
-
-  alterarPedido(pedido: any) {
+  /**
+   * @author helio.souza
+   * @param pedido
+   */
+  alterarPedido(pedido: PedidoHeader): void {
     this.pedidoManutencaoService.reabrirPedido(pedido);
   }
 }

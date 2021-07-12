@@ -1,5 +1,5 @@
 <ion-content>
-  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event.target)">
     <ion-refresher-content
       pullingIcon="chevron-down-outline"
       pullingText="Solte para Recarregar!"
@@ -9,7 +9,7 @@
   </ion-refresher>
 
   <!-- Nenhum pedido na lista -->
-  <ion-grid *ngIf="!showSkeleton && pedidos == null" class="noPedidos">
+  <ion-grid *ngIf="!showSkeleton && !data" class="noPedidos">
     <ion-row class="topHeading">
       <ion-col>
         <h3>Seus pedidos finalizados vâo ficar aqui...</h3>
@@ -28,7 +28,7 @@
   </ion-grid>
 
   <!-- Skeleton da Lista de pedidos -->
-  <ion-list *ngIf="showSkeleton">
+  <ion-list *ngIf="showSkeleton && !data">
     <ion-item lines="none" class="pedido-item">
       <ion-grid class="grid-pedido">
         <ion-row class="pedido-rows">
@@ -57,9 +57,9 @@
   </ion-list>
 
   <!-- Lista de pedidos -->
-  <ion-list *ngIf="!showSkeleton && pedidos != [] && pedidos != null" class="pedido-list">
+  <ion-list *ngIf="!showSkeleton && data" class="pedido-list">
     <ion-item-sliding
-      *ngFor="let pedido of pedidos; let i = index"
+      *ngFor="let pedido of data.content; let i = index"
       #slidingItem
       class="pedido"
     >
@@ -93,14 +93,12 @@
           <ion-row class="pedido-rows">
             <ion-row style="width: 100%">
               <p class="pedido-info">
-                <img src="../../../assets/images/05-pedidos_lista/shopping cart.png" />
+                <img src="assets/images/05-pedidos_lista/shopping cart.png" />
                 <span>{{ pedido.numitens | formatarString: 'FORMAT':'2' }}</span>
               </p>
 
               <p class="pedido-info">
-                <img
-                  src="../../../assets/images/05-pedidos_lista/ic_person_black_24px.png"
-                />
+                <img src="assets/images/05-pedidos_lista/ic_person_black_24px.png" />
                 <span>{{ pedido.nome_cliente }}</span>
               </p>
             </ion-row>
@@ -108,7 +106,7 @@
             <ion-row style="width: 100%">
               <ion-col size="5" class="ion-no-padding">
                 <p class="pedido-info">
-                  <img src="../../../assets/images/05-pedidos_lista/ic_retirada.png" />
+                  <img src="assets/images/05-pedidos_lista/ic_retirada.png" />
                   <span>{{ pedido.tipoEntrega }}</span>
                 </p>
               </ion-col>
@@ -154,10 +152,10 @@
     </ion-item-sliding>
   </ion-list>
 
-  <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+  <ion-infinite-scroll (ionInfinite)="doInfinite($event.target)">
     <ion-infinite-scroll-content
       loadingSpinner="circles"
-      loadingText="Carregando mais pedidos..."
+      loadingText="Carregando pedidos..."
     >
     </ion-infinite-scroll-content>
   </ion-infinite-scroll>

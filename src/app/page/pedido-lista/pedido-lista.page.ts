@@ -9,38 +9,32 @@ import { PedidoService } from 'src/app/services/pedido/pedido.service';
   styleUrls: ['./pedido-lista.page.scss'],
 })
 export class PedidoListaPage implements OnInit {
-  public totalEmAberto = 0;
-  public totalFinalizados = 0;
-
-  public disableButton = false;
-
   constructor(
-    public common: CommonService,
-    private menu: MenuController,
-    private navControl: NavController,
-    public pedidoService: PedidoService
+    private readonly common: CommonService,
+    private readonly menu: MenuController,
+    private readonly navControl: NavController,
+    private readonly pedidoService: PedidoService
   ) {}
 
-  ngOnInit() {}
+  ngOnInit(): void {}
 
-  ionViewWillEnter() {
+  ionViewWillEnter(): void {
     this.menu.enable(true);
-    this.disableButton = false;
     this.common.goToFullScreen();
   }
 
-  ionViewDidEnter() {
+  ionViewDidEnter(): void {
     this.common.goToFullScreen();
   }
 
-  ionViewWillLeave() {
+  ionViewWillLeave(): void {
     this.menu.enable(false);
     // console.clear();
   }
 
   ionViewDidLeave() {}
 
-  async addNovoPedido() {
+  addNovoPedido() {
     this.pedidoService.limpaDadosPedido();
     // await this.common.showLoaderCustom('Criando Pedido!');
     // await this.pedidoService.criarPedido().then(
@@ -67,46 +61,4 @@ export class PedidoListaPage implements OnInit {
     //   this.disableButton = false;
     // }
   }
-
-  checaAtivo(id: string, id2: string) {
-    // console.log('A')
-    // let elemento = document.getElementById(id);
-    // let classes = elemento.className.split(' ');
-    // let getIndex = classes.indexOf('fab-button-close-active');
-    // let elemento2 = document.getElementById(id2);
-    // let classes2 = elemento2.className.split(' ');
-    // let getIndex2 = classes2.indexOf('contentOpaco');
-    // if (getIndex === -1) {
-    //   classes.push('contentOpaco');
-    //   elemento2.className = classes.join(' ');
-    // }
-    // else {
-    //   classes2.splice(getIndex2, 1);
-    //   elemento2.className = classes.join(' ');
-    // }
-  }
-
-  // async getPedidosEmAberto(page: number) {
-  //   const link =
-  //     ENV.WS_VENDAS +
-  //     API_URL +
-  //     'PedidoVenda/list/' +
-  //     localStorage.getItem('empresa') +
-  //     '/abertos?page=' +
-  //     page;
-
-  //   return await this.baseService.get(link);
-  // }
-
-  // async getPedidosFinalizados(page: number) {
-  //   const link =
-  //     ENV.WS_VENDAS +
-  //     API_URL +
-  //     'PedidoVenda/list/' +
-  //     localStorage.getItem('empresa') +
-  //     '/faturados?page=' +
-  //     page;
-
-  //   return await this.baseService.get(link);
-  // }
 }

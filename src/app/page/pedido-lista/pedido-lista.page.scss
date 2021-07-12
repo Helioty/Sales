@@ -1,45 +1,28 @@
-
 .tabs-shadow {
-    box-shadow: 2px 2px 3px 1px  rgba(0, 0, 0, 0.4);
-    height: 48px;
+  box-shadow: 2px 2px 3px 1px rgba(0, 0, 0, 0.4);
+  height: 48px;
 }
+
 .tab-selected {
-    border: 3px white !important;
-    font-size: 16px;
-    font-weight: bold;
+  border: 3px white !important;
+  font-size: 16px;
+  font-weight: bold;
 }
 
 .header-md:after {
-    height: 0 !important;
-    background-image: none !important;
+  height: 0 !important;
+  background-image: none !important;
 }
 
-// ion-fab-button[data-desc] {
-//     position: relative;
-// }
-  
-// ion-fab-button[data-desc]::after {
-//     position: absolute;
-//     content: attr(data-desc);
-//     z-index: 1;
-//     right: 55px;
-//     bottom: 4px;
-//     background-color: rgba($color: #32A651, $alpha: 0.5); 
-//     padding: 9px;
-//     border-radius: 15px;
-//     color: white;
-//     box-shadow: 0 3px 5px -1px rgba(0,0,0,0.2), 0 6px 10px 0 rgba(0,0,0,0.14), 0 1px 18px 0 rgba(0,0,0,0.12);
-// }
-
 .btn-fab {
-    width: 54px !important;
-    height: 54px !important;
+  width: 54px !important;
+  height: 54px !important;
 
-    ion-icon {
-        font-size: 500% !important;
-    }
+  ion-icon {
+    font-size: 500% !important;
+  }
 }
 
 .contentOpaco {
-    opacity: 0.2 !important;
+  opacity: 0.2 !important;
 }

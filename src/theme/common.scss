@@ -1,18 +1,68 @@
 .scanner {
-    position: fixed;
-    top: -50px !important;
-    height: 1px !important;
+  position: fixed;
+  top: -50px !important;
+  height: 1px !important;
+}
+
+ion-header {
+  height: auto;
+  ion-toolbar {
+    --min-height: 52px !important;
+
+    ion-buttons {
+      min-height: 40px !important;
+
+      ion-button {
+        min-width: 48px !important;
+        min-height: 48px !important;
+        // --overflow: visible !important;
+        --border-radius: 50% !important;
+        margin: 2px 4px;
+
+        ion-icon {
+          font-size: 200%;
+        }
+
+        .badge-position {
+          border-radius: 50%;
+          position: absolute;
+          min-width: 20px;
+          bottom: 5px;
+          right: 0;
+        }
+      }
+
+      ion-back-button {
+        --icon-font-size: 200%;
+      }
+    }
+  }
+}
+
+// Diretivas CSS
+ion-searchbar[no-shadow] {
+  & input {
+    box-shadow: none !important;
+  }
+}
+
+.alertError {
+  color: var(--ion-color-fc-button-green) !important;
+
+  .alert-sub-title.sc-ion-alert-md {
+    font-weight: 600 !important;
+    font-size: 14px !important;
+  }
 }
 
 // Custom Alert
 .ion-alert-input {
+  .alert-button {
+    color: var(--ion-color-fc);
+  }
 
-    .alert-button {
-      color: var(--ion-color-fc);
-    }
-  
-    div.alert-wrapper {
-      top: 10% !important;
-      position: absolute !important;
-    }
+  div.alert-wrapper {
+    top: 10% !important;
+    position: absolute !important;
+  }
 }

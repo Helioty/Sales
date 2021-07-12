@@ -9,7 +9,7 @@
   </ion-refresher>
 
   <!-- Nenhum pedido na lista -->
-  <ion-grid *ngIf="!showSkeleton && data == null" class="noPedidos">
+  <ion-grid *ngIf="!showSkeleton && !data" class="noPedidos">
     <ion-row class="topHeading">
       <ion-col>
         <h3>Seus pedidos em andamento vão ficar aqui... Inicie um novo pedido</h3>
@@ -28,7 +28,7 @@
   </ion-grid>
 
   <!-- Skeleton da Lista de pedidos -->
-  <ion-list *ngIf="showSkeleton">
+  <ion-list *ngIf="showSkeleton && !data">
     <ion-item lines="none" class="pedido-item">
       <ion-grid class="grid-pedido">
         <ion-row class="pedido-rows">
@@ -145,10 +145,10 @@
     </ion-item-sliding>
   </ion-list>
 
-  <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+  <ion-infinite-scroll (ionInfinite)="doInfinite($event.target)">
     <ion-infinite-scroll-content
       loadingSpinner="circles"
-      loadingText="Carregando mais pedidos..."
+      loadingText="Carregando pedidos..."
     >
     </ion-infinite-scroll-content>
   </ion-infinite-scroll>

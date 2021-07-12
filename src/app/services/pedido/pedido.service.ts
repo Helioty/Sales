@@ -4,10 +4,11 @@ import { NavController, AlertController } from '@ionic/angular';
 import { BaseService } from './../http/base.service';
 import { CommonService } from 'src/app/services/common/common.service';
 import { ClienteService } from 'src/app/services/cliente/cliente.service';
-import { PedidoHeader, PedidoTable } from 'src/app/class/pedido';
+import { PedidoTable } from 'src/app/class/pedido';
 import { API_URL, ENV } from 'src/app/config/app.config.service';
 import { NavigationExtras } from '@angular/router';
-import { take, tap } from 'rxjs/operators';
+import { map, take, tap } from 'rxjs/operators';
+import { PedidoHeader } from './pedido.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -118,27 +119,20 @@ export class PedidoService {
     console.log(this.pedidoHeader);
   }
 
-  // by Hélio 06/02/2020
-  public criarPedido() {
-    // const link =
-    //   ENV.WS_VENDAS +
-    //   API_URL +
-    //   'PedidoVenda/' +
-    //   localStorage.getItem('empresa') +
-    //   '/criar';
-    // return new Promise((resolve, reject) => {
-    //   this.baseService.post(link, {}).then(
-    //     (result: any) => {
-    //       this.atualizaPedidoHeader(result);
-    //       console.log('Pedido criado!');
-    //       resolve(result);
-    //     },
-    //     (error: any) => {
-    //       console.log(error);
-    //       reject();
-    //     }
-    //   );
-    // });
+  /**
+   * @author helio.souza
+   */
+  criarPedido(): Observable<PedidoHeader> {
+    const empresa = localStorage.getItem('empresa');
+    const url = `${ENV.WS_VENDAS}${API_URL}PedidoVenda/${empresa}/criar`;
+    return this.http.post<PedidoHeader, any>({ url, body: {} }).pipe(
+      tap({
+        next: (pedido) => {
+          console.log('Pedido criado!');
+          this.atualizaPedidoHeader(pedido);
+        },
+      })
+    );
   }
 
   // edit by Helio 10/03/2020

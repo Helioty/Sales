@@ -4,47 +4,63 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class ScannerService {
-  private taskScanner: any;
-  private focusStatus = true;
   public valorScanner: string;
+  public focusStatus = true;
+  private taskScanner: any;
 
   constructor() {}
 
-  // Cria o loop que da foco no input
-  focusOn() {
+  /**
+   * @author helio.souza
+   * @description Retorna o ultimo scanner renderizado no DOM.
+   * @returns HTMLInputElement.
+   */
+  getScannerElement(): HTMLInputElement {
+    const scanners = document.body.getElementsByClassName('scanner');
+    return scanners[scanners.length - 1] as HTMLInputElement;
+  }
+
+  /**
+   * @author helio.souza
+   * @description Cria o loop que da foco no input.
+   */
+  focusOn(): void {
     this.taskScanner = setInterval(() => {
-      try {
-        this.valorScanner = '';
-        if (this.focusStatus) {
-          const scanners = document.body.getElementsByClassName('scanner');
-          for (const i in scanners) {
-            if (Number(i) === scanners.length - 1) {
-              (scanners[i] as HTMLInputElement).focus();
-            }
-          }
-        }
-      } catch (error) {}
+      this.valorScanner = '';
+      if (this.focusStatus) {
+        try {
+          this.getScannerElement().focus();
+        } catch (error) {}
+      }
     }, 350);
   }
 
-  // Retorna o focus pausado
-  focusPlay() {
+  /**
+   * @author helio.souza
+   * @description Altera o status do foco para TRUE.
+   */
+  focusPlay(): void {
     this.focusStatus = true;
   }
 
-  // Pausa o focus
-  focusPause() {
+  /**
+   * @author helio.souza
+   * @description Altera o status do foco para FALSE.
+   */
+  focusPause(): void {
     this.focusStatus = false;
-    const scanners = document.body.getElementsByClassName('scanner');
-    for (const i in scanners) {
-      if (Number(i) === scanners.length - 1) {
-        (scanners[i] as HTMLInputElement).blur();
-      }
-    }
+    try {
+      this.getScannerElement().blur();
+    } catch (error) {}
   }
 
-  // Encerra o loop de foco no input
-  focusOff() {
-    clearInterval(this.taskScanner);
+  /**
+   * @author helio.souza
+   * @description Encerra o loop de foco no input.
+   */
+  focusOff(): void {
+    try {
+      clearInterval(this.taskScanner);
+    } catch (error) {}
   }
 }

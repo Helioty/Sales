@@ -42,7 +42,23 @@ export class PedidoAbertoPage implements OnInit {
   }
 
   ionViewDidEnter(): void {
-    this.getPedidosEmAberto(this.paginaAtual);
+    this.doInit();
+  }
+
+  /**
+   * @author helio.souza
+   */
+  doInit(): void {
+    const event = (data: Pagination<PedidoHeader>) => {
+      if (data) {
+        this.data = data;
+        this.infiniteScroll.disabled = this.data.last;
+        this.showSkeleton = false;
+      } else {
+        this.showSkeleton = false;
+      }
+    };
+    this.getPedidosEmAberto(this.paginaAtual, event);
   }
 
   /**
@@ -50,20 +66,17 @@ export class PedidoAbertoPage implements OnInit {
    * @param refresher IonRefresher Element.
    */
   doRefresh(refresher: IonRefresher): void {
-    this.paginaAtual = 1;
-    this.pedidoListaService
-      .getPedidosEmAberto(this.paginaAtual)
-      .pipe(take(1))
-      .subscribe({
-        next: (result) => {
-          console.log(result);
-          this.atualizaData(result);
-          refresher.complete();
-        },
-        error: () => {
-          refresher.complete();
-        },
-      });
+    const event = (data: Pagination<PedidoHeader>) => {
+      if (data) {
+        this.paginaAtual = 1;
+        this.data = data;
+        this.infiniteScroll.disabled = this.data.last;
+        refresher.complete();
+      } else {
+        refresher.complete();
+      }
+    };
+    this.getPedidosEmAberto(1, event);
   }
 
   /**
@@ -71,50 +84,40 @@ export class PedidoAbertoPage implements OnInit {
    * @param infinite IonInfinite Element.
    */
   doInfinite(infinite: IonInfiniteScroll): void {
-    this.pedidoListaService
-      .getPedidosEmAberto(this.paginaAtual + 1)
-      .pipe(take(1))
-      .subscribe({
-        next: (result) => {
-          console.log(result);
-          this.paginaAtual = this.paginaAtual + 1;
-          this.atualizaData(result);
-          infinite.complete();
-        },
-        error: () => {
-          infinite.complete();
-        },
-      });
+    const event = (data: Pagination<PedidoHeader>) => {
+      if (data) {
+        this.paginaAtual = this.paginaAtual + 1;
+        data.content = this.data.content.concat(data.content);
+        this.data = data;
+        infinite.complete();
+        this.infiniteScroll.disabled = this.data.last;
+      } else {
+        infinite.complete();
+      }
+    };
+    this.getPedidosEmAberto(this.paginaAtual + 1, event);
   }
 
   /**
    * @author helio.souza
    * @param page
    */
-  getPedidosEmAberto(page: number): void {
+  getPedidosEmAberto(
+    page: number,
+    event = (data?: Pagination<PedidoHeader>) => {}
+  ): void {
     this.pedidoListaService
       .getPedidosEmAberto(page)
       .pipe(take(1))
       .subscribe({
         next: (result) => {
           console.log(result);
-          this.atualizaData(result);
-          this.paginaAtual = page;
-          this.showSkeleton = false;
+          event(result);
         },
-        error: (error: any) => {
-          console.log(error);
+        error: () => {
+          event(null);
         },
       });
-  }
-
-  /**
-   * @author helio.souza
-   * @param data
-   */
-  atualizaData(data: Pagination<PedidoHeader>) {
-    this.data = data;
-    this.infiniteScroll.disabled = this.data.last;
   }
 
   openSlide(itemSlide: IonItemSliding): void {
@@ -150,7 +153,11 @@ export class PedidoAbertoPage implements OnInit {
     this.common.showAlertAction(props);
   }
 
-  alterarPedido(pedido: any) {
+  /**
+   * @author helio.souza
+   * @param pedido 
+   */
+  alterarPedido(pedido: PedidoHeader): void {
     this.pedidoManutencaoService.reabrirPedido(pedido);
   }
 }
