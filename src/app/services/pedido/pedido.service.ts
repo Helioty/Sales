@@ -51,6 +51,7 @@ export class PedidoService {
   public sequencialEndereco: any = null;
 
   // REMAKE
+  // Dados do Pedido.
   readonly pedido = new BehaviorSubject<PedidoHeader>(null);
 
   // Tipos de Retirada do Pedido.
