@@ -55,7 +55,7 @@ export class PedidoService {
   readonly pedido = new BehaviorSubject<PedidoHeader>(null);
 
   // Tipos de Retirada do Pedido.
-  readonly opcaoRetirada = ['IMEDIATA', 'POSTERIOR', 'ENTREGA'];
+  readonly opcoesRetirada = ['IMEDIATA', 'POSTERIOR', 'ENTREGA'];
   public tipoRetiradaIndex: number;
 
   constructor(
@@ -181,7 +181,7 @@ export class PedidoService {
    * @returns
    */
   alterarTipoRetirada(numPedido: number, retiradaIdx: number): Observable<any> {
-    const aResult = this.atualizaPedido('entrega', this.opcaoRetirada[retiradaIdx]);
+    const aResult = this.atualizaPedido('entrega', this.opcoesRetirada[retiradaIdx]);
     const empresa = localStorage.getItem('empresa') as string;
     const url = `${ENV.WS_VENDAS}${API_URL}PedidoVenda/update/${empresa}/${numPedido}`;
     const props = { url, body: aResult };
