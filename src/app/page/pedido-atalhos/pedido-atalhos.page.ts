@@ -20,7 +20,6 @@ export class PedidoAtalhosPage implements OnInit {
     private readonly common: CommonService,
     public readonly scanner: ScannerService,
     public readonly pedidoService: PedidoService,
-    public readonly pedidoItemService: PedidoItemService,
     private readonly navControl: NavController
   ) {}
 
@@ -32,7 +31,7 @@ export class PedidoAtalhosPage implements OnInit {
     this.scanner.focusOn();
     this.common.goToFullScreen();
     this.slides.lockSwipes(true);
-    this.totalItensOBS = this.pedidoItemService.getTotalItensOBS();
+    this.totalItensOBS = this.pedidoService.getTotalItensOBS();
   }
 
   ionViewDidEnter(): void {

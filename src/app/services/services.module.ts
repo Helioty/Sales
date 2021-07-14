@@ -4,6 +4,7 @@ import { AuthService } from './auth/auth.service';
 import { CommonService } from './common/common.service';
 import { DataService } from './data/data.service';
 import { BaseService } from './http/base.service';
+import { PedidoService } from './pedido/pedido.service';
 import { ScannerService } from './scanner/scanner.service';
 
 @NgModule({
@@ -17,7 +18,7 @@ import { ScannerService } from './scanner/scanner.service';
     DataService,
     // CondicaoPagamentoService,
     // ConsultaEnderecoService,
-    // PedidoService,
+    PedidoService,
     // PedidoItemService,
     // PedidoManutencaoService,
     // ProdutoService,

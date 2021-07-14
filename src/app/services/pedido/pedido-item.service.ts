@@ -12,56 +12,11 @@ import { PedidoItens } from './pedido.interface';
   providedIn: 'root',
 })
 export class PedidoItemService {
-  readonly qtdItensSacola = new BehaviorSubject<number>(0);
-  readonly pedidoItens = new BehaviorSubject<PedidoItens[]>([]);
-
-  // Itens por Paginação.
-  readonly produtoPorPagina = 10;
-
   constructor(
     private readonly common: CommonService,
     private readonly pedidoService: PedidoService,
     private readonly http: BaseService
   ) {}
-
-  getTotalItensOBS(): Observable<number> {
-    return this.qtdItensSacola.asObservable();
-  }
-
-  getPedidoItensOBS(): Observable<PedidoItens[]> {
-    return this.pedidoItens.asObservable();
-  }
-
-  /**
-   * @author helio.souza
-   * @param numPedido Número do Pedido.
-   * @param page Pagina a ser retornada.
-   * @returns
-   */
-  getPedidoItens(numPedido: number, page = 1): Observable<Pagination<PedidoItens>> {
-    const empresa = localStorage.getItem('empresa') as string;
-    const url = `${ENV.WS_VENDAS}${API_URL}PedidoVendaItem/${empresa}/${numPedido}/itens?page=${page}&size=${this.produtoPorPagina}`;
-    return this.http.get<Pagination<PedidoItens>>(url).pipe(take(1));
-  }
-
-  /**
-   * @author helio.souza
-   * @param numPedido Número do Pedido.
-   * @returns
-   */
-  getPedidoAllItens(numPedido: number): Observable<PedidoItens[]> {
-    const empresa = localStorage.getItem('empresa') as string;
-    const url = `${ENV.WS_VENDAS}${API_URL}PedidoVendaItem/${empresa}/${numPedido}/itens`;
-    return this.http.get<Pagination<PedidoItens>>(url).pipe(
-      take(1),
-      tap({
-        next: (paginationIt) => {
-          this.qtdItensSacola.next(paginationIt.totalElements);
-        },
-      }),
-      map((it) => it.content)
-    );
-  }
 
   // edit by Helio 10/03/2020
   public getItemPedido() {

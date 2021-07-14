@@ -91,7 +91,7 @@ export class PedidoResumoPage implements OnInit {
    * @param event Ação a ser executada.
    */
   getItens(page: number, event = (data: Pagination<PedidoItens> | null) => {}): void {
-    this.pedidoItemService.getPedidoItens(this.pedido.value.numpedido, page).subscribe({
+    this.pedidoService.getPedidoItens(this.pedido.value.numpedido, page).subscribe({
       next: (it) => {
         event(it);
       },

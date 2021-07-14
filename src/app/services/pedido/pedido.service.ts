@@ -2,12 +2,13 @@ import { Injectable } from '@angular/core';
 import { NavigationExtras } from '@angular/router';
 import { NavController } from '@ionic/angular';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { take, tap } from 'rxjs/operators';
+import { map, take, tap } from 'rxjs/operators';
 import { API_URL, ENV } from 'src/app/config/app.config.service';
+import { Pagination } from 'src/app/page/pedido-lista/pedido-lista.interface';
 import { ClienteService } from 'src/app/services/cliente/cliente.service';
 import { CommonService } from 'src/app/services/common/common.service';
 import { BaseService } from './../http/base.service';
-import { AttPedido, PedidoHeader, PedidoTable } from './pedido.interface';
+import { AttPedido, PedidoHeader, PedidoItens, PedidoTable } from './pedido.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -30,12 +31,12 @@ export class PedidoService {
   public nomeCliente = '';
 
   // PEDIDO EM MANUTENÇÃO
-  public pedidoHeader = new PedidoHeader(); // Todos os principais dados do pedido em manutenção.
+  // public pedidoHeader = new PedidoHeader(); // Todos os principais dados do pedido em manutenção.
   // public numPedido = '0'; // Numero do pedido em manutenção.
   public digitoPedido: number;
   // public tipoRetirada: string; // Tipo de retirada do pedido em manutenção.
   public tipoDocumento: any;
-  public qtdItensSacola = 0; // Quantidade de itens do pedido em manutenção.
+  // public qtdItensSacola = 0; // Quantidade de itens do pedido em manutenção.
 
   // Verdadeiro se o pedido em manutenção tiver um cliente selecionado.
   public clientSelected = false;
@@ -58,17 +59,32 @@ export class PedidoService {
   readonly opcoesRetirada = ['IMEDIATA', 'POSTERIOR', 'ENTREGA'];
   public tipoRetiradaIndex: number;
 
+  // Produtos
+  readonly qtdItensSacola = new BehaviorSubject<number>(null);
+  readonly pedidoItens = new BehaviorSubject<PedidoItens[]>([]);
+  // Produtos por Paginação.
+  readonly produtoPorPagina = 10;
+
   constructor(
     private readonly http: BaseService,
     private readonly common: CommonService,
-    private clienteService: ClienteService,
-    private navControl: NavController
+    private readonly clienteService: ClienteService,
+    private readonly navControl: NavController
   ) {}
 
-  public limpaDadosPedido() {
-    this.pedidoHeader = new PedidoHeader();
-    // this.numPedido = '0';
+  getPedidoAtivo(): Observable<PedidoHeader> {
+    return this.pedido.asObservable();
+  }
 
+  getTotalItensOBS(): Observable<number> {
+    return this.qtdItensSacola.asObservable();
+  }
+
+  getPedidoItensOBS(): Observable<PedidoItens[]> {
+    return this.pedidoItens.asObservable();
+  }
+
+  public limpaDadosPedido() {
     // Limpando cliente do pedido
     this.clientSelected = false;
     this.docCliente = '';
@@ -76,7 +92,6 @@ export class PedidoService {
 
     // Limpando cartão do pedido
     this.cardSelected = false;
-    // this.codigoCartaoPedido = '';
 
     // Limpando endereco de entrega
     this.enderecoSelected = false;
@@ -88,16 +103,20 @@ export class PedidoService {
     this.digitoPedido = 0;
     // this.sistuacaoPedido = 'N';
     this.tipoDocumento = '';
-    this.qtdItensSacola = 0;
     this.statusPedido = '';
     this.docCliente = '';
     this.nomeCliente = '';
   }
 
   // by Helio 20/03/2020
-  public atualizaPedidoHeader(pedidoHeader: PedidoHeader) {
+  public atualizaPedidoHeader(pedidoHeader: PedidoHeader): void {
+    // Pedido
     this.pedido.next(pedidoHeader);
-    this.pedidoHeader = pedidoHeader;
+
+    // Produtos
+    this.qtdItensSacola.next(pedidoHeader.numitens);
+
+    // this.pedidoHeader = pedidoHeader;
     // this.numPedido = pedidoHeader.numpedido.toString();
     this.digitoPedido = pedidoHeader.digito;
 
@@ -114,10 +133,8 @@ export class PedidoService {
         break;
     }
 
-    this.qtdItensSacola = pedidoHeader.numitens;
-
     console.log('PEDIDO HEADER ATUALIZADO');
-    console.log(this.pedidoHeader);
+    console.log(this.pedido);
   }
 
   /**
@@ -138,25 +155,10 @@ export class PedidoService {
   }
 
   // edit by Helio 10/03/2020
-  public async getPedido(idPedido: string) {
-    // const link =
-    //   ENV.WS_VENDAS +
-    //   API_URL +
-    //   'PedidoVenda/' +
-    //   localStorage.getItem('empresa') +
-    //   '/' +
-    //   idPedido;
-    // return new Promise((resolve, reject) => {
-    //   this.baseService.get(link).then(
-    //     (result: any) => {
-    //       resolve(result);
-    //     },
-    //     (error) => {
-    //       console.log(error);
-    //       reject(error);
-    //     }
-    //   );
-    // });
+  getPedido(idPedido: string): Observable<PedidoHeader> {
+    const empresa = localStorage.getItem('empresa') as string;
+    const url = `${ENV.WS_VENDAS}${API_URL}PedidoVenda/${empresa}/${idPedido}`;
+    return this.http.get<PedidoHeader>(url).pipe(take(1));
   }
 
   // by Hélio 06/02/2020
@@ -249,13 +251,9 @@ export class PedidoService {
         },
       })
     );
-    // await this.baseService.post(link, aResult).then(
-    //   (result: any) => {
     //     this.clientSelected = true;
     //     this.docCliente = cgccpf;
     //     this.dadosCliente = dadosCli;
-    //   }
-    // );
   }
 
   // by Hélio 14/02/2020
@@ -303,14 +301,44 @@ export class PedidoService {
     // }
   }
 
+  /**
+   * @author helio.souza
+   * @param numPedido Número do Pedido.
+   * @param page Pagina a ser retornada.
+   * @returns
+   */
+  getPedidoItens(numPedido: number, page = 1): Observable<Pagination<PedidoItens>> {
+    const empresa = localStorage.getItem('empresa') as string;
+    const url = `${ENV.WS_VENDAS}${API_URL}PedidoVendaItem/${empresa}/${numPedido}/itens?page=${page}&size=${this.produtoPorPagina}`;
+    return this.http.get<Pagination<PedidoItens>>(url).pipe(take(1));
+  }
+
+  /**
+   * @author helio.souza
+   * @param numPedido Número do Pedido.
+   * @returns
+   */
+  getPedidoAllItens(numPedido: number): Observable<PedidoItens[]> {
+    const empresa = localStorage.getItem('empresa') as string;
+    const url = `${ENV.WS_VENDAS}${API_URL}PedidoVendaItem/${empresa}/${numPedido}/itens`;
+    return this.http.get<Pagination<PedidoItens>>(url).pipe(
+      take(1),
+      tap({
+        next: (paginationIt) => {
+          this.qtdItensSacola.next(paginationIt.totalElements);
+        },
+      }),
+      map((it) => it.content)
+    );
+  }
+
   // by Hélio 12/02/2020
-  public async sairPedido() {
-    const mensagem =
-      this.qtdItensSacola === 0
-        ? 'Pedidos sem itens serão removidos permanentemente!'
-        : '';
+  public sairPedido(): void {
+    const mensagem = this.qtdItensSacola.value
+      ? 'Pedidos sem itens serão removidos permanentemente!'
+      : '';
     const handler = () => {
-      if (this.qtdItensSacola === 0) {
+      if (this.qtdItensSacola.value) {
         this.limpaDadosPedido();
         this.apagarPedido(this.pedido.value.numpedido)
           .pipe(take(1))
@@ -339,7 +367,7 @@ export class PedidoService {
    * @param numPedido Número do Pedido a ser apagado.
    * @returns
    */
-  public apagarPedido(numPedido: number): Observable<any> {
+  apagarPedido(numPedido: number): Observable<any> {
     const empresa = localStorage.getItem('empresa');
     const url = `${ENV.WS_VENDAS}${API_URL}PedidoVenda/${empresa}/${numPedido}`;
     const props = { url, body: {} };
@@ -352,30 +380,27 @@ export class PedidoService {
   }
 
   // by Helio 15/07/2020
-  public async selecionaEndereco(endereco: any) {
+  selecionaEndereco(endereco: any): Observable<PedidoHeader> {
     const aResult = this.atualizaPedido(
       AttPedido.SEQ_ENDERECO_ENTREGA,
       endereco.id.sequencialId
     );
-
-    // const link =
-    //   ENV.WS_VENDAS +
-    //   API_URL +
-    //   'PedidoVenda/update/' +
-    //   localStorage.getItem('empresa') +
-    //   '/' +
-    //   this.numPedido;
-
+    const empresa = localStorage.getItem('empresa') as string;
+    const url = `${ENV.WS_VENDAS}${API_URL}PedidoVenda/update/${empresa}/${endereco}`;
+    const props = { url, body: aResult };
+    return this.http.post<PedidoHeader, PedidoTable[]>(props).pipe(
+      take(1),
+      tap({
+        next: (pedido) => {
+          console.log('Endereço atualizado: ', pedido);
+          this.atualizaPedidoHeader(pedido);
+        },
+      })
+    );
     // await this.baseService.post(link, aResult).then(
-    //   (result: any) => {
     //     this.atualizaPedidoHeader(result);
     //     this.enderecoSelected = true;
     //     this.sequencialEndereco = this.pedidoHeader.seqEnderecoEntrega;
-    //   },
-    //   (error: any) => {
-    //     console.log(error);
-    //   }
-    // );
   }
 
   // abrindo pagina customizada utilizando parametros
@@ -391,35 +416,35 @@ export class PedidoService {
 
   goToFinalizacao(paginaAtual: string) {
     // checa se é necessario informar o cliente
-    if (this.pedidoHeader.informarCliente === 'S') {
-      if (
-        !this.clientSelected &&
-        (this.pedidoHeader.cgccpf_cliente === '' ||
-          this.pedidoHeader.cgccpf_cliente === null)
-      ) {
-        console.log('Cliente obrigatorio!');
-        this.openCustomPage('cliente', 'finalizaService', paginaAtual);
-        return;
-      }
-    }
+    // if (this.pedidoHeader.informarCliente === 'S') {
+    //   if (
+    //     !this.clientSelected &&
+    //     (this.pedidoHeader.cgccpf_cliente === '' ||
+    //       this.pedidoHeader.cgccpf_cliente === null)
+    //   ) {
+    //     console.log('Cliente obrigatorio!');
+    //     this.openCustomPage('cliente', 'finalizaService', paginaAtual);
+    //     return;
+    //   }
+    // }
 
-    // checa o tipo de entrega do pedido
-    if (this.pedidoHeader.tipoEntrega === 'ENTREGA') {
-      console.log('Pedido do tipo ENTREGA!');
-      const tms = localStorage.getItem('tms');
-      // checa se o TMS está ativo na filial baseado na informações retornada no login
-      if (tms === 'true') {
-        console.log('TMS ativo!');
-        this.openCustomPage('endereco-entrega', 'finalizaService', paginaAtual);
-        return;
-      } else {
-        console.log('TMS inativo!');
-        this.openCustomPage('endereco-entrega-old', 'finalizaService', paginaAtual);
-        return;
-      }
-    } else {
-      this.openCustomPage('formas-pagamento', 'finalizaService', paginaAtual);
-      return;
-    }
+    // // checa o tipo de entrega do pedido
+    // if (this.pedidoHeader.tipoEntrega === 'ENTREGA') {
+    //   console.log('Pedido do tipo ENTREGA!');
+    //   const tms = localStorage.getItem('tms');
+    //   // checa se o TMS está ativo na filial baseado na informações retornada no login
+    //   if (tms === 'true') {
+    //     console.log('TMS ativo!');
+    //     this.openCustomPage('endereco-entrega', 'finalizaService', paginaAtual);
+    //     return;
+    //   } else {
+    //     console.log('TMS inativo!');
+    //     this.openCustomPage('endereco-entrega-old', 'finalizaService', paginaAtual);
+    //     return;
+    //   }
+    // } else {
+    //   this.openCustomPage('formas-pagamento', 'finalizaService', paginaAtual);
+    //   return;
+    // }
   }
 }

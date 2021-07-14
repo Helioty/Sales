@@ -24,26 +24,25 @@ export class ProdutoPage implements OnInit {
 
   // controla a exibição do botão que leva a tela de mais informações
   public showMaisInfo = false;
-  private maisInfo = [];
+  private maisInfo: any = [];
 
   constructor(
-    private activatedRoute: ActivatedRoute,
-    public alertCtrl: AlertController,
-    public common: CommonService,
-    public pedidoService: PedidoService,
+    public readonly common: CommonService,
+    private readonly activatedRoute: ActivatedRoute,
+    public readonly pedidoService: PedidoService,
     private dataService: DataService,
     private produtoS: ProdutoService,
     private navControl: NavController,
     private platform: Platform
   ) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.activatedRoute.queryParams.subscribe((params: any) => {
       this.produto = JSON.parse(params.produto);
     });
   }
 
-  ionViewWillEnter() {
+  ionViewWillEnter(): void {
     this.focusOn();
     this.common.goToFullScreen();
     this.getImage(this.produto.codigo);
@@ -51,15 +50,15 @@ export class ProdutoPage implements OnInit {
     this.getProdutoInformacao(this.produto.codigodigitoembalagem);
   }
 
-  ionViewDidEnter() {
+  ionViewDidEnter(): void {
     this.common.goToFullScreen();
   }
 
-  ionViewWillLeave() {
+  ionViewWillLeave(): void {
     this.focusOff();
   }
 
-  ionViewDidLeave() {}
+  ionViewDidLeave(): void {}
 
   // Cria o loop que da foco no input
   focusOn() {
@@ -98,49 +97,49 @@ export class ProdutoPage implements OnInit {
   }
 
   scaneado(evento: any) {
-    try {
-      if (evento.target && evento.target.value.length >= 2) {
-        this.focusPause();
-        const codigo: string = evento.target.value;
+    // try {
+    //   if (evento.target && evento.target.value.length >= 2) {
+    //     this.focusPause();
+    //     const codigo: string = evento.target.value;
 
-        if (codigo.substring(0, 1) === 'P') {
-          this.pedidoService.setCardPedido(codigo);
-          this.focusPlay();
-        } else {
-        }
-      }
-    } catch (error) {
-      this.focusPlay();
-    }
+    //     if (codigo.substring(0, 1) === 'P') {
+    //       this.pedidoService.setCardPedido(codigo);
+    //       this.focusPlay();
+    //     } else {
+    //     }
+    //   }
+    // } catch (error) {
+    //   this.focusPlay();
+    // }
   }
 
   async adicionarCartaoPedido() {
-    const alert = await this.alertCtrl.create({
-      header: 'Cartão Pedido',
-      cssClass: 'ion-alert-input',
-      inputs: [
-        {
-          name: 'codigo',
-          type: 'text',
-          placeholder: 'Digite o codigo do cartão!',
-        },
-      ],
-      buttons: [
-        'CANCELAR',
-        {
-          text: 'ADICIONAR',
-          handler: (data: any) => {
-            this.pedidoService.setCardPedido(data.codigo);
-          },
-        },
-      ],
-    });
-    alert.onDidDismiss().finally(() => {
-      this.focusPlay();
-    });
-    await alert.present().then(() => {
-      this.focusPause();
-    });
+    // const alert = await this.alertCtrl.create({
+    //   header: 'Cartão Pedido',
+    //   cssClass: 'ion-alert-input',
+    //   inputs: [
+    //     {
+    //       name: 'codigo',
+    //       type: 'text',
+    //       placeholder: 'Digite o codigo do cartão!',
+    //     },
+    //   ],
+    //   buttons: [
+    //     'CANCELAR',
+    //     {
+    //       text: 'ADICIONAR',
+    //       handler: (data: any) => {
+    //         this.pedidoService.setCardPedido(data.codigo);
+    //       },
+    //     },
+    //   ],
+    // });
+    // alert.onDidDismiss().finally(() => {
+    //   this.focusPlay();
+    // });
+    // await alert.present().then(() => {
+    //   this.focusPause();
+    // });
   }
 
   openClientePage() {
@@ -230,18 +229,18 @@ export class ProdutoPage implements OnInit {
         dataId: 'produtoListImage',
       },
     };
-    await this.produtoS.getAllListImage(codigoNoEmbalagem).then(
-      (result: any) => {
-        // console.log(result);
-        this.dataService.setData('produtoListImage', result);
-        this.navControl.navigateForward(['/produto-imagens'], navigationExtras);
-        this.common.loading.dismiss();
-      },
-      (error) => {
-        this.common.loading.dismiss();
-        console.log(error);
-      }
-    );
+    // await this.produtoS.getAllListImage(codigoNoEmbalagem).then(
+    //   (result: any) => {
+    //     // console.log(result);
+    //     this.dataService.setData('produtoListImage', result);
+    //     this.navControl.navigateForward(['/produto-imagens'], navigationExtras);
+    //     this.common.loading.dismiss();
+    //   },
+    //   (error) => {
+    //     this.common.loading.dismiss();
+    //     console.log(error);
+    //   }
+    // );
   }
 
   async getImage(codigoDigitoEmb: string) {

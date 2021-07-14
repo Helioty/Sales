@@ -30,14 +30,13 @@ export class PedidoRapidoPage implements OnInit {
     public readonly scanner: ScannerService,
     private readonly common: CommonService,
     private readonly pedidoService: PedidoService,
-    private readonly pedidoItemService: PedidoItemService,
     private alertCtrl: AlertController,
     private navControl: NavController,
     private platform: Platform
   ) {}
 
   ngOnInit(): void {
-    this.itensOBS = this.pedidoItemService.getPedidoItensOBS();
+    this.itensOBS = this.pedidoService.getPedidoItensOBS();
     // .then((result: any) => {
     //   this.itens = result.content;
     //   console.log(result);
@@ -47,7 +46,7 @@ export class PedidoRapidoPage implements OnInit {
   ionViewWillEnter(): void {
     this.scanner.focusOn();
     this.common.goToFullScreen();
-    this.pedidoItemService
+    this.pedidoService
       .getPedidoAllItens(this.pedidoService.pedido.value.numpedido)
       .subscribe();
   }
@@ -64,7 +63,11 @@ export class PedidoRapidoPage implements OnInit {
     console.clear();
   }
 
-  scaneado(value: string) {
+  /**
+   * @author helio.souza
+   * @param value Dado scaneado.
+   */
+  scaneado(value: string): void {
     if (value.substring(0, 1) === 'P') {
       this.pedidoService
         .setCardPedido(this.pedidoService.pedido.value.numpedido, value)
