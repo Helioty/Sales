@@ -1,69 +1,50 @@
 .scanner {
-    position: fixed;
-    top: -50px !important;
-    height: 0.1px !important;
+  position: fixed;
+  top: -50px !important;
+  height: 0.1px !important;
 }
 
 ion-header {
-    ion-toolbar {
-
-        ion-title {
-            display: none;
-        }
-
-        ion-buttons {
-            min-height: 40px !important;
-
-            ion-button {
-                min-width: 48px !important;
-                min-height: 48px !important;
-                --border-radius: 50% !important;
-                margin: 2px 4px;
-
-                ion-icon {
-                    font-size: 200%;
-                }
-            }
-        }
-
-        ion-segment {
-
-            ion-segment-button {
-                opacity: 1;
-            }
-        }
+  ion-toolbar {
+    ion-title {
+      display: none;
     }
+
+    ion-segment {
+      ion-segment-button {
+        opacity: 1;
+      }
+    }
+  }
 }
 
 ion-content {
+  ion-slides {
+    ion-slide {
+      background: #f4f4f4;
 
-    ion-slides {
+      ion-grid {
+        max-width: 500px;
+        margin: auto;
 
-        ion-slide {
-            background: #f4f4f4;
-        
-            ion-grid {
-                max-width: 500px;
-                margin: auto;
-
-                ion-card {
-                    ion-card-header {
-                        ion-button {
-                            opacity: 1 !important;
-                            font-size: 135%;
-                            width: 100%;
-                        }
-                    }
-
-                    ion-card-content {
-                        padding: 0 0 13px 0;
-                    }
-                }
+        ion-card {
+          ion-card-header {
+            ion-button {
+              opacity: 1 !important;
+              font-size: 135%;
+              width: 100%;
             }
+          }
+
+          ion-card-content {
+            padding: 0 0 13px 0;
+          }
         }
+      }
     }
+  }
 }
 
 ion-footer {
-    background-color: #F4F4F4;
+  background-color: #f4f4f4;
 }

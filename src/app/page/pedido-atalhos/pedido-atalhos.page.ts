@@ -1,8 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { AlertController, NavController, Platform, IonSlides } from '@ionic/angular';
+import { NavigationExtras } from '@angular/router';
+import { IonSlides, NavController } from '@ionic/angular';
 import { CommonService } from 'src/app/services/common/common.service';
 import { PedidoService } from 'src/app/services/pedido/pedido.service';
-import { NavigationExtras } from '@angular/router';
+import { ScannerService } from 'src/app/services/scanner/scanner.service';
 
 @Component({
   selector: 'app-pedido-atalhos',
@@ -10,120 +11,69 @@ import { NavigationExtras } from '@angular/router';
   styleUrls: ['./pedido-atalhos.page.scss'],
 })
 export class PedidoAtalhosPage implements OnInit {
-  @ViewChild(IonSlides, { static: true }) slides: IonSlides;
-
-  public taskScanner: any;
-  public valorScanner: string;
-  public focusStatus = true;
+  @ViewChild(IonSlides) readonly slides: IonSlides;
 
   constructor(
-    private alertCtrl: AlertController,
-    public common: CommonService,
+    public readonly scanner: ScannerService,
+    private readonly common: CommonService,
     public pedidoService: PedidoService,
-    private navControl: NavController,
-    private platform: Platform
+    private readonly navControl: NavController
   ) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
+    console.log('Atalhos OnInit');
+  }
+
+  ionViewWillEnter(): void {
+    this.scanner.focusOn();
+    this.common.goToFullScreen();
     this.slides.lockSwipes(true);
   }
 
-  ionViewWillEnter() {
-    this.focusOn();
+  ionViewDidEnter(): void {
     this.common.goToFullScreen();
   }
 
-  ionViewDidEnter() {
-    this.common.goToFullScreen();
-  }
-
-  ionViewWillLeave() {
-    this.focusOff();
+  ionViewWillLeave(): void {
+    this.scanner.focusOff();
   }
 
   ionViewDidLeave() {}
 
-  // Cria o loop que da foco no input
-  focusOn() {
-    this.taskScanner = setInterval(() => {
-      try {
-        this.valorScanner = '';
-        if (this.focusStatus) {
-          const scanners = document.body.getElementsByClassName('scanner');
-          for (const i in scanners) {
-            if (Number(i) === scanners.length - 1) {
-              (scanners[i] as HTMLInputElement).focus();
-            }
-          }
-        }
-      } catch (error) {}
-    }, 350);
-  }
-
-  focusPlay() {
-    this.focusStatus = true;
-  }
-
-  focusPause() {
-    this.focusStatus = false;
-    const scanners = document.body.getElementsByClassName('scanner');
-    for (const i in scanners) {
-      if (Number(i) === scanners.length - 1) {
-        (scanners[i] as HTMLInputElement).blur();
-      }
+  /**
+   * @author helio.souza
+   * @param value Valor escaneado.
+   */
+  scaneado(value: string): void {
+    if (value.substring(0, 1) === 'P') {
+      this.pedidoService.setCardPedido(value);
+    } else {
+      this.common.showToast('Cartão Pedido inválido!');
     }
   }
 
-  // Encerra o loop de foco no input
-  focusOff() {
-    clearInterval(this.taskScanner);
-  }
-
-  scaneado(evento: any) {
-    try {
-      if (evento.target && evento.target.value.length >= 2) {
-        this.focusPause();
-        const codigo: string = evento.target.value;
-
-        if (codigo.substring(0, 1) === 'P') {
-          this.pedidoService.setCardPedido(codigo);
-          this.focusPlay();
-        } else {
-          this.focusPlay();
-        }
-      }
-    } catch (error) {
-      this.focusPlay();
-    }
-  }
-
-  async adicionarCartaoPedido() {
-    const alert = await this.alertCtrl.create({
-      header: 'Cartão Pedido',
-      cssClass: 'ion-alert-input',
-      inputs: [
-        {
-          name: 'codigo',
-          type: 'text',
-          placeholder: 'Digite o codigo do cartão!',
-        },
-      ],
-      buttons: [
-        'CANCELAR',
-        {
-          text: 'ADICIONAR',
-          handler: (data: any) => {
-            this.pedidoService.setCardPedido(data.codigo);
-          },
-        },
-      ],
-    });
-    alert.onDidDismiss().finally(() => {
-      this.focusPlay();
-    });
-    await alert.present().then(() => {
-      this.focusPause();
-    });
+  /**
+   * @author helio.souza
+   */
+  adicionarCartaoPedido(): void {
+    const handler = (data: any) => {
+      this.pedidoService.setCardPedido(data.codigo);
+    };
+    const props = { titulo: 'Cartão Pedido', message: '', handler };
+    const inputs = [
+      {
+        name: 'codigo',
+        type: 'text',
+        placeholder: 'Digite o codigo do cartão!',
+      },
+    ];
+    const options = {
+      allowClose: true,
+      showCancel: true,
+      cssClasses: ['ion-alert-input'],
+      inputs,
+    };
+    this.common.showAlertAction(props, options);
   }
 
   openClientePage() {

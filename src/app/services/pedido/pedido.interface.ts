@@ -45,6 +45,13 @@ export enum TiposEntrega {
   ENTREGA = 'ENTREGA',
 }
 
+export enum AttPedido {
+  CLIENTE = 'cliente',
+  CARTAO_PEDIDO = 'cartao_pedido',
+  TIPO_ENTREGA = 'entrega',
+  SEQ_ENDERECO_ENTREGA = 'seq_endereco_entrega',
+}
+
 export class PedidoItens {
   idEmpresa: number;
   numPedido: number;

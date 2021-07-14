@@ -15,8 +15,9 @@
           color="success"
           class="badge-position"
           *ngIf="pedidoService.cardSelected"
-          >✔</ion-badge
         >
+          ✔
+        </ion-badge>
       </ion-button>
 
       <ion-button (click)="openClientePage()">
@@ -25,8 +26,9 @@
           color="success"
           class="badge-position"
           *ngIf="pedidoService.clientSelected"
-          >✔</ion-badge
         >
+          ✔
+        </ion-badge>
       </ion-button>
 
       <ion-button
@@ -65,11 +67,10 @@
 
 <ion-content>
   <input
-    id="scanner"
     appHideKeyboard
     class="scanner"
-    [(ngModel)]="valorScanner"
-    (keyup.enter)="scaneado($event)"
+    [(ngModel)]="scanner.valorScanner"
+    (keyup.enter)="scaneado($event.target.value)"
   />
 
   <ion-slides style="width: 100%; height: 100%">
@@ -100,7 +101,7 @@
                 <ion-card
                   [routerLink]="['/pedido-rapido']"
                   routerDirection="forward"
-                  [disabled]="pedidoService.tipoRetirada !== 'IMEDIATA'"
+                  [disabled]="pedidoService.opcoesRetirada[pedidoService.tipoRetiradaIndex] !== 'IMEDIATA'"
                 >
                   <ion-card-header>
                     <ion-button

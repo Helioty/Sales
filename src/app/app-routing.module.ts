@@ -38,14 +38,14 @@ const routes: Routes = [
       ),
     canActivate: [AuthGuard],
   },
-  // {
-  //   path: 'pedido-atalhos',
-  //   loadChildren: () =>
-  //     import('./page/pedido-atalhos/pedido-atalhos.module').then(
-  //       (m) => m.PedidoAtalhosPageModule
-  //     ),
-  //   canActivate: [AuthGuard],
-  // },
+  {
+    path: 'pedido-atalhos',
+    loadChildren: () =>
+      import('./page/pedido-atalhos/pedido-atalhos.module').then(
+        (m) => m.PedidoAtalhosPageModule
+      ),
+    canActivate: [AuthGuard],
+  },
   // {
   //   path: 'pedido-sacola',
   //   loadChildren: () =>

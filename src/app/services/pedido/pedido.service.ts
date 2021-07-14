@@ -7,7 +7,7 @@ import { API_URL, ENV } from 'src/app/config/app.config.service';
 import { ClienteService } from 'src/app/services/cliente/cliente.service';
 import { CommonService } from 'src/app/services/common/common.service';
 import { BaseService } from './../http/base.service';
-import { PedidoHeader, PedidoTable } from './pedido.interface';
+import { AttPedido, PedidoHeader, PedidoTable } from './pedido.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -163,7 +163,7 @@ export class PedidoService {
   }
 
   // by Hélio 06/02/2020
-  private atualizaPedido(tableName: string, tableValor: any): PedidoTable[] {
+  private atualizaPedido(tableName: AttPedido, tableValor: any): PedidoTable[] {
     const aResult: PedidoTable[] = [];
     const table = new PedidoTable();
     table.name = tableName;
@@ -179,7 +179,10 @@ export class PedidoService {
    * @returns
    */
   alterarTipoRetirada(numPedido: number, retiradaIdx: number): Observable<any> {
-    const aResult = this.atualizaPedido('entrega', this.opcoesRetirada[retiradaIdx]);
+    const aResult = this.atualizaPedido(
+      AttPedido.TIPO_ENTREGA,
+      this.opcoesRetirada[retiradaIdx]
+    );
     const empresa = localStorage.getItem('empresa') as string;
     const url = `${ENV.WS_VENDAS}${API_URL}PedidoVenda/update/${empresa}/${numPedido}`;
     const props = { url, body: aResult };
@@ -197,7 +200,7 @@ export class PedidoService {
   // alterado por Nicollas Bastos em 25/09/2018
   // alterado por Hélio 06/02/2020
   public async setCardPedido(codCard: string) {
-    const aResult: any = await this.atualizaPedido('cartao_pedido', codCard);
+    const aResult: any = await this.atualizaPedido(AttPedido.CARTAO_PEDIDO, codCard);
 
     // const link =
     //   ENV.WS_VENDAS +
@@ -224,7 +227,7 @@ export class PedidoService {
 
   // by Hélio 11/02/2020
   public async adicionarCliente(cgccpf: string, dadosCli: any) {
-    const aResult: any = await this.atualizaPedido('cliente', cgccpf);
+    const aResult: any = await this.atualizaPedido(AttPedido.CLIENTE, cgccpf);
 
     // const link =
     //   ENV.WS_VENDAS +
@@ -272,7 +275,7 @@ export class PedidoService {
 
   // by Hélio 14/02/2020
   public async removerCliente() {
-    const aResult: any = await this.atualizaPedido('cliente', '');
+    const aResult = this.atualizaPedido(AttPedido.CLIENTE, '');
 
     // const link =
     //   ENV.WS_VENDAS +
@@ -345,8 +348,8 @@ export class PedidoService {
 
   // by Helio 15/07/2020
   public async selecionaEndereco(endereco: any) {
-    const aResult: any = await this.atualizaPedido(
-      'seq_endereco_entrega',
+    const aResult = this.atualizaPedido(
+      AttPedido.SEQ_ENDERECO_ENTREGA,
       endereco.id.sequencialId
     );
 

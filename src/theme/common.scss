@@ -55,6 +55,19 @@ ion-searchbar[no-shadow] {
   }
 }
 
+.alertButtonFcGreen {
+  color: var(--ion-color-fc-button-green) !important;
+}
+
+.alertButtonCenter {
+  margin: 0 !important;
+  width: 50% !important;
+
+  span {
+    justify-content: center !important;
+  }
+}
+
 // Custom Alert
 .ion-alert-input {
   .alert-button {
