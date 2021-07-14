@@ -60,7 +60,7 @@ export class PedidoService {
 
   constructor(
     private readonly http: BaseService,
-    private common: CommonService,
+    private readonly common: CommonService,
     private clienteService: ClienteService,
     private navControl: NavController
   ) {
