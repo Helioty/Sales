@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { NavigationExtras } from '@angular/router';
-import { AlertController, NavController } from '@ionic/angular';
+import { NavController } from '@ionic/angular';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { take, tap } from 'rxjs/operators';
 import { API_URL, ENV } from 'src/app/config/app.config.service';
@@ -25,9 +25,6 @@ export class PedidoService {
 
   public statusPedido: string; // controla pedido; 'I' INCLUSÃO , 'M' MANUTENCAO
   // public sistuacaoPedido: string; // controla pedido, A = ABERTO , F = FINALIZADO
-
-  public readonly opcaoRetirada = ['IMEDIATA', 'POSTERIOR', 'ENTREGA'];
-  public codigoTipoRetirada: number;
 
   public ItensPedidoAdd: any;
   public nomeCliente = '';
@@ -54,10 +51,13 @@ export class PedidoService {
   public sequencialEndereco: any = null;
 
   // REMAKE
-  readonly pedido = new BehaviorSubject<PedidoHeader>(null as unknown as PedidoHeader);
+  readonly pedido = new BehaviorSubject<PedidoHeader>(null);
+
+  // Tipos de Retirada do Pedido.
+  public readonly opcaoRetirada = ['IMEDIATA', 'POSTERIOR', 'ENTREGA'];
+  public tipoRetiradaIndex: number;
 
   constructor(
-    private alertCtrl: AlertController,
     private readonly http: BaseService,
     private common: CommonService,
     private clienteService: ClienteService,
@@ -105,13 +105,13 @@ export class PedidoService {
     // this.tipoRetirada = pedidoHeader.tipoEntrega;
     switch (pedidoHeader.tipoEntrega) {
       case 'IMEDIATA':
-        this.codigoTipoRetirada = 0;
+        this.tipoRetiradaIndex = 0;
         break;
       case 'POSTERIOR':
-        this.codigoTipoRetirada = 1;
+        this.tipoRetiradaIndex = 1;
         break;
       case 'ENTREGA':
-        this.codigoTipoRetirada = 2;
+        this.tipoRetiradaIndex = 2;
         break;
 
       default:
@@ -189,22 +189,10 @@ export class PedidoService {
       tap({
         next: (pedido) => {
           console.log('Pedido: ', pedido);
-          this.codigoTipoRetirada = retiradaIdx;
+          this.tipoRetiradaIndex = retiradaIdx;
         },
       })
     );
-    // return new Promise((resolve, reject) => {
-    //   this.baseService.post(link, aResult).then(
-    //     (result: any) => {
-    //       this.atualizaPedidoHeader(result);
-    //       resolve(result);
-    //     },
-    //     (error: any) => {
-    //       console.log(error);
-    //       reject();
-    //     }
-    //   );
-    // });
   }
 
   // alterado por Nicollas Bastos em 25/09/2018
@@ -314,34 +302,29 @@ export class PedidoService {
       this.qtdItensSacola === 0
         ? 'Pedidos sem itens serão removidos permanentemente!'
         : '';
-    const alert = await this.alertCtrl.create({
-      header: 'Deseja realmente sair do pedido?',
-      message: mensagem,
-      buttons: [
-        'NÃO',
-        {
-          text: 'SIM',
-          handler: () => {
-            if (this.qtdItensSacola === 0) {
-              this.limpaDadosPedido();
-              this.apagarPedido(Number(this.numPedido))
-                .pipe(take(1))
-                .subscribe({
-                  next: () => {
-                    this.navControl.navigateRoot('/pedido-lista');
-                    console.clear();
-                  },
-                });
-            } else {
-              this.limpaDadosPedido();
+    const handler = () => {
+      if (this.qtdItensSacola === 0) {
+        this.limpaDadosPedido();
+        this.apagarPedido(Number(this.numPedido))
+          .pipe(take(1))
+          .subscribe({
+            next: () => {
               this.navControl.navigateRoot('/pedido-lista');
               console.clear();
-            }
-          },
-        },
-      ],
-    });
-    await alert.present();
+            },
+          });
+      } else {
+        this.limpaDadosPedido();
+        this.navControl.navigateRoot('/pedido-lista');
+        console.clear();
+      }
+    };
+    const props = {
+      titulo: 'Deseja realmente sair do pedido?',
+      message: mensagem,
+      handler,
+    };
+    this.common.showAlertAction(props);
   }
 
   /**
