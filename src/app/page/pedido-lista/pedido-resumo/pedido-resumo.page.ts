@@ -3,7 +3,6 @@ import { ActivatedRoute } from '@angular/router';
 import { IonInfiniteScroll } from '@ionic/angular';
 import { BehaviorSubject } from 'rxjs';
 import { CommonService } from 'src/app/services/common/common.service';
-import { PedidoItemService } from 'src/app/services/pedido/pedido-item.service';
 import { PedidoHeader, PedidoItens } from 'src/app/services/pedido/pedido.interface';
 import { PedidoService } from 'src/app/services/pedido/pedido.service';
 import { Pagination } from '../pedido-lista.interface';
@@ -25,8 +24,7 @@ export class PedidoResumoPage implements OnInit {
   constructor(
     private readonly common: CommonService,
     private readonly activatedRoute: ActivatedRoute,
-    private readonly pedidoService: PedidoService,
-    private readonly pedidoItemService: PedidoItemService
+    private readonly pedidoService: PedidoService
   ) {}
 
   ngOnInit(): void {
