@@ -29,7 +29,9 @@ export class PedidoResumoPage implements OnInit {
     private readonly pedidoItemService: PedidoItemService
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    console.log('Pedido Resumo OnInit');
+  }
 
   ionViewWillEnter(): void {
     this.common.goToFullScreen();
