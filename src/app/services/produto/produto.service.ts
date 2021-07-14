@@ -1,29 +1,20 @@
+import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { BaseService } from '../HTTP/base-service.service';
-import { API_URL } from 'src/app/config/app.config.service';
-import { ENV } from 'src/environments/environment';
+import { BaseService } from './../http/base.service';
+import { API_URL, ENV } from 'src/app/config/app.config.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProdutoService {
-  constructor(private baseService: BaseService) {}
+  constructor(private readonly http: BaseService) {}
 
   // by Ryuge 18/09/2018
   // edit by Helio 19/03/2020
-  public getAllListImage(codigo: string) {
-    const link = ENV.WS_PRODUTO + API_URL + 'listImages/' + codigo;
-
-    return new Promise((resolve, reject) => {
-      this.baseService.get(link).then(
-        (result: any) => {
-          resolve(result);
-        },
-        (error) => {
-          reject(error);
-        }
-      );
-    });
+  public getAllListImage(codigo: string): Observable<any> {
+    // const link = ENV.WS_PRODUTO + API_URL + 'listImages/' + codigo;
+    const url = `${ENV.WS_PRODUTO}${API_URL}listImages/${codigo}`;
+    return this.http.get(url);
   }
 
   // by Ryuge 18/09/2018
@@ -32,14 +23,17 @@ export class ProdutoService {
     const link = ENV.WS_PRODUTO + API_URL + 'listImages/' + codigo + '/1';
 
     return new Promise((resolve, reject) => {
-      this.baseService.getNoShowError(link).then(
-        (result: any) => {
-          resolve(result);
-        },
-        (error) => {
-          reject(error);
-        }
-      );
+      this.http
+        .get(link)
+        .toPromise()
+        .then(
+          (result: any) => {
+            resolve(result);
+          },
+          (error) => {
+            reject(error);
+          }
+        );
     });
   }
 
@@ -48,14 +42,17 @@ export class ProdutoService {
     const link = ENV.WS_PRODUTO + API_URL + 'detalhe/' + codigoProduto;
 
     return new Promise((resolve, reject) => {
-      this.baseService.getNoShowError(link).then(
-        (result: any) => {
-          resolve(result);
-        },
-        (error) => {
-          reject(error);
-        }
-      );
+      this.http
+        .get(link)
+        .toPromise()
+        .then(
+          (result: any) => {
+            resolve(result);
+          },
+          (error) => {
+            reject(error);
+          }
+        );
     });
   }
 
@@ -70,14 +67,17 @@ export class ProdutoService {
       codigoProduto;
 
     return new Promise((resolve, reject) => {
-      this.baseService.getNoShowError(link).then(
-        (result: any) => {
-          resolve(result);
-        },
-        (error) => {
-          reject(error);
-        }
-      );
+      this.http
+        .get(link)
+        .toPromise()
+        .then(
+          (result: any) => {
+            resolve(result);
+          },
+          (error) => {
+            reject(error);
+          }
+        );
     });
   }
 
@@ -94,14 +94,17 @@ export class ProdutoService {
       codigoPedido;
 
     return new Promise((resolve, reject) => {
-      this.baseService.get(link).then(
-        (result: any) => {
-          resolve(result);
-        },
-        (error) => {
-          reject(error);
-        }
-      );
+      this.http
+        .get(link)
+        .toPromise()
+        .then(
+          (result: any) => {
+            resolve(result);
+          },
+          (error) => {
+            reject(error);
+          }
+        );
     });
   }
 
@@ -116,14 +119,17 @@ export class ProdutoService {
       codigo;
 
     return new Promise((resolve, reject) => {
-      this.baseService.get(link).then(
-        (result: any) => {
-          resolve(result);
-        },
-        (error) => {
-          reject(error);
-        }
-      );
+      this.http
+        .get(link)
+        .toPromise()
+        .then(
+          (result: any) => {
+            resolve(result);
+          },
+          (error) => {
+            reject(error);
+          }
+        );
     });
   }
 
@@ -138,14 +144,17 @@ export class ProdutoService {
       codigo;
 
     return new Promise((resolve, reject) => {
-      this.baseService.get(link).then(
-        (result: any) => {
-          resolve(result);
-        },
-        (error) => {
-          reject(error);
-        }
-      );
+      this.http
+        .get(link)
+        .toPromise()
+        .then(
+          (result: any) => {
+            resolve(result);
+          },
+          (error) => {
+            reject(error);
+          }
+        );
     });
   }
 }
