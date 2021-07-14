@@ -175,8 +175,8 @@ export class CommonService {
     options = {
       allowClose: true,
       showCancel: true,
-      cssClasses: [''] || null,
-      inputs: [] || null,
+      cssClasses: [''],
+      inputs: [] as any[],
     }
   ): Promise<void> {
     this.scanner.focusPause();

@@ -1,14 +1,13 @@
-import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { NavController, AlertController } from '@ionic/angular';
-import { BaseService } from './../http/base.service';
-import { CommonService } from 'src/app/services/common/common.service';
-import { ClienteService } from 'src/app/services/cliente/cliente.service';
-import { PedidoTable } from 'src/app/class/pedido';
-import { API_URL, ENV } from 'src/app/config/app.config.service';
 import { NavigationExtras } from '@angular/router';
-import { map, take, tap } from 'rxjs/operators';
-import { PedidoHeader } from './pedido.interface';
+import { AlertController, NavController } from '@ionic/angular';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { take, tap } from 'rxjs/operators';
+import { API_URL, ENV } from 'src/app/config/app.config.service';
+import { ClienteService } from 'src/app/services/cliente/cliente.service';
+import { CommonService } from 'src/app/services/common/common.service';
+import { BaseService } from './../http/base.service';
+import { PedidoHeader, PedidoTable } from './pedido.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -25,10 +24,10 @@ export class PedidoService {
   public condicao: any;
 
   public statusPedido: string; // controla pedido; 'I' INCLUSÃO , 'M' MANUTENCAO
-  public sistuacaoPedido: string; // controla pedido, A = ABERTO , F = FINALIZADO
+  // public sistuacaoPedido: string; // controla pedido, A = ABERTO , F = FINALIZADO
 
-  public opcaoRetirada: any = ['IMEDIATA', 'POSTERIOR', 'ENTREGA'];
-  public codigoTipoRetirada: string;
+  public readonly opcaoRetirada = ['IMEDIATA', 'POSTERIOR', 'ENTREGA'];
+  public codigoTipoRetirada: number;
 
   public ItensPedidoAdd: any;
   public nomeCliente = '';
@@ -37,7 +36,7 @@ export class PedidoService {
   public pedidoHeader = new PedidoHeader(); // Todos os principais dados do pedido em manutenção.
   public numPedido = '0'; // Numero do pedido em manutenção.
   public digitoPedido: number;
-  public tipoRetirada: string; // Tipo de retirada do pedido em manutenção.
+  // public tipoRetirada: string; // Tipo de retirada do pedido em manutenção.
   public tipoDocumento: any;
   public qtdItensSacola = 0; // Quantidade de itens do pedido em manutenção.
 
@@ -52,7 +51,10 @@ export class PedidoService {
 
   // Verdadeiro se o pedido em manutenção tiver um endereco selecionado.
   public enderecoSelected = false;
-  public sequencialEndereco: number = null;
+  public sequencialEndereco: any = null;
+
+  // REMAKE
+  readonly pedido = new BehaviorSubject<PedidoHeader>(null as unknown as PedidoHeader);
 
   constructor(
     private alertCtrl: AlertController,
@@ -60,7 +62,9 @@ export class PedidoService {
     private common: CommonService,
     private clienteService: ClienteService,
     private navControl: NavController
-  ) {}
+  ) {
+    // this.pedido = new BehaviorSubject({} as PedidoHeader);
+  }
 
   public limpaDadosPedido() {
     this.pedidoHeader = new PedidoHeader();
@@ -82,8 +86,8 @@ export class PedidoService {
     this.valorFrete = 0;
 
     this.alteracaoItemPedido = false;
-    this.digitoPedido = null;
-    this.sistuacaoPedido = 'N';
+    this.digitoPedido = 0;
+    // this.sistuacaoPedido = 'N';
     this.tipoDocumento = '';
     this.qtdItensSacola = 0;
     this.statusPedido = '';
@@ -93,20 +97,21 @@ export class PedidoService {
 
   // by Helio 20/03/2020
   public atualizaPedidoHeader(pedidoHeader: PedidoHeader) {
+    this.pedido.next(pedidoHeader);
     this.pedidoHeader = pedidoHeader;
     this.numPedido = pedidoHeader.numpedido.toString();
     this.digitoPedido = pedidoHeader.digito;
 
-    this.tipoRetirada = pedidoHeader.tipoEntrega;
+    // this.tipoRetirada = pedidoHeader.tipoEntrega;
     switch (pedidoHeader.tipoEntrega) {
       case 'IMEDIATA':
-        this.codigoTipoRetirada = '0';
+        this.codigoTipoRetirada = 0;
         break;
       case 'POSTERIOR':
-        this.codigoTipoRetirada = '1';
+        this.codigoTipoRetirada = 1;
         break;
       case 'ENTREGA':
-        this.codigoTipoRetirada = '2';
+        this.codigoTipoRetirada = 2;
         break;
 
       default:
@@ -126,6 +131,7 @@ export class PedidoService {
     const empresa = localStorage.getItem('empresa');
     const url = `${ENV.WS_VENDAS}${API_URL}PedidoVenda/${empresa}/criar`;
     return this.http.post<PedidoHeader, any>({ url, body: {} }).pipe(
+      take(1),
       tap({
         next: (pedido) => {
           console.log('Pedido criado!');
@@ -158,44 +164,47 @@ export class PedidoService {
   }
 
   // by Hélio 06/02/2020
-  public async atualizaPedido(tableName: any, tableValor: any) {
-    const aResult = [];
-    const table: PedidoTable = new PedidoTable();
+  private atualizaPedido(tableName: string, tableValor: any): PedidoTable[] {
+    const aResult: PedidoTable[] = [];
+    const table = new PedidoTable();
     table.name = tableName;
     table.value = tableValor;
     aResult.push(table);
     return aResult;
   }
 
-  // by Hélio 11/03/2020
-  public async alterarTipoRetirada(retirada: string) {
-    if (retirada === this.codigoTipoRetirada) {
-      const aResult: any = await this.atualizaPedido(
-        'entrega',
-        this.opcaoRetirada[retirada]
-      );
-
-      // const link =
-      //   ENV.WS_VENDAS +
-      //   API_URL +
-      //   'PedidoVenda/update/' +
-      //   localStorage.getItem('empresa') +
-      //   '/' +
-      //   this.numPedido;
-
-      // return new Promise((resolve, reject) => {
-      //   this.baseService.post(link, aResult).then(
-      //     (result: any) => {
-      //       this.atualizaPedidoHeader(result);
-      //       resolve(result);
-      //     },
-      //     (error: any) => {
-      //       console.log(error);
-      //       reject();
-      //     }
-      //   );
-      // });
-    }
+  /**
+   * @author helio.souza
+   * @param numPedido Número do Pedido.
+   * @param retiradaIdx Index de retirada.
+   * @returns
+   */
+  alterarTipoRetirada(numPedido: number, retiradaIdx: number): Observable<any> {
+    const aResult = this.atualizaPedido('entrega', this.opcaoRetirada[retiradaIdx]);
+    const empresa = localStorage.getItem('empresa') as string;
+    const url = `${ENV.WS_VENDAS}${API_URL}PedidoVenda/update/${empresa}/${numPedido}`;
+    const props = { url, body: aResult };
+    return this.http.post<PedidoHeader, PedidoTable[]>(props).pipe(
+      take(1),
+      tap({
+        next: (pedido) => {
+          console.log('Pedido: ', pedido);
+          this.codigoTipoRetirada = retiradaIdx;
+        },
+      })
+    );
+    // return new Promise((resolve, reject) => {
+    //   this.baseService.post(link, aResult).then(
+    //     (result: any) => {
+    //       this.atualizaPedidoHeader(result);
+    //       resolve(result);
+    //     },
+    //     (error: any) => {
+    //       console.log(error);
+    //       reject();
+    //     }
+    //   );
+    // });
   }
 
   // alterado por Nicollas Bastos em 25/09/2018
@@ -337,13 +346,15 @@ export class PedidoService {
 
   /**
    * @author helio.souza
-   * @param pedidoId ID do Pedido a ser apagado.
+   * @param numPedido Número do Pedido a ser apagado.
    * @returns
    */
-  public apagarPedido(pedidoId: number): Observable<any> {
+  public apagarPedido(numPedido: number): Observable<any> {
     const empresa = localStorage.getItem('empresa');
-    const url = `${ENV.WS_VENDAS}${API_URL}PedidoVenda/${empresa}/${pedidoId}`;
-    return this.http.delete<any>(url).pipe(
+    const url = `${ENV.WS_VENDAS}${API_URL}PedidoVenda/${empresa}/${numPedido}`;
+    const props = { url, body: {} };
+    return this.http.post<any, any>(props).pipe(
+      take(1),
       tap({
         next: () => console.log('Pedido Apagado!'),
       })
@@ -351,7 +362,7 @@ export class PedidoService {
   }
 
   // by Helio 15/07/2020
-  public async selecionaEndereco(endereco) {
+  public async selecionaEndereco(endereco: any) {
     const aResult: any = await this.atualizaPedido(
       'seq_endereco_entrega',
       endereco.id.sequencialId

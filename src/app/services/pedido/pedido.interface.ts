@@ -16,7 +16,7 @@ export class PedidoHeader {
   qtdpages: number;
   totalElements: number;
   dataEmissao: string;
-  tipoEntrega: string;
+  tipoEntrega: TiposEntrega;
   status: string;
   hora: string;
   seqEnderecoEntrega: number;
@@ -37,4 +37,51 @@ export class PedidoHeader {
   totalProdutos: number;
   canalVenda: number;
   sqltypeName: any;
+}
+
+export enum TiposEntrega {
+  IMEDIATA = 'IMEDIATA',
+  POSTERIOR = 'POSTERIOR',
+  ENTREGA = 'ENTREGA',
+}
+
+export class PedidoItens {
+  idEmpresa: number;
+  numPedido: number;
+  idProduto: string;
+  descricao: string;
+  embalagem: number;
+  retiradas: Retiradas[];
+  qtdTotal: number;
+  prcUnitario: number;
+  prcTotal: number;
+  imagem: string;
+  sqltypeName: string;
+}
+
+export class Retiradas {
+  empresaRetirada: number;
+  idDeposito: number;
+  tipoRetirada: number;
+  qtd: number;
+  precoUnitario: number;
+  sqltypeName: string;
+}
+
+export class PedidoTable {
+  name: string; // Atributo do objeto AtualizaPedido
+  value: string; // Valor do atributo
+}
+
+// by Helio 27/03/2020
+export class OpcaoParcela {
+  id: string;
+  descricao: string;
+  tipoDoc: string;
+  qtdParcelas: number;
+  pctEntrada: number;
+  valorEntrada: number;
+  valorParcelas: number;
+  taxaJuros: number;
+  isEntrada: string;
 }

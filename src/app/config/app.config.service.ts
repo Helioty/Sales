@@ -49,7 +49,7 @@ export class AppConfigService {
         },
         error: (err) => {
           if (localStorage.getItem('API_URL')) {
-            API_URL = localStorage.getItem('API_URL');
+            API_URL = localStorage.getItem('API_URL') as string;
             resolve(API_URL);
           } else {
             reject(err);

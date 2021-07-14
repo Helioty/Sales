@@ -6,7 +6,6 @@ import {
   IonRefresher,
   NavController,
 } from '@ionic/angular';
-import { take } from 'rxjs/operators';
 import { CommonService } from 'src/app/services/common/common.service';
 import { PedidoManutencaoService } from 'src/app/services/pedido/pedido-manutencao.service';
 import { PedidoHeader } from 'src/app/services/pedido/pedido.interface';
@@ -49,7 +48,7 @@ export class PedidoAbertoPage implements OnInit {
    * @author helio.souza
    */
   doInit(): void {
-    const event = (data: Pagination<PedidoHeader>) => {
+    const event = (data: Pagination<PedidoHeader> | null) => {
       if (data) {
         this.data = data;
         this.infiniteScroll.disabled = this.data.last;
@@ -66,7 +65,7 @@ export class PedidoAbertoPage implements OnInit {
    * @param refresher IonRefresher Element.
    */
   doRefresh(refresher: IonRefresher): void {
-    const event = (data: Pagination<PedidoHeader>) => {
+    const event = (data: Pagination<PedidoHeader> | null) => {
       if (data) {
         this.paginaAtual = 1;
         this.data = data;
@@ -84,7 +83,7 @@ export class PedidoAbertoPage implements OnInit {
    * @param infinite IonInfinite Element.
    */
   doInfinite(infinite: IonInfiniteScroll): void {
-    const event = (data: Pagination<PedidoHeader>) => {
+    const event = (data: Pagination<PedidoHeader> | null) => {
       if (data) {
         this.paginaAtual = this.paginaAtual + 1;
         data.content = this.data.content.concat(data.content);
@@ -104,20 +103,17 @@ export class PedidoAbertoPage implements OnInit {
    */
   getPedidosEmAberto(
     page: number,
-    event = (data?: Pagination<PedidoHeader>) => {}
+    event = (data: Pagination<PedidoHeader> | null) => {}
   ): void {
-    this.pedidoListaService
-      .getPedidosEmAberto(page)
-      .pipe(take(1))
-      .subscribe({
-        next: (result) => {
-          console.log(result);
-          event(result);
-        },
-        error: () => {
-          event(null);
-        },
-      });
+    this.pedidoListaService.getPedidos('abertos', page).subscribe({
+      next: (result) => {
+        console.log(result);
+        event(result);
+      },
+      error: () => {
+        event(null);
+      },
+    });
   }
 
   openSlide(itemSlide: IonItemSliding): void {
@@ -128,7 +124,7 @@ export class PedidoAbertoPage implements OnInit {
     itemSlide.close();
   }
 
-  verProdutosPedido(pedido: PedidoHeader) {
+  verProdutosPedido(pedido: PedidoHeader): void {
     const navigationExtras: NavigationExtras = {
       queryParams: {
         pedido: JSON.stringify(pedido),
@@ -140,14 +136,20 @@ export class PedidoAbertoPage implements OnInit {
 
   /**
    * @author helio.souza
-   * @param pedido
+   * @param pedido Pedido.
+   * @param index Index do Pedido na Lista.
    */
-  apagarPedido(pedido: PedidoHeader): void {
+  apagarPedido(pedido: PedidoHeader, index: number): void {
     const props = {
       titulo: 'ATENÇÃO!',
       message: `Tem certeza? Apagando um pedido, os dados inseridos não poderão ser recuperados.`,
       handler: () => {
-        this.pedidoService.apagarPedido(pedido.numpedido);
+        this.pedidoService.apagarPedido(pedido.numpedido).subscribe({
+          next: () => {
+            this.data.content.splice(index, 1);
+            this.common.showToast('Pedido excluido!');
+          },
+        });
       },
     };
     this.common.showAlertAction(props);
@@ -155,7 +157,7 @@ export class PedidoAbertoPage implements OnInit {
 
   /**
    * @author helio.souza
-   * @param pedido 
+   * @param pedido
    */
   alterarPedido(pedido: PedidoHeader): void {
     this.pedidoManutencaoService.reabrirPedido(pedido);

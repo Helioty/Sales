@@ -15,10 +15,7 @@ import { Observable } from 'rxjs';
 export class ListaEnderecoGuard implements CanActivate {
   constructor(private common: CommonService, private pedidoService: PedidoService) {}
 
-  canActivate(
-    next: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
-  ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+  canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
     if (
       this.pedidoService.clientSelected &&
       this.pedidoService.docCliente !== '' &&
@@ -45,5 +42,6 @@ export class ListaEnderecoGuard implements CanActivate {
       this.common.showAlert('Atenção!', 'Selecione um cliente antes de continuar');
       return false;
     }
+    return false;
   }
 }

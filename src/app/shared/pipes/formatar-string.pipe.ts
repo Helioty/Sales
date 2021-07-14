@@ -4,7 +4,7 @@ import { Pipe, PipeTransform } from '@angular/core';
   name: 'formatarString',
 })
 export class FormatarStringPipe implements PipeTransform {
-  transform(value: any, ...args) {
+  transform(value: any, ...args: any) {
     const filter = args[0];
     const mask: any = args[1];
 
@@ -73,7 +73,7 @@ export class FormatarStringPipe implements PipeTransform {
     }
   }
 
-  private splited(str: string, idx) {
+  private splited(str: string, idx: any) {
     const fulltext = str.split('|');
     return fulltext[idx];
   }
@@ -86,11 +86,11 @@ export class FormatarStringPipe implements PipeTransform {
     return str;
   }
 
-  private captilizeString(text) {
+  private captilizeString(text: string) {
     return !!text ? text.charAt(0).toUpperCase() + text.substr(1).toLowerCase() : '';
   }
 
-  private StrFormatPipe(value, args: any) {
+  private StrFormatPipe(value: string, args: any) {
     const tam = args.length - 1;
     const zero = '0'.repeat(tam);
     value = zero + value;

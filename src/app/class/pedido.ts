@@ -33,10 +33,10 @@ export class PedidoHeader {
   valorDesconto: number;
   percDesconto: number;
   valorEntrada: number;
-  valorParcela;
+  valorParcela: number;
   totalProdutos: number;
   canalVenda: number;
-  sqltypeName;
+  sqltypeName: any;
 }
 
 export class PedidoCab {
@@ -91,22 +91,4 @@ export class AtualizaPedido {
   seq_endereco_entrega: string; // Sequencial do Endereço de Entrega
   valor_entrada: number;
   basket: number;
-}
-
-export class PedidoTable {
-  name: string; // Atributo do objeto AtualizaPedido
-  value: string; // Valor do atributo
-}
-
-// by Helio 27/03/2020
-export class OpcaoParcela {
-  id: string;
-  descricao: string;
-  tipoDoc: string;
-  qtdParcelas: number;
-  pctEntrada: number;
-  valorEntrada: number;
-  valorParcelas: number;
-  taxaJuros: number;
-  isEntrada: string;
 }

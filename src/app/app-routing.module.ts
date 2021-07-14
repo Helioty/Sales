@@ -30,14 +30,14 @@ const routes: Routes = [
       ),
     canActivate: [AuthGuard],
   },
-  // {
-  //   path: 'pedido-retirada',
-  //   loadChildren: () =>
-  //     import('./page/pedido-retirada/pedido-retirada.module').then(
-  //       (m) => m.PedidoRetiradaPageModule
-  //     ),
-  //   canActivate: [AuthGuard],
-  // },
+  {
+    path: 'pedido-retirada',
+    loadChildren: () =>
+      import('./page/pedido-retirada/pedido-retirada.module').then(
+        (m) => m.PedidoRetiradaPageModule
+      ),
+    canActivate: [AuthGuard],
+  },
   // {
   //   path: 'pedido-atalhos',
   //   loadChildren: () =>

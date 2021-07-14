@@ -11,6 +11,9 @@
     "experimentalDecorators": true,
     "importHelpers": true,
     "target": "es2015",
+    "strict": true,
+    "strictPropertyInitialization": false,
+    "strictNullChecks": false,
     "types": [
       "node"
     ],
@@ -25,6 +28,8 @@
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,
     "strictInjectionParameters": true,
+    "strictTemplates": true,
+    "strictDomEventTypes": false,
     "types": [
       "node"
     ]

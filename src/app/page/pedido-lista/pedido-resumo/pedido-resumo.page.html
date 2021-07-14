@@ -4,8 +4,8 @@
       <ion-back-button icon="close"></ion-back-button>
     </ion-buttons>
 
-    <ion-title *ngIf="showPedido">Pedido: {{ pedido.numpedido }}</ion-title>
-    <ion-title *ngIf="!showPedido">
+    <ion-title *ngIf="pedido | async as ped"> Pedido: {{ ped.numpedido }} </ion-title>
+    <ion-title *ngIf="(pedido | async) === (null || undefined)">
       <ion-skeleton-text animated style="width: 70%"></ion-skeleton-text>
     </ion-title>
   </ion-toolbar>
@@ -13,78 +13,95 @@
 
 <ion-content>
   <ion-list class="lista-produtos">
-    <ion-list-header style="min-height: 30px; padding: 0; margin-bottom: 10px">
-      <ion-label *ngIf="showPedido" class="list-header-label">
-        N° Cartão: {{ cartaoPedido }}
+    <ion-list-header>
+      <ion-label *ngIf="pedido | async as ped">
+        N° Cartão: {{ ped.barCodecartaoPedido }}
         <br />
-        {{ docTipo }} {{ docCliente | formatarString: 'CPFCGC' }}
+        {{ docTipo }} {{ ped.cgccpf_cliente | formatarString: 'CPFCGC' }}
       </ion-label>
 
-      <ion-label *ngIf="!showPedido" class="list-header-label">
+      <ion-label *ngIf="(pedido | async) === (null || undefined)">
         <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
         <ion-skeleton-text animated style="width: 70%"></ion-skeleton-text>
       </ion-label>
     </ion-list-header>
 
-    <ion-item
-      lines="none"
-      class="produto-item-card"
-      *ngFor="let item of pedidoItens; let i = index"
-    >
-      <ion-grid>
-        <ion-row>
-          <ion-col size="2" class="img" style="margin: auto">
-            <img src="data:image/jpeg;base64,{{ item.imagem }}" />
-          </ion-col>
+    <div *ngIf="produtos | async as itens">
+      <ion-item
+        lines="none"
+        class="produto-item-card"
+        *ngFor="let item of itens.content; let i = index"
+      >
+        <ion-grid>
+          <ion-row>
+            <ion-col size="2" class="img" style="margin: auto">
+              <img src="data:image/jpeg;base64,{{ item.imagem }}" />
+            </ion-col>
 
-          <ion-col
-            size="7"
-            class="section ion-no-padding"
-            style="padding-bottom: 5px !important"
-          >
-            <!-- Product Name -->
-            <ion-row class="produtoNome">
-              <ion-col>
-                <p>{{ item.descricao }}</p>
-              </ion-col>
-            </ion-row>
-
-            <!-- product price -->
-            <ion-row class="productVariant">
-              <ion-col class="produtoPreco">
-                {{ item.prcTotal | formatarString: 'VALOR' }}
-              </ion-col>
-            </ion-row>
-
-            <ion-row *ngIf="item.qtdTotal > 1">
-              <ion-col class="produtoPrecoUnidade">
-                {{ item.prcUnitario | formatarString: 'VALOR' }} cada
-              </ion-col>
-            </ion-row>
-          </ion-col>
-
-          <ion-col size="3" class="colQtde" style="padding-bottom: 0 !important">
-            <div class="divQtde">
-              <ion-row class="produtoQuantidade">
-                <span>{{ item.qtdTotal }}</span>
+            <ion-col
+              size="7"
+              class="section ion-no-padding"
+              style="padding-bottom: 5px !important"
+            >
+              <!-- Product Name -->
+              <ion-row class="produtoNome">
+                <ion-col>
+                  <p>{{ item.descricao }}</p>
+                </ion-col>
               </ion-row>
-            </div>
 
-            <div class="btnDelete">
-              <div>
-                <ion-button fill="clear" color="dark">
-                  <ion-icon name="arrow-down" slot="icon-only"></ion-icon>
-                </ion-button>
+              <!-- product price -->
+              <ion-row class="productVariant">
+                <ion-col class="produtoPreco">
+                  {{ item.prcTotal | formatarString: 'VALOR' }}
+                </ion-col>
+              </ion-row>
+
+              <ion-row *ngIf="item.qtdTotal > 1">
+                <ion-col class="produtoPrecoUnidade">
+                  {{ item.prcUnitario | formatarString: 'VALOR' }} cada
+                </ion-col>
+              </ion-row>
+            </ion-col>
+
+            <ion-col size="3" class="colQtde">
+              <div class="divQtde">
+                <ion-row class="produtoQuantidade">
+                  <span>{{ item.qtdTotal }}</span>
+                </ion-row>
               </div>
-            </div>
-          </ion-col>
-        </ion-row>
-        <!-- <ion-row>
-          <ion-label *ngFor="let deposito of item.retiradas" class="label-depositos">
-            Depósito {{deposito.idDeposito}}: <span style="white-space: nowrap">{{deposito.qtd}} unidade(s)</span>
-          </ion-label>
-        </ion-row> -->
-      </ion-grid>
-    </ion-item>
+
+              <!-- <div class="btnDelete">
+                <div>
+                  <ion-button
+                    fill="clear"
+                    expand="block"
+                    color="dark"
+                    style="margin: 4px 0"
+                  >
+                    <ion-icon name="arrow-down" slot="icon-only"></ion-icon>
+                  </ion-button>
+                </div>
+              </div> -->
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-label *ngFor="let deposito of item.retiradas" class="label-depositos">
+              Depósito {{ deposito.idDeposito }}:
+              <span style="white-space: nowrap">{{ deposito.qtd }} unidade(s)</span>
+            </ion-label>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+    </div>
   </ion-list>
+
+  <ion-infinite-scroll (ionInfinite)="doInfinite($event.target)">
+    <ion-infinite-scroll-content
+      loadingSpinner="circles"
+      loadingText="Carregando Produtos..."
+    >
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 </ion-content>

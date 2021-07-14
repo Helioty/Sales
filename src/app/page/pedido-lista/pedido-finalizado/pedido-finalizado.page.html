@@ -9,7 +9,7 @@
   </ion-refresher>
 
   <!-- Nenhum pedido na lista -->
-  <ion-grid *ngIf="!showSkeleton && !data" class="noPedidos">
+  <ion-grid *ngIf="!showSkeleton && (!data || !data.totalElements)" class="noPedidos">
     <ion-row class="topHeading">
       <ion-col>
         <h3>Seus pedidos finalizados vâo ficar aqui...</h3>
@@ -17,7 +17,7 @@
     </ion-row>
     <ion-row class="noImg">
       <ion-col>
-        <img src="../../../assets/images/08-catalogo/parachute.png" />
+        <img src="assets/images/08-catalogo/parachute.png" />
       </ion-col>
     </ion-row>
     <ion-row class="bottomHeading">
@@ -64,9 +64,9 @@
       class="pedido"
     >
       <ion-item-options side="start" (click)="closeSlide(slidingItem)">
-        <ion-item-option color="medium" style="width: 90px">
+        <ion-item-option color="medium">
           <ion-icon slot="top" name="build-outline" size="large"></ion-icon>
-          <span style="font-weight: bold">AJUSTES</span>
+          <span>AJUSTES</span>
         </ion-item-option>
       </ion-item-options>
 
@@ -124,29 +124,19 @@
       </ion-item>
 
       <ion-item-options side="end" (click)="closeSlide(slidingItem)">
-        <ion-item-option
-          (click)="verProdutosPedido(pedido)"
-          color="fc-button-green"
-          style="width: 90px"
-        >
+        <ion-item-option (click)="verProdutosPedido(pedido)" color="fc-button-green">
           <ion-icon slot="top" name="eye" size="large"></ion-icon>
-          <span style="font-weight: bold">VER</span>
+          <span>VER</span>
         </ion-item-option>
-        <ion-item-option
-          (click)="apagarPedido(pedido)"
-          color="danger"
-          style="width: 90px"
-        >
+
+        <ion-item-option (click)="apagarPedido(pedido)" color="danger">
           <ion-icon slot="top" name="trash" size="large"></ion-icon>
-          <span style="font-weight: bold">APAGAR</span>
+          <span>APAGAR</span>
         </ion-item-option>
-        <ion-item-option
-          (click)="alterarPedido(pedido)"
-          color="secondary"
-          style="width: 90px"
-        >
+
+        <ion-item-option (click)="alterarPedido(pedido)" color="secondary">
           <ion-icon slot="top" name="create" size="large"></ion-icon>
-          <span style="font-weight: bold">ALTERAR</span>
+          <span>ALTERAR</span>
         </ion-item-option>
       </ion-item-options>
     </ion-item-sliding>

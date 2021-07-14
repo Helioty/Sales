@@ -74,7 +74,7 @@ export class AuthService {
    * @description Retorna as informações referentes ao login.
    */
   public getLoginInfo(): IAuth {
-    return JSON.parse(localStorage.getItem('loginServiceData')) as IAuth;
+    return JSON.parse(localStorage.getItem('loginServiceData') as string) as IAuth;
   }
 
   /**
@@ -83,7 +83,9 @@ export class AuthService {
    */
   private restoreLoginData(): void {
     if (localStorage.getItem('token')) {
-      const loginData = JSON.parse(localStorage.getItem('loginServiceData')) as IAuth;
+      const loginData = JSON.parse(
+        localStorage.getItem('loginServiceData') as string
+      ) as IAuth;
       this.loginSubject.next(loginData);
     }
   }

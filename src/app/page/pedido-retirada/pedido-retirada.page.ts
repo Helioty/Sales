@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MenuController, NavController, Platform } from '@ionic/angular';
 import { CommonService } from 'src/app/services/common/common.service';
 import { PedidoService } from 'src/app/services/pedido/pedido.service';
-import { BaseService } from 'src/app/services/HTTP/base-service.service';
+import { BaseService } from 'src/app/services/http/base.service';
 import { NavigationExtras } from '@angular/router';
 
 @Component({
@@ -11,56 +11,63 @@ import { NavigationExtras } from '@angular/router';
   styleUrls: ['./pedido-retirada.page.scss'],
 })
 export class PedidoRetiradaPage implements OnInit {
-  public disableButton = false;
-
   constructor(
-    public common: CommonService,
-    private menu: MenuController,
-    private navControl: NavController,
-    public baseService: BaseService,
-    public pedidoService: PedidoService,
-    public platform: Platform
+    private readonly common: CommonService,
+    private readonly menu: MenuController,
+    private readonly navControl: NavController,
+    private readonly pedidoService: PedidoService
   ) {}
 
-  ngOnInit() {}
-
-  ionViewWillEnter() {
+  ngOnInit(): void {
     this.menu.enable(false);
-    this.disableButton = false;
+  }
+
+  ionViewWillEnter(): void {
     this.common.goToFullScreen();
   }
 
-  ionViewDidEnter() {
+  ionViewDidEnter(): void {
     this.common.goToFullScreen();
   }
 
-  async openPesquisaProduto(tipoRetirada: string) {
-    this.pedidoService.sistuacaoPedido = 'A';
-    this.pedidoService.codigoTipoRetirada = tipoRetirada;
-    this.pedidoService.tipoRetirada = this.pedidoService.opcaoRetirada[tipoRetirada];
-
+  /**
+   * @author helio.souza
+   * @param tipoRetiradaIndex Index dos tipos de Entrega.
+   */
+  async openPesquisaProduto(tipoRetiradaIndex: number): Promise<void> {
+    // this.pedidoService.sistuacaoPedido = 'A';
+    // this.pedidoService.tipoRetirada = this.pedidoService.opcaoRetirada[tipoRetiradaIndex];
     await this.common.showLoader();
-    await this.pedidoService.alterarTipoRetirada(tipoRetirada).then(
-      () => {
-        this.common.loading.dismiss();
-        // by Ryuge 14/11/2019
-        // edit by Helio 14/02/2020
-        if (this.pedidoService.tipoRetirada === 'ENTREGA') {
-          const navigationExtras: NavigationExtras = {
-            queryParams: {
-              paginaSeguinte: 'endereco-entrega',
-              paginaAnterior: 'pedido-retirada',
-            },
-          };
-          this.navControl.navigateForward(['/cliente'], navigationExtras);
-        } else {
-          this.navControl.navigateRoot(['/pedido-atalhos']);
-        }
-      },
-      (error) => {
-        this.common.loading.dismiss();
-        console.log(error);
-      }
-    );
+    this.pedidoService
+      .alterarTipoRetirada(this.pedidoService.pedido.value.numpedido, tipoRetiradaIndex)
+      .subscribe({
+        next: () => {
+          this.common.loading.dismiss();
+          this.navegar(tipoRetiradaIndex);
+        },
+        error: () => {
+          this.common.loading.dismiss();
+        },
+      });
+  }
+
+  /**
+   * @author helio.souza
+   * @param tipoRetiradaIndex Index dos tipos de Entrega.
+   */
+  navegar(tipoRetiradaIndex: number): void {
+    // by Ryuge 14/11/2019
+    // edit by Helio 14/02/2020
+    if (tipoRetiradaIndex === 3) {
+      const navigationExtras: NavigationExtras = {
+        queryParams: {
+          paginaSeguinte: 'endereco-entrega',
+          paginaAnterior: 'pedido-retirada',
+        },
+      };
+      this.navControl.navigateForward(['/cliente'], navigationExtras);
+    } else {
+      this.navControl.navigateRoot(['/pedido-atalhos']);
+    }
   }
 }

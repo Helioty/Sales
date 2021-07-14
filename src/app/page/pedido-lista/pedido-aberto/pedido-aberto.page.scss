@@ -1,92 +1,100 @@
-
 .noPedidos {
-    position: fixed;
-    height: 100%;
-    width: 100%;
-    
-    .topHeading {
-        h3 {
-            text-align: center;
-            font-size: 18px;
-            color: #3f3f3f;
-        }
+  position: fixed;
+  height: 100%;
+  width: 100%;
+
+  .topHeading {
+    h3 {
+      text-align: center;
+      font-size: 18px;
+      color: #3f3f3f;
     }
-    .noImg {
-        text-align: center;
-        img {
-            width: 200px;
-            height: auto;
-        }
+  }
+  .noImg {
+    text-align: center;
+    img {
+      width: 200px;
+      height: auto;
     }
-    .bottomHeading {
-        h3 {
-            text-align: center;
-            font-size: 18px;
-            color: #8f8f8f;
-            font-weight: normal;
-        }
+  }
+  .bottomHeading {
+    h3 {
+      text-align: center;
+      font-size: 18px;
+      color: #8f8f8f;
+      font-weight: normal;
     }
+  }
 }
 
 .pedido-list {
-    padding: 0 !important;
-    border-top: 1px solid rgba(0, 0, 0, 0.2);
-    margin-bottom: 75px;
+  padding: 0 !important;
+  border-top: 1px solid rgba(0, 0, 0, 0.2);
+  margin-bottom: 75px;
 }
 
 .pedido {
-    width: 100%;
-    max-width: 600px;
-    margin: auto;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  width: 100%;
+  max-width: 600px;
+  margin: auto;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 
-    .pedido-item {
-        width: 100% !important;
-        --inner-padding-end: 10px;
-        --padding-start: 10px;
+  .pedido-item {
+    width: 100% !important;
+    --inner-padding-end: 10px;
+    --padding-start: 10px;
 
-        .grid-pedido {
-            padding: 5px 0 10px !important;
-        }
-
-        .pedido-rows {
-            width: 100% !important;
-            font-size: 12px;
-
-            .pedido-valor {
-                width: 100%;
-                margin-top: 7px;
-                margin-bottom: 0 !important;
-                font-size: 22px;
-                font-weight: bold;
-                text-align: right;
-                float: right;
-            }
-
-            .pedido-peso {
-                width: 100%;
-                color: #666666;
-                font-size: 14px;
-                font-weight: 500;
-                text-align: right;
-                float: right;
-            }
-        }
+    .grid-pedido {
+      padding: 5px 0 10px !important;
     }
+
+    .pedido-rows {
+      width: 100% !important;
+      font-size: 12px;
+
+      .pedido-valor {
+        width: 100%;
+        margin-top: 7px;
+        margin-bottom: 0 !important;
+        font-size: 22px;
+        font-weight: bold;
+        text-align: right;
+        float: right;
+      }
+
+      .pedido-peso {
+        width: 100%;
+        color: #666666;
+        font-size: 14px;
+        font-weight: 500;
+        text-align: right;
+        float: right;
+      }
+    }
+  }
 }
 
+ion-item-options {
+  ion-item-option {
+    width: 90px;
+
+    span {
+      font-weight: bold;
+    }
+  }
+}
 
 p.pedido-info {
-    width: 100%;
-    text-indent: 0;
-    vertical-align: middle; //align-items: center;
-    color: #727272;
-    font-size: 15px;
-    font-weight: normal; // margin-left: 10px;
-    margin: 7px 0px 0px 5px;
-    img {
-        width: 16px;
-        height: 16px;
-        margin-right: 5px;
-    }
+  width: 100%;
+  text-indent: 0;
+  vertical-align: middle; //align-items: center;
+  color: #727272;
+  font-size: 15px;
+  font-weight: normal; // margin-left: 10px;
+  margin: 7px 0px 0px 5px;
+  img {
+    width: 16px;
+    height: 16px;
+    margin-right: 5px;
+  }
 }

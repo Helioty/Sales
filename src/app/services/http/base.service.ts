@@ -27,9 +27,12 @@ export class BaseService {
     headers?: HttpHeaders
   ): Observable<T> {
     if (options.token && headers) {
-      headers.set('x-auth-token', localStorage.getItem('token'));
+      headers.set('x-auth-token', localStorage.getItem('token') as string);
     } else if (options.token) {
-      headers = new HttpHeaders().set('x-auth-token', localStorage.getItem('token'));
+      headers = new HttpHeaders().set(
+        'x-auth-token',
+        localStorage.getItem('token') as string
+      );
     }
     return this.http.get<T>(url, { headers }).pipe(
       catchError((err) => {
@@ -56,9 +59,12 @@ export class BaseService {
     headers?: HttpHeaders
   ): Observable<T> {
     if (options.token && headers) {
-      headers.set('x-auth-token', localStorage.getItem('token'));
+      headers.set('x-auth-token', localStorage.getItem('token') as string);
     } else if (options.token) {
-      headers = new HttpHeaders().set('x-auth-token', localStorage.getItem('token'));
+      headers = new HttpHeaders().set(
+        'x-auth-token',
+        localStorage.getItem('token') as string
+      );
     }
     return this.http.post<T>(prop.url, prop.body, { headers }).pipe(
       catchError((err) => {
@@ -85,9 +91,12 @@ export class BaseService {
     headers?: HttpHeaders
   ): Observable<T> {
     if (options.token && headers) {
-      headers.set('x-auth-token', localStorage.getItem('token'));
+      headers.set('x-auth-token', localStorage.getItem('token') as string);
     } else if (options.token) {
-      headers = new HttpHeaders().set('x-auth-token', localStorage.getItem('token'));
+      headers = new HttpHeaders().set(
+        'x-auth-token',
+        localStorage.getItem('token') as string
+      );
     }
     return this.http.put<T>(prop.url, prop.body, { headers }).pipe(
       catchError((err) => {
@@ -113,9 +122,12 @@ export class BaseService {
     headers?: HttpHeaders
   ): Observable<T> {
     if (options.token && headers) {
-      headers.set('x-auth-token', localStorage.getItem('token'));
+      headers.set('x-auth-token', localStorage.getItem('token') as string);
     } else if (options.token) {
-      headers = new HttpHeaders().set('x-auth-token', localStorage.getItem('token'));
+      headers = new HttpHeaders().set(
+        'x-auth-token',
+        localStorage.getItem('token') as string
+      );
     }
     return this.http.delete<T>(url, { headers }).pipe(
       catchError((err) => {

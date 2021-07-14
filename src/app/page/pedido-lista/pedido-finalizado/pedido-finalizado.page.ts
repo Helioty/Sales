@@ -6,7 +6,6 @@ import {
   IonRefresher,
   NavController,
 } from '@ionic/angular';
-import { take } from 'rxjs/operators';
 import { CommonService } from 'src/app/services/common/common.service';
 import { PedidoManutencaoService } from 'src/app/services/pedido/pedido-manutencao.service';
 import { PedidoHeader } from 'src/app/services/pedido/pedido.interface';
@@ -49,7 +48,7 @@ export class PedidoFinalizadoPage implements OnInit {
    * @author helio.souza
    */
   doInit(): void {
-    const event = (data: Pagination<PedidoHeader>) => {
+    const event = (data: Pagination<PedidoHeader> | null) => {
       if (data) {
         this.data = data;
         this.infiniteScroll.disabled = this.data.last;
@@ -66,7 +65,7 @@ export class PedidoFinalizadoPage implements OnInit {
    * @param refresher IonRefresher Element.
    */
   doRefresh(refresher: IonRefresher): void {
-    const event = (data: Pagination<PedidoHeader>) => {
+    const event = (data: Pagination<PedidoHeader> | null) => {
       if (data) {
         this.paginaAtual = 1;
         this.data = data;
@@ -84,7 +83,7 @@ export class PedidoFinalizadoPage implements OnInit {
    * @param infinite IonInfinite Element.
    */
   doInfinite(infinite: IonInfiniteScroll): void {
-    const event = (data: Pagination<PedidoHeader>) => {
+    const event = (data: Pagination<PedidoHeader> | null) => {
       if (data) {
         this.paginaAtual = this.paginaAtual + 1;
         data.content = this.data.content.concat(data.content);
@@ -104,20 +103,17 @@ export class PedidoFinalizadoPage implements OnInit {
    */
   getPedidosFinalizados(
     page: number,
-    event = (data?: Pagination<PedidoHeader>) => {}
+    event = (data: Pagination<PedidoHeader> | null) => {}
   ): void {
-    this.pedidoListaService
-      .getPedidosFinalizados(page)
-      .pipe(take(1))
-      .subscribe({
-        next: (result) => {
-          console.log(result);
-          event(result);
-        },
-        error: () => {
-          event(null);
-        },
-      });
+    this.pedidoListaService.getPedidos('faturados', page).subscribe({
+      next: (result) => {
+        console.log(result);
+        event(result);
+      },
+      error: () => {
+        event(null);
+      },
+    });
   }
 
   openSlide(itemSlide: IonItemSliding) {

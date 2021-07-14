@@ -1,15 +1,36 @@
 import { Injectable } from '@angular/core';
-import { PedidoItens } from 'src/app/class/pedido';
+import { Observable } from 'rxjs';
+import { take } from 'rxjs/operators';
+import { API_URL, ENV } from 'src/app/config/app.config.service';
+import { Pagination } from 'src/app/page/pedido-lista/pedido-lista.interface';
 import { PedidoService } from 'src/app/services/pedido/pedido.service';
-import { CommonService } from '../common/common.service';
+import { CommonService } from './../common/common.service';
+import { BaseService } from './../http/base.service';
+import { PedidoItens } from './pedido.interface';
 
 @Injectable({
   providedIn: 'root',
 })
 export class PedidoItemService {
-  public pedidoItens: any[] = [];
+  readonly produtoPorPagina = 10;
 
-  constructor(private common: CommonService, private pedidoService: PedidoService) {}
+  constructor(
+    private readonly common: CommonService,
+    private readonly pedidoService: PedidoService,
+    private readonly http: BaseService
+  ) {}
+
+  /**
+   * @author helio.souza
+   * @param numPedido Número do Pedido.
+   * @param page Pagina a ser retornada.
+   * @returns
+   */
+  getPedidoItens(numPedido: number, page = 1): Observable<Pagination<PedidoItens>> {
+    const empresa = localStorage.getItem('empresa') as string;
+    const url = `${ENV.WS_VENDAS}${API_URL}PedidoVendaItem/${empresa}/${numPedido}/itens?page=${page}&size=${this.produtoPorPagina}`;
+    return this.http.get<Pagination<PedidoItens>>(url).pipe(take(1));
+  }
 
   // edit by Helio 10/03/2020
   public getItemPedido() {

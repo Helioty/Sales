@@ -27,7 +27,7 @@ export class HideKeyboardDirective {
     }, 100);
   }
 
-  @HostListener('click', ['$event.target']) onClick(input) {
+  @HostListener('click', ['$event.target']) onClick() {
     this.readonly = true;
     this.setReadOnly(this.readonly);
 

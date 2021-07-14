@@ -9,7 +9,7 @@
   </ion-refresher>
 
   <!-- Nenhum pedido na lista -->
-  <ion-grid *ngIf="!showSkeleton && !data" class="noPedidos">
+  <ion-grid *ngIf="!showSkeleton && (!data || !data.totalElements)" class="noPedidos">
     <ion-row class="topHeading">
       <ion-col>
         <h3>Seus pedidos em andamento vão ficar aqui... Inicie um novo pedido</h3>
@@ -117,29 +117,19 @@
       </ion-item>
 
       <ion-item-options side="end" (click)="closeSlide(slidingItem)">
-        <ion-item-option
-          (click)="verProdutosPedido(pedido)"
-          color="fc-button-green"
-          style="width: 90px"
-        >
+        <ion-item-option (click)="verProdutosPedido(pedido)" color="fc-button-green">
           <ion-icon slot="top" name="eye" size="large"></ion-icon>
-          <span style="font-weight: bold">VER</span>
+          <span>VER</span>
         </ion-item-option>
-        <ion-item-option
-          (click)="apagarPedido(pedido)"
-          color="danger"
-          style="width: 90px"
-        >
+
+        <ion-item-option (click)="apagarPedido(pedido, i)" color="danger">
           <ion-icon slot="top" name="trash" size="large"></ion-icon>
-          <span style="font-weight: bold">APAGAR</span>
+          <span>APAGAR</span>
         </ion-item-option>
-        <ion-item-option
-          (click)="alterarPedido(pedido)"
-          color="secondary"
-          style="width: 90px"
-        >
+
+        <ion-item-option (click)="alterarPedido(pedido)" color="secondary">
           <ion-icon slot="top" name="create" size="large"></ion-icon>
-          <span style="font-weight: bold">ALTERAR</span>
+          <span>ALTERAR</span>
         </ion-item-option>
       </ion-item-options>
     </ion-item-sliding>

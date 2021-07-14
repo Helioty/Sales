@@ -34,31 +34,20 @@ export class PedidoListaPage implements OnInit {
 
   ionViewDidLeave() {}
 
-  addNovoPedido() {
+  /**
+   * @author helio.souza
+   */
+  async addNovoPedido(): Promise<void> {
     this.pedidoService.limpaDadosPedido();
-    // await this.common.showLoaderCustom('Criando Pedido!');
-    // await this.pedidoService.criarPedido().then(
-    //   () => {
-    //     this.navControl.navigateForward('/pedido-retirada');
-    //     this.common.loading.dismiss();
-    //   },
-    //   (error) => {
-    //     console.log(error);
-    //     this.common.loading.dismiss();
-    //   }
-    // );
-    // try {
-    //   this.disableButton = true;
-    //   if (this.platform.is('ios') || this.platform.is('android')) {
-    //     // by Ryuge 03/09/2019
-    //     this.pedidoService.limpaDadosPedido();
-    //     this.navControl.navigateForward('/pedido-retirada')
-    //   } else {
-    //     this.pedidoService.limpaDadosPedido();
-    //     this.navControl.navigateForward('/pedido-retirada')
-    //   }
-    // } catch (error) {
-    //   this.disableButton = false;
-    // }
+    await this.common.showLoaderCustom('Criando pedido...');
+    this.pedidoService.criarPedido().subscribe({
+      next: () => {
+        this.common.loading.dismiss();
+        this.navControl.navigateForward('/pedido-retirada');
+      },
+      error: () => {
+        this.common.loading.dismiss();
+      },
+    });
   }
 }
