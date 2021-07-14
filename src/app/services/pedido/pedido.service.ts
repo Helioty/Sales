@@ -63,9 +63,7 @@ export class PedidoService {
     private readonly common: CommonService,
     private clienteService: ClienteService,
     private navControl: NavController
-  ) {
-    // this.pedido = new BehaviorSubject({} as PedidoHeader);
-  }
+  ) {}
 
   public limpaDadosPedido() {
     this.pedidoHeader = new PedidoHeader();
