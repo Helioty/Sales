@@ -1,9 +1,11 @@
+import { Observable } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
 import { NavController, Platform, AlertController } from '@ionic/angular';
 import { CommonService } from 'src/app/services/common/common.service';
 import { PedidoService } from 'src/app/services/pedido/pedido.service';
 import { PedidoItemService } from 'src/app/services/pedido/pedido-item.service';
-import { PedidoItens, Retiradas } from 'src/app/class/pedido';
+import { ScannerService } from 'src/app/services/scanner/scanner.service';
+import { PedidoItens, Retiradas } from 'src/app/services/pedido/pedido.interface';
 
 @Component({
   selector: 'app-pedido-rapido',
@@ -11,11 +13,10 @@ import { PedidoItens, Retiradas } from 'src/app/class/pedido';
   styleUrls: ['./pedido-rapido.page.scss'],
 })
 export class PedidoRapidoPage implements OnInit {
-  public taskScanner: any;
-  public valorScanner: string;
-  public focusStatus = true;
+  public itensOBS: Observable<PedidoItens[]>;
+  // public itens: any[] = [];
 
-  public itens: any[] = [];
+  private novoPedidoItem: PedidoItens;
 
   public pedidoItens: PedidoItens;
   public retiradas: Retiradas;
@@ -26,118 +27,71 @@ export class PedidoRapidoPage implements OnInit {
   private codProdRequest = '';
 
   constructor(
-    public common: CommonService,
-    public pedido: PedidoService,
-    public pedidoIt: PedidoItemService,
+    public readonly scanner: ScannerService,
+    private readonly common: CommonService,
+    private readonly pedidoService: PedidoService,
+    private readonly pedidoItemService: PedidoItemService,
     private alertCtrl: AlertController,
     private navControl: NavController,
     private platform: Platform
   ) {}
 
-  async ngOnInit() {
-    await this.pedidoIt.getItemPedido().then((result: any) => {
-      this.itens = result.content;
-      console.log(result);
-    });
+  ngOnInit(): void {
+    this.itensOBS = this.pedidoItemService.getPedidoItensOBS();
+    // .then((result: any) => {
+    //   this.itens = result.content;
+    //   console.log(result);
+    // });
   }
 
-  ionViewWillEnter() {
-    this.focusOn();
+  ionViewWillEnter(): void {
+    this.scanner.focusOn();
+    this.common.goToFullScreen();
+    this.pedidoItemService
+      .getPedidoAllItens(this.pedidoService.pedido.value.numpedido)
+      .subscribe();
+  }
+
+  ionViewDidEnter(): void {
     this.common.goToFullScreen();
   }
 
-  ionViewDidEnter() {
-    this.common.goToFullScreen();
+  ionViewWillLeave(): void {
+    this.scanner.focusOff();
   }
 
-  ionViewWillLeave() {
-    this.focusOff();
-  }
-
-  ionViewDidLeave() {
+  ionViewDidLeave(): void {
     console.clear();
   }
 
-  // Cria o loop que da foco no input
-  focusOn() {
-    this.taskScanner = setInterval(() => {
-      try {
-        this.valorScanner = '';
-        if (this.focusStatus) {
-          const scanners = document.body.getElementsByClassName('scanner');
-          for (const i in scanners) {
-            if (Number(i) === scanners.length - 1) {
-              (scanners[i] as HTMLInputElement).focus();
-            }
-          }
-        }
-      } catch (error) {}
-    }, 350);
-  }
-
-  focusPlay() {
-    this.focusStatus = true;
-  }
-
-  focusPause() {
-    this.focusStatus = false;
-    const scanners = document.body.getElementsByClassName('scanner');
-    for (const i in scanners) {
-      if (Number(i) === scanners.length - 1) {
-        (scanners[i] as HTMLInputElement).blur();
-      }
-    }
-  }
-
-  // Encerra o loop de foco no input
-  focusOff() {
-    clearInterval(this.taskScanner);
-  }
-
-  scaneado(evento: any) {
-    try {
-      if (evento.target && evento.target.value.length >= 2) {
-        this.focusPause();
-        const codigo: string = evento.target.value;
-
-        if (codigo.substring(0, 1) === 'P') {
-          this.pedido.setCardPedido(codigo);
-          this.focusPlay();
-        } else {
-          this.addItem(codigo);
-          this.focusPlay();
-        }
-      }
-    } catch (error) {
-      this.focusPlay();
+  scaneado(value: string) {
+    if (value.substring(0, 1) === 'P') {
+      this.pedidoService
+        .setCardPedido(this.pedidoService.pedido.value.numpedido, value)
+        .subscribe();
+    } else {
+      this.addItem(value);
     }
   }
 
   // by Ryuge
   // edit by Helio 10/03/2020
-  addItem(codigo: string | number) {
+  addItem(produtoCodigo: string): void {
     // by Ryuge 27/11/2019 - Não permitir gravar item com pedido = '0';
-    if (this.pedido.numPedido !== '0' || this.pedido.numPedido !== undefined) {
-      const tipo = this.pedido.codigoTipoRetirada;
-      const valor = 0;
+    const tipo = 'this.pedido.codigoTipoRetirada';
+    const valor = 0;
 
-      this.pedidoItens = new PedidoItens(
-        localStorage.getItem('empresa'),
-        // eslint-disable-next-line radix
-        parseInt(this.pedido.numPedido)
-      );
-      // eslint-disable-next-line radix
-      this.pedidoItens.idEmpresa = parseInt(localStorage.getItem('empresa'));
-      // eslint-disable-next-line radix
-      this.pedidoItens.numPedido = parseInt(this.pedido.numPedido);
-      this.pedidoItens.idProduto = String(codigo);
-      this.pedidoItens.embalagem = 0;
-      this.pedidoItens.qtdTotal = 0;
-      this.pedidoItens.prcUnitario = 0;
-      this.pedidoItens.prcTotal = 0;
+    const empresa = localStorage.getItem('empresa') as string;
+    this.novoPedidoItem = new PedidoItens();
+    this.novoPedidoItem.idEmpresa = Number(empresa);
+    this.novoPedidoItem.numPedido = this.pedidoService.pedido.value.numpedido;
+    this.novoPedidoItem.idProduto = produtoCodigo;
+    this.novoPedidoItem.embalagem = 0;
+    this.novoPedidoItem.qtdTotal = 0;
+    this.novoPedidoItem.prcUnitario = 0;
+    this.novoPedidoItem.prcTotal = 0;
 
-      this.adicionarSacola(tipo, valor, String(codigo));
-    }
+    this.adicionarSacola(tipo, valor, produtoCodigo);
   }
 
   adicionarSacola(tipo: string, valor: any, codigo: string) {
@@ -191,7 +145,7 @@ export class PedidoRapidoPage implements OnInit {
         }
       }
     } catch (error) {
-      this.common.showAlertInfo('Erro no adicionar sacola');
+      // this.common.showAlertInfo('Erro no adicionar sacola');
       // by Ryuge 28/11/2019
       if (error.status === 400) {
         // await this.showMessage(error.json().title, error.json().detail);
@@ -210,19 +164,18 @@ export class PedidoRapidoPage implements OnInit {
   // by Ryuge
   // edit by Helio 10/03/2020
   async addItemPedido(body: PedidoItens) {
-    await this.pedidoIt.addFast(body).then(
-      (result: any) => {
-        this.itens = result.content;
-        if (this.numRequest > 1) {
-          this.numRequest -= 1;
-        }
-        console.log(result);
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
-
+    // await this.pedidoIt.addFast(body).then(
+    //   (result: any) => {
+    //     this.itens = result.content;
+    //     if (this.numRequest > 1) {
+    //       this.numRequest -= 1;
+    //     }
+    //     console.log(result);
+    //   },
+    //   (error) => {
+    //     console.log(error);
+    //   }
+    // );
     // this.commonServices.ItensPedidoAdd = result.pedido; // cabeçalho dp pedido
     // this.totalPedido = result.pedido.totpedido;
   }
@@ -246,21 +199,16 @@ export class PedidoRapidoPage implements OnInit {
         },
       ],
     });
-    alert.onDidDismiss().finally(() => {
-      this.focusPlay();
-    });
-    await alert.present().then(() => {
-      this.focusPause();
-    });
+    await alert.present();
   }
 
   async deleteItemPedido(codigoProduto: string) {
-    await this.pedidoIt.removeItemPedido(codigoProduto).then((result: any) => {
-      this.common.showToast(result.msg);
-    });
-    await this.pedidoIt.getItemPedido().then((result: any) => {
-      this.itens = result.content;
-      console.log(result);
-    });
+    // await this.pedidoIt.removeItemPedido(codigoProduto).then((result: any) => {
+    //   this.common.showToast(result.msg);
+    // });
+    // await this.pedidoIt.getItemPedido().then((result: any) => {
+    //   this.itens = result.content;
+    //   console.log(result);
+    // });
   }
 }

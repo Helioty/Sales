@@ -10,17 +10,16 @@
 
 <ion-content>
   <input
-    id="scanner"
     appHideKeyboard
     class="scanner"
-    [(ngModel)]="valorScanner"
-    (keyup.enter)="scaneado($event)"
+    [(ngModel)]="scanner.valorScanner"
+    (keyup.enter)="scaneado($event.target.value)"
   />
 
-  <ion-input #teste></ion-input>
+  <input #teste />
   <ion-button (click)="addItem(teste.value)">teste de pedido rapido</ion-button>
 
-  <ion-grid *ngIf="itens.length == 0" class="noItens">
+  <ion-grid *ngIf="(itensOBS | async) === (null || undefined || [])" class="noItens">
     <ion-row class="topHeading">
       <ion-col>
         <h3>Seus produtos selecionados vão ficar aqui...</h3>
@@ -40,7 +39,7 @@
     </ion-row>
   </ion-grid>
 
-  <ion-list lines="none" class="listaProdutos" *ngIf="itens.length > 0">
+  <ion-list lines="none" class="listaProdutos" *ngIf="(itensOBS | async) as itens">
     <ion-item lines="none" class="produto" *ngFor="let item of itens; let i = index">
       <ion-thumbnail slot="start">
         <ion-img src="data:image/jpeg;base64,{{ item?.imagem }}"></ion-img>
@@ -101,14 +100,14 @@
   </ion-list>
 </ion-content>
 
-<ion-footer *ngIf="itens.length > 0">
+<ion-footer *ngIf="(itensOBS | async).length">
   <ion-grid>
     <ion-row>
       <ion-col size="6" class="colunaPreco">
         <ion-row class="titulo"> Total Pedido: </ion-row>
 
         <ion-row class="valor">
-          {{ pedido.pedidoHeader.totpedido | formatarString: 'VALOR' }}
+          <!-- {{ pedido.pedidoHeader.totpedido | formatarString: 'VALOR' }} -->
         </ion-row>
       </ion-col>
 

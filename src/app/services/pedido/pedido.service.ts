@@ -31,7 +31,7 @@ export class PedidoService {
 
   // PEDIDO EM MANUTENÇÃO
   public pedidoHeader = new PedidoHeader(); // Todos os principais dados do pedido em manutenção.
-  public numPedido = '0'; // Numero do pedido em manutenção.
+  // public numPedido = '0'; // Numero do pedido em manutenção.
   public digitoPedido: number;
   // public tipoRetirada: string; // Tipo de retirada do pedido em manutenção.
   public tipoDocumento: any;
@@ -44,7 +44,7 @@ export class PedidoService {
 
   // Verdadeiro se o pedido em manutenção tiver um cartão-pedido selecionado.
   public cardSelected = false;
-  public codigoCartaoPedido = ''; // Codido do cartão-pedido do pedido em manutenção.
+  // public codigoCartaoPedido = ''; // Codido do cartão-pedido do pedido em manutenção.
 
   // Verdadeiro se o pedido em manutenção tiver um endereco selecionado.
   public enderecoSelected = false;
@@ -67,7 +67,7 @@ export class PedidoService {
 
   public limpaDadosPedido() {
     this.pedidoHeader = new PedidoHeader();
-    this.numPedido = '0';
+    // this.numPedido = '0';
 
     // Limpando cliente do pedido
     this.clientSelected = false;
@@ -76,7 +76,7 @@ export class PedidoService {
 
     // Limpando cartão do pedido
     this.cardSelected = false;
-    this.codigoCartaoPedido = '';
+    // this.codigoCartaoPedido = '';
 
     // Limpando endereco de entrega
     this.enderecoSelected = false;
@@ -98,7 +98,7 @@ export class PedidoService {
   public atualizaPedidoHeader(pedidoHeader: PedidoHeader) {
     this.pedido.next(pedidoHeader);
     this.pedidoHeader = pedidoHeader;
-    this.numPedido = pedidoHeader.numpedido.toString();
+    // this.numPedido = pedidoHeader.numpedido.toString();
     this.digitoPedido = pedidoHeader.digito;
 
     // this.tipoRetirada = pedidoHeader.tipoEntrega;
@@ -111,9 +111,6 @@ export class PedidoService {
         break;
       case 'ENTREGA':
         this.tipoRetiradaIndex = 2;
-        break;
-
-      default:
         break;
     }
 
@@ -163,6 +160,12 @@ export class PedidoService {
   }
 
   // by Hélio 06/02/2020
+  /**
+   * @author helio.souza
+   * @param tableName
+   * @param tableValor
+   * @returns
+   */
   private atualizaPedido(tableName: AttPedido, tableValor: any): PedidoTable[] {
     const aResult: PedidoTable[] = [];
     const table = new PedidoTable();
@@ -178,7 +181,7 @@ export class PedidoService {
    * @param retiradaIdx Index de retirada.
    * @returns
    */
-  alterarTipoRetirada(numPedido: number, retiradaIdx: number): Observable<any> {
+  alterarTipoRetirada(numPedido: number, retiradaIdx: number): Observable<PedidoHeader> {
     const aResult = this.atualizaPedido(
       AttPedido.TIPO_ENTREGA,
       this.opcoesRetirada[retiradaIdx]
@@ -197,57 +200,84 @@ export class PedidoService {
     );
   }
 
-  // alterado por Nicollas Bastos em 25/09/2018
-  // alterado por Hélio 06/02/2020
-  public async setCardPedido(codCard: string) {
-    const aResult: any = await this.atualizaPedido(AttPedido.CARTAO_PEDIDO, codCard);
+  /**
+   * @author helio.souza
+   * @param numPedido Número do Pedido.
+   * @param codCard Codigo escaneado do Cartão Pedido.
+   * @returns
+   */
+  setCardPedido(numPedido: number, codCard: string): Observable<PedidoHeader> {
+    const aResult = this.atualizaPedido(AttPedido.CARTAO_PEDIDO, codCard);
+    const empresa = localStorage.getItem('empresa') as string;
+    const url = `${ENV.WS_VENDAS}${API_URL}PedidoVenda/update/${empresa}/${numPedido}`;
+    const props = { url, body: aResult };
+    return this.http.post<PedidoHeader, PedidoTable[]>(props).pipe(
+      take(1),
+      tap({
+        next: (pedido) => {
+          console.log('Set Catão: ', pedido);
+          this.atualizaPedidoHeader(pedido);
+          this.common.showToast('Cartão Pedido Adicionado!');
+        },
+      })
+    );
+  }
 
-    // const link =
-    //   ENV.WS_VENDAS +
-    //   API_URL +
-    //   'PedidoVenda/update/' +
-    //   localStorage.getItem('empresa') +
-    //   '/' +
-    //   this.numPedido;
-
+  // by Hélio 11/02/2020
+  /**
+   * @author helio.souza
+   * @param numPedido Número do Pedido.
+   * @param cgccpf
+   * @param clienteData
+   * @returns
+   */
+  adicionarCliente(
+    numPedido: number,
+    cgccpf: string,
+    clienteData: any
+  ): Observable<PedidoHeader> {
+    const aResult = this.atualizaPedido(AttPedido.CLIENTE, cgccpf);
+    const empresa = localStorage.getItem('empresa') as string;
+    const url = `${ENV.WS_VENDAS}${API_URL}PedidoVenda/update/${empresa}/${numPedido}`;
+    const props = { url, body: aResult };
+    return this.http.post<PedidoHeader, PedidoTable[]>(props).pipe(
+      take(1),
+      tap({
+        next: (pedido) => {
+          console.log('Cliente atualizado: ', pedido);
+          this.atualizaPedidoHeader(pedido);
+        },
+      })
+    );
     // await this.baseService.post(link, aResult).then(
     //   (result: any) => {
-    //     this.atualizaPedidoHeader(result);
-    //     this.cardSelected = true;
-    //     this.codigoCartaoPedido = codCard;
-    //     this.common.showToast('Cartão Pedido Adicionado!');
-    //   },
-    //   (error: any) => {
-    //     this.cardSelected = false;
-    //     this.codigoCartaoPedido = '';
-    //     console.log(error);
+    //     this.clientSelected = true;
+    //     this.docCliente = cgccpf;
+    //     this.dadosCliente = dadosCli;
     //   }
     // );
   }
 
-  // by Hélio 11/02/2020
-  public async adicionarCliente(cgccpf: string, dadosCli: any) {
-    const aResult: any = await this.atualizaPedido(AttPedido.CLIENTE, cgccpf);
-
-    // const link =
-    //   ENV.WS_VENDAS +
-    //   API_URL +
-    //   'PedidoVenda/update/' +
-    //   localStorage.getItem('empresa') +
-    //   '/' +
-    //   this.numPedido;
-
-    // await this.baseService.post(link, aResult).then(
-    //   (result: any) => {
-    //     this.atualizaPedidoHeader(result);
-    //     this.clientSelected = true;
-    //     this.docCliente = cgccpf;
-    //     this.dadosCliente = dadosCli;
-    //   },
-    //   (error: any) => {
-    //     console.log(error);
-    //   }
-    // );
+  // by Hélio 14/02/2020
+  /**
+   * @author helio.souza
+   * @param numPedido Número do Pedido.
+   * @returns
+   */
+  removerCliente(numPedido: number): Observable<PedidoHeader> {
+    const aResult = this.atualizaPedido(AttPedido.CLIENTE, '');
+    const empresa = localStorage.getItem('empresa') as string;
+    const url = `${ENV.WS_VENDAS}${API_URL}PedidoVenda/update/${empresa}/${numPedido}`;
+    const props = { url, body: aResult };
+    return this.http.post<PedidoHeader, PedidoTable[]>(props).pipe(
+      take(1),
+      tap({
+        next: (pedido) => {
+          console.log('Cliente Removido! ', pedido);
+          this.atualizaPedidoHeader(pedido);
+        },
+      })
+    );
   }
 
   // by Hélio - Retorna os dados do cliente selecionado
@@ -273,31 +303,6 @@ export class PedidoService {
     // }
   }
 
-  // by Hélio 14/02/2020
-  public async removerCliente() {
-    const aResult = this.atualizaPedido(AttPedido.CLIENTE, '');
-
-    // const link =
-    //   ENV.WS_VENDAS +
-    //   API_URL +
-    //   'PedidoVenda/update/' +
-    //   localStorage.getItem('empresa') +
-    //   '/' +
-    //   this.numPedido;
-
-    // await this.baseService.post(link, aResult).then(
-    //   (result: any) => {
-    //     this.atualizaPedidoHeader(result);
-    //     this.clientSelected = false;
-    //     this.docCliente = '';
-    //     this.dadosCliente = undefined;
-    //   },
-    //   (error: any) => {
-    //     console.log(error);
-    //   }
-    // );
-  }
-
   // by Hélio 12/02/2020
   public async sairPedido() {
     const mensagem =
@@ -307,7 +312,7 @@ export class PedidoService {
     const handler = () => {
       if (this.qtdItensSacola === 0) {
         this.limpaDadosPedido();
-        this.apagarPedido(Number(this.numPedido))
+        this.apagarPedido(this.pedido.value.numpedido)
           .pipe(take(1))
           .subscribe({
             next: () => {

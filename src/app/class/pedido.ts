@@ -57,20 +57,20 @@ export class PedidoCab {
   constructor(id: number, empresa: string) {}
 }
 
-export class PedidoItens {
-  idEmpresa: number;
-  numPedido: number;
-  idProduto: string;
-  descricao: string;
-  embalagem: number;
-  retiradas: Retiradas[];
-  qtdTotal: number = 0;
-  prcUnitario: number = 0;
-  prcTotal: number = 0;
-  imagem: string;
+// export class PedidoItens {
+//   idEmpresa: number;
+//   numPedido: number;
+//   idProduto: string;
+//   descricao: string;
+//   embalagem: number;
+//   retiradas: Retiradas[];
+//   qtdTotal: number = 0;
+//   prcUnitario: number = 0;
+//   prcTotal: number = 0;
+//   imagem: string;
 
-  constructor(idEmpresa: string, numPedido: number) {}
-}
+//   constructor(idEmpresa: string, numPedido: number) {}
+// }
 
 export class Retiradas {
   empresaRetirada: number;

@@ -46,19 +46,19 @@ const routes: Routes = [
       ),
     canActivate: [AuthGuard],
   },
+  {
+    path: 'pedido-rapido',
+    loadChildren: () =>
+      import('./page/pedido-rapido/pedido-rapido.module').then(
+        (m) => m.PedidoRapidoPageModule
+      ),
+    canActivate: [AuthGuard],
+  },
   // {
   //   path: 'pedido-sacola',
   //   loadChildren: () =>
   //     import('./page/pedido-sacola/pedido-sacola.module').then(
   //       (m) => m.PedidoSacolaPageModule
-  //     ),
-  //   canActivate: [AuthGuard],
-  // },
-  // {
-  //   path: 'pedido-rapido',
-  //   loadChildren: () =>
-  //     import('./page/pedido-rapido/pedido-rapido.module').then(
-  //       (m) => m.PedidoRapidoPageModule
   //     ),
   //   canActivate: [AuthGuard],
   // },

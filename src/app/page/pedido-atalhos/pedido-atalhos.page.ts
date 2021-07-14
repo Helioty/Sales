@@ -1,7 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NavigationExtras } from '@angular/router';
 import { IonSlides, NavController } from '@ionic/angular';
+import { Observable } from 'rxjs';
 import { CommonService } from 'src/app/services/common/common.service';
+import { PedidoItemService } from 'src/app/services/pedido/pedido-item.service';
 import { PedidoService } from 'src/app/services/pedido/pedido.service';
 import { ScannerService } from 'src/app/services/scanner/scanner.service';
 
@@ -12,11 +14,13 @@ import { ScannerService } from 'src/app/services/scanner/scanner.service';
 })
 export class PedidoAtalhosPage implements OnInit {
   @ViewChild(IonSlides) readonly slides: IonSlides;
+  totalItensOBS: Observable<number>;
 
   constructor(
-    public readonly scanner: ScannerService,
     private readonly common: CommonService,
-    public pedidoService: PedidoService,
+    public readonly scanner: ScannerService,
+    public readonly pedidoService: PedidoService,
+    public readonly pedidoItemService: PedidoItemService,
     private readonly navControl: NavController
   ) {}
 
@@ -28,6 +32,7 @@ export class PedidoAtalhosPage implements OnInit {
     this.scanner.focusOn();
     this.common.goToFullScreen();
     this.slides.lockSwipes(true);
+    this.totalItensOBS = this.pedidoItemService.getTotalItensOBS();
   }
 
   ionViewDidEnter(): void {
@@ -46,7 +51,9 @@ export class PedidoAtalhosPage implements OnInit {
    */
   scaneado(value: string): void {
     if (value.substring(0, 1) === 'P') {
-      this.pedidoService.setCardPedido(value);
+      this.pedidoService
+        .setCardPedido(this.pedidoService.pedido.value.numpedido, value)
+        .subscribe();
     } else {
       this.common.showToast('Cartão Pedido inválido!');
     }
@@ -57,7 +64,9 @@ export class PedidoAtalhosPage implements OnInit {
    */
   adicionarCartaoPedido(): void {
     const handler = (data: any) => {
-      this.pedidoService.setCardPedido(data.codigo);
+      this.pedidoService
+        .setCardPedido(this.pedidoService.pedido.value.numpedido, data.codigo)
+        .subscribe();
     };
     const props = { titulo: 'Cartão Pedido', message: '', handler };
     const inputs = [
