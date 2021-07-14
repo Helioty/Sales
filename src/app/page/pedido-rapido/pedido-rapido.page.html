@@ -39,7 +39,7 @@
     </ion-row>
   </ion-grid>
 
-  <ion-list lines="none" class="listaProdutos" *ngIf="(itensOBS | async) as itens">
+  <ion-list lines="none" class="listaProdutos" *ngIf="itensOBS | async as itens">
     <ion-item lines="none" class="produto" *ngFor="let item of itens; let i = index">
       <ion-thumbnail slot="start">
         <ion-img src="data:image/jpeg;base64,{{ item?.imagem }}"></ion-img>

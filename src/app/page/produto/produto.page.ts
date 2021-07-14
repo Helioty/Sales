@@ -101,7 +101,6 @@ export class ProdutoPage implements OnInit {
     //   if (evento.target && evento.target.value.length >= 2) {
     //     this.focusPause();
     //     const codigo: string = evento.target.value;
-
     //     if (codigo.substring(0, 1) === 'P') {
     //       this.pedidoService.setCardPedido(codigo);
     //       this.focusPlay();

@@ -120,7 +120,6 @@ export class PedidoService {
     // this.numPedido = pedidoHeader.numpedido.toString();
     this.digitoPedido = pedidoHeader.digito;
 
-    // this.tipoRetirada = pedidoHeader.tipoEntrega;
     switch (pedidoHeader.tipoEntrega) {
       case 'IMEDIATA':
         this.tipoRetiradaIndex = 0;
@@ -132,16 +131,14 @@ export class PedidoService {
         this.tipoRetiradaIndex = 2;
         break;
     }
-
-    console.log('PEDIDO HEADER ATUALIZADO');
-    console.log(this.pedido);
+    console.log('PEDIDO HEADER ATUALIZADO', this.pedido);
   }
 
   /**
    * @author helio.souza
    */
   criarPedido(): Observable<PedidoHeader> {
-    const empresa = localStorage.getItem('empresa');
+    const empresa = localStorage.getItem('empresa') as string;
     const url = `${ENV.WS_VENDAS}${API_URL}PedidoVenda/${empresa}/criar`;
     return this.http.post<PedidoHeader, any>({ url, body: {} }).pipe(
       take(1),
@@ -154,14 +151,17 @@ export class PedidoService {
     );
   }
 
-  // edit by Helio 10/03/2020
+  /**
+   * @author helio.souza
+   * @param idPedido 
+   * @returns 
+   */
   getPedido(idPedido: string): Observable<PedidoHeader> {
     const empresa = localStorage.getItem('empresa') as string;
     const url = `${ENV.WS_VENDAS}${API_URL}PedidoVenda/${empresa}/${idPedido}`;
     return this.http.get<PedidoHeader>(url).pipe(take(1));
   }
 
-  // by Hélio 06/02/2020
   /**
    * @author helio.souza
    * @param tableName
@@ -225,7 +225,6 @@ export class PedidoService {
     );
   }
 
-  // by Hélio 11/02/2020
   /**
    * @author helio.souza
    * @param numPedido Número do Pedido.
@@ -256,7 +255,6 @@ export class PedidoService {
     //     this.dadosCliente = dadosCli;
   }
 
-  // by Hélio 14/02/2020
   /**
    * @author helio.souza
    * @param numPedido Número do Pedido.
@@ -427,7 +425,6 @@ export class PedidoService {
     //     return;
     //   }
     // }
-
     // // checa o tipo de entrega do pedido
     // if (this.pedidoHeader.tipoEntrega === 'ENTREGA') {
     //   console.log('Pedido do tipo ENTREGA!');
