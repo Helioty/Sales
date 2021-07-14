@@ -55,7 +55,7 @@ export class PedidoService {
   readonly pedido = new BehaviorSubject<PedidoHeader>(null);
 
   // Tipos de Retirada do Pedido.
-  public readonly opcaoRetirada = ['IMEDIATA', 'POSTERIOR', 'ENTREGA'];
+  readonly opcaoRetirada = ['IMEDIATA', 'POSTERIOR', 'ENTREGA'];
   public tipoRetiradaIndex: number;
 
   constructor(
