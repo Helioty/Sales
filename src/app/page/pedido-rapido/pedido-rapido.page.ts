@@ -1,11 +1,14 @@
-import { Observable } from 'rxjs';
-import { Component, OnInit } from '@angular/core';
-import { NavController, Platform, AlertController } from '@ionic/angular';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { AlertController, NavController, Platform } from '@ionic/angular';
+import { Observable, Subscription } from 'rxjs';
 import { CommonService } from 'src/app/services/common/common.service';
+import {
+  PedidoHeader,
+  PedidoItens,
+  Retiradas,
+} from 'src/app/services/pedido/pedido.interface';
 import { PedidoService } from 'src/app/services/pedido/pedido.service';
-import { PedidoItemService } from 'src/app/services/pedido/pedido-item.service';
 import { ScannerService } from 'src/app/services/scanner/scanner.service';
-import { PedidoItens, Retiradas } from 'src/app/services/pedido/pedido.interface';
 
 @Component({
   selector: 'app-pedido-rapido',
@@ -13,6 +16,7 @@ import { PedidoItens, Retiradas } from 'src/app/services/pedido/pedido.interface
   styleUrls: ['./pedido-rapido.page.scss'],
 })
 export class PedidoRapidoPage implements OnInit {
+  public pedidoOBS: Observable<PedidoHeader>;
   public itensOBS: Observable<PedidoItens[]>;
   // public itens: any[] = [];
 
@@ -30,12 +34,12 @@ export class PedidoRapidoPage implements OnInit {
     public readonly scanner: ScannerService,
     private readonly common: CommonService,
     private readonly pedidoService: PedidoService,
-    private alertCtrl: AlertController,
-    private navControl: NavController,
-    private platform: Platform
+    private readonly navControl: NavController,
+    private readonly platform: Platform
   ) {}
 
   ngOnInit(): void {
+    this.pedidoOBS = this.pedidoService.getPedidoAtivo();
     this.itensOBS = this.pedidoService.getPedidoItensOBS();
     // .then((result: any) => {
     //   this.itens = result.content;
@@ -46,9 +50,7 @@ export class PedidoRapidoPage implements OnInit {
   ionViewWillEnter(): void {
     this.scanner.focusOn();
     this.common.goToFullScreen();
-    this.pedidoService
-      .getPedidoAllItens(this.pedidoService.pedido.value.numpedido)
-      .subscribe();
+    this.atualizaItens();
   }
 
   ionViewDidEnter(): void {
@@ -75,6 +77,16 @@ export class PedidoRapidoPage implements OnInit {
     } else {
       this.addItem(value);
     }
+  }
+
+  /**
+   * @author helio.souza
+   * @description Atualiza os Produtos do Pedido.
+   */
+  atualizaItens(): void {
+    this.pedidoService
+      .getPedidoAllItens(this.pedidoService.pedido.value.numpedido)
+      .subscribe();
   }
 
   // by Ryuge
@@ -184,25 +196,16 @@ export class PedidoRapidoPage implements OnInit {
   }
 
   // by Hélio 11/03/2020
-  async removerProduto(produto: any) {
-    const alert = await this.alertCtrl.create({
-      header: 'Remover produto',
-      message:
-        'Tem certeza que deseja remover o produto ' + produto.descricao + ' do pedido?',
-      buttons: [
-        {
-          text: 'CANCELAR',
-          role: 'cancel',
-        },
-        {
-          text: 'REMOVER',
-          handler: () => {
-            this.deleteItemPedido(produto.idProduto);
-          },
-        },
-      ],
-    });
-    await alert.present();
+  removerProduto(produto: PedidoItens): void {
+    const handler = () => {
+      this.deleteItemPedido(produto.idProduto);
+    };
+    const props = {
+      titulo: 'Remover produto!',
+      message: `Tem certeza que deseja remover o produto ${produto.descricao} do pedido?`,
+      handler,
+    };
+    this.common.showAlertAction(props);
   }
 
   async deleteItemPedido(codigoProduto: string) {

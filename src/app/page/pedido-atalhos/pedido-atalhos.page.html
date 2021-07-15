@@ -14,7 +14,7 @@
         <ion-badge
           color="success"
           class="badge-position"
-          *ngIf="pedidoService.pedido.value.cartaoPedido"
+          *ngIf="(pedidoOBS | async)?.cartaoPedido"
         >
           ✔
         </ion-badge>
@@ -25,20 +25,20 @@
         <ion-badge
           color="success"
           class="badge-position"
-          *ngIf="pedidoService.clientSelected"
+          *ngIf="(pedidoOBS | async)?.cgccpf_cliente"
         >
           ✔
         </ion-badge>
       </ion-button>
 
       <ion-button
-        *ngIf="totalItensOBS | async"
+        *ngIf="totalItensOBS | async as total"
         [routerLink]="['/pedido-sacola']"
         routerDirection="forward"
       >
         <ion-icon name="basket"></ion-icon>
         <ion-badge color="fc-cinza-vermelho" class="badge-position">
-          {{ pedidoService.qtdItensSacola }}
+          {{ total }}
         </ion-badge>
       </ion-button>
     </ion-buttons>
@@ -82,11 +82,7 @@
               <ion-col size="6">
                 <ion-card [routerLink]="['/produto-pesquisa']" routerDirection="forward">
                   <ion-card-header>
-                    <ion-button
-                      disabled="true"
-                      fill="clear"
-                      style="opacity: 1 !important"
-                    >
+                    <ion-button disabled fill="clear" style="opacity: 1 !important">
                       <ion-icon slot="icon-only" name="search"></ion-icon>
                     </ion-button>
                   </ion-card-header>
@@ -107,11 +103,7 @@
                   "
                 >
                   <ion-card-header>
-                    <ion-button
-                      disabled="true"
-                      fill="clear"
-                      style="opacity: 1 !important"
-                    >
+                    <ion-button disabled fill="clear" style="opacity: 1 !important">
                       <ion-icon slot="icon-only" name="speedometer-outline"></ion-icon>
                     </ion-button>
                   </ion-card-header>
@@ -125,11 +117,7 @@
               <ion-col size="6">
                 <ion-card disabled>
                   <ion-card-header>
-                    <ion-button
-                      disabled="true"
-                      fill="clear"
-                      style="opacity: 1 !important"
-                    >
+                    <ion-button disabled fill="clear" style="opacity: 1 !important">
                       <ion-icon slot="icon-only" name="construct-outline"></ion-icon>
                     </ion-button>
                   </ion-card-header>
@@ -143,11 +131,7 @@
               <ion-col size="6">
                 <ion-card disabled>
                   <ion-card-header>
-                    <ion-button
-                      disabled="true"
-                      fill="clear"
-                      style="opacity: 1 !important"
-                    >
+                    <ion-button disabled fill="clear" style="opacity: 1 !important">
                       <ion-icon slot="icon-only" name="color-fill"></ion-icon>
                     </ion-button>
                   </ion-card-header>
@@ -161,11 +145,7 @@
               <ion-col size="6">
                 <ion-card disabled>
                   <ion-card-header>
-                    <ion-button
-                      disabled="true"
-                      fill="clear"
-                      style="opacity: 1 !important"
-                    >
+                    <ion-button disabled fill="clear" style="opacity: 1 !important">
                       <ion-icon slot="icon-only" name="flash-outline"></ion-icon>
                     </ion-button>
                   </ion-card-header>

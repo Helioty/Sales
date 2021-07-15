@@ -19,7 +19,7 @@ export class PedidoService {
   public executaPedidoRapido = false;
   public alteracaoItemPedido = false;
 
-  public noCard = false;
+  // public noCard = false;
   public valorFrete = 0;
 
   public condicao: any;
@@ -44,7 +44,7 @@ export class PedidoService {
   public dadosCliente: any = undefined; // Dados do cliente do pedido em manutenção.
 
   // Verdadeiro se o pedido em manutenção tiver um cartão-pedido selecionado.
-  public cardSelected = false;
+  // public cardSelected = false;
   // public codigoCartaoPedido = ''; // Codido do cartão-pedido do pedido em manutenção.
 
   // Verdadeiro se o pedido em manutenção tiver um endereco selecionado.
@@ -89,9 +89,6 @@ export class PedidoService {
     this.clientSelected = false;
     this.docCliente = '';
     this.dadosCliente = undefined;
-
-    // Limpando cartão do pedido
-    this.cardSelected = false;
 
     // Limpando endereco de entrega
     this.enderecoSelected = false;
@@ -250,8 +247,6 @@ export class PedidoService {
         },
       })
     );
-    // this.clientSelected = true;
-    // this.docCliente = cgccpf;
     // this.dadosCliente = dadosCli;
   }
 
