@@ -1,6 +1,6 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { AlertController, NavController, Platform } from '@ionic/angular';
-import { Observable, Subscription } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
+import { NavController, Platform } from '@ionic/angular';
+import { Observable } from 'rxjs';
 import { CommonService } from 'src/app/services/common/common.service';
 import {
   PedidoHeader,
@@ -41,10 +41,6 @@ export class PedidoRapidoPage implements OnInit {
   ngOnInit(): void {
     this.pedidoOBS = this.pedidoService.getPedidoAtivo();
     this.itensOBS = this.pedidoService.getPedidoItensOBS();
-    // .then((result: any) => {
-    //   this.itens = result.content;
-    //   console.log(result);
-    // });
   }
 
   ionViewWillEnter(): void {

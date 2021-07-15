@@ -150,8 +150,8 @@ export class PedidoService {
 
   /**
    * @author helio.souza
-   * @param idPedido 
-   * @returns 
+   * @param idPedido
+   * @returns
    */
   getPedido(idPedido: string): Observable<PedidoHeader> {
     const empresa = localStorage.getItem('empresa') as string;
@@ -318,6 +318,8 @@ export class PedidoService {
       take(1),
       tap({
         next: (paginationIt) => {
+          console.log('Pedido Itens Att: ', paginationIt.content);
+          this.pedidoItens.next(paginationIt.content);
           this.qtdItensSacola.next(paginationIt.totalElements);
         },
       }),
