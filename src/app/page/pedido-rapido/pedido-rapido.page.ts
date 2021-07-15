@@ -18,7 +18,6 @@ import { ScannerService } from 'src/app/services/scanner/scanner.service';
 export class PedidoRapidoPage implements OnInit {
   public pedidoOBS: Observable<PedidoHeader>;
   public itensOBS: Observable<PedidoItens[]>;
-  // public itens: any[] = [];
 
   private novoPedidoItem: PedidoItens;
 
