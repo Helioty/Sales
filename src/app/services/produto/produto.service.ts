@@ -1,9 +1,9 @@
-import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { BaseService } from './../http/base.service';
-import { API_URL, ENV } from 'src/app/config/app.config.service';
-import { Produto } from './produto.interface';
+import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { API_URL, ENV } from 'src/app/config/app.config.service';
+import { BaseService } from './../http/base.service';
+import { Produto } from './produto.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -86,21 +86,9 @@ export class ProdutoService {
   // by Ryuge 18/09/2018
   // edit by Helio 22/05/2020
   public getFirstImage(codigo: string) {
-    const link = ENV.WS_PRODUTO + API_URL + 'listImages/' + codigo + '/1';
-
-    return new Promise((resolve, reject) => {
-      this.http
-        .get(link)
-        .toPromise()
-        .then(
-          (result: any) => {
-            resolve(result);
-          },
-          (error) => {
-            reject(error);
-          }
-        );
-    });
+    // const link = ENV.WS_PRODUTO + API_URL + 'listImages/' + codigo + '/1';
+    const url = `${ENV.WS_PRODUTO}${API_URL}listImages/${codigo}/1`;
+    return this.http.get(url);
   }
 
   // edit by Helio 19/03/2020

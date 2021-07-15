@@ -68,7 +68,7 @@ export class PedidoRapidoPage implements OnInit {
   scaneado(value: string): void {
     if (value.substring(0, 1) === 'P') {
       this.pedidoService
-        .setCardPedido(this.pedidoService.pedido.value.numpedido, value)
+        .setCardPedido(this.pedidoService.getPedidoNumero(), value)
         .subscribe();
     } else {
       this.addItem(value);
@@ -81,7 +81,7 @@ export class PedidoRapidoPage implements OnInit {
    */
   atualizaItens(): void {
     this.pedidoService
-      .getPedidoAllItens(this.pedidoService.pedido.value.numpedido)
+      .getPedidoAllItens(this.pedidoService.getPedidoNumero())
       .subscribe();
   }
 
@@ -95,7 +95,7 @@ export class PedidoRapidoPage implements OnInit {
     const empresa = localStorage.getItem('empresa') as string;
     this.novoPedidoItem = new PedidoItens();
     this.novoPedidoItem.idEmpresa = Number(empresa);
-    this.novoPedidoItem.numPedido = this.pedidoService.pedido.value.numpedido;
+    this.novoPedidoItem.numPedido = this.pedidoService.getPedidoNumero();
     this.novoPedidoItem.idProduto = produtoCodigo;
     this.novoPedidoItem.embalagem = 0;
     this.novoPedidoItem.qtdTotal = 0;
@@ -155,21 +155,7 @@ export class PedidoRapidoPage implements OnInit {
           this.addItemPedido(this.pedidoItens);
         }
       }
-    } catch (error) {
-      // this.common.showAlertInfo('Erro no adicionar sacola');
-      // by Ryuge 28/11/2019
-      if (error.status === 400) {
-        // await this.showMessage(error.json().title, error.json().detail);
-      } else if (error.status === 503) {
-        this.common.showAlert('Atenção!', 'Sem serviço, entrar em contato com suporte.');
-      } else {
-        if (error.error.detail) {
-          this.common.showAlert(error.error.title, error.error.detail);
-        } else {
-          this.common.showAlert('Atenção!', JSON.stringify(error));
-        }
-      }
-    }
+    } catch (error) {}
   }
 
   // by Ryuge

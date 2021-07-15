@@ -53,7 +53,7 @@ export class PedidoAtalhosPage implements OnInit {
   scaneado(value: string): void {
     if (value.substring(0, 1) === 'P') {
       this.pedidoService
-        .setCardPedido(this.pedidoService.pedido.value.numpedido, value)
+        .setCardPedido(this.pedidoService.getPedidoNumero(), value)
         .subscribe();
     } else {
       this.common.showToast('Cartão Pedido inválido!');
@@ -66,7 +66,7 @@ export class PedidoAtalhosPage implements OnInit {
   adicionarCartaoPedido(): void {
     const handler = (data: any) => {
       this.pedidoService
-        .setCardPedido(this.pedidoService.pedido.value.numpedido, data.codigo)
+        .setCardPedido(this.pedidoService.getPedidoNumero(), data.codigo)
         .subscribe();
     };
     const props = { titulo: 'Cartão Pedido', message: '', handler };

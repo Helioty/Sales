@@ -31,21 +31,12 @@ export class PedidoService {
   public nomeCliente = '';
 
   // PEDIDO EM MANUTENÇÃO
-  // public pedidoHeader = new PedidoHeader(); // Todos os principais dados do pedido em manutenção.
-  // public numPedido = '0'; // Numero do pedido em manutenção.
-  public digitoPedido: number;
-  // public tipoRetirada: string; // Tipo de retirada do pedido em manutenção.
   public tipoDocumento: any;
-  // public qtdItensSacola = 0; // Quantidade de itens do pedido em manutenção.
 
   // Verdadeiro se o pedido em manutenção tiver um cliente selecionado.
   public clientSelected = false;
   public docCliente = ''; // CPF/CNPJ do cliente do pedido em manutenção.
   public dadosCliente: any = undefined; // Dados do cliente do pedido em manutenção.
-
-  // Verdadeiro se o pedido em manutenção tiver um cartão-pedido selecionado.
-  // public cardSelected = false;
-  // public codigoCartaoPedido = ''; // Codido do cartão-pedido do pedido em manutenção.
 
   // Verdadeiro se o pedido em manutenção tiver um endereco selecionado.
   public enderecoSelected = false;
@@ -72,6 +63,10 @@ export class PedidoService {
     private readonly navControl: NavController
   ) {}
 
+  getPedidoNumero(): number {
+    return this.pedido.getValue().numpedido;
+  }
+
   getPedidoAtivo(): Observable<PedidoHeader> {
     return this.pedido.asObservable();
   }
@@ -97,7 +92,7 @@ export class PedidoService {
     this.valorFrete = 0;
 
     this.alteracaoItemPedido = false;
-    this.digitoPedido = 0;
+    // this.digitoPedido = 0;
     // this.sistuacaoPedido = 'N';
     this.tipoDocumento = '';
     this.statusPedido = '';
@@ -109,25 +104,12 @@ export class PedidoService {
   public atualizaPedidoHeader(pedidoHeader: PedidoHeader): void {
     // Pedido
     this.pedido.next(pedidoHeader);
-
     // Produtos
     this.qtdItensSacola.next(pedidoHeader.numitens);
-
-    // this.pedidoHeader = pedidoHeader;
-    // this.numPedido = pedidoHeader.numpedido.toString();
-    this.digitoPedido = pedidoHeader.digito;
-
-    switch (pedidoHeader.tipoEntrega) {
-      case 'IMEDIATA':
-        this.tipoRetiradaIndex = 0;
-        break;
-      case 'POSTERIOR':
-        this.tipoRetiradaIndex = 1;
-        break;
-      case 'ENTREGA':
-        this.tipoRetiradaIndex = 2;
-        break;
-    }
+    // Pedido - Tipo Retirada.
+    this.tipoRetiradaIndex = this.opcoesRetirada.findIndex(
+      (el) => el === pedidoHeader.tipoEntrega
+    );
     console.log('PEDIDO HEADER ATUALIZADO', this.pedido);
   }
 
@@ -335,7 +317,7 @@ export class PedidoService {
     const handler = () => {
       if (this.qtdItensSacola.value) {
         this.limpaDadosPedido();
-        this.apagarPedido(this.pedido.value.numpedido)
+        this.apagarPedido(this.getPedidoNumero())
           .pipe(take(1))
           .subscribe({
             next: () => {
