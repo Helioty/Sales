@@ -250,9 +250,9 @@ export class PedidoService {
         },
       })
     );
-    //     this.clientSelected = true;
-    //     this.docCliente = cgccpf;
-    //     this.dadosCliente = dadosCli;
+    // this.clientSelected = true;
+    // this.docCliente = cgccpf;
+    // this.dadosCliente = dadosCli;
   }
 
   /**
