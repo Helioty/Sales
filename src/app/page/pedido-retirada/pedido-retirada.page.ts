@@ -39,7 +39,7 @@ export class PedidoRetiradaPage implements OnInit {
     // this.pedidoService.tipoRetirada = this.pedidoService.opcaoRetirada[tipoRetiradaIndex];
     await this.common.showLoader();
     this.pedidoService
-      .alterarTipoRetirada(this.pedidoService.pedido.value.numpedido, tipoRetiradaIndex)
+      .alterarTipoRetirada(this.pedidoService.getPedidoNumero(), tipoRetiradaIndex)
       .subscribe({
         next: () => {
           this.common.loading.dismiss();
