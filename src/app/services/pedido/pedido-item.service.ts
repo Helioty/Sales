@@ -6,7 +6,7 @@ import { Pagination } from 'src/app/page/pedido-lista/pedido-lista.interface';
 import { PedidoService } from 'src/app/services/pedido/pedido.service';
 import { CommonService } from './../common/common.service';
 import { BaseService } from './../http/base.service';
-import { PedidoItens } from './pedido.interface';
+import { PedidoItem } from './pedido.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -43,7 +43,7 @@ export class PedidoItemService {
   }
 
   // by Helio 10/03/2020
-  public addFast(body: PedidoItens) {
+  public addFast(body: PedidoItem) {
     // const link =
     //   ENV.WS_VENDAS +
     //   API_URL +
@@ -90,7 +90,7 @@ export class PedidoItemService {
   }
 
   // by Helio 09/07/2020
-  public addItemPedido(body: PedidoItens) {
+  public addItemPedido(body: PedidoItem) {
     // const link =
     //   ENV.WS_VENDAS +
     //   API_URL +

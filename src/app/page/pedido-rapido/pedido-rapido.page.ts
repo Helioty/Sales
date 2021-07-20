@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { CommonService } from 'src/app/services/common/common.service';
 import {
   PedidoHeader,
-  PedidoItens,
+  PedidoItem,
   Retiradas,
 } from 'src/app/services/pedido/pedido.interface';
 import { PedidoService } from 'src/app/services/pedido/pedido.service';
@@ -17,17 +17,17 @@ import { ScannerService } from 'src/app/services/scanner/scanner.service';
 })
 export class PedidoRapidoPage implements OnInit {
   public pedidoOBS: Observable<PedidoHeader>;
-  public itensOBS: Observable<PedidoItens[]>;
+  public itensOBS: Observable<PedidoItem[]>;
 
-  private novoPedidoItem: PedidoItens;
+  private novoPedidoItem: PedidoItem;
 
-  public pedidoItens: PedidoItens;
+  public pedidoItens: PedidoItem;
   public retiradas: Retiradas;
 
   // controle de requisições by Ryuge 28/11/2019
-  private maxRequest = 10;
-  private numRequest = 0;
+  private readonly maxRequest = 10;
   private codProdRequest = '';
+  private numRequest = 0;
 
   constructor(
     public readonly scanner: ScannerService,
@@ -88,11 +88,11 @@ export class PedidoRapidoPage implements OnInit {
   // edit by Helio 10/03/2020
   addItem(produtoCodigo: string): void {
     // by Ryuge 27/11/2019 - Não permitir gravar item com pedido = '0';
-    const tipo = 'this.pedido.codigoTipoRetirada';
+    const empresa = localStorage.getItem('empresa') as string;
+    const tipo = this.pedidoService.tipoRetiradaIndex;
     const valor = 0;
 
-    const empresa = localStorage.getItem('empresa') as string;
-    this.novoPedidoItem = new PedidoItens();
+    this.novoPedidoItem = new PedidoItem();
     this.novoPedidoItem.idEmpresa = Number(empresa);
     this.novoPedidoItem.numPedido = this.pedidoService.getPedidoNumero();
     this.novoPedidoItem.idProduto = produtoCodigo;
@@ -104,15 +104,15 @@ export class PedidoRapidoPage implements OnInit {
     this.adicionarSacola(tipo, valor, produtoCodigo);
   }
 
-  adicionarSacola(tipo: string, valor: any, codigo: string) {
-    const aRetiradas: any[] = [];
+  adicionarSacola(tipo: number, valor: any, codigo: string) {
+    const aRetiradas: Retiradas[] = [];
     try {
       this.retiradas = new Retiradas();
       // eslint-disable-next-line radix
       this.retiradas.empresaRetirada = parseInt(localStorage.getItem('empresa'));
       this.retiradas.idDeposito = 8;
       // eslint-disable-next-line radix
-      this.retiradas.tipoRetirada = parseInt(tipo);
+      this.retiradas.tipoRetirada = tipo;
       this.retiradas.qtd = 1;
       this.retiradas.precoUnitario = parseFloat(valor);
       // add array
@@ -159,7 +159,7 @@ export class PedidoRapidoPage implements OnInit {
 
   // by Ryuge
   // edit by Helio 10/03/2020
-  async addItemPedido(body: PedidoItens) {
+  async addItemPedido(body: PedidoItem) {
     // await this.pedidoIt.addFast(body).then(
     //   (result: any) => {
     //     this.itens = result.content;
@@ -177,7 +177,7 @@ export class PedidoRapidoPage implements OnInit {
   }
 
   // by Hélio 11/03/2020
-  removerProduto(produto: PedidoItens): void {
+  removerProduto(produto: PedidoItem): void {
     const handler = () => {
       this.deleteItemPedido(produto.idProduto);
     };

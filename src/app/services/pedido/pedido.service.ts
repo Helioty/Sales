@@ -8,7 +8,7 @@ import { Pagination } from 'src/app/page/pedido-lista/pedido-lista.interface';
 import { ClienteService } from 'src/app/services/cliente/cliente.service';
 import { CommonService } from 'src/app/services/common/common.service';
 import { BaseService } from './../http/base.service';
-import { AttPedido, PedidoHeader, PedidoItens, PedidoTable } from './pedido.interface';
+import { AttPedido, PedidoHeader, PedidoItem, PedidoTable } from './pedido.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -52,7 +52,7 @@ export class PedidoService {
 
   // Produtos
   readonly qtdItensSacola = new BehaviorSubject<number>(null);
-  readonly pedidoItens = new BehaviorSubject<PedidoItens[]>([]);
+  readonly pedidoItens = new BehaviorSubject<PedidoItem[]>([]);
   // Produtos por Paginação.
   readonly produtoPorPagina = 10;
 
@@ -75,11 +75,11 @@ export class PedidoService {
     return this.qtdItensSacola.asObservable();
   }
 
-  getPedidoItensOBS(): Observable<PedidoItens[]> {
+  getPedidoItensOBS(): Observable<PedidoItem[]> {
     return this.pedidoItens.asObservable();
   }
 
-  public limpaDadosPedido() {
+  public limpaDadosPedido(): void {
     // Limpando cliente do pedido
     this.clientSelected = false;
     this.docCliente = '';
@@ -92,12 +92,16 @@ export class PedidoService {
     this.valorFrete = 0;
 
     this.alteracaoItemPedido = false;
-    // this.digitoPedido = 0;
     // this.sistuacaoPedido = 'N';
     this.tipoDocumento = '';
     this.statusPedido = '';
     this.docCliente = '';
     this.nomeCliente = '';
+
+    // REMAKE
+    this.pedido.next(null);
+    this.qtdItensSacola.next(null);
+    this.pedidoItens.next([]);
   }
 
   // by Helio 20/03/2020
@@ -282,10 +286,10 @@ export class PedidoService {
    * @param page Pagina a ser retornada.
    * @returns
    */
-  getPedidoItens(numPedido: number, page = 1): Observable<Pagination<PedidoItens>> {
+  getPedidoItens(numPedido: number, page = 1): Observable<Pagination<PedidoItem>> {
     const empresa = localStorage.getItem('empresa') as string;
     const url = `${ENV.WS_VENDAS}${API_URL}PedidoVendaItem/${empresa}/${numPedido}/itens?page=${page}&size=${this.produtoPorPagina}`;
-    return this.http.get<Pagination<PedidoItens>>(url).pipe(take(1));
+    return this.http.get<Pagination<PedidoItem>>(url).pipe(take(1));
   }
 
   /**
@@ -293,10 +297,10 @@ export class PedidoService {
    * @param numPedido Número do Pedido.
    * @returns
    */
-  getPedidoAllItens(numPedido: number): Observable<PedidoItens[]> {
+  getPedidoAllItens(numPedido: number): Observable<PedidoItem[]> {
     const empresa = localStorage.getItem('empresa') as string;
     const url = `${ENV.WS_VENDAS}${API_URL}PedidoVendaItem/${empresa}/${numPedido}/itens`;
-    return this.http.get<Pagination<PedidoItens>>(url).pipe(
+    return this.http.get<Pagination<PedidoItem>>(url).pipe(
       take(1),
       tap({
         next: (paginationIt) => {
@@ -309,6 +313,10 @@ export class PedidoService {
     );
   }
 
+  adicionarItemPedido(): Observable<any> {
+    return this.http.post({} as any).pipe(take(1));
+  }
+
   // by Hélio 12/02/2020
   public sairPedido(): void {
     const mensagem = this.qtdItensSacola.value
@@ -316,15 +324,13 @@ export class PedidoService {
       : '';
     const handler = () => {
       if (this.qtdItensSacola.value) {
-        this.limpaDadosPedido();
-        this.apagarPedido(this.getPedidoNumero())
-          .pipe(take(1))
-          .subscribe({
-            next: () => {
-              this.navControl.navigateRoot('/pedido-lista');
-              console.clear();
-            },
-          });
+        this.apagarPedido(this.getPedidoNumero()).subscribe({
+          next: () => {
+            this.limpaDadosPedido();
+            this.navControl.navigateRoot('/pedido-lista');
+            console.clear();
+          },
+        });
       } else {
         this.limpaDadosPedido();
         this.navControl.navigateRoot('/pedido-lista');

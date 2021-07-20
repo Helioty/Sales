@@ -52,7 +52,7 @@ export enum AttPedido {
   SEQ_ENDERECO_ENTREGA = 'seq_endereco_entrega',
 }
 
-export class PedidoItens {
+export class PedidoItem {
   idEmpresa: number;
   numPedido: number;
   idProduto: string;
