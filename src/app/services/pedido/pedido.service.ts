@@ -178,7 +178,8 @@ export class PedidoService {
       take(1),
       tap({
         next: (pedido) => {
-          console.log('Pedido: ', pedido);
+          console.log(`Tipo Entraga Atualizado: ${this.opcoesRetirada[retiradaIdx]}`);
+          this.atualizaPedidoHeader(pedido);
           this.tipoRetiradaIndex = retiradaIdx;
         },
       })
@@ -200,12 +201,37 @@ export class PedidoService {
       take(1),
       tap({
         next: (pedido) => {
-          console.log('Set Catão: ', pedido);
+          console.log('Set Catão: ', codCard);
           this.atualizaPedidoHeader(pedido);
           this.common.showToast('Cartão Pedido Adicionado!');
         },
       })
     );
+  }
+
+  /**
+   * @author helio.souza
+   * @description Atualiza o cartão pedido.
+   */
+  adicionarCartaoPedido(): void {
+    const handler = (data: any) => {
+      this.setCardPedido(this.getPedidoNumero(), data.codigo).subscribe();
+    };
+    const props = { titulo: 'Cartão Pedido', message: '', handler };
+    const inputs = [
+      {
+        name: 'codigo',
+        type: 'text',
+        placeholder: 'Digite o codigo do cartão!',
+      },
+    ];
+    const options = {
+      allowClose: true,
+      showCancel: true,
+      cssClasses: ['ion-alert-input'],
+      inputs,
+    };
+    this.common.showAlertAction(props, options);
   }
 
   /**

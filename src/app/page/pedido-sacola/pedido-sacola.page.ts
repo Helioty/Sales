@@ -96,26 +96,7 @@ export class PedidoSacolaPage implements OnInit {
    * @description Atualiza o cartão pedido.
    */
   adicionarCartaoPedido(): void {
-    const handler = (data: any) => {
-      this.pedidoService
-        .setCardPedido(this.pedidoService.getPedidoNumero(), data.codigo)
-        .subscribe();
-    };
-    const props = { titulo: 'Cartão Pedido', message: '', handler };
-    const inputs = [
-      {
-        name: 'codigo',
-        type: 'text',
-        placeholder: 'Digite o codigo do cartão!',
-      },
-    ];
-    const options = {
-      allowClose: true,
-      showCancel: true,
-      cssClasses: ['ion-alert-input'],
-      inputs,
-    };
-    this.common.showAlertAction(props, options);
+    this.pedidoService.adicionarCartaoPedido();
   }
 
   /**
