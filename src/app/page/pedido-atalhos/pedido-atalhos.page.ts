@@ -14,8 +14,8 @@ import { ScannerService } from 'src/app/services/scanner/scanner.service';
 })
 export class PedidoAtalhosPage implements OnInit {
   @ViewChild(IonSlides) readonly slides: IonSlides;
-  pedidoOBS: Observable<PedidoHeader>;
-  totalItensOBS: Observable<number>;
+  public pedidoOBS: Observable<PedidoHeader>;
+  public totalItensOBS: Observable<number>;
 
   constructor(
     private readonly common: CommonService,
@@ -62,6 +62,7 @@ export class PedidoAtalhosPage implements OnInit {
 
   /**
    * @author helio.souza
+   * @description Atualiza o cartão pedido.
    */
   adicionarCartaoPedido(): void {
     const handler = (data: any) => {

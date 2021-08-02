@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { AlertController, NavController, Platform } from '@ionic/angular';
-import { CommonService } from 'src/app/services/common/common.service';
-import { PedidoService } from 'src/app/services/pedido/pedido.service';
-import { PedidoItemService } from 'src/app/services/pedido/pedido-item.service';
-import { ProdutoService } from 'src/app/services/produto/produto.service';
-import { DataService } from 'src/app/services/data/data.service';
 import { NavigationExtras } from '@angular/router';
+import { NavController } from '@ionic/angular';
+import { Observable } from 'rxjs';
+import { CommonService } from 'src/app/services/common/common.service';
+import { DataService } from 'src/app/services/data/data.service';
+import { PedidoHeader, PedidoItem } from 'src/app/services/pedido/pedido.interface';
+import { PedidoService } from 'src/app/services/pedido/pedido.service';
+import { ProdutoService } from 'src/app/services/produto/produto.service';
+import { ScannerService } from 'src/app/services/scanner/scanner.service';
 
 @Component({
   selector: 'app-pedido-sacola',
@@ -13,9 +15,9 @@ import { NavigationExtras } from '@angular/router';
   styleUrls: ['./pedido-sacola.page.scss'],
 })
 export class PedidoSacolaPage implements OnInit {
-  public taskScanner: any;
-  public valorScanner: string;
-  public focusStatus = true;
+  public pedidoOBS: Observable<PedidoHeader>;
+  public itensOBS: Observable<PedidoItem[]>;
+  public totalItensOBS: Observable<number>;
 
   public showInfo = false;
 
@@ -25,172 +27,114 @@ export class PedidoSacolaPage implements OnInit {
   public existeProdRetiradaDepo = false;
 
   constructor(
-    private alertCtrl: AlertController,
+    public readonly scanner: ScannerService,
     private dataService: DataService,
-    private common: CommonService,
-    public pedido: PedidoService,
-    public pedidoIt: PedidoItemService,
-    private produtoS: ProdutoService,
-    private navControl: NavController,
-    private platform: Platform
+    private readonly common: CommonService,
+    public readonly pedidoService: PedidoService,
+    private readonly produtoService: ProdutoService,
+    private readonly navControl: NavController
   ) {}
 
-  ngOnInit() {
-    this.pedidoIt.getItemPedido().then((result: any) => {
-      console.log(result);
-      result.content.forEach((el) => {
-        if (el.retiradas[0].tipoRetirada === 9997) {
-          this.existeProdEntrega = true;
-        } else if (el.retiradas[0].tipoRetirada !== 9997) {
-          this.existeProdRetirada = true;
-        }
-      });
-      // for (let i = 0; i < result.content.length; i++) {
-      //   if (result.content[i].retiradas[0].tipoRetirada == 9997) {
-      //     this.existeProdEntrega = true;
-      //   } else if (result.content[i].retiradas[0].tipoRetirada != 9997) {
-      //     this.existeProdRetirada = true;
-      //   }
-      // }
-    });
+  ngOnInit(): void {
+    this.pedidoOBS = this.pedidoService.getPedidoAtivo();
+    this.itensOBS = this.pedidoService.getPedidoItensOBS();
+    this.totalItensOBS = this.pedidoService.getTotalItensOBS();
   }
 
-  ionViewWillEnter() {
-    this.focusOn();
+  ionViewWillEnter(): void {
+    this.scanner.focusOn();
+    this.common.goToFullScreen();
+    this.atualizaItens();
+  }
+
+  ionViewDidEnter(): void {
     this.common.goToFullScreen();
   }
 
-  ionViewDidEnter() {
-    this.common.goToFullScreen();
+  ionViewWillLeave(): void {
+    this.scanner.focusOff();
   }
 
-  ionViewWillLeave() {
-    this.focusOff();
+  ionViewDidLeave(): void {
+    console.clear();
   }
 
-  ionViewDidLeave() {}
+  /**
+   * @author helio.souza
+   * @param value Dado scaneado.
+   */
+  scaneado(value: string): void {
+    if (value.substring(0, 1) === 'P') {
+      this.pedidoService
+        .setCardPedido(this.pedidoService.getPedidoNumero(), value)
+        .subscribe();
+    } else {
+      // this.addItem(value);
+    }
+  }
 
-  // Cria o loop que da foco no input
-  focusOn() {
-    this.taskScanner = setInterval(() => {
-      try {
-        this.valorScanner = '';
-        if (this.focusStatus) {
-          const scanners = document.body.getElementsByClassName('scanner');
-          for (const i in scanners) {
-            if (Number(i) === scanners.length - 1) {
-              (scanners[i] as HTMLInputElement).focus();
-            }
+  /**
+   * @author helio.souza
+   * @description Atualiza os Produtos do Pedido.
+   */
+  atualizaItens(): void {
+    this.pedidoService.getPedidoAllItens(this.pedidoService.getPedidoNumero()).subscribe({
+      next: (produtos) => {
+        produtos.forEach((el) => {
+          if (el.retiradas[0].tipoRetirada === 9997) {
+            this.existeProdEntrega = true;
+          } else if (el.retiradas[0].tipoRetirada !== 9997) {
+            this.existeProdRetirada = true;
           }
-        }
-      } catch (error) {}
-    }, 350);
-  }
-
-  focusPlay() {
-    this.focusStatus = true;
-  }
-
-  focusPause() {
-    this.focusStatus = false;
-    const scanners = document.body.getElementsByClassName('scanner');
-    for (const i in scanners) {
-      if (Number(i) === scanners.length - 1) {
-        (scanners[i] as HTMLInputElement).blur();
-      }
-    }
-  }
-
-  // Encerra o loop de foco no input
-  focusOff() {
-    clearInterval(this.taskScanner);
-  }
-
-  scaneado(evento: any) {
-    try {
-      if (evento.target && evento.target.value.length >= 2) {
-        this.focusPause();
-        const codigo: string = evento.target.value;
-
-        if (codigo.substring(0, 1) === 'P') {
-          this.pedido.setCardPedido(codigo);
-          this.focusPlay();
-        } else {
-          this.focusPlay();
-        }
-      }
-    } catch (error) {
-      this.focusPlay();
-    }
-  }
-
-  async adicionarCartaoPedido() {
-    const alert = await this.alertCtrl.create({
-      header: 'Cartão Pedido',
-      cssClass: 'ion-alert-input',
-      inputs: [
-        {
-          name: 'codigo',
-          type: 'text',
-          placeholder: 'Digite o codigo do cartão!',
-        },
-      ],
-      buttons: [
-        'CANCELAR',
-        {
-          text: 'ADICIONAR',
-          handler: (data: any) => {
-            this.pedido.setCardPedido(data.codigo);
-          },
-        },
-      ],
-    });
-    alert.onDidDismiss().finally(() => {
-      this.focusPlay();
-    });
-    await alert.present().then(() => {
-      this.focusPause();
+        });
+      },
     });
   }
 
-  // by Hélio 11/03/2020
-  async removerProduto(produto: any) {
-    const alert = await this.alertCtrl.create({
-      header: 'Remover produto',
-      message:
-        'Tem certeza que deseja remover o produto ' + produto.descricao + ' do pedido?',
-      buttons: [
-        {
-          text: 'CANCELAR',
-          role: 'cancel',
-        },
-        {
-          text: 'REMOVER',
-          handler: () => {
-            this.deleteItemPedido(produto.idProduto);
-          },
-        },
-      ],
-    });
-    alert.onDidDismiss().finally(() => {
-      this.focusPlay();
-    });
-    await alert.present().then(() => {
-      this.focusPause();
-    });
+  /**
+   * @author helio.souza
+   * @description Atualiza o cartão pedido.
+   */
+  adicionarCartaoPedido(): void {
+    const handler = (data: any) => {
+      this.pedidoService
+        .setCardPedido(this.pedidoService.getPedidoNumero(), data.codigo)
+        .subscribe();
+    };
+    const props = { titulo: 'Cartão Pedido', message: '', handler };
+    const inputs = [
+      {
+        name: 'codigo',
+        type: 'text',
+        placeholder: 'Digite o codigo do cartão!',
+      },
+    ];
+    const options = {
+      allowClose: true,
+      showCancel: true,
+      cssClasses: ['ion-alert-input'],
+      inputs,
+    };
+    this.common.showAlertAction(props, options);
   }
 
-  async deleteItemPedido(codigoProduto: string) {
-    await this.pedidoIt.removeItemPedido(codigoProduto).then((result: any) => {
-      this.common.showToast(result.msg);
-    });
-    await this.pedidoIt.getItemPedido().then((result: any) => {
-      // this.itens = result.content;
-      console.log(result);
-    });
+  /**
+   * @author helio.souza
+   * @param produto Pedido Item da lista.
+   */
+  removerProduto(produto: PedidoItem): void {
+    const handler = () => {
+      this.pedidoService.removeItemPedido(produto.idProduto).subscribe();
+    };
+    const props = {
+      titulo: 'Remover produto!',
+      message: `Tem certeza que deseja remover o produto ${produto.descricao} do pedido?`,
+      handler,
+    };
+    this.common.showAlertAction(props);
   }
 
-  openClientePage() {
+  openClientePage(): void {
     const navigationExtras: NavigationExtras = {
       queryParams: {
         paginaSeguinte: 'back',
@@ -200,7 +144,7 @@ export class PedidoSacolaPage implements OnInit {
     this.navControl.navigateForward(['/cliente'], navigationExtras);
   }
 
-  openProdutoAddSacolaPage(prod: any) {
+  openProdutoAddSacolaPage(prod: any): void {
     const navigationExtras: NavigationExtras = {
       queryParams: {
         paginaSeguinte: 'back',
@@ -212,13 +156,13 @@ export class PedidoSacolaPage implements OnInit {
   }
 
   getProduto(codigo: string) {
-    this.produtoS.getProduto(codigo).then((result: any) => {
+    this.produtoService.getProduto(codigo).then((result: any) => {
       this.openProdutoAddSacolaPage(result.content[0]);
     });
   }
 
   // finalização do pedido
   finalizarPedido() {
-    this.pedido.goToFinalizacao('pedido-sacola');
+    this.pedidoService.goToFinalizacao('pedido-sacola');
   }
 }

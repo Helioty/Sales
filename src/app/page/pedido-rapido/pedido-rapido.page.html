@@ -16,10 +16,10 @@
     (keyup.enter)="scaneado($event.target.value)"
   />
 
-  <input #teste />
+  <input #teste (focus)="scanner.focusPause()" (blur)="scanner.focusPlay()" />
   <ion-button (click)="addItem(teste.value)">teste de pedido rapido</ion-button>
 
-  <ion-grid *ngIf="!(itensOBS | async)?.length else list" class="noItens">
+  <ion-grid *ngIf="!(itensOBS | async)?.length; else list" class="noItens">
     <ion-row class="topHeading">
       <ion-col>
         <h3>Seus produtos selecionados vão ficar aqui...</h3>
@@ -40,32 +40,28 @@
   </ion-grid>
 
   <ng-template #list>
-    <ion-list
-      lines="none"
-      class="listaProdutos"
-      *ngIf="itensOBS | async as itens"
-    >
+    <ion-list lines="none" class="listaProdutos" *ngIf="itensOBS | async as itens">
       <ion-item lines="none" class="produto" *ngFor="let item of itens; let i = index">
         <ion-thumbnail slot="start">
           <ion-img src="data:image/jpeg;base64,{{ item?.imagem }}"></ion-img>
         </ion-thumbnail>
-  
+
         <ion-grid>
           <ion-row class="produtoRow">
             <ion-col size="8" class="produtoInformacao">
               <ion-row class="produtoDescri">
                 {{ item.idProduto }} - {{ item.descricao }}
               </ion-row>
-  
+
               <ion-row class="produtoPreco">
                 {{ item.prcTotal | formatarString: 'VALOR' }}
               </ion-row>
-  
+
               <ion-row class="produtoPrecoUnidade" *ngIf="item.qtdTotal > 1">
                 {{ item.prcUnitario | formatarString: 'VALOR' }} cada
               </ion-row>
             </ion-col>
-  
+
             <ion-col size="4" class="produtoQuantidade">
               <ion-row
                 class="quantidadeTop ion-justify-content-center ion-align-items-center"
@@ -74,13 +70,13 @@
                   <ion-icon slot="icon-only" size="large" name="arrow-up"></ion-icon>
                 </ion-button>
               </ion-row>
-  
+
               <ion-row
                 class="quantidadeCenter ion-justify-content-center ion-align-items-center"
               >
                 {{ item.qtdTotal }}
               </ion-row>
-  
+
               <ion-row
                 class="quantidadeBottom ion-justify-content-center ion-align-items-center"
               >

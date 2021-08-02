@@ -54,14 +54,14 @@ const routes: Routes = [
       ),
     canActivate: [AuthGuard],
   },
-  // {
-  //   path: 'pedido-sacola',
-  //   loadChildren: () =>
-  //     import('./page/pedido-sacola/pedido-sacola.module').then(
-  //       (m) => m.PedidoSacolaPageModule
-  //     ),
-  //   canActivate: [AuthGuard],
-  // },
+  {
+    path: 'pedido-sacola',
+    loadChildren: () =>
+      import('./page/pedido-sacola/pedido-sacola.module').then(
+        (m) => m.PedidoSacolaPageModule
+      ),
+    canActivate: [AuthGuard],
+  },
 
   // {
   //   path: 'produto-pesquisa',

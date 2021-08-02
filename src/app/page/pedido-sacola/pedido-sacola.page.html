@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="pedido-atalhos"></ion-back-button>
 
-      <ion-button (click)="pedido.sairPedido()">
+      <ion-button (click)="pedidoService.sairPedido()">
         <ion-icon name="log-out-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
@@ -13,16 +13,24 @@
     <ion-buttons slot="end">
       <ion-button (click)="adicionarCartaoPedido()">
         <ion-icon name="card"></ion-icon>
-        <ion-badge color="success" class="badge-position" *ngIf="pedido.cardSelected"
-          >✔</ion-badge
+        <ion-badge
+          color="success"
+          class="badge-position"
+          *ngIf="(pedidoOBS | async)?.cartaoPedido"
         >
+          ✔
+        </ion-badge>
       </ion-button>
 
       <ion-button (click)="openClientePage()">
         <ion-icon name="person"></ion-icon>
-        <ion-badge color="success" class="badge-position" *ngIf="pedido.clientSelected"
-          >✔</ion-badge
+        <ion-badge
+          color="success"
+          class="badge-position"
+          *ngIf="(pedidoOBS | async)?.cgccpf_cliente"
         >
+          ✔
+        </ion-badge>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
@@ -33,199 +41,204 @@
     id="scanner"
     appHideKeyboard
     class="scanner"
-    [(ngModel)]="valorScanner"
-    (keyup.enter)="scaneado($event)"
+    [(ngModel)]="scanner.valorScanner"
+    (keyup.enter)="scaneado($event.target.value)"
   />
 
-  <ion-grid [hidden]="pedido.tipoRetirada === 'ENTREGA'">
-    <ion-row>
-      <ion-col size="12">
-        <ion-item lines="none" class="tipoEntrega">
-          Retirada {{ pedido.tipoRetirada }}
-        </ion-item>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+  <div *ngIf="pedidoOBS | async as ped">
+    <ion-grid [hidden]="ped.tipoEntrega === 'ENTREGA'">
+      <ion-row>
+        <ion-col size="12">
+          <ion-item lines="none" class="tipoEntrega">
+            Retirada {{ ped.tipoEntrega }}
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
 
+  <ion-grid *ngIf="!(itensOBS | async)?.length; else list"></ion-grid>
   <!-- Item Dividers in a List -->
-  <ion-list *ngIf="pedidoIt.pedidoItens.length > 0">
-    <ion-item-divider sticky *ngIf="existeProdRetirada">
-      <ion-label> Levar da loja </ion-label>
-    </ion-item-divider>
+  <ng-template #list>
+    <ion-list *ngIf="itensOBS | async as itens">
+      <ion-item-divider sticky *ngIf="existeProdRetirada">
+        <ion-label> Levar da loja </ion-label>
+      </ion-item-divider>
 
-    <ion-grid *ngIf="existeProdRetirada">
-      <ion-row>
-        <ion-col
-          size="12"
-          *ngFor="let item of pedidoIt.pedidoItens; let i = index"
-          style="padding: 0 !important"
-        >
-          <ion-row
-            *ngIf="item?.retiradas[0].tipoRetirada != 9997"
-            style="padding: 5px !important"
+      <ion-grid *ngIf="existeProdRetirada">
+        <ion-row>
+          <ion-col
+            size="12"
+            *ngFor="let item of itens; let i = index"
+            style="padding: 0 !important"
           >
-            <ion-item lines="none" class="produto">
-              <ion-thumbnail slot="start">
-                <ion-img src="data:image/jpeg;base64,{{ item?.imagem }}"></ion-img>
-              </ion-thumbnail>
+            <ion-row
+              *ngIf="item?.retiradas[0].tipoRetirada != 9997"
+              style="padding: 5px !important"
+            >
+              <ion-item lines="none" class="produto">
+                <ion-thumbnail slot="start">
+                  <ion-img src="data:image/jpeg;base64,{{ item?.imagem }}"></ion-img>
+                </ion-thumbnail>
 
-              <ion-grid>
-                <ion-row class="produtoRow">
-                  <ion-col size="8.5" class="produtoInformacao">
-                    <ion-row class="produtoDescri">
-                      {{ item.idProduto }} - {{ item.descricao }}
-                    </ion-row>
+                <ion-grid>
+                  <ion-row class="produtoRow">
+                    <ion-col size="8.5" class="produtoInformacao">
+                      <ion-row class="produtoDescri">
+                        {{ item.idProduto }} - {{ item.descricao }}
+                      </ion-row>
 
-                    <ion-row class="produtoPreco">
-                      {{ item.prcTotal | formatarString: 'VALOR' }}
-                    </ion-row>
+                      <ion-row class="produtoPreco">
+                        {{ item.prcTotal | formatarString: 'VALOR' }}
+                      </ion-row>
 
-                    <ion-row class="produtoPrecoUnidade" *ngIf="item.qtdTotal > 1">
-                      {{ item.prcUnitario | formatarString: 'VALOR' }} cada
-                    </ion-row>
-                  </ion-col>
+                      <ion-row class="produtoPrecoUnidade" *ngIf="item.qtdTotal > 1">
+                        {{ item.prcUnitario | formatarString: 'VALOR' }} cada
+                      </ion-row>
+                    </ion-col>
 
-                  <ion-col size="3.5" class="produtoManutencao">
-                    <ion-row
-                      class="
-                        produtoManutencaoTop
-                        ion-justify-content-center ion-align-items-center
-                      "
-                    >
-                      <ion-col class="ion-no-padding" size="12">
-                        <ion-button
-                          expand="full"
-                          fill="clear"
-                          color="dark"
-                          class="ion-no-margin"
-                          (click)="getProduto(item.idProduto)"
-                        >
-                          {{ item.qtdTotal }}
-                        </ion-button>
-                      </ion-col>
-                    </ion-row>
+                    <ion-col size="3.5" class="produtoManutencao">
+                      <ion-row
+                        class="
+                          produtoManutencaoTop
+                          ion-justify-content-center ion-align-items-center
+                        "
+                      >
+                        <ion-col class="ion-no-padding" size="12">
+                          <ion-button
+                            expand="full"
+                            fill="clear"
+                            color="dark"
+                            class="ion-no-margin"
+                            (click)="getProduto(item.idProduto)"
+                          >
+                            {{ item.qtdTotal }}
+                          </ion-button>
+                        </ion-col>
+                      </ion-row>
 
-                    <ion-row
-                      class="
-                        produtoManutencaoBottom
-                        ion-justify-content-center ion-align-items-center
-                      "
-                    >
-                      <ion-col class="ion-no-padding" size="12">
-                        <ion-button
-                          expand="full"
-                          fill="clear"
-                          color="dark"
-                          class="ion-no-margin"
-                          (click)="removerProduto(item)"
-                        >
-                          <ion-icon
-                            slot="icon-only"
-                            size="large"
-                            name="trash-bin-outline"
-                          ></ion-icon>
-                        </ion-button>
-                      </ion-col>
-                    </ion-row>
-                  </ion-col>
-                </ion-row>
-              </ion-grid>
-            </ion-item>
-          </ion-row>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
+                      <ion-row
+                        class="
+                          produtoManutencaoBottom
+                          ion-justify-content-center ion-align-items-center
+                        "
+                      >
+                        <ion-col class="ion-no-padding" size="12">
+                          <ion-button
+                            expand="full"
+                            fill="clear"
+                            color="dark"
+                            class="ion-no-margin"
+                            (click)="removerProduto(item)"
+                          >
+                            <ion-icon
+                              slot="icon-only"
+                              size="large"
+                              name="trash-bin-outline"
+                            ></ion-icon>
+                          </ion-button>
+                        </ion-col>
+                      </ion-row>
+                    </ion-col>
+                  </ion-row>
+                </ion-grid>
+              </ion-item>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
 
-    <ion-item-divider sticky *ngIf="existeProdEntrega">
-      <ion-label> Receber em casa </ion-label>
-    </ion-item-divider>
+      <ion-item-divider sticky *ngIf="existeProdEntrega">
+        <ion-label> Receber em casa </ion-label>
+      </ion-item-divider>
 
-    <ion-grid *ngIf="existeProdEntrega">
-      <ion-row>
-        <ion-col
-          size="12"
-          *ngFor="let item of pedidoIt.pedidoItens; let i = index"
-          style="padding: 0 !important"
-        >
-          <ion-row
-            *ngIf="item?.retiradas[0].tipoRetirada == 9997"
-            style="padding: 5px !important"
+      <ion-grid *ngIf="existeProdEntrega">
+        <ion-row>
+          <ion-col
+            size="12"
+            *ngFor="let item of itens; let i = index"
+            style="padding: 0 !important"
           >
-            <ion-item lines="none" class="produto">
-              <ion-thumbnail slot="start">
-                <ion-img src="data:image/jpeg;base64,{{ item?.imagem }}"></ion-img>
-              </ion-thumbnail>
+            <ion-row
+              *ngIf="item?.retiradas[0].tipoRetirada == 9997"
+              style="padding: 5px !important"
+            >
+              <ion-item lines="none" class="produto">
+                <ion-thumbnail slot="start">
+                  <ion-img src="data:image/jpeg;base64,{{ item?.imagem }}"></ion-img>
+                </ion-thumbnail>
 
-              <ion-grid>
-                <ion-row class="produtoRow">
-                  <ion-col size="8" class="produtoInformacao">
-                    <ion-row class="produtoDescri">
-                      {{ item.idProduto }} - {{ item.descricao }}
-                    </ion-row>
+                <ion-grid>
+                  <ion-row class="produtoRow">
+                    <ion-col size="8" class="produtoInformacao">
+                      <ion-row class="produtoDescri">
+                        {{ item.idProduto }} - {{ item.descricao }}
+                      </ion-row>
 
-                    <ion-row class="produtoPreco">
-                      {{ item.prcTotal | formatarString: 'VALOR' }}
-                    </ion-row>
+                      <ion-row class="produtoPreco">
+                        {{ item.prcTotal | formatarString: 'VALOR' }}
+                      </ion-row>
 
-                    <ion-row class="produtoPrecoUnidade" *ngIf="item.qtdTotal > 1">
-                      {{ item.prcUnitario | formatarString: 'VALOR' }} cada
-                    </ion-row>
-                  </ion-col>
+                      <ion-row class="produtoPrecoUnidade" *ngIf="item.qtdTotal > 1">
+                        {{ item.prcUnitario | formatarString: 'VALOR' }} cada
+                      </ion-row>
+                    </ion-col>
 
-                  <ion-col size="4" class="produtoManutencao">
-                    <ion-row
-                      class="
-                        produtoManutencaoTop
-                        ion-justify-content-center ion-align-items-center
-                      "
-                    >
-                      <ion-col class="ion-no-padding" size="12">
-                        <ion-button
-                          expand="full"
-                          fill="clear"
-                          color="dark"
-                          class="ion-no-margin"
-                          (click)="getProduto(item.idProduto)"
-                        >
-                          {{ item.qtdTotal }}
-                        </ion-button>
-                      </ion-col>
-                    </ion-row>
+                    <ion-col size="4" class="produtoManutencao">
+                      <ion-row
+                        class="
+                          produtoManutencaoTop
+                          ion-justify-content-center ion-align-items-center
+                        "
+                      >
+                        <ion-col class="ion-no-padding" size="12">
+                          <ion-button
+                            expand="full"
+                            fill="clear"
+                            color="dark"
+                            class="ion-no-margin"
+                            (click)="getProduto(item.idProduto)"
+                          >
+                            {{ item.qtdTotal }}
+                          </ion-button>
+                        </ion-col>
+                      </ion-row>
 
-                    <ion-row
-                      class="
-                        produtoManutencaoBottom
-                        ion-justify-content-center ion-align-items-center
-                      "
-                    >
-                      <ion-col class="ion-no-padding" size="12">
-                        <ion-button
-                          expand="full"
-                          fill="clear"
-                          color="dark"
-                          class="ion-no-margin"
-                          (click)="removerProduto(item)"
-                        >
-                          <ion-icon
-                            slot="icon-only"
-                            size="large"
-                            name="trash-bin-outline"
-                          ></ion-icon>
-                        </ion-button>
-                      </ion-col>
-                    </ion-row>
-                  </ion-col>
-                </ion-row>
-              </ion-grid>
-            </ion-item>
-          </ion-row>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-  </ion-list>
+                      <ion-row
+                        class="
+                          produtoManutencaoBottom
+                          ion-justify-content-center ion-align-items-center
+                        "
+                      >
+                        <ion-col class="ion-no-padding" size="12">
+                          <ion-button
+                            expand="full"
+                            fill="clear"
+                            color="dark"
+                            class="ion-no-margin"
+                            (click)="removerProduto(item)"
+                          >
+                            <ion-icon
+                              slot="icon-only"
+                              size="large"
+                              name="trash-bin-outline"
+                            ></ion-icon>
+                          </ion-button>
+                        </ion-col>
+                      </ion-row>
+                    </ion-col>
+                  </ion-row>
+                </ion-grid>
+              </ion-item>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-list>
+  </ng-template>
 </ion-content>
 
-<ion-footer>
+<ion-footer *ngIf="pedidoOBS | async as ped">
   <ion-toolbar>
     <ion-grid>
       <ion-row class="buttons">
@@ -265,22 +278,20 @@
       <ion-row *ngIf="showInfo" class="infos">
         <ion-col size="6" class="esquerda">
           <ion-row>
-            <ion-col
-              >Pedido ({{
-                pedido.qtdItensSacola | formatarString: 'FORMAT':'2'
-              }}):</ion-col
-            >
+            <ion-col>
+              <div *ngIf="totalItensOBS | async as total">Pedido ({{ total }}):</div>
+            </ion-col>
           </ion-row>
 
           <ion-row>
             <ion-col>Peso total:</ion-col>
           </ion-row>
 
-          <ion-row *ngIf="pedido.pedidoHeader.frete.valor > 0">
+          <ion-row *ngIf="ped.frete.valor > 0">
             <ion-col>Frete: </ion-col>
           </ion-row>
 
-          <ion-row *ngIf="pedido.pedidoHeader.descontoBrinde > 0">
+          <ion-row *ngIf="ped.descontoBrinde > 0">
             <ion-col>Brinde: </ion-col>
           </ion-row>
 
@@ -292,34 +303,25 @@
         <ion-col size="6" class="direita">
           <ion-row class="orderId">
             <ion-col>
-              {{
-                pedido.pedidoHeader.totpedido -
-                  pedido.pedidoHeader.frete.valor +
-                  pedido.pedidoHeader.descontoBrinde | formatarString: 'VALOR'
-              }}
+              {{ ped.totpedido - ped.frete.valor + ped.descontoBrinde | formatarString:
+              'VALOR' }}
             </ion-col>
           </ion-row>
 
           <ion-row>
-            <ion-col> {{ pedido.pedidoHeader.pesoTotal }} kg </ion-col>
+            <ion-col> {{ ped.pesoTotal }} kg </ion-col>
           </ion-row>
 
-          <ion-row *ngIf="pedido.pedidoHeader.frete.valor > 0">
-            <ion-col>
-              {{ pedido.pedidoHeader.frete.valor | formatarString: 'VALOR' }}
-            </ion-col>
+          <ion-row *ngIf="ped.frete.valor > 0">
+            <ion-col> {{ ped.frete.valor | formatarString: 'VALOR' }} </ion-col>
           </ion-row>
 
-          <ion-row *ngIf="pedido.pedidoHeader.descontoBrinde > 0">
-            <ion-col>
-              {{ pedido.pedidoHeader.descontoBrinde | formatarString: 'VALOR' }}
-            </ion-col>
+          <ion-row *ngIf="ped.descontoBrinde > 0">
+            <ion-col> {{ ped.descontoBrinde | formatarString: 'VALOR' }} </ion-col>
           </ion-row>
 
           <ion-row>
-            <ion-col>
-              {{ pedido.pedidoHeader.totpedido | formatarString: 'VALOR' }}
-            </ion-col>
+            <ion-col> {{ ped.totpedido | formatarString: 'VALOR' }} </ion-col>
           </ion-row>
         </ion-col>
       </ion-row>

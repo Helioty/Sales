@@ -304,9 +304,7 @@ export class PedidoService {
       take(1),
       tap({
         next: (paginationIt) => {
-          console.log('Pedido Itens Att: ', paginationIt.content);
-          this.pedidoItens.next(paginationIt.content);
-          this.qtdItensSacola.next(paginationIt.totalElements);
+          this.atualizaPedidoItems(paginationIt);
         },
       }),
       map((it) => it.content)
@@ -315,6 +313,62 @@ export class PedidoService {
 
   adicionarItemPedido(): Observable<any> {
     return this.http.post({} as any).pipe(take(1));
+  }
+
+  /**
+   * @author helio.souza
+   * @param pedidoItem
+   * @returns
+   */
+  adicionarItemPedidoRapido(pedidoItem: PedidoItem): Observable<PedidoItem[]> {
+    const empresa = localStorage.getItem('empresa');
+    const pedido = this.getPedidoNumero();
+    const url = `${ENV.WS_VENDAS}${API_URL}PedidoVendaItem/${empresa}/${pedido}/addfast`;
+    return this.http
+      .post<{ items: Pagination<PedidoItem>; pedido: PedidoHeader }, PedidoItem>({
+        url,
+        body: pedidoItem,
+      })
+      .pipe(
+        take(1),
+        tap({
+          next: (response) => {
+            this.atualizaPedidoItems(response.items);
+            this.atualizaPedidoHeader(response.pedido);
+          },
+        }),
+        map((response) => response.items.content)
+      );
+  }
+
+  /**
+   * @author helio.souza
+   * @param paginationIt
+   */
+  atualizaPedidoItems(paginationIt: Pagination<PedidoItem>): void {
+    console.log('Pedido Itens Att: ', paginationIt.content);
+    this.pedidoItens.next(paginationIt.content);
+    this.qtdItensSacola.next(paginationIt.totalElements);
+  }
+
+  /**
+   * @author helio.souza
+   * @param codigoProduto Codigo do produto a ser removido do pedido.
+   * @returns
+   */
+  removeItemPedido(codigoProduto: string): Observable<any> {
+    const empresa = localStorage.getItem('empresa');
+    const pedido = this.getPedidoNumero();
+    const url = `${ENV.WS_VENDAS}${API_URL}PedidoVendaItem/${empresa}/${pedido}/${codigoProduto}`;
+    return this.http.post<any, any>({ url, body: {} }).pipe(
+      take(1),
+      tap({
+        next: (a) => {
+          this.common.showToast(a.msg);
+          console.log('Remove Produto Response: ', a.msg);
+        },
+      })
+    );
   }
 
   // by Hélio 12/02/2020
