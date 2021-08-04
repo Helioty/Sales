@@ -28,7 +28,7 @@ export class PedidoSacolaPage implements OnInit {
 
   constructor(
     public readonly scanner: ScannerService,
-    private dataService: DataService,
+    private readonly dataService: DataService,
     private readonly common: CommonService,
     public readonly pedidoService: PedidoService,
     private readonly produtoService: ProdutoService,
