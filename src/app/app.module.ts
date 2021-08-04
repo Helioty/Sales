@@ -6,8 +6,6 @@ import { RouteReuseStrategy } from '@angular/router';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { AndroidFullScreen } from '@ionic-native/android-full-screen/ngx';
 import { AppVersion } from '@ionic-native/app-version/ngx';
-import { Geolocation } from '@ionic-native/geolocation/ngx';
-import { Network } from '@ionic-native/network/ngx';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
@@ -36,11 +34,9 @@ console.log(environment.production ? 'Production' : 'Development');
   providers: [
     AndroidFullScreen,
     AppConfigService,
+    SplashScreen,
     AppVersion,
     StatusBar,
-    SplashScreen,
-    Network,
-    Geolocation,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
   ],
   bootstrap: [AppComponent],

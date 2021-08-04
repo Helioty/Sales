@@ -194,7 +194,12 @@ export class CommonService {
       buttons: buttons,
     });
     alert.onWillDismiss().then(() => this.scanner.focusPlay());
-    await alert.present();
+    await alert.present().then(() => {
+      const firstInput: HTMLInputElement = document.querySelector('ion-alert input');
+      if (firstInput) {
+        firstInput.focus();
+      }
+    });
   }
 
   /**

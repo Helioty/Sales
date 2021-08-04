@@ -51,7 +51,7 @@ export class PedidoService {
   public tipoRetiradaIndex: number;
 
   // Produtos
-  readonly qtdItensSacola = new BehaviorSubject<number>(null);
+  readonly qtdItensSacola = new BehaviorSubject<number>(0);
   readonly pedidoItens = new BehaviorSubject<PedidoItem[]>([]);
   // Produtos por Paginação.
   readonly produtoPorPagina = 10;
@@ -119,6 +119,7 @@ export class PedidoService {
 
   /**
    * @author helio.souza
+   * @description Cria um novo pedido.
    */
   criarPedido(): Observable<PedidoHeader> {
     const empresa = localStorage.getItem('empresa') as string;
@@ -132,6 +133,21 @@ export class PedidoService {
         },
       })
     );
+  }
+
+  async reabrirPedido(pedido: PedidoHeader): Promise<void> {
+    await this.common.showLoader();
+    this.atualizaPedidoHeader(pedido);
+
+    // if (pedido.cgccpf_cliente !== null && pedido.cgccpf_cliente.length > 10) {
+    // this.pedidoService.docCliente = pedido.cgccpf_cliente;
+    // this.pedidoService.clientSelected = true;
+    // await this.reGetCliente(pedido.cgccpf_cliente);
+    // }
+
+    this.navControl.navigateRoot(['/pedido-atalhos']).then(() => {
+      this.common.loading.dismiss();
+    });
   }
 
   /**
@@ -397,25 +413,27 @@ export class PedidoService {
     );
   }
 
-  // by Hélio 12/02/2020
+  /**
+   * @author helio.souza
+   * @description Exibe um alert para sair do pedido, se o pedido não conter produtos o mesmo será apagado.
+   */
   public sairPedido(): void {
-    const mensagem = this.qtdItensSacola.value
+    const mensagem = !this.qtdItensSacola.value
       ? 'Pedidos sem itens serão removidos permanentemente!'
       : '';
     const handler = () => {
-      if (this.qtdItensSacola.value) {
+      if (!this.qtdItensSacola.value) {
         this.apagarPedido(this.getPedidoNumero()).subscribe({
           next: () => {
             this.limpaDadosPedido();
             this.navControl.navigateRoot('/pedido-lista');
-            console.clear();
           },
         });
       } else {
         this.limpaDadosPedido();
         this.navControl.navigateRoot('/pedido-lista');
-        console.clear();
       }
+      console.clear();
     };
     const props = {
       titulo: 'Deseja realmente sair do pedido?',

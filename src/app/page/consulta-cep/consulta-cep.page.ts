@@ -1,10 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Geolocation } from '@ionic-native/geolocation/ngx';
-import { CommonService } from 'src/app/services/common/common.service';
-import { IonSearchbar, IonSlides, MenuController, NavController } from '@ionic/angular';
-import { DataService } from 'src/app/services/data/data.service';
-import { CamposParaNovoEndereco } from 'src/app/class/cliente';
 import { ActivatedRoute } from '@angular/router';
+import { IonSearchbar, IonSlides, MenuController, NavController } from '@ionic/angular';
+import { CamposParaNovoEndereco } from 'src/app/class/cliente';
+import { CommonService } from 'src/app/services/common/common.service';
+import { DataService } from 'src/app/services/data/data.service';
 
 declare var google: any;
 
@@ -49,7 +48,6 @@ export class ConsultaCepPage implements OnInit {
   constructor(
     private router: ActivatedRoute,
     public common: CommonService,
-    private geolocation: Geolocation,
     private menu: MenuController,
     private navControl: NavController,
     private data: DataService
