@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { MenuController, NavController, Platform } from '@ionic/angular';
+import { NavigationExtras } from '@angular/router';
+import { MenuController, NavController } from '@ionic/angular';
 import { CommonService } from 'src/app/services/common/common.service';
 import { PedidoService } from 'src/app/services/pedido/pedido.service';
-import { BaseService } from 'src/app/services/http/base.service';
-import { NavigationExtras } from '@angular/router';
 
 @Component({
   selector: 'app-pedido-retirada',
@@ -36,7 +35,6 @@ export class PedidoRetiradaPage implements OnInit {
    */
   async openPesquisaProduto(tipoRetiradaIndex: number): Promise<void> {
     // this.pedidoService.sistuacaoPedido = 'A';
-    // this.pedidoService.tipoRetirada = this.pedidoService.opcaoRetirada[tipoRetiradaIndex];
     await this.common.showLoader();
     this.pedidoService
       .alterarTipoRetirada(this.pedidoService.getPedidoNumero(), tipoRetiradaIndex)

@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { API_URL, ENV } from 'src/app/config/app.config.service';
 import { BaseService } from './../http/base.service';
-import { Produto } from './produto.interface';
+import { IProduto } from './produto.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -17,7 +17,7 @@ export class ProdutoService {
    * @param codigo - Codigo do produto.
    * @return Objeto do Produto formatado.
    */
-  getProdutoByCodigo(codigo: string): Observable<Produto[]> {
+  getProdutoByCodigo(codigo: string): Observable<IProduto[]> {
     const empresa = localStorage.getItem('empresa') as string;
     const link = `${ENV.WS_PRODUTO}${API_URL}list/${empresa}?filter=${codigo}`;
     return this.http
@@ -31,7 +31,7 @@ export class ProdutoService {
    * @param produtos Objetos do serviço JAVA.
    * @returns Produtos formatados.
    */
-  formataProdutos(produtos: any[]): Produto[] {
+  formataProdutos(produtos: any[]): IProduto[] {
     return produtos.map((produto) => {
       return {
         avariadoStatus: produto.avariadoStatus,
@@ -71,7 +71,7 @@ export class ProdutoService {
         totalElements: produto.totalElements,
         unidade: produto.unidade,
         valorParcela: produto.valorParcela,
-      } as Produto;
+      } as IProduto;
     });
   }
 

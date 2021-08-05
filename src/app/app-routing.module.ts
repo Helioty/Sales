@@ -62,15 +62,15 @@ const routes: Routes = [
       ),
     canActivate: [AuthGuard],
   },
+  {
+    path: 'produto-pesquisa',
+    loadChildren: () =>
+      import('./page/produto-pesquisa/produto-pesquisa.module').then(
+        (m) => m.ProdutoPesquisaPageModule
+      ),
+    canActivate: [AuthGuard],
+  },
 
-  // {
-  //   path: 'produto-pesquisa',
-  //   loadChildren: () =>
-  //     import('./page/produto-pesquisa/produto-pesquisa.module').then(
-  //       (m) => m.ProdutoPesquisaPageModule
-  //     ),
-  //   canActivate: [AuthGuard],
-  // },
   // {
   //   path: 'produto',
   //   loadChildren: () =>

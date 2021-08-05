@@ -1,4 +1,4 @@
-export interface Produto {
+export interface IProduto {
   avariadoStatus: string;
   cgcFornecedor: string;
   codProduto: string;

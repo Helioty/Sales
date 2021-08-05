@@ -11,26 +11,34 @@
 
       <ion-button (click)="adicionarCartaoPedido()">
         <ion-icon name="card"></ion-icon>
-        <ion-badge color="success" class="badge-position" *ngIf="pedidoS.cardSelected"
-          >✔</ion-badge
+        <ion-badge
+          color="success"
+          class="badge-position"
+          *ngIf="(pedidoOBS | async)?.cartaoPedido"
         >
+          ✔
+        </ion-badge>
       </ion-button>
 
       <ion-button (click)="openClientePage()">
         <ion-icon name="person"></ion-icon>
-        <ion-badge color="success" class="badge-position" *ngIf="pedidoS.clientSelected"
-          >✔</ion-badge
+        <ion-badge
+          color="success"
+          class="badge-position"
+          *ngIf="(pedidoOBS | async)?.cgccpf_cliente"
         >
+          ✔
+        </ion-badge>
       </ion-button>
 
       <ion-button
-        *ngIf="pedidoS.qtdItensSacola > 0"
+        *ngIf="totalItensOBS | async as total"
         [routerLink]="['/pedido-sacola']"
         routerDirection="forward"
       >
         <ion-icon name="basket"></ion-icon>
         <ion-badge color="fc-cinza-vermelho" class="badge-position">
-          {{ pedidoS.qtdItensSacola }}
+          {{ total }}
         </ion-badge>
       </ion-button>
     </ion-buttons>
@@ -52,15 +60,24 @@
       *ngIf="pesquisando"
     ></ion-spinner>
   </ion-toolbar>
+
+  <ion-toolbar color="primary">
+    <form [formGroup]="formPesquisa" (ngSubmit)="submitFormPesquisa()">
+      <ion-searchbar
+        formControlName="data"
+        (ionFocus)="scanner.focusPause()"
+        (ionBlur)="scanner.focusPlay()"
+      ></ion-searchbar>
+    </form>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <input
-    id="scanner"
     appHideKeyboard
     class="scanner"
-    [(ngModel)]="valorScanner"
-    (keyup.enter)="scaneado($event)"
+    [(ngModel)]="scanner.valorScanner"
+    (keyup.enter)="scaneado($event.target.value)"
   />
 
   <ion-grid
@@ -87,7 +104,7 @@
     </ion-row>
   </ion-grid>
 
-  <ion-grid [hidden]="pesquisaDetalhada" *ngIf="pesquisaItems.length != 0">
+  <!-- <ion-grid [hidden]="pesquisaDetalhada" *ngIf="pesquisaItems.length != 0">
     <ion-row>
       <ion-col *ngFor="let item of pesquisaItems; let i = index">
         <ion-item lines="none" class="produto" (click)="goToProdutoPage(item)">
@@ -124,13 +141,13 @@
                     </ion-button>
                   </ion-col>
                 </ion-row>
-              </ion-col> -->
+              </ion-col> --
             </ion-row>
           </ion-grid>
         </ion-item>
       </ion-col>
     </ion-row>
-  </ion-grid>
+  </ion-grid> -->
 
   <!-- Grid pesquisa detalhada -->
   <ion-grid [hidden]="!pesquisaDetalhada" class="pesquisa-detalhada-grid">

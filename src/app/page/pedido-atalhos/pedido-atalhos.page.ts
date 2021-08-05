@@ -13,7 +13,7 @@ import { ScannerService } from 'src/app/services/scanner/scanner.service';
   styleUrls: ['./pedido-atalhos.page.scss'],
 })
 export class PedidoAtalhosPage implements OnInit {
-  @ViewChild(IonSlides) readonly slides: IonSlides;
+  @ViewChild(IonSlides, { static: true }) readonly slides: IonSlides;
   public pedidoOBS: Observable<PedidoHeader>;
   public totalItensOBS: Observable<number>;
 
