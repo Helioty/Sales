@@ -1,8 +1,16 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { NavigationExtras } from '@angular/router';
-import { IonInput, NavController, IonSearchbar } from '@ionic/angular';
+import { IonInput, IonSearchbar, NavController, IonInfiniteScroll } from '@ionic/angular';
 import { Observable } from 'rxjs';
+import {
+  debounceTime,
+  distinctUntilChanged,
+  filter,
+  map,
+  switchMap,
+  tap,
+} from 'rxjs/operators';
 import { CommonService } from 'src/app/services/common/common.service';
 import { PedidoHeader } from 'src/app/services/pedido/pedido.interface';
 import { PedidoService } from 'src/app/services/pedido/pedido.service';
@@ -16,44 +24,30 @@ import { ScannerService } from 'src/app/services/scanner/scanner.service';
   styleUrls: ['./produto-pesquisa.page.scss'],
 })
 export class ProdutoPesquisaPage implements OnInit {
-  @ViewChild('ip1', { static: true }) input1: IonInput;
-  @ViewChild('ip2', { static: true }) input2: IonInput;
-  @ViewChild('ip3', { static: true }) input3: IonInput;
-  @ViewChild('ip4', { static: true }) input4: IonInput;
-  @ViewChild('ip5', { static: true }) input5: IonInput;
-
+  @ViewChild(IonInfiniteScroll) readonly infiniteScroll: IonInfiniteScroll;
   @ViewChild(IonSearchbar, { static: true }) readonly searchbar: IonSearchbar;
 
   public pedidoOBS: Observable<PedidoHeader>;
   public totalItensOBS: Observable<number>;
 
-  // controle de exibição
-  public pesquisaDetalhada = false;
-  public pesquisando = false;
-  public foco = false;
-  public inputFoco = 0;
-
-  // propriedades da pesquisa
-  public soComEstoque = true;
-  public p1 = 1;
-  public p2 = 20;
-
-  public pesquisaItems: IProduto[] = [];
-
-  formPesquisa: FormGroup;
+  public pesquisaItems: Observable<IProduto[]>;
+  public showLoadingSpinner = false;
+  readonly fieldPesquisa = new FormControl('', [
+    Validators.required,
+    Validators.minLength(3),
+  ]);
 
   constructor(
     public readonly scanner: ScannerService,
     private readonly common: CommonService,
     public readonly pedidoService: PedidoService,
-    public readonly produtoService: ProdutoService,
-    private readonly navControl: NavController,
-    private readonly formBuilder: FormBuilder
+    private readonly produtoService: ProdutoService,
+    private readonly navControl: NavController
   ) {}
 
   ngOnInit(): void {
     console.log('Produto Pesquisa OnInit');
-    this.setupFormPesquisa();
+    this.setPesquisa();
   }
 
   ionViewWillEnter(): void {
@@ -63,6 +57,7 @@ export class ProdutoPesquisaPage implements OnInit {
 
   ionViewDidEnter(): void {
     this.common.goToFullScreen();
+    this.setSearchbarFocus();
   }
 
   ionViewWillLeave(): void {
@@ -73,21 +68,55 @@ export class ProdutoPesquisaPage implements OnInit {
 
   /**
    * @author helio.souza
+   * @description Pesquisa reativa.
    */
-  setupFormPesquisa(): void {
-    this.formPesquisa = this.formBuilder.group({
-      data: ['', [Validators.required, Validators.minLength(3)]],
-    });
+  setPesquisa(): void {
+    this.pesquisaItems = this.fieldPesquisa.valueChanges.pipe(
+      map((value: string) => value.trim()),
+      filter((value) => value.length > 1),
+      debounceTime(300),
+      distinctUntilChanged(),
+      tap({
+        next: (pesquisa) => {
+          console.log(`Valor pesquisado: ${pesquisa}`);
+        },
+      }),
+      switchMap((value) => this.produtoService.getProdutoByCodigo(value)),
+      tap({
+        next: (result) => {
+          console.log('Resultado da pesquisa: ', result);
+        },
+      })
+    );
+  }
+
+  /**
+   * @author helio.souza
+   * @param infinite IonInfinite Element.
+   */
+  doInfinite(infinit: IonInfiniteScroll) {}
+
+  log(l: any) {
+    console.log(l);
+  }
+
+  /**
+   * @author helio.souza
+   * @param delay
+   */
+  setSearchbarFocus(delay = 500): void {
+    setTimeout(() => {
+      this.searchbar.setFocus();
+    }, delay);
   }
 
   /**
    * @author helio.souza
    */
-  submitFormPesquisa(): void {
-    console.log(this.formPesquisa);
-    if (this.formPesquisa.valid) {
-      console.log('Pesquisando...');
-    }
+  blurSearchBar(): void {
+    try {
+      this.searchbar.getInputElement().then((search) => search.blur());
+    } catch (error) {}
   }
 
   scaneado(value: string): void {
@@ -122,66 +151,56 @@ export class ProdutoPesquisaPage implements OnInit {
     this.navControl.navigateForward(['/cliente'], navigationExtras);
   }
 
-  showPesquisa() {
-    this.pesquisaDetalhada = !this.pesquisaDetalhada;
-  }
+  // showPesquisa() {
+  //   this.pesquisaDetalhada = !this.pesquisaDetalhada;
+  // }
 
-  setInputComFoco(acao: string) {
-    let input = '';
-    if (acao === 'mais') {
-      this.inputFoco++;
-      input = this.inputFoco.toString();
-    } else if (acao === 'menos') {
-      this.inputFoco--;
-      input = this.inputFoco.toString();
-    }
+  // setInputComFoco(acao: string) {
+  //   let input = '';
+  //   if (acao === 'mais') {
+  //     this.inputFoco++;
+  //     input = this.inputFoco.toString();
+  //   } else if (acao === 'menos') {
+  //     this.inputFoco--;
+  //     input = this.inputFoco.toString();
+  //   }
 
-    switch (input) {
-      case '1':
-        this.inputFoco = 1;
-        this.input1.setFocus();
-        break;
+  //   switch (input) {
+  //     case '1':
+  //       this.inputFoco = 1;
+  //       this.input1.setFocus();
+  //       break;
 
-      case '2':
-        this.inputFoco = 2;
-        this.input2.setFocus();
-        break;
+  //     case '2':
+  //       this.inputFoco = 2;
+  //       this.input2.setFocus();
+  //       break;
 
-      case '3':
-        this.inputFoco = 3;
-        this.input3.setFocus();
-        break;
+  //     case '3':
+  //       this.inputFoco = 3;
+  //       this.input3.setFocus();
+  //       break;
 
-      case '4':
-        this.inputFoco = 4;
-        this.input4.setFocus();
-        break;
+  //     case '4':
+  //       this.inputFoco = 4;
+  //       this.input4.setFocus();
+  //       break;
 
-      case '5':
-        this.inputFoco = 5;
-        this.input5.setFocus();
-        break;
+  //     case '5':
+  //       this.inputFoco = 5;
+  //       this.input5.setFocus();
+  //       break;
 
-      default:
-        this.inputFoco = 0;
-        this.common.goToFullScreen();
-        console.log('case-default');
-        break;
-    }
-  }
+  //     default:
+  //       this.inputFoco = 0;
+  //       this.common.goToFullScreen();
+  //       console.log('case-default');
+  //       break;
+  //   }
+  // }
 
-  async pesquisar() {
-    // const value = this.input1.value.toString();
-    // let codigo: number;
-    // if (value === '' || value === undefined) {
-    //   codigo = null;
-    // } else {
-    //   codigo = parseInt(value);
-    // }
-    // this.pesquisando = true;
-    // await this.pesquisa
+  pesquisar(value: string): Observable<IProduto[]> {
     //   .getPesquisaDetalhada({
-    //     codEmpresa: localStorage.getItem('empresa'),
     //     codigo,
     //     descricao: this.input2.value.toString(),
     //     fornecedor: this.input3.value.toString(),
@@ -192,15 +211,10 @@ export class ProdutoPesquisaPage implements OnInit {
     //     soComEstoque: this.soComEstoque,
     //   })
     //   .then((result: any) => {
-    //     console.log(result);
     //     this.pesquisaItems = result.content;
     //     this.pesquisaDetalhada = false;
-    //     this.pesquisando = false;
     //   })
-    //   .catch((err) => {
-    //     this.pesquisando = false;
-    //     console.log(err);
-    //   });
+    return this.produtoService.getProdutoByCodigo(value);
   }
 
   goToProdutoPage(produto: IProduto) {

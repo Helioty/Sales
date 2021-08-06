@@ -1,71 +1,57 @@
-// .header-md:after {
-//     height: 0 !important;
-//     background-image: none !important;
-// }
-
-.scanner {
-    position: fixed;
-    top: -50px !important;
-    height: 0.1px !important;
-}
-
 ion-content {
-
-    ion-grid.noItens {
-        position: fixed;
-        height: 100%;
-        width: 100%;
-        
-        .topHeading {
-            h3 {
-                text-align: center;
-                font-size: 18px;
-                color: #3f3f3f;
-            }
-        }
-        .noImg {
-            text-align: center;
-            img {
-                width: 200px;
-                height: auto;
-            }
-        }
-        .bottomHeading {
-            h3 {
-                text-align: center;
-                font-size: 18px;
-                color: #8f8f8f;
-                font-weight: normal;
-            }
-        }
-    }
-
-    ion-grid.pesquisa-detalhada-grid {
-
-        ion-row.pesquisa-input-row {
-            ion-col {
-                ion-item {
-                    border: 1px solid silver;
-                    border-radius: 6px;
-                    overflow: hidden;
-                }
-            }
-        }
-
-        ion-row.pesquisa-button-row {
-            ion-col {
-                ion-button {
-                    width: 100%;
-                    margin: 4px 0 !important;
-                }
-            }
-        }
-    }
+  --background: #f4f4f4;
 }
 
-ion-footer {
+ion-list {
+  width: 100%;
+  background: transparent;
 
-    ion-grid.grid-foco-change {
-        padding: 0 !important;
+  ion-img {
+    padding: 16px 0px;
+    max-width: 75px !important;
+    margin: 0 !important;
+  }
+
+  .codigo-produto {
+    font-size: 13px;
+    font-weight: bold;
+  }
+
+  .descricao {
+    font-size: 13px;
+  }
+
+  .endereco {
+    font-size: 15px;
+    font-weight: bold;
+  }
+}
+
+ion-grid.noItens {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+
+  .topHeading {
+    h3 {
+      text-align: center;
+      font-size: 18px;
+      color: #3f3f3f;
     }
+  }
+  .noImg {
+    text-align: center;
+    img {
+      width: 200px;
+      height: auto;
+    }
+  }
+  .bottomHeading {
+    h3 {
+      text-align: center;
+      font-size: 18px;
+      color: #8f8f8f;
+      font-weight: normal;
+    }
+  }
 }

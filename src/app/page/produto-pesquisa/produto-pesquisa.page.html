@@ -1,13 +1,13 @@
 <ion-header>
-  <ion-toolbar color="primary" [hidden]="pesquisaDetalhada">
+  <ion-toolbar color="primary">
     <ion-buttons slot="start">
       <ion-back-button defaultHref="pedido-atalhos"></ion-back-button>
     </ion-buttons>
 
     <ion-buttons slot="end">
-      <ion-button (click)="showPesquisa()">
+      <!-- <ion-button (click)="showPesquisa()">
         <ion-icon name="search-sharp"></ion-icon>
-      </ion-button>
+      </ion-button> -->
 
       <ion-button (click)="adicionarCartaoPedido()">
         <ion-icon name="card"></ion-icon>
@@ -44,31 +44,14 @@
     </ion-buttons>
   </ion-toolbar>
 
-  <ion-toolbar color="primary" [hidden]="!pesquisaDetalhada">
-    <ion-buttons slot="start">
-      <ion-button (click)="pesquisaDetalhada = false">
-        <ion-icon name="arrow-back-sharp"></ion-icon>
-      </ion-button>
-    </ion-buttons>
-
-    <ion-title>Pesquisa Detalhada</ion-title>
-
-    <ion-spinner
-      slot="end"
-      color="cinza"
-      style="margin-right: 10px"
-      *ngIf="pesquisando"
-    ></ion-spinner>
-  </ion-toolbar>
-
   <ion-toolbar color="primary">
-    <form [formGroup]="formPesquisa" (ngSubmit)="submitFormPesquisa()">
-      <ion-searchbar
-        formControlName="data"
-        (ionFocus)="scanner.focusPause()"
-        (ionBlur)="scanner.focusPlay()"
-      ></ion-searchbar>
-    </form>
+    <ion-searchbar
+      [formControl]="fieldPesquisa"
+      placeholder="Pesquise um produto!"
+      (ionFocus)="scanner.focusPause()"
+      (ionBlur)="scanner.focusPlay()"
+      (keyup.enter)="blurSearchBar()"
+    ></ion-searchbar>
   </ion-toolbar>
 </ion-header>
 
@@ -80,29 +63,51 @@
     (keyup.enter)="scaneado($event.target.value)"
   />
 
-  <ion-grid
-    [hidden]="pesquisaDetalhada"
-    *ngIf="pesquisaItems.length == 0"
-    class="noItens"
+  <ion-list
+    lines="none"
+    *ngIf="(pesquisaItems | async) as itemList; else noProduct"
   >
-    <ion-row class="topHeading">
-      <ion-col>
-        <h3>Escaneie um produto ou pesquise em nosso catálogo</h3>
-      </ion-col>
-    </ion-row>
+    <ion-card *ngFor="let produto of itemList">
+      <ion-item (click)="log(produto)">
+        <ion-img
+          slot="start"
+          src="data:image/jpeg;base64,{{ produto?.imagem }}"
+        ></ion-img>
 
-    <ion-row class="noImg">
-      <ion-col>
-        <img src="assets/images/08-catalogo/pedido-nao-encontrado.png" />
-      </ion-col>
-    </ion-row>
+        <ion-card-content>
+          <ion-row class="codigo-produto"> {{ produto.codigodigitoembalagem }} </ion-row>
+          <ion-row class="descricao"> {{ produto?.descricao }} </ion-row>
+          <ion-row class="endereco"> </ion-row>
+        </ion-card-content>
+      </ion-item>
+    </ion-card>
+  </ion-list>
 
-    <ion-row class="bottomHeading">
-      <ion-col>
-        <h3>Sem resultados para exibir...</h3>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+  <ng-template #noProduct>
+    <ion-grid class="noItens">
+      <ion-row class="topHeading">
+        <ion-col>
+          <h3>Escaneie um produto ou pesquise em nosso catálogo</h3>
+        </ion-col>
+      </ion-row>
+
+      <ion-row class="noImg">
+        <ion-col>
+          <img src="assets/images/08-catalogo/pedido-nao-encontrado.png" />
+        </ion-col>
+      </ion-row>
+
+      <ion-row class="bottomHeading">
+        <ion-col>
+          <h3>Sem resultados para exibir...</h3>
+        </ion-col>
+      </ion-row>
+
+      <ion-row class="ion-justify-content-center">
+        <ion-spinner></ion-spinner>
+      </ion-row>
+    </ion-grid>
+  </ng-template>
 
   <!-- <ion-grid [hidden]="pesquisaDetalhada" *ngIf="pesquisaItems.length != 0">
     <ion-row>
@@ -150,9 +155,9 @@
   </ion-grid> -->
 
   <!-- Grid pesquisa detalhada -->
-  <ion-grid [hidden]="!pesquisaDetalhada" class="pesquisa-detalhada-grid">
+  <!-- <ion-grid [hidden]="!pesquisaDetalhada" class="pesquisa-detalhada-grid">
     <ion-row class="pesquisa-input-row">
-      <!-- Codigo -->
+      <!-- Codigo --
       <ion-col size="12" class="pesquisa-input-col">
         <ion-item lines="none">
           <ion-label position="stacked">Codigo</ion-label>
@@ -166,7 +171,7 @@
         </ion-item>
       </ion-col>
 
-      <!-- Descrição -->
+      <!-- Descrição --
       <ion-col size="12" class="pesquisa-input-col">
         <ion-item lines="none">
           <ion-label position="stacked">Descrição</ion-label>
@@ -180,7 +185,7 @@
         </ion-item>
       </ion-col>
 
-      <!-- Fornecedor -->
+      <!-- Fornecedor --
       <ion-col size="12" class="pesquisa-input-col">
         <ion-item lines="none">
           <ion-label position="stacked">Fornecedor</ion-label>
@@ -194,7 +199,7 @@
         </ion-item>
       </ion-col>
 
-      <!-- Modelo -->
+      <!-- Modelo --
       <ion-col size="6" class="pesquisa-input-col">
         <ion-item lines="none">
           <ion-label position="stacked">Modelo</ion-label>
@@ -208,7 +213,7 @@
         </ion-item>
       </ion-col>
 
-      <!-- Linha -->
+      <!-- Linha --
       <ion-col size="6" class="pesquisa-input-col">
         <ion-item lines="none">
           <ion-label position="stacked">Linha</ion-label>
@@ -229,13 +234,21 @@
       </ion-col>
 
       <ion-col size="6">
-        <ion-button (click)="pesquisar()" color="fc-button-green">PESQUISAR</ion-button>
+        <ion-button (click)="pesquisar('')" color="fc-button-green">PESQUISAR</ion-button>
       </ion-col>
     </ion-row>
-  </ion-grid>
+  </ion-grid> -->
+
+  <ion-infinite-scroll (ionInfinite)="doInfinite($event.target)">
+    <ion-infinite-scroll-content
+      loadingSpinner="circles"
+      loadingText="Carregando Produtos..."
+    >
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 </ion-content>
 
-<ion-footer>
+<!-- <ion-footer>
   <ion-grid [hidden]="!pesquisaDetalhada" class="grid-foco-change">
     <ion-row>
       <ion-col size="6">
@@ -258,4 +271,4 @@
       </ion-col>
     </ion-row>
   </ion-grid>
-</ion-footer>
+</ion-footer> -->

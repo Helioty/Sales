@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import { API_URL, ENV } from 'src/app/config/app.config.service';
+import { Pagination } from 'src/app/page/pedido-lista/pedido-lista.interface';
 import { BaseService } from './../http/base.service';
 import { IProduto } from './produto.interface';
 
@@ -20,9 +21,28 @@ export class ProdutoService {
   getProdutoByCodigo(codigo: string): Observable<IProduto[]> {
     const empresa = localStorage.getItem('empresa') as string;
     const link = `${ENV.WS_PRODUTO}${API_URL}list/${empresa}?filter=${codigo}`;
-    return this.http
-      .get<any>(link)
-      .pipe(map((result) => this.formataProdutos(result.content)));
+    return this.http.get<any>(link).pipe(
+      tap({ next: (a) => console.log('Pagination Item: ', a) }),
+      map((result) => this.formataProdutos(result.content))
+    );
+  }
+
+  /**
+   * @author helio.souza
+   * @description Retorna produto usando o codigo. Serviço JAVA.
+   * @param codigo - Codigo do produto.
+   * @return Objeto do Produto formatado.
+   */
+  getProdutoPagination(codigo: string): Observable<Pagination<IProduto>> {
+    const empresa = localStorage.getItem('empresa') as string;
+    const link = `${ENV.WS_PRODUTO}${API_URL}list/${empresa}?filter=${codigo}`;
+    return this.http.get<Pagination<any>>(link).pipe(
+      tap({ next: (a) => console.log('Pagination Item: ', a) }),
+      map((result) => {
+        result.content = this.formataProdutos(result.content);
+        return result as Pagination<IProduto>;
+      })
+    );
   }
 
   /**
