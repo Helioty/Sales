@@ -1,14 +1,15 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { FormControl, Validators } from '@angular/forms';
 import { NavigationExtras } from '@angular/router';
-import { IonInput, IonSearchbar, NavController, IonInfiniteScroll } from '@ionic/angular';
-import { Observable } from 'rxjs';
+import { IonInfiniteScroll, IonSearchbar, NavController } from '@ionic/angular';
+import { Observable, Subscription } from 'rxjs';
 import {
   debounceTime,
   distinctUntilChanged,
   filter,
   map,
   switchMap,
+  take,
   tap,
 } from 'rxjs/operators';
 import { CommonService } from 'src/app/services/common/common.service';
@@ -17,30 +18,39 @@ import { PedidoService } from 'src/app/services/pedido/pedido.service';
 import { IProduto } from 'src/app/services/produto/produto.interface';
 import { ProdutoService } from 'src/app/services/produto/produto.service';
 import { ScannerService } from 'src/app/services/scanner/scanner.service';
+import { Pagination } from '../pedido-lista/pedido-lista.interface';
 
 @Component({
   selector: 'app-produto-pesquisa',
   templateUrl: './produto-pesquisa.page.html',
   styleUrls: ['./produto-pesquisa.page.scss'],
 })
-export class ProdutoPesquisaPage implements OnInit {
+export class ProdutoPesquisaPage implements OnInit, OnDestroy {
   @ViewChild(IonInfiniteScroll) readonly infiniteScroll: IonInfiniteScroll;
   @ViewChild(IonSearchbar, { static: true }) readonly searchbar: IonSearchbar;
 
+  // Dados do Pedido.
   public pedidoOBS: Observable<PedidoHeader>;
   public totalItensOBS: Observable<number>;
 
-  public pesquisaItems: Observable<IProduto[]>;
   public showLoadingSpinner = false;
+
+  // Dados da Pesquisa reativa.
   readonly fieldPesquisa = new FormControl('', [
     Validators.required,
     Validators.minLength(3),
   ]);
+  private fieldSub: Subscription;
+
+  // Dados da Pesquisa e Paginação
+  public pagination: Pagination<IProduto>;
+  private pesquisado = '';
+  private page = 1;
 
   constructor(
     public readonly scanner: ScannerService,
     private readonly common: CommonService,
-    public readonly pedidoService: PedidoService,
+    private readonly pedidoService: PedidoService,
     private readonly produtoService: ProdutoService,
     private readonly navControl: NavController
   ) {}
@@ -48,6 +58,8 @@ export class ProdutoPesquisaPage implements OnInit {
   ngOnInit(): void {
     console.log('Produto Pesquisa OnInit');
     this.setPesquisa();
+    this.pedidoOBS = this.pedidoService.getPedidoAtivo();
+    this.totalItensOBS = this.pedidoService.getTotalItensOBS();
   }
 
   ionViewWillEnter(): void {
@@ -66,35 +78,88 @@ export class ProdutoPesquisaPage implements OnInit {
 
   ionViewDidLeave(): void {}
 
+  ngOnDestroy(): void {
+    this.fieldSub.unsubscribe();
+  }
+
   /**
    * @author helio.souza
    * @description Pesquisa reativa.
    */
   setPesquisa(): void {
-    this.pesquisaItems = this.fieldPesquisa.valueChanges.pipe(
-      map((value: string) => value.trim()),
-      filter((value) => value.length > 1),
-      debounceTime(300),
-      distinctUntilChanged(),
-      tap({
-        next: (pesquisa) => {
-          console.log(`Valor pesquisado: ${pesquisa}`);
-        },
-      }),
-      switchMap((value) => this.produtoService.getProdutoByCodigo(value)),
-      tap({
-        next: (result) => {
-          console.log('Resultado da pesquisa: ', result);
-        },
-      })
-    );
+    this.fieldSub = this.fieldPesquisa.valueChanges
+      .pipe(
+        map((value: string) => value.trim()),
+        filter((value) => value.length > 1),
+        debounceTime(300),
+        distinctUntilChanged(),
+        switchMap((value) => this.pesquisar(value)),
+        map((response) => response.content)
+      )
+      .subscribe();
+  }
+
+  /**
+   * @author helio.souza
+   * @param value Dado a ser pesquisado.
+   * @returns
+   */
+  pesquisar(value: string): Observable<Pagination<IProduto>> {
+    return this.produtoService
+      .getProdutoPagination(value, this.pesquisado === value ? this.page + 1 : 1)
+      .pipe(
+        map((response) => this.mapPagination(response, value)),
+        tap({
+          next: (result) => {
+            this.pesquisado = value;
+            this.pagination = result;
+            console.log(`Valor pesquisado: ${value}`);
+            console.log('Resultado da pesquisa: ', result);
+          },
+        })
+      );
+  }
+
+  /**
+   * @author helio.souza
+   * @param pagination
+   * @param pesquisado
+   * @returns
+   */
+  mapPagination(
+    pagination: Pagination<IProduto>,
+    pesquisado: string
+  ): Pagination<IProduto> {
+    if (this.pagination && this.pesquisado === pesquisado) {
+      pagination.content = [...this.pagination.content, ...pagination.content];
+      this.page += 1;
+    } else {
+      this.infiniteScroll.disabled = false;
+      this.page = 1;
+    }
+    return pagination;
   }
 
   /**
    * @author helio.souza
    * @param infinite IonInfinite Element.
    */
-  doInfinite(infinit: IonInfiniteScroll) {}
+  doInfinite(infinit: IonInfiniteScroll) {
+    this.pesquisar(this.pesquisado)
+      .pipe(
+        take(1),
+        tap({
+          next: (response) => {
+            infinit.complete();
+            infinit.disabled = response.last;
+          },
+          error: () => {
+            infinit.complete();
+          },
+        })
+      )
+      .subscribe();
+  }
 
   log(l: any) {
     console.log(l);
@@ -102,7 +167,7 @@ export class ProdutoPesquisaPage implements OnInit {
 
   /**
    * @author helio.souza
-   * @param delay
+   * @param delay Delay para executar o foco no searchbar.
    */
   setSearchbarFocus(delay = 500): void {
     setTimeout(() => {
@@ -120,16 +185,12 @@ export class ProdutoPesquisaPage implements OnInit {
   }
 
   scaneado(value: string): void {
-    if (value && value.length >= 2) {
-      const codigo: string = value;
-
-      if (codigo.substring(0, 1) === 'P') {
-        this.pedidoService
-          .setCardPedido(this.pedidoService.getPedidoNumero(), codigo)
-          .subscribe();
-      } else {
-        console.log('nothing');
-      }
+    if (value.length > 2 && value.substring(0, 1) === 'P') {
+      this.pedidoService
+        .setCardPedido(this.pedidoService.getPedidoNumero(), value)
+        .subscribe();
+    } else if (value.length > 2) {
+      console.log('nothing');
     }
   }
 
@@ -149,72 +210,6 @@ export class ProdutoPesquisaPage implements OnInit {
       },
     };
     this.navControl.navigateForward(['/cliente'], navigationExtras);
-  }
-
-  // showPesquisa() {
-  //   this.pesquisaDetalhada = !this.pesquisaDetalhada;
-  // }
-
-  // setInputComFoco(acao: string) {
-  //   let input = '';
-  //   if (acao === 'mais') {
-  //     this.inputFoco++;
-  //     input = this.inputFoco.toString();
-  //   } else if (acao === 'menos') {
-  //     this.inputFoco--;
-  //     input = this.inputFoco.toString();
-  //   }
-
-  //   switch (input) {
-  //     case '1':
-  //       this.inputFoco = 1;
-  //       this.input1.setFocus();
-  //       break;
-
-  //     case '2':
-  //       this.inputFoco = 2;
-  //       this.input2.setFocus();
-  //       break;
-
-  //     case '3':
-  //       this.inputFoco = 3;
-  //       this.input3.setFocus();
-  //       break;
-
-  //     case '4':
-  //       this.inputFoco = 4;
-  //       this.input4.setFocus();
-  //       break;
-
-  //     case '5':
-  //       this.inputFoco = 5;
-  //       this.input5.setFocus();
-  //       break;
-
-  //     default:
-  //       this.inputFoco = 0;
-  //       this.common.goToFullScreen();
-  //       console.log('case-default');
-  //       break;
-  //   }
-  // }
-
-  pesquisar(value: string): Observable<IProduto[]> {
-    //   .getPesquisaDetalhada({
-    //     codigo,
-    //     descricao: this.input2.value.toString(),
-    //     fornecedor: this.input3.value.toString(),
-    //     modelo: this.input4.value.toString(),
-    //     linha: this.input5.value.toString(),
-    //     p1: parseInt(this.p1.toString()),
-    //     p2: parseInt(this.p2.toString()),
-    //     soComEstoque: this.soComEstoque,
-    //   })
-    //   .then((result: any) => {
-    //     this.pesquisaItems = result.content;
-    //     this.pesquisaDetalhada = false;
-    //   })
-    return this.produtoService.getProdutoByCodigo(value);
   }
 
   goToProdutoPage(produto: IProduto) {

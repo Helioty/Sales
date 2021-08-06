@@ -14,9 +14,7 @@ import { AttPedido, PedidoHeader, PedidoItem, PedidoTable } from './pedido.inter
   providedIn: 'root',
 })
 export class PedidoService {
-  public tipoConexao: string;
   public exibeBotaoComprar = false;
-  public executaPedidoRapido = false;
   public alteracaoItemPedido = false;
 
   // public noCard = false;
@@ -26,9 +24,6 @@ export class PedidoService {
 
   public statusPedido: string; // controla pedido; 'I' INCLUSÃO , 'M' MANUTENCAO
   // public sistuacaoPedido: string; // controla pedido, A = ABERTO , F = FINALIZADO
-
-  public ItensPedidoAdd: any;
-  public nomeCliente = '';
 
   // PEDIDO EM MANUTENÇÃO
   public tipoDocumento: any;
@@ -96,11 +91,10 @@ export class PedidoService {
     this.tipoDocumento = '';
     this.statusPedido = '';
     this.docCliente = '';
-    this.nomeCliente = '';
 
     // REMAKE
     this.pedido.next(null);
-    this.qtdItensSacola.next(null);
+    this.qtdItensSacola.next(0);
     this.pedidoItens.next([]);
   }
 

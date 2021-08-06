@@ -65,9 +65,9 @@
 
   <ion-list
     lines="none"
-    *ngIf="(pesquisaItems | async) as itemList; else noProduct"
+    *ngIf="pagination && pagination.content; else noProduct"
   >
-    <ion-card *ngFor="let produto of itemList">
+    <ion-card *ngFor="let produto of pagination.content">
       <ion-item (click)="log(produto)">
         <ion-img
           slot="start"
@@ -154,91 +154,6 @@
     </ion-row>
   </ion-grid> -->
 
-  <!-- Grid pesquisa detalhada -->
-  <!-- <ion-grid [hidden]="!pesquisaDetalhada" class="pesquisa-detalhada-grid">
-    <ion-row class="pesquisa-input-row">
-      <!-- Codigo --
-      <ion-col size="12" class="pesquisa-input-col">
-        <ion-item lines="none">
-          <ion-label position="stacked">Codigo</ion-label>
-          <ion-input
-            #ip1
-            type="tel"
-            (ionFocus)="inputFoco = 1; foco = true"
-            (ionBlur)="foco = false"
-          >
-          </ion-input>
-        </ion-item>
-      </ion-col>
-
-      <!-- Descrição --
-      <ion-col size="12" class="pesquisa-input-col">
-        <ion-item lines="none">
-          <ion-label position="stacked">Descrição</ion-label>
-          <ion-input
-            #ip2
-            type="text"
-            (ionFocus)="inputFoco = 2; foco = true"
-            (ionBlur)="foco = false"
-          >
-          </ion-input>
-        </ion-item>
-      </ion-col>
-
-      <!-- Fornecedor --
-      <ion-col size="12" class="pesquisa-input-col">
-        <ion-item lines="none">
-          <ion-label position="stacked">Fornecedor</ion-label>
-          <ion-input
-            #ip3
-            type="text"
-            (ionFocus)="inputFoco = 3; foco = true"
-            (ionBlur)="foco = false"
-          >
-          </ion-input>
-        </ion-item>
-      </ion-col>
-
-      <!-- Modelo --
-      <ion-col size="6" class="pesquisa-input-col">
-        <ion-item lines="none">
-          <ion-label position="stacked">Modelo</ion-label>
-          <ion-input
-            #ip4
-            type="text"
-            (ionFocus)="inputFoco = 4; foco = true"
-            (ionBlur)="foco = false"
-          >
-          </ion-input>
-        </ion-item>
-      </ion-col>
-
-      <!-- Linha --
-      <ion-col size="6" class="pesquisa-input-col">
-        <ion-item lines="none">
-          <ion-label position="stacked">Linha</ion-label>
-          <ion-input
-            #ip5
-            type="text"
-            (ionFocus)="inputFoco = 5; foco = true"
-            (ionBlur)="foco = false"
-          >
-          </ion-input>
-        </ion-item>
-      </ion-col>
-    </ion-row>
-
-    <ion-row class="pesquisa-button-row">
-      <ion-col size="6">
-        <ion-button color="fc-cinza-vermelho">LIMPAR</ion-button>
-      </ion-col>
-
-      <ion-col size="6">
-        <ion-button (click)="pesquisar('')" color="fc-button-green">PESQUISAR</ion-button>
-      </ion-col>
-    </ion-row>
-  </ion-grid> -->
-
   <ion-infinite-scroll (ionInfinite)="doInfinite($event.target)">
     <ion-infinite-scroll-content
       loadingSpinner="circles"
@@ -247,28 +162,3 @@
     </ion-infinite-scroll-content>
   </ion-infinite-scroll>
 </ion-content>
-
-<!-- <ion-footer>
-  <ion-grid [hidden]="!pesquisaDetalhada" class="grid-foco-change">
-    <ion-row>
-      <ion-col size="6">
-        <ion-button
-          fill="clear"
-          expand="full"
-          [disabled]="inputFoco < 2"
-          (click)="setInputComFoco('menos')"
-        >
-          <ion-icon name="chevron-back" slot="start"></ion-icon>
-          Anterior
-        </ion-button>
-      </ion-col>
-
-      <ion-col size="6">
-        <ion-button fill="clear" expand="full" (click)="setInputComFoco('mais')">
-          <ion-icon name="chevron-forward" slot="end"></ion-icon>
-          Próximo
-        </ion-button>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
-</ion-footer> -->
