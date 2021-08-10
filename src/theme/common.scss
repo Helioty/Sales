@@ -34,6 +34,8 @@ ion-header {
 
       ion-back-button {
         --icon-font-size: 200%;
+        width: 48px !important;
+        height: 48px !important;
       }
     }
   }

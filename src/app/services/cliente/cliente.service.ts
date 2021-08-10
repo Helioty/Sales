@@ -1,27 +1,27 @@
 import { Injectable } from '@angular/core';
-import { BaseService } from '../http/base.service';
+import { Observable } from 'rxjs';
+import { take, tap } from 'rxjs/operators';
 import { API_URL, ENV } from 'src/app/config/app.config.service';
+import { BaseService } from '../http/base.service';
+import { ClienteGet } from './cliente.interface';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ClienteService {
-  constructor(private http: BaseService) {}
+  constructor(private readonly http: BaseService) {}
 
-  // edit by Helio 20/03/2020, pega as informações do cliente via CPF/CNPJ
-  public getCliente(doc: string) {
-    const link = ENV.WS_CRM + API_URL + 'cliente/' + doc;
-
-    // return new Promise((resolve, reject) => {
-    //   this.baseService.get(link).then(
-    //     (result: any) => {
-    //       resolve(result);
-    //     },
-    //     (error) => {
-    //       reject(error);
-    //     }
-    //   );
-    // });
+  /**
+   * @author helio.souza
+   * @description Pega as informações do cliente via CPF/CNPJ.
+   * @param doc CPF/CNPJ do cliente.
+   * @returns
+   */
+  public getCliente(doc: string): Observable<ClienteGet> {
+    const url = `${ENV.WS_CRM}${API_URL}cliente/${doc}`;
+    return this.http
+      .get<ClienteGet>(url)
+      .pipe(take(1), tap({ next: (clie) => console.log('Cliente: ', clie) }));
   }
 
   // by Helio 20/03/2020, usado para pegar as informações do cliente apos reabrir o pedido
@@ -41,8 +41,9 @@ export class ClienteService {
   }
 
   // by Helio 23/03/2020, usado para cadastrar um novo endereco
-  public postClienteAlteracao(cliente: any) {
-    const link = ENV.WS_CRM + API_URL + 'cliente/save/';
+  public postClienteAlteracao(cliente: any): Observable<any> {
+    // const link = ENV.WS_CRM + API_URL + 'cliente/save/';
+    const url = `${ENV.WS_CRM}${API_URL}cliente/save`;
 
     // return new Promise((resolve, reject) => {
     //   this.baseService.post(link, cliente).then(
@@ -54,5 +55,7 @@ export class ClienteService {
     //     }
     //   );
     // });
+    const props = { url, body: cliente };
+    return this.http.post(props).pipe(take(1));
   }
 }

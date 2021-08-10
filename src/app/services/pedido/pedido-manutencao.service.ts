@@ -26,8 +26,8 @@ export class PedidoManutencaoService {
     // this.pedidoService.qtdItensSacola = pedido.numitens;
 
     if (pedido.cgccpf_cliente !== null && pedido.cgccpf_cliente.length > 10) {
-      this.pedidoService.docCliente = pedido.cgccpf_cliente;
-      this.pedidoService.clientSelected = true;
+      // this.pedidoService.docCliente = pedido.cgccpf_cliente;
+      // this.pedidoService.clientSelected = true;
       // await this.reGetCliente(pedido.cgccpf_cliente);
     }
 

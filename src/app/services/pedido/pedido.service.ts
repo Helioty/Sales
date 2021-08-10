@@ -7,6 +7,7 @@ import { API_URL, ENV } from 'src/app/config/app.config.service';
 import { Pagination } from 'src/app/page/pedido-lista/pedido-lista.interface';
 import { ClienteService } from 'src/app/services/cliente/cliente.service';
 import { CommonService } from 'src/app/services/common/common.service';
+import { ClienteGet } from '../cliente/cliente.interface';
 import { BaseService } from './../http/base.service';
 import { AttPedido, PedidoHeader, PedidoItem, PedidoTable } from './pedido.interface';
 
@@ -28,11 +29,6 @@ export class PedidoService {
   // PEDIDO EM MANUTENÇÃO
   public tipoDocumento: any;
 
-  // Verdadeiro se o pedido em manutenção tiver um cliente selecionado.
-  public clientSelected = false;
-  public docCliente = ''; // CPF/CNPJ do cliente do pedido em manutenção.
-  public dadosCliente: any = undefined; // Dados do cliente do pedido em manutenção.
-
   // Verdadeiro se o pedido em manutenção tiver um endereco selecionado.
   public enderecoSelected = false;
   public sequencialEndereco: any = null;
@@ -50,6 +46,9 @@ export class PedidoService {
   readonly pedidoItens = new BehaviorSubject<PedidoItem[]>([]);
   // Produtos por Paginação.
   readonly produtoPorPagina = 10;
+
+  // Cliente
+  readonly cliente = new BehaviorSubject<ClienteGet>(null);
 
   constructor(
     private readonly http: BaseService,
@@ -75,11 +74,6 @@ export class PedidoService {
   }
 
   public limpaDadosPedido(): void {
-    // Limpando cliente do pedido
-    this.clientSelected = false;
-    this.docCliente = '';
-    this.dadosCliente = undefined;
-
     // Limpando endereco de entrega
     this.enderecoSelected = false;
     this.sequencialEndereco = null;
@@ -90,12 +84,12 @@ export class PedidoService {
     // this.sistuacaoPedido = 'N';
     this.tipoDocumento = '';
     this.statusPedido = '';
-    this.docCliente = '';
 
     // REMAKE
     this.pedido.next(null);
     this.qtdItensSacola.next(0);
     this.pedidoItens.next([]);
+    this.cliente.next(null);
   }
 
   // by Helio 20/03/2020
@@ -249,13 +243,8 @@ export class PedidoService {
    * @param numPedido Número do Pedido.
    * @param cgccpf
    * @param clienteData
-   * @returns
    */
-  adicionarCliente(
-    numPedido: number,
-    cgccpf: string,
-    clienteData: any
-  ): Observable<PedidoHeader> {
+  adicionarCliente(numPedido: number, cgccpf: string): Observable<PedidoHeader> {
     const aResult = this.atualizaPedido(AttPedido.CLIENTE, cgccpf);
     const empresa = localStorage.getItem('empresa') as string;
     const url = `${ENV.WS_VENDAS}${API_URL}PedidoVenda/update/${empresa}/${numPedido}`;
@@ -275,7 +264,6 @@ export class PedidoService {
   /**
    * @author helio.souza
    * @param numPedido Número do Pedido.
-   * @returns
    */
   removerCliente(numPedido: number): Observable<PedidoHeader> {
     const aResult = this.atualizaPedido(AttPedido.CLIENTE, '');
@@ -293,8 +281,34 @@ export class PedidoService {
     );
   }
 
+  /**
+   * @author helio.souza
+   * @param action Ação para ser executada ao remover o cliente do pedido.
+   */
+  confirmaRemoveCliente(action = () => {}): void {
+    const handler = async () => {
+      await this.common.showLoader();
+      this.removerCliente(this.getPedidoNumero()).subscribe({
+        next: () => {
+          this.common.loading.dismiss();
+          action();
+        },
+        error: () => this.common.loading.dismiss(),
+      });
+    };
+    const props = {
+      titulo: 'Remover cliente?',
+      message: 'Deseja remover o cliente do pedido',
+      handler,
+    };
+    this.common.showAlertAction(props);
+  }
+
   // by Hélio - Retorna os dados do cliente selecionado
   public async retornaDadosCliente() {
+    if (this.pedido.value && this.pedido.value.cgccpf_cliente) {
+    } else {
+    }
     // if (
     //   this.clientSelected &&
     //   this.docCliente !== '' &&

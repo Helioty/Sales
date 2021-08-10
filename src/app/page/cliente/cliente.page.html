@@ -1,135 +1,116 @@
-<ion-header [ngClass]="{ 'bg-blue': isBlue, 'bg-orange': isOrange, 'bg-green': isGreen }">
-  <ion-toolbar
-    [ngClass]="{ 'bg-blue': isBlue, 'bg-orange': isOrange, 'bg-green': isGreen }"
-  >
+<ion-header [class]="'ion-no-border ' + colorState + '-bg'">
+  <ion-toolbar [class]="colorState + '-bg'">
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
 
     <ion-buttons slot="end">
-      <ion-button *ngIf="isGreen" (click)="editarCadastro()">
+      <ion-button *ngIf="colorState === 'isGreen'" (click)="editarCadastro()">
         <ion-icon name="create" style="color: white"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content
-  [ngClass]="{ 'bg-blue': isBlue, 'bg-orange': isOrange, 'bg-green': isGreen }"
->
+<ion-content [class]="colorState + '-bg'">
   <ion-grid>
     <ion-row style="width: 100%; max-width: 600px; margin: auto">
       <ion-card class="clie-card">
-        <ion-card-content class="ion-no-padding">
-          <ion-item
-            lines="none"
-            [ngClass]="{
-              'card-blue': isBlue,
-              'card-orange': isOrange,
-              'card-green': isGreen
-            }"
+        <ion-item lines="none" [class]="colorState + '-card'">
+          <ion-icon
+            slot="start"
+            src="assets/images/10-cliente/cliente.svg"
+            [class]="'clie-icon ' + colorState + '-clie-icon'"
           >
-            <ion-icon
-              slot="start"
-              src="../../../assets/images/10-cliente/cliente.svg"
-              class="clie-icon"
-              [ngClass]="{
-                'clie-icon-blue': isBlue,
-                'clie-icon-orange': isOrange,
-                'clie-icon-green': isGreen
-              }"
-            >
-            </ion-icon>
-            <ion-grid>
-              <ion-row>
-                <ion-col size="12" *ngIf="dados == undefined">
-                  <ion-row>
-                    <ion-skeleton-text
-                      [animated]="skeletonAni"
-                      style="width: 100%"
-                    ></ion-skeleton-text>
-                  </ion-row>
-                  <ion-row>
-                    <ion-skeleton-text
-                      [animated]="skeletonAni"
-                      style="width: 80%"
-                    ></ion-skeleton-text>
-                  </ion-row>
-                  <ion-row>
-                    <ion-skeleton-text
-                      [animated]="skeletonAni"
-                      style="width: 50%"
-                    ></ion-skeleton-text>
-                  </ion-row>
-                  <ion-row>
-                    <ion-skeleton-text
-                      [animated]="skeletonAni"
-                      style="width: 75%"
-                    ></ion-skeleton-text>
-                  </ion-row>
-                  <ion-row>
-                    <ion-skeleton-text
-                      [animated]="skeletonAni"
-                      style="width: 65%"
-                    ></ion-skeleton-text>
-                  </ion-row>
-                </ion-col>
+          </ion-icon>
 
-                <ion-col size="12" *ngIf="dados != undefined">
-                  <ion-row>
-                    <ion-label>
-                      {{ dadosShow.nome }}
-                    </ion-label>
-                  </ion-row>
-                  <ion-row>
-                    <ion-label>
-                      {{ dadosShow.endereco }}
-                    </ion-label>
-                  </ion-row>
-                  <ion-row>
-                    <ion-label>
-                      {{ dadosShow.celular }}
-                    </ion-label>
-                  </ion-row>
-                  <ion-row>
-                    <ion-label>
-                      {{ dadosShow.email }}
-                    </ion-label>
-                  </ion-row>
-                </ion-col>
-              </ion-row>
-            </ion-grid>
-          </ion-item>
-        </ion-card-content>
+          <ion-card-content class="ion-no-padding" [style.width]="'100%'">
+            <ion-row>
+              <ion-col size="12" *ngIf="!dados">
+                <ion-row>
+                  <ion-skeleton-text
+                    [animated]="skeletonAni"
+                    style="width: 100%"
+                  ></ion-skeleton-text>
+                </ion-row>
+
+                <ion-row>
+                  <ion-skeleton-text
+                    [animated]="skeletonAni"
+                    style="width: 80%"
+                  ></ion-skeleton-text>
+                </ion-row>
+
+                <ion-row>
+                  <ion-skeleton-text
+                    [animated]="skeletonAni"
+                    style="width: 50%"
+                  ></ion-skeleton-text>
+                </ion-row>
+
+                <ion-row>
+                  <ion-skeleton-text
+                    [animated]="skeletonAni"
+                    style="width: 75%"
+                  ></ion-skeleton-text>
+                </ion-row>
+
+                <ion-row>
+                  <ion-skeleton-text
+                    [animated]="skeletonAni"
+                    style="width: 65%"
+                  ></ion-skeleton-text>
+                </ion-row>
+              </ion-col>
+
+              <ion-col size="12" *ngIf="dados">
+                <ion-row>
+                  <ion-label> {{ dadosShow.nome }} </ion-label>
+                </ion-row>
+
+                <ion-row>
+                  <ion-label> {{ dadosShow.endereco }} </ion-label>
+                </ion-row>
+
+                <ion-row>
+                  <ion-label> {{ dadosShow.celular }} </ion-label>
+                </ion-row>
+
+                <ion-row>
+                  <ion-label> {{ dadosShow.email }} </ion-label>
+                </ion-row>
+              </ion-col>
+            </ion-row>
+          </ion-card-content>
+        </ion-item>
       </ion-card>
     </ion-row>
 
-    <ion-row class="clie-input" *ngIf="isBlue">
+    <ion-row class="clie-input" *ngIf="colorState === 'isBlue'">
       <ion-input
-        #input
-        id="input"
         placeholder="CPF ou CNPJ do cliente"
-        (ionChange)="dynamicMask('cli')"
+        (ionChange)="dynamicMask()"
         [(ngModel)]="valorDigitado"
         style="margin-bottom: 1px; font-size: 20px"
         inputmode="numeric"
         (ionBlur)="checaMinimo(valorDigitado)"
-        (keyup.enter)="blur($event)"
+        (keyup.enter)="blurSearch()"
       >
       </ion-input>
     </ion-row>
 
-    <ion-row class="clie-btn-row" *ngIf="isBlue">
+    <ion-row class="clie-btn-row" *ngIf="colorState === 'isBlue'">
       <ion-button
         class="clie-btn-busca"
         color="fc-blue"
         fill="clear"
         (click)="buscaCliente()"
-        >Buscar cliente por nome</ion-button
       >
+        Buscar cliente por nome
+      </ion-button>
     </ion-row>
 
-    <ion-row class="clie-btn-row" *ngIf="isGreen">
+    <ion-row class="clie-btn-row" *ngIf="colorState === 'isGreen'">
       <ion-button
         class="clie-btn-confirme"
         color="light"
@@ -141,34 +122,38 @@
       </ion-button>
     </ion-row>
 
-    <ion-row class="clie-btn-row" *ngIf="isGreen && atualizaCadastro">
-      <ion-button class="clie-btn-atualiza" color="white-red"
-        >Atualizar Cadastro
+    <ion-row class="clie-btn-row" *ngIf="colorState === 'isGreen' && atualizaCadastro">
+      <ion-button class="clie-btn-atualiza" color="white-red">
         <ion-icon name="checkmark" slot="start"></ion-icon>
+        Atualizar Cadastro
       </ion-button>
     </ion-row>
 
-    <ion-row class="clie-btn-row" *ngIf="isGreen">
-      <ion-button class="clie-btn-confirme" color="fc-orange" (click)="naoCliente()"
-        >Não é seu cliente?
+    <ion-row class="clie-btn-row" *ngIf="colorState === 'isGreen'">
+      <ion-button class="clie-btn-confirme" color="fc-orange" (click)="naoCliente()">
         <ion-icon name="person" slot="start"></ion-icon>
+        Não é seu cliente?
       </ion-button>
     </ion-row>
 
-    <ion-row class="clie-btn-row" *ngIf="isOrange">
+    <ion-row class="clie-btn-row" *ngIf="colorState === 'isOrange'">
       <ion-label>{{ mensagem }}</ion-label>
     </ion-row>
 
-    <ion-row class="clie-btn-row" *ngIf="isOrange">
-      <ion-button class="clie-btn-confirme" color="fc-orange" (click)="cadastrarNovo()"
-        >Cadastrar novo Cliente!
+    <ion-row class="clie-btn-row" *ngIf="colorState === 'isOrange'">
+      <ion-button class="clie-btn-confirme" color="fc-orange" (click)="cadastrarNovo()">
         <ion-icon name="person" slot="start"></ion-icon>
+        Cadastrar novo Cliente!
       </ion-button>
     </ion-row>
 
-    <ion-row class="clie-btn-row" *ngIf="isOrange">
-      <ion-button class="clie-btn-confirme" color="white-red" (click)="setEstado('reset')"
-        >Digitar novamente.
+    <ion-row class="clie-btn-row" *ngIf="colorState === 'isOrange'">
+      <ion-button
+        class="clie-btn-confirme"
+        color="white-red"
+        (click)="setEstado('reset')"
+      >
+        Digitar novamente.
         <ion-icon name="person" slot="start"></ion-icon>
       </ion-button>
     </ion-row>

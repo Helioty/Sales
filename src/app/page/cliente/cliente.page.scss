@@ -1,181 +1,212 @@
-.header-md:after {
-    height: 0 !important;
-    background-image: none !important;
+.isBlue-bg {
+  --background: white;
+  --bg-cor: #59b3d9;
+  --font-cor: #353535;
+  --card-cor: #59b3d9;
 }
 
-ion-header {
-
-    ion-toolbar {
-
-        ion-buttons {
-
-            ion-button {
-                min-width: 48px !important;
-                min-height: 48px !important;
-                --border-radius: 50% !important;
-
-                ion-icon {
-                    font-size: 200%;
-                }
-            }
-        }
-    }
+.isOrange-bg {
+  // --background: #EF6F38;
+  --bg-cor: #ef6f38;
+  --font-cor: white;
+  --card-cor: white;
+  --card-text: #ef6f38;
+  --background: rgba(255, 175, 75, 1);
+  --background: -moz-linear-gradient(
+    left,
+    rgba(255, 175, 75, 1) 0%,
+    rgba(239, 111, 56, 1) 100%
+  );
+  --background: -webkit-gradient(
+    left top,
+    right top,
+    color-stop(0%, rgba(255, 175, 75, 1)),
+    color-stop(100%, rgba(239, 111, 56, 1))
+  );
+  --background: -webkit-linear-gradient(
+    left,
+    rgba(255, 175, 75, 1) 0%,
+    rgba(239, 111, 56, 1) 100%
+  );
+  --background: -o-linear-gradient(
+    left,
+    rgba(255, 175, 75, 1) 0%,
+    rgba(239, 111, 56, 1) 100%
+  );
+  --background: -ms-linear-gradient(
+    left,
+    rgba(255, 175, 75, 1) 0%,
+    rgba(239, 111, 56, 1) 100%
+  );
+  --background: linear-gradient(
+    to right,
+    rgba(255, 175, 75, 1) 0%,
+    rgba(239, 111, 56, 1) 100%
+  );
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffaf4b', endColorstr='#EF6F38', GradientType=1 );
 }
 
-
-.bg-blue {
-    --background: white;
-    --bg-cor: #59B3D9;
-    --font-cor: #353535;
-    --card-cor: #59B3D9;
+.isGreen-bg {
+  // --background: #19A852;
+  --bg-cor: #19a852;
+  --card-cor: white;
+  --font-cor: white;
+  --background: rgb(122, 255, 82);
+  --background: -moz-linear-gradient(
+    left,
+    rgba(44, 216, 113, 1) 0%,
+    rgba(25, 168, 82, 1) 100%
+  );
+  --background: -webkit-gradient(
+    left top,
+    right top,
+    color-stop(0%, rgba(44, 216, 113, 1)),
+    color-stop(100%, rgba(25, 168, 82, 1))
+  );
+  --background: -webkit-linear-gradient(
+    left,
+    rgba(44, 216, 113, 1) 0%,
+    rgba(25, 168, 82, 1) 100%
+  );
+  --background: -o-linear-gradient(
+    left,
+    rgba(44, 216, 113, 1) 0%,
+    rgba(25, 168, 82, 1) 100%
+  );
+  --background: -ms-linear-gradient(
+    left,
+    rgba(44, 216, 113, 1) 0%,
+    rgba(25, 168, 82, 1) 100%
+  );
+  --background: linear-gradient(
+    to right,
+    rgba(44, 216, 113, 1) 0%,
+    rgba(25, 168, 82, 1) 100%
+  );
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#2cd871', endColorstr='#19a852', GradientType=1 );
 }
-.bg-orange {
-    // --background: #EF6F38;
-    --bg-cor: #EF6F38;
-    --font-cor: white;
-    --card-cor: white;
-    --card-text: #EF6F38;
-    --background: rgba(255,175,75,1);
-    --background: -moz-linear-gradient(left, rgba(255,175,75,1) 0%, rgba(239,111,56,1) 100%);
-    --background: -webkit-gradient(left top, right top, color-stop(0%, rgba(255,175,75,1)), color-stop(100%, rgba(239,111,56,1)));
-    --background: -webkit-linear-gradient(left, rgba(255,175,75,1) 0%, rgba(239,111,56,1) 100%);
-    --background: -o-linear-gradient(left, rgba(255,175,75,1) 0%, rgba(239,111,56,1) 100%);
-    --background: -ms-linear-gradient(left, rgba(255,175,75,1) 0%, rgba(239,111,56,1) 100%);
-    --background: linear-gradient(to right, rgba(255,175,75,1) 0%, rgba(239,111,56,1) 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffaf4b', endColorstr='#EF6F38', GradientType=1 );
-}
-.bg-green {
-    // --background: #19A852;
-    --bg-cor: #19A852;
-    --card-cor: white;
-    --font-cor: white;
-    --background: rgb(122,255,82);
-    --background: -moz-linear-gradient(left, rgba(44,216,113,1) 0%, rgba(25,168,82,1) 100%);
-    --background: -webkit-gradient(left top, right top, color-stop(0%, rgba(44,216,113,1)), color-stop(100%, rgba(25,168,82,1)));
-    --background: -webkit-linear-gradient(left, rgba(44,216,113,1) 0%, rgba(25,168,82,1) 100%);
-    --background: -o-linear-gradient(left, rgba(44,216,113,1) 0%, rgba(25,168,82,1) 100%);
-    --background: -ms-linear-gradient(left, rgba(44,216,113,1) 0%, rgba(25,168,82,1) 100%);
-    --background: linear-gradient(to right, rgba(44,216,113,1) 0%, rgba(25,168,82,1) 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#2cd871', endColorstr='#19a852', GradientType=1 );
+
+.isBlue-card {
+  --background: #59b3d9 !important;
+  --padding-bottom: 10px;
+  --padding-top: 10px;
 }
 
-
-
-
-.card-blue {
-    --background: #59B3D9 !important;
-    --padding-bottom: 10px;
-    --padding-top: 10px;
+.isOrange-card {
+  --padding-bottom: 10px;
+  --padding-top: 10px;
 }
-.card-orange {
-    --padding-bottom: 10px;
-    --padding-top: 10px;
-}
-.card-green {
-    --padding-bottom: 10px;
-    --padding-top: 10px;
+
+.isGreen-card {
+  --padding-bottom: 10px;
+  --padding-top: 10px;
 }
 
 @media only screen and (min-width: 600px) {
-    .card-blue {
-        --background: #59B3D9 !important;
-        --padding-bottom: 40px;
-        --padding-top: 40px;
-    }
-    .card-orange {
-        --padding-bottom: 40px;
-        --padding-top: 40px;
-    }
-    .card-green {
-        --padding-bottom: 40px;
-        --padding-top: 40px;
-    }
+  .isBlue-card {
+    --background: #59b3d9 !important;
+    --padding-bottom: 40px;
+    --padding-top: 40px;
+  }
+  .isOrange-card {
+    --padding-bottom: 40px;
+    --padding-top: 40px;
+  }
+  .isGreen-card {
+    --padding-bottom: 40px;
+    --padding-top: 40px;
+  }
 }
 
 .clie-card {
-    width: 100%;
-    border-radius: 8px;
-    margin: 5px !important;
+  width: 100%;
+  border-radius: 8px;
+  margin: 5px !important;
 
+  ion-label {
+    word-break: break-word;
+    white-space: normal;
+    font-size: 14px;
+  }
+
+  @media only screen and (min-width: 600px) {
     ion-label {
-        word-break: break-word;
-        white-space: normal;
-        font-size: 14px;
+      word-break: break-word;
+      white-space: normal;
+      font-size: 16px;
     }
-    @media only screen and (min-width: 600px) {
-        ion-label {
-            word-break: break-word;
-            white-space: normal;
-            font-size: 16px;
-        }
-    }
+  }
 }
+
 .clie-icon {
-    font-size: 64px;
-    margin-right: 5px;
+  font-size: 64px;
+  margin-right: 5px;
 }
+
 @media only screen and (min-width: 600px) {
-    .clie-icon {
-        font-size: 96px;
-        margin-right: 5px;
-    }
+  .clie-icon {
+    font-size: 96px;
+    margin-right: 5px;
+  }
 }
-.clie-icon-blue {
-    color: white !important;
+
+.isBlue-clie-icon {
+  color: white !important;
 }
-.clie-icon-orange {
-    color: rgba(255,175,75,1);
+
+.isOrange-clie-icon {
+  color: rgba(255, 175, 75, 1);
 }
-.clie-icon-green {
-    color: rgba(025,168,82,1);
+
+.isGreen-clie-icon {
+  color: rgba(025, 168, 82, 1);
 }
 
 .clie-input {
-    width: 280px !important;
-    margin: auto !important;
-    text-align: center;
+  width: 280px !important;
+  margin: auto !important;
+  text-align: center;
 
-    .has-focus {
-        border-bottom: 1px solid #59B3D9;
-        margin-bottom: 0 !important;
-    }
-    .has-value {
-        border-bottom: 1px solid #59B3D9;
-        margin-bottom: 0 !important;
-    }
+  .has-focus {
+    border-bottom: 1px solid #59b3d9;
+    margin-bottom: 0 !important;
+  }
+  .has-value {
+    border-bottom: 1px solid #59b3d9;
+    margin-bottom: 0 !important;
+  }
 }
 
 .clie-btn-row {
-    padding: 0 10px !important;
-    margin-top: 15px !important;
+  padding: 0 10px !important;
+  margin-top: 15px !important;
 
-    .clie-btn-busca {
-        margin: auto !important;
-        --border-radius: 8px;
-        width: 100%;
-        max-width: 350px;
+  .clie-btn-busca {
+    margin: auto !important;
+    --border-radius: 8px;
+    width: 100%;
+    max-width: 350px;
+  }
+
+  .clie-btn-confirme {
+    margin: auto !important;
+    --border-radius: 8px;
+    width: 100%;
+    max-width: 350px;
+  }
+
+  .clie-btn-atualiza {
+    margin: auto !important;
+    --border-radius: 8px;
+    width: 100%;
+    max-width: 350px;
+
+    button {
+      color: red !important;
     }
+  }
 
-    .clie-btn-confirme {
-        margin: auto !important;
-        --border-radius: 8px;
-        width: 100%;
-        max-width: 350px;
-    }
-
-    .clie-btn-atualiza {
-        margin: auto !important;
-        --border-radius: 8px;
-        width: 100%;
-        max-width: 350px;
-
-        button {
-            color: red !important;
-        }
-    }
-
-    ion-label {
-        margin: auto !important;
-    }
-
+  ion-label {
+    margin: auto !important;
+  }
 }

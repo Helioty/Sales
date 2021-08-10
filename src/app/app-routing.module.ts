@@ -146,12 +146,12 @@ const routes: Routes = [
   //     ),
   // },
 
-  // {
-  //   path: 'cliente',
-  //   loadChildren: () =>
-  //     import('./page/cliente/cliente.module').then((m) => m.ClientePageModule),
-  //   canActivate: [AuthGuard],
-  // },
+  {
+    path: 'cliente',
+    loadChildren: () =>
+      import('./page/cliente/cliente.module').then((m) => m.ClientePageModule),
+    canActivate: [AuthGuard],
+  },
   // {
   //   path: 'cliente-cadastro-edicao',
   //   loadChildren: () =>
