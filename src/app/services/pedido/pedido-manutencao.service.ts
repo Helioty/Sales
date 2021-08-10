@@ -20,7 +20,7 @@ export class PedidoManutencaoService {
   // by Helio 20/03/2020, ajusta as informações do pedido para fazer manutenção
   async reabrirPedido(pedido: any) {
     await this.common.showLoader();
-    this.pedidoService.atualizaPedidoHeader(pedido);
+    // this.pedidoService.atualizaPedidoHeader(pedido);
     // this.pedidoService.numPedido = pedido.numpedido;
     // this.pedidoService.digitoPedido = pedido.digito;
     // this.pedidoService.qtdItensSacola = pedido.numitens;

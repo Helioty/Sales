@@ -73,7 +73,11 @@ export class PedidoService {
     return this.pedidoItens.asObservable();
   }
 
-  public limpaDadosPedido(): void {
+  getPedidoClienteOBS(): Observable<ClienteGet> {
+    return this.cliente.asObservable();
+  }
+
+  private limpaDadosPedido(): void {
     // Limpando endereco de entrega
     this.enderecoSelected = false;
     this.sequencialEndereco = null;
@@ -92,8 +96,11 @@ export class PedidoService {
     this.cliente.next(null);
   }
 
-  // by Helio 20/03/2020
-  public atualizaPedidoHeader(pedidoHeader: PedidoHeader): void {
+  /**
+   * @author helio.souza
+   * @param pedidoHeader Objeto do Pedido.
+   */
+  private atualizaPedidoHeader(pedidoHeader: PedidoHeader): void {
     // Pedido
     this.pedido.next(pedidoHeader);
     // Produtos
@@ -110,6 +117,7 @@ export class PedidoService {
    * @description Cria um novo pedido.
    */
   criarPedido(): Observable<PedidoHeader> {
+    this.limpaDadosPedido();
     const empresa = localStorage.getItem('empresa') as string;
     const url = `${ENV.WS_VENDAS}${API_URL}PedidoVenda/${empresa}/criar`;
     return this.http.post<PedidoHeader, any>({ url, body: {} }).pipe(
@@ -123,15 +131,15 @@ export class PedidoService {
     );
   }
 
+  /**
+   * @author helio.souza
+   * @param pedido Objeto do Pedido.
+   */
   async reabrirPedido(pedido: PedidoHeader): Promise<void> {
     await this.common.showLoader();
     this.atualizaPedidoHeader(pedido);
 
-    // if (pedido.cgccpf_cliente !== null && pedido.cgccpf_cliente.length > 10) {
-    // this.pedidoService.docCliente = pedido.cgccpf_cliente;
-    // this.pedidoService.clientSelected = true;
     // await this.reGetCliente(pedido.cgccpf_cliente);
-    // }
 
     this.navControl.navigateRoot(['/pedido-atalhos']).then(() => {
       this.common.loading.dismiss();
@@ -140,8 +148,7 @@ export class PedidoService {
 
   /**
    * @author helio.souza
-   * @param idPedido
-   * @returns
+   * @param idPedido Número do Pedido.
    */
   getPedido(idPedido: string): Observable<PedidoHeader> {
     const empresa = localStorage.getItem('empresa') as string;
@@ -151,9 +158,8 @@ export class PedidoService {
 
   /**
    * @author helio.souza
-   * @param tableName
-   * @param tableValor
-   * @returns
+   * @param tableName Campo a ser alterado.
+   * @param tableValor Novo dado.
    */
   private atualizaPedido(tableName: AttPedido, tableValor: any): PedidoTable[] {
     const aResult: PedidoTable[] = [];
@@ -168,7 +174,6 @@ export class PedidoService {
    * @author helio.souza
    * @param numPedido Número do Pedido.
    * @param retiradaIdx Index de retirada.
-   * @returns
    */
   alterarTipoRetirada(numPedido: number, retiradaIdx: number): Observable<PedidoHeader> {
     const aResult = this.atualizaPedido(
@@ -194,7 +199,6 @@ export class PedidoService {
    * @author helio.souza
    * @param numPedido Número do Pedido.
    * @param codCard Codigo escaneado do Cartão Pedido.
-   * @returns
    */
   setCardPedido(numPedido: number, codCard: string): Observable<PedidoHeader> {
     const aResult = this.atualizaPedido(AttPedido.CARTAO_PEDIDO, codCard);
@@ -241,10 +245,14 @@ export class PedidoService {
   /**
    * @author helio.souza
    * @param numPedido Número do Pedido.
-   * @param cgccpf
-   * @param clienteData
+   * @param cgccpf CPF/CNPJ do cliente.
+   * @param clie Dados do Cliente.
    */
-  adicionarCliente(numPedido: number, cgccpf: string): Observable<PedidoHeader> {
+  adicionarCliente(
+    numPedido: number,
+    cgccpf: string,
+    clie: ClienteGet
+  ): Observable<PedidoHeader> {
     const aResult = this.atualizaPedido(AttPedido.CLIENTE, cgccpf);
     const empresa = localStorage.getItem('empresa') as string;
     const url = `${ENV.WS_VENDAS}${API_URL}PedidoVenda/update/${empresa}/${numPedido}`;
@@ -255,10 +263,10 @@ export class PedidoService {
         next: (pedido) => {
           console.log('Cliente atualizado: ', pedido);
           this.atualizaPedidoHeader(pedido);
+          this.cliente.next(clie);
         },
       })
     );
-    // this.dadosCliente = dadosCli;
   }
 
   /**

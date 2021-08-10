@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { take, tap } from 'rxjs/operators';
+import { catchError, take, tap } from 'rxjs/operators';
 import { API_URL, ENV } from 'src/app/config/app.config.service';
 import { BaseService } from '../http/base.service';
 import { ClienteGet } from './cliente.interface';
@@ -15,29 +15,25 @@ export class ClienteService {
    * @author helio.souza
    * @description Pega as informações do cliente via CPF/CNPJ.
    * @param doc CPF/CNPJ do cliente.
-   * @returns
+   * @param showError Controla o alert de erro da requisição.
    */
-  public getCliente(doc: string): Observable<ClienteGet> {
+  public getCliente(doc: string, showError = true): Observable<ClienteGet> {
     const url = `${ENV.WS_CRM}${API_URL}cliente/${doc}`;
-    return this.http
-      .get<ClienteGet>(url)
-      .pipe(take(1), tap({ next: (clie) => console.log('Cliente: ', clie) }));
-  }
-
-  // by Helio 20/03/2020, usado para pegar as informações do cliente apos reabrir o pedido
-  public getClienteNoAlert(doc: string) {
-    const link = ENV.WS_CRM + API_URL + 'cliente/' + doc;
-
-    // return new Promise((resolve, reject) => {
-    //   this.baseService.getNoShowError(link).then(
-    //     (result: any) => {
-    //       resolve(result);
-    //     },
-    //     (error) => {
-    //       reject(error);
-    //     }
-    //   );
-    // });
+    const options = { token: true, showError };
+    return this.http.get<ClienteGet>(url, options).pipe(
+      take(1),
+      tap({ next: (clie) => console.log('Cliente: ', clie) }),
+      catchError((err) => {
+        if (
+          !showError &&
+          err.error &&
+          !(err.error.detail as string).includes('foi encontrado na nossa base')
+        ) {
+          this.http.showError(err);
+        }
+        throw err;
+      })
+    );
   }
 
   // by Helio 23/03/2020, usado para cadastrar um novo endereco
@@ -49,9 +45,6 @@ export class ClienteService {
     //   this.baseService.post(link, cliente).then(
     //     (result: any) => {
     //       resolve(result);
-    //     },
-    //     (error) => {
-    //       reject(error);
     //     }
     //   );
     // });

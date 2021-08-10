@@ -7,7 +7,6 @@ import {
   NavController,
 } from '@ionic/angular';
 import { CommonService } from 'src/app/services/common/common.service';
-import { PedidoManutencaoService } from 'src/app/services/pedido/pedido-manutencao.service';
 import { PedidoHeader } from 'src/app/services/pedido/pedido.interface';
 import { PedidoService } from 'src/app/services/pedido/pedido.service';
 import { Pagination } from './../pedido-lista.interface';
@@ -28,8 +27,7 @@ export class PedidoFinalizadoPage implements OnInit {
     private readonly common: CommonService,
     private readonly navControl: NavController,
     private readonly pedidoService: PedidoService,
-    private readonly pedidoListaService: PedidoListaService,
-    private readonly pedidoManutencaoService: PedidoManutencaoService
+    private readonly pedidoListaService: PedidoListaService
   ) {}
 
   ngOnInit(): void {
@@ -154,6 +152,6 @@ export class PedidoFinalizadoPage implements OnInit {
    * @param pedido
    */
   alterarPedido(pedido: PedidoHeader): void {
-    this.pedidoManutencaoService.reabrirPedido(pedido);
+    this.pedidoService.reabrirPedido(pedido);
   }
 }

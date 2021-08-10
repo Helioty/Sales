@@ -38,7 +38,6 @@ export class PedidoListaPage implements OnInit {
    * @author helio.souza
    */
   async addNovoPedido(): Promise<void> {
-    this.pedidoService.limpaDadosPedido();
     await this.common.showLoaderCustom('Criando pedido...');
     this.pedidoService.criarPedido().subscribe({
       next: () => {

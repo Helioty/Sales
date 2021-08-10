@@ -34,6 +34,7 @@ export class ClientePage implements OnInit, OnDestroy {
   public isActive = '';
 
   // Dados do cliente.
+  private clienteSub: Subscription;
   public dados: ClienteGet;
   public dadosShow = { nome: '', endereco: '', celular: '', email: '' };
 
@@ -78,8 +79,11 @@ export class ClientePage implements OnInit, OnDestroy {
   ionViewDidLeave(): void {}
 
   ngOnDestroy(): void {
-    this.pedidoSub.unsubscribe();
-    this.paramsSub.unsubscribe();
+    try {
+      this.pedidoSub.unsubscribe();
+      this.paramsSub.unsubscribe();
+      this.clienteSub.unsubscribe();
+    } catch (error) {}
   }
 
   /**
@@ -114,24 +118,22 @@ export class ClientePage implements OnInit, OnDestroy {
    * @author helio.souza
    */
   private getNavParams(): void {
-    this.paramsSub = this.activatedRoute.params.subscribe({
+    this.paramsSub = this.activatedRoute.queryParams.subscribe({
       next: (params) => (this.navParams = params),
     });
   }
 
-  // by Helio 12/02/2020
-  getClienteAntesSelecionado() {
-    // await this.pedido.retornaDadosCliente().then(() => {
-    //   this.dados = this.pedido.dadosCliente;
-    //   this.valorDigitado = this.common.formataCPFNPJ(this.pedido.docCliente);
-    //   this.atualizaExibicaoDadosCliente(this.dados);
-    // });
-
-    if (this.atualizaCadastro) {
-      this.setEstado('atualizacao');
-    } else {
-      this.setEstado('confirmacao');
-    }
+  /**
+   * @author helio.souza
+   */
+  getClienteAntesSelecionado(): void {
+    this.clienteSub = this.pedidoService.getPedidoClienteOBS().subscribe({
+      next: (clie) => {
+        this.dados = clie;
+        this.valorDigitado = this.common.formataCPFNPJ(clie.cgccpf);
+        this.atualizaExibicaoDadosCliente(clie);
+      },
+    });
   }
 
   /**
@@ -207,15 +209,10 @@ export class ClientePage implements OnInit, OnDestroy {
    */
   getCliente(doc: string): void {
     this.skeletonAni = true;
-    this.clienteService.getCliente(doc).subscribe({
+    this.clienteService.getCliente(doc, false).subscribe({
       next: (response) => {
         this.dados = response;
         this.atualizaExibicaoDadosCliente(response);
-        if (response.atualizaCadastro) {
-          this.setEstado('atualizacao');
-        } else {
-          this.setEstado('confirmacao');
-        }
         this.skeletonAni = false;
       },
       error: (err) => {
@@ -238,6 +235,11 @@ export class ClientePage implements OnInit, OnDestroy {
     this.isCNPJ = clie.natureza !== 'FISICA';
     this.isActive = clie.ativo;
     this.atualizaCadastro = clie.atualizaCadastro;
+    if (this.atualizaCadastro) {
+      this.setEstado('atualizacao');
+    } else {
+      this.setEstado('confirmacao');
+    }
     this.showDados(clie);
   }
 
@@ -320,13 +322,14 @@ export class ClientePage implements OnInit, OnDestroy {
 
   /**
    * @author helio.souza
+   * @description Grava o cliente no Pedido.
    */
   async confirmaCliente(): Promise<void> {
     const doc = this.valorDigitado.replace(/\D/g, '');
     await this.common.showLoader();
     if (this.pedido.cgccpf_cliente !== doc) {
       this.pedidoService
-        .adicionarCliente(this.pedidoService.getPedidoNumero(), doc)
+        .adicionarCliente(this.pedidoService.getPedidoNumero(), doc, this.dados)
         .subscribe({
           next: () => {
             this.common.loading.dismiss();
