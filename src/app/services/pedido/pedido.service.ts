@@ -7,7 +7,7 @@ import { API_URL, ENV } from 'src/app/config/app.config.service';
 import { Pagination } from 'src/app/page/pedido-lista/pedido-lista.interface';
 import { ClienteService } from 'src/app/services/cliente/cliente.service';
 import { CommonService } from 'src/app/services/common/common.service';
-import { ClienteGet } from '../cliente/cliente.interface';
+import { ClienteGet } from './../cliente/cliente.interface';
 import { BaseService } from './../http/base.service';
 import { AttPedido, PedidoHeader, PedidoItem, PedidoTable } from './pedido.interface';
 
