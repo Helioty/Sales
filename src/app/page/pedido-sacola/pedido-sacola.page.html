@@ -55,7 +55,10 @@
           <ion-card button class="ion-no-margin">
             <ion-card-content>
               Retirada: {{ ped.tipoEntrega }}
-              <ion-icon name="build-outline" style="float: right; font-size: 24px;"></ion-icon>
+              <ion-icon
+                name="build-outline"
+                style="float: right; font-size: 24px"
+              ></ion-icon>
             </ion-card-content>
           </ion-card>
         </ion-col>
@@ -311,8 +314,10 @@
         <ion-col size="6" class="direita">
           <ion-row class="orderId">
             <ion-col>
-              {{ ped.totpedido - ped.frete.valor + ped.descontoBrinde | formatarString:
-              'VALOR' }}
+              {{
+                ped.totpedido - ped.frete.valor + ped.descontoBrinde
+                  | formatarString: 'VALOR'
+              }}
             </ion-col>
           </ion-row>
 

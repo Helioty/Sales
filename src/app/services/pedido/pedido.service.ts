@@ -35,18 +35,15 @@ export class PedidoService {
 
   // REMAKE
   // Dados do Pedido.
-  readonly pedido = new BehaviorSubject<PedidoHeader>(null);
-
+  private readonly pedido = new BehaviorSubject<PedidoHeader>(null);
   // Tipos de Retirada do Pedido.
   readonly opcoesRetirada = ['IMEDIATA', 'POSTERIOR', 'ENTREGA'];
   public tipoRetiradaIndex: number;
-
   // Produtos
-  readonly qtdItensSacola = new BehaviorSubject<number>(0);
-  readonly pedidoItens = new BehaviorSubject<PedidoItem[]>([]);
+  private readonly qtdItensSacola = new BehaviorSubject<number>(0);
+  private readonly pedidoItens = new BehaviorSubject<PedidoItem[]>([]);
   // Produtos por Paginação.
-  readonly produtoPorPagina = 10;
-
+  private readonly produtoPorPagina = 10;
   // Cliente
   readonly cliente = new BehaviorSubject<ClienteGet>(null);
 
@@ -138,9 +135,11 @@ export class PedidoService {
   async reabrirPedido(pedido: PedidoHeader): Promise<void> {
     await this.common.showLoader();
     this.atualizaPedidoHeader(pedido);
-
-    // await this.reGetCliente(pedido.cgccpf_cliente);
-
+    if (pedido.cgccpf_cliente) {
+      this.clienteService
+        .getCliente(pedido.cgccpf_cliente, false)
+        .subscribe({ next: (clie) => this.cliente.next(clie) });
+    }
     this.navControl.navigateRoot(['/pedido-atalhos']).then(() => {
       this.common.loading.dismiss();
     });
@@ -299,6 +298,7 @@ export class PedidoService {
       this.removerCliente(this.getPedidoNumero()).subscribe({
         next: () => {
           this.common.loading.dismiss();
+          this.cliente.next(null);
           action();
         },
         error: () => this.common.loading.dismiss(),
@@ -310,32 +310,6 @@ export class PedidoService {
       handler,
     };
     this.common.showAlertAction(props);
-  }
-
-  // by Hélio - Retorna os dados do cliente selecionado
-  public async retornaDadosCliente() {
-    if (this.pedido.value && this.pedido.value.cgccpf_cliente) {
-    } else {
-    }
-    // if (
-    //   this.clientSelected &&
-    //   this.docCliente !== '' &&
-    //   this.dadosCliente === undefined
-    // ) {
-    //   await this.common.showLoader();
-    //   await this.clienteService.getClienteNoAlert(this.docCliente).then(
-    //     (result: any) => {
-    //       this.dadosCliente = result;
-    //       this.common.loading.dismiss();
-    //       return;
-    //     },
-    //     () => {
-    //       this.common.loading.dismiss();
-    //     }
-    //   );
-    // } else {
-    //   return;
-    // }
   }
 
   /**

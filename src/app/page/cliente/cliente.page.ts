@@ -23,7 +23,7 @@ export class ClientePage implements OnInit, OnDestroy {
   // Controle da animação do skeleton
   public skeletonAni = false;
 
-  // Controle da cor do background // by Ryuge
+  // Controle da cor do background
   public colorState: 'isBlue' | 'isGreen' | 'isOrange' = 'isBlue';
 
   // Controle da pesquisa de CPF/CNPJ
@@ -58,20 +58,19 @@ export class ClientePage implements OnInit, OnDestroy {
   ngOnInit(): void {
     console.log('Cliente OnInit');
     this.getPedidoAtivo();
+    this.getClienteAtivo();
     this.getNavParams();
   }
 
   ionViewWillEnter(): void {
     this.common.goToFullScreen();
-    if (this.pedido.cgccpf_cliente) {
-      this.getClienteAntesSelecionado();
-    } else if (!this.valorDigitado) {
-      this.setEstado('reset');
-    }
   }
 
   ionViewDidEnter(): void {
     this.common.goToFullScreen();
+    if (!this.pedido.cgccpf_cliente) {
+      this.setEstado('reset');
+    }
   }
 
   ionViewWillLeave(): void {}
@@ -79,11 +78,9 @@ export class ClientePage implements OnInit, OnDestroy {
   ionViewDidLeave(): void {}
 
   ngOnDestroy(): void {
-    try {
-      this.pedidoSub.unsubscribe();
-      this.paramsSub.unsubscribe();
-      this.clienteSub.unsubscribe();
-    } catch (error) {}
+    this.pedidoSub.unsubscribe();
+    this.paramsSub.unsubscribe();
+    this.clienteSub.unsubscribe();
   }
 
   /**
@@ -126,12 +123,14 @@ export class ClientePage implements OnInit, OnDestroy {
   /**
    * @author helio.souza
    */
-  getClienteAntesSelecionado(): void {
+  private getClienteAtivo(): void {
     this.clienteSub = this.pedidoService.getPedidoClienteOBS().subscribe({
       next: (clie) => {
         this.dados = clie;
-        this.valorDigitado = this.common.formataCPFNPJ(clie.cgccpf);
-        this.atualizaExibicaoDadosCliente(clie);
+        if (clie) {
+          this.valorDigitado = this.common.formataCPFNPJ(clie.cgccpf);
+          this.atualizaExibicaoDadosCliente(clie);
+        }
       },
     });
   }
@@ -249,20 +248,16 @@ export class ClientePage implements OnInit, OnDestroy {
    */
   private showDados(dados: ClienteGet): void {
     this.dadosShow.nome = dados.nome;
-    // by Hélio 11/02/2020
-    if (dados && dados.endereco && dados.numero) {
-      this.dadosShow.endereco = dados.endereco + ', ' + dados.numero;
-    } else {
+    try {
       this.dadosShow.endereco = dados.endereco;
-    }
-    if (dados && dados.emails.length) {
+      this.dadosShow.endereco = dados.numero
+        ? this.dadosShow.endereco + ', ' + dados.numero
+        : this.dadosShow.endereco;
       this.dadosShow.email = dados.emails[0] ? dados.emails[0]?.email_site : '';
-    }
-    if (dados && dados.celulares.length) {
       this.dadosShow.celular = this.common.formataFONE(
         dados.celulares[0].ddd + dados.celulares[0].numero
       );
-    }
+    } catch (error) {}
   }
 
   /**

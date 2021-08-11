@@ -63,10 +63,7 @@
     (keyup.enter)="scaneado($event.target.value)"
   />
 
-  <ion-list
-    lines="none"
-    *ngIf="pagination && pagination.content; else noProduct"
-  >
+  <ion-list lines="none" *ngIf="pagination && pagination.content; else noProduct">
     <ion-card *ngFor="let produto of pagination.content">
       <ion-item (click)="log(produto)">
         <ion-img
