@@ -18,7 +18,7 @@ import { PedidoService } from 'src/app/services/pedido/pedido.service';
 import { IProduto } from 'src/app/services/produto/produto.interface';
 import { ProdutoService } from 'src/app/services/produto/produto.service';
 import { ScannerService } from 'src/app/services/scanner/scanner.service';
-import { Pagination } from '../pedido-lista/pedido-lista.interface';
+import { Pagination } from './../pedido-lista/pedido-lista.interface';
 
 @Component({
   selector: 'app-produto-pesquisa',
@@ -102,9 +102,10 @@ export class ProdutoPesquisaPage implements OnInit, OnDestroy {
   /**
    * @author helio.souza
    * @param value Dado a ser pesquisado.
-   * @returns
+   * @returns {Observable<Pagination<IProduto>>}
    */
   pesquisar(value: string): Observable<Pagination<IProduto>> {
+    this.showLoadingSpinner = true;
     return this.produtoService
       .getProdutoPagination(value, this.pesquisado === value ? this.page + 1 : 1)
       .pipe(
@@ -115,6 +116,10 @@ export class ProdutoPesquisaPage implements OnInit, OnDestroy {
             this.pagination = result;
             console.log(`Valor pesquisado: ${value}`);
             console.log('Resultado da pesquisa: ', result);
+            this.showLoadingSpinner = false;
+          },
+          error: () => {
+            this.showLoadingSpinner = false;
           },
         })
       );
@@ -161,7 +166,7 @@ export class ProdutoPesquisaPage implements OnInit, OnDestroy {
       .subscribe();
   }
 
-  log(l: any) {
+  log(l: any): void {
     console.log(l);
   }
 
@@ -184,6 +189,10 @@ export class ProdutoPesquisaPage implements OnInit, OnDestroy {
     } catch (error) {}
   }
 
+  /**
+   * @author helio.souza
+   * @param value Dado scaneado.
+   */
   scaneado(value: string): void {
     if (value.length > 2 && value.substring(0, 1) === 'P') {
       this.pedidoService

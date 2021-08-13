@@ -42,7 +42,6 @@ export class PedidoService {
   // Produtos
   private readonly qtdItensSacola = new BehaviorSubject<number>(0);
   private readonly pedidoItens = new BehaviorSubject<PedidoItem[]>([]);
-  // Produtos por Paginação.
   private readonly produtoPorPagina = 10;
   // Cliente
   readonly cliente = new BehaviorSubject<ClienteGet>(null);
@@ -260,7 +259,7 @@ export class PedidoService {
       take(1),
       tap({
         next: (pedido) => {
-          console.log('Cliente atualizado: ', pedido);
+          console.log('Cliente Adicionado!');
           this.atualizaPedidoHeader(pedido);
           this.cliente.next(clie);
         },
@@ -436,7 +435,6 @@ export class PedidoService {
   /**
    * @author helio.souza
    * @param numPedido Número do Pedido a ser apagado.
-   * @returns
    */
   apagarPedido(numPedido: number): Observable<any> {
     const empresa = localStorage.getItem('empresa');

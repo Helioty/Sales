@@ -63,6 +63,14 @@
     (keyup.enter)="scaneado($event.target.value)"
   />
 
+  <div
+    slot="fixed"
+    class="ion-text-center ion-padding"
+    style="width: 100vw"
+  >
+    <ion-spinner [hidden]="!showLoadingSpinner"></ion-spinner>
+  </div>
+
   <ion-list lines="none" *ngIf="pagination && pagination.content; else noProduct">
     <ion-card *ngFor="let produto of pagination.content">
       <ion-item (click)="log(produto)">
@@ -100,9 +108,9 @@
         </ion-col>
       </ion-row>
 
-      <ion-row class="ion-justify-content-center">
+      <!-- <ion-row class="ion-justify-content-center">
         <ion-spinner></ion-spinner>
-      </ion-row>
+      </ion-row> -->
     </ion-grid>
   </ng-template>
 
