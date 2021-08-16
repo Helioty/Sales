@@ -46,13 +46,6 @@ export class ClienteCadastroEdicaoPage implements OnInit, OnDestroy {
     this.setFormCliente();
     this.setFormEndereco();
     this.slides.lockSwipes(true);
-
-    if (this.situacao === 'edicao') {
-      this.activatedRoute.queryParams.subscribe((params: Params) => {
-        this.clienteDadosOld = JSON.parse(params.dados);
-      });
-      console.log(this.clienteDadosOld);
-    }
   }
 
   ionViewWillEnter(): void {
@@ -78,15 +71,17 @@ export class ClienteCadastroEdicaoPage implements OnInit, OnDestroy {
           next: (params) => {
             this.navParams = params;
             console.log('Params: ', params);
+            this.situacao = params.situacao;
+            this.cliente = params.cliente;
+
+            if (this.situacao === 'edicao') {
+              this.clienteDadosOld = JSON.parse(params.dados);
+              console.log(this.clienteDadosOld);
+            }
           },
         })
       )
-      .subscribe({
-        next: (params: Params) => {
-          this.situacao = params.situacao;
-          this.cliente = params.cliente;
-        },
-      });
+      .subscribe();
   }
 
   /**
@@ -118,7 +113,7 @@ export class ClienteCadastroEdicaoPage implements OnInit, OnDestroy {
 
   /**
    * @author helio.souza
-   * @param slide 
+   * @param slide
    */
   slideTo(slide: number): void {
     this.slides.lockSwipes(false);
