@@ -93,7 +93,12 @@ export class ProdutoPesquisaPage implements OnInit, OnDestroy {
         filter((value) => value.length > 1),
         debounceTime(300),
         distinctUntilChanged(),
+        tap({ next: () => (this.showLoadingSpinner = true) }),
         switchMap((value) => this.pesquisar(value)),
+        tap({
+          next: () => (this.showLoadingSpinner = false),
+          error: () => (this.showLoadingSpinner = false),
+        }),
         map((response) => response.content)
       )
       .subscribe();
@@ -105,7 +110,6 @@ export class ProdutoPesquisaPage implements OnInit, OnDestroy {
    * @returns {Observable<Pagination<IProduto>>}
    */
   pesquisar(value: string): Observable<Pagination<IProduto>> {
-    this.showLoadingSpinner = true;
     return this.produtoService
       .getProdutoPagination(value, this.pesquisado === value ? this.page + 1 : 1)
       .pipe(
@@ -116,10 +120,6 @@ export class ProdutoPesquisaPage implements OnInit, OnDestroy {
             this.pagination = result;
             console.log(`Valor pesquisado: ${value}`);
             console.log('Resultado da pesquisa: ', result);
-            this.showLoadingSpinner = false;
-          },
-          error: () => {
-            this.showLoadingSpinner = false;
           },
         })
       );
