@@ -33,14 +33,15 @@ export class ProdutoPesquisaPage implements OnInit, OnDestroy {
   public pedidoOBS: Observable<PedidoHeader>;
   public totalItensOBS: Observable<number>;
 
+  // Controle de Loading.
   public showLoadingSpinner = false;
 
   // Dados da Pesquisa reativa.
+  private fieldSub: Subscription;
   readonly fieldPesquisa = new FormControl('', [
     Validators.required,
     Validators.minLength(3),
   ]);
-  private fieldSub: Subscription;
 
   // Dados da Pesquisa e Paginação
   public pagination: Pagination<IProduto>;
@@ -127,9 +128,9 @@ export class ProdutoPesquisaPage implements OnInit, OnDestroy {
 
   /**
    * @author helio.souza
-   * @param pagination
-   * @param pesquisado
-   * @returns
+   * @param pagination Dados da paginação da pesquisa.
+   * @param pesquisado Dado pesquisado.
+   * @returns {Pagination<IProduto>}
    */
   mapPagination(
     pagination: Pagination<IProduto>,
