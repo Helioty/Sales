@@ -152,14 +152,7 @@ const routes: Routes = [
       import('./page/cliente/cliente.module').then((m) => m.ClientePageModule),
     canActivate: [AuthGuard],
   },
-  // {
-  //   path: 'cliente-cadastro-edicao',
-  //   loadChildren: () =>
-  //     import(
-  //       './page/cliente/cliente-cadastro-edicao/cliente-cadastro-edicao.module'
-  //     ).then((m) => m.ClienteCadastroEdicaoPageModule),
-  //   canActivate: [AuthGuard],
-  // },
+
 
   // {
   //   path: 'tinta-alterada',

@@ -13,27 +13,17 @@ const routes: Routes = [
     children: [
       {
         path: 'pedido-aberto',
-        children: [
-          {
-            path: '',
-            loadChildren: () =>
-              import('./pedido-aberto/pedido-aberto.module').then(
-                (m) => m.PedidoAbertoPageModule
-              ),
-          },
-        ],
+        loadChildren: () =>
+          import('./pedido-aberto/pedido-aberto.module').then(
+            (m) => m.PedidoAbertoPageModule
+          ),
       },
       {
         path: 'pedido-finalizado',
-        children: [
-          {
-            path: '',
-            loadChildren: () =>
-              import('./pedido-finalizado/pedido-finalizado.module').then(
-                (m) => m.PedidoFinalizadoPageModule
-              ),
-          },
-        ],
+        loadChildren: () =>
+          import('./pedido-finalizado/pedido-finalizado.module').then(
+            (m) => m.PedidoFinalizadoPageModule
+          ),
       },
       {
         path: '',

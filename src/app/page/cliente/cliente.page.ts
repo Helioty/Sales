@@ -304,15 +304,14 @@ export class ClientePage implements OnInit, OnDestroy {
       case 'pedido-retirada':
         navigationExtras.queryParams.paginaSeguinte = 'produto-atalhos';
         navigationExtras.queryParams.paginaAnterior = 'pedido-retirada';
-        this.navControl.navigateForward(['/cliente-cadastro-edicao'], navigationExtras);
         break;
 
       default:
         navigationExtras.queryParams.paginaSeguinte = navParams.paginaAnterior;
         navigationExtras.queryParams.paginaAnterior = 'back';
-        this.navControl.navigateForward(['/cliente-cadastro-edicao'], navigationExtras);
         break;
     }
+    this.navControl.navigateForward('cliente/cadastro-edicao', navigationExtras);
   }
 
   /**
