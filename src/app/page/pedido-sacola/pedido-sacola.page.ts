@@ -79,15 +79,21 @@ export class PedidoSacolaPage implements OnInit {
    */
   atualizaItens(): void {
     this.pedidoService.getPedidoAllItens(this.pedidoService.getPedidoNumero()).subscribe({
-      next: (produtos) => {
-        produtos.forEach((el) => {
-          if (el.retiradas[0].tipoRetirada === 9997) {
-            this.existeProdEntrega = true;
-          } else if (el.retiradas[0].tipoRetirada !== 9997) {
-            this.existeProdRetirada = true;
-          }
-        });
-      },
+      next: (produtos) => this.atualizaRetiradas(produtos),
+    });
+  }
+
+  /**
+   * @author helio.souza
+   * @param produtos Itens do Pedido.
+   */
+  private atualizaRetiradas(produtos: PedidoItem[]): void {
+    produtos.forEach((el) => {
+      if (el.retiradas[0].tipoRetirada === 9997) {
+        this.existeProdEntrega = true;
+      } else if (el.retiradas[0].tipoRetirada !== 9997) {
+        this.existeProdRetirada = true;
+      }
     });
   }
 

@@ -1,9 +1,8 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, NavigationExtras, Params } from '@angular/router';
 import { IonContent, IonSlides, NavController } from '@ionic/angular';
-import { Subscription } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { switchMap, tap } from 'rxjs/operators';
 import { ClienteGet } from 'src/app/services/cliente/cliente.interface';
 import { CommonService } from 'src/app/services/common/common.service';
 
@@ -12,7 +11,7 @@ import { CommonService } from 'src/app/services/common/common.service';
   templateUrl: './cliente-cadastro-edicao.page.html',
   styleUrls: ['./cliente-cadastro-edicao.page.scss'],
 })
-export class ClienteCadastroEdicaoPage implements OnInit, OnDestroy {
+export class ClienteCadastroEdicaoPage implements OnInit {
   @ViewChild(IonContent, { static: true }) readonly content: IonContent;
   @ViewChild(IonSlides, { static: true }) readonly slides: IonSlides;
 
@@ -31,7 +30,6 @@ export class ClienteCadastroEdicaoPage implements OnInit, OnDestroy {
   private clienteDadosOld: ClienteGet;
 
   // Dados da navegação.
-  private paramsSub: Subscription;
   private navParams: Params;
 
   constructor(
@@ -42,9 +40,9 @@ export class ClienteCadastroEdicaoPage implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.getNavParams();
     this.setFormCliente();
     this.setFormEndereco();
+    this.getNavParams();
     this.slides.lockSwipes(true);
   }
 
@@ -57,26 +55,26 @@ export class ClienteCadastroEdicaoPage implements OnInit, OnDestroy {
     this.common.goToFullScreen();
   }
 
-  ngOnDestroy(): void {
-    this.paramsSub.unsubscribe();
-  }
-
   /**
    * @author helio.souza
    */
   getNavParams(): void {
-    this.paramsSub = this.activatedRoute.queryParams
+    this.activatedRoute.params
       .pipe(
+        tap({
+          next: (params) => (this.cliente = params.doc),
+        }),
+        switchMap(() => this.activatedRoute.queryParams),
         tap({
           next: (params) => {
             this.navParams = params;
-            console.log('Params: ', params);
+            console.log('queryParams: ', params);
             this.situacao = params.situacao;
-            this.cliente = params.cliente;
-
             if (this.situacao === 'edicao') {
               this.clienteDadosOld = JSON.parse(params.dados);
               console.log(this.clienteDadosOld);
+              this.updateFormCliente(this.clienteDadosOld);
+              this.updateFormEndereco(this.clienteDadosOld);
             }
           },
         })
@@ -96,6 +94,10 @@ export class ClienteCadastroEdicaoPage implements OnInit, OnDestroy {
     });
   }
 
+  updateFormCliente(newValue: any): void {
+    this.formCliente.patchValue({});
+  }
+
   /**
    * @author helio.souza
    */
@@ -109,6 +111,10 @@ export class ClienteCadastroEdicaoPage implements OnInit, OnDestroy {
       numero: ['', Validators.required],
       comple: [''],
     });
+  }
+
+  updateFormEndereco(newValue: any): void {
+    this.formEndereco.patchValue({});
   }
 
   /**

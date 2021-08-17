@@ -43,7 +43,6 @@ export class ClientePage implements OnInit, OnDestroy {
   private pedido: PedidoHeader;
 
   // Dados da navegação.
-  private paramsSub: Subscription;
   private navParams: Params;
 
   constructor(
@@ -79,7 +78,6 @@ export class ClientePage implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.pedidoSub.unsubscribe();
-    this.paramsSub.unsubscribe();
     this.clienteSub.unsubscribe();
   }
 
@@ -115,7 +113,7 @@ export class ClientePage implements OnInit, OnDestroy {
    * @author helio.souza
    */
   private getNavParams(): void {
-    this.paramsSub = this.activatedRoute.queryParams.subscribe({
+    this.activatedRoute.queryParams.subscribe({
       next: (params) => (this.navParams = params),
     });
   }
@@ -294,8 +292,7 @@ export class ClientePage implements OnInit, OnDestroy {
         paginaSeguinte: '',
         paginaAnterior: 'back',
         situacao: situacao,
-        cliente: doc,
-        dados: '',
+        dados: null,
       },
     };
     if (situacao === 'edicao') {

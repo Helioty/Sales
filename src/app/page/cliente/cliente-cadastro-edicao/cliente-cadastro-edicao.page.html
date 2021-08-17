@@ -16,7 +16,8 @@
     [hidden]="!loading"
   ></ion-progress-bar>
 
-  <ion-progress-bar color="success" *ngIf="!loading"></ion-progress-bar>
+  <ion-progress-bar slot="fixed" color="success" *ngIf="!loading"></ion-progress-bar>
+
   <ion-slides>
     <ion-slide>
       <ion-grid>

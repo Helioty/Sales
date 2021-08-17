@@ -1,69 +1,45 @@
-ion-header {
-
-    ion-toobar {
-
-        ion-buttons {
-
-            ion-button {
-                min-width: 48px;
-                min-height: 48px;
-            }
-        }
-    }
-}
-
 ion-content {
+  ion-grid {
+    height: 100% !important;
 
-    ion-slides {
-        min-height: calc(100% - 4px) !important;
+    ion-row {
+      max-width: 900px !important;
+      margin: auto !important;
 
-        ion-slide {
-
-            ion-grid {
-                height: 100% !important;
-
-                ion-row {
-                    max-width: 900px !important;
-                    margin: auto !important;
-
-                    ion-col {
-
-                        ion-item {
-                            border: #b2becd 1px solid !important;
-                            border-radius: 6px !important;
-                        }
-
-                        ion-item.cep-item {
-                            --inner-padding-end: 0 !important;
-                            
-                            ion-button {
-                                margin: auto !important;
-                                margin-right: 5px !important;
-                                height: 75% !important;
-                                min-width: 50px !important;
-
-                                ion-icon {
-                                    font-size: 200%;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
+      ion-col {
+        ion-item {
+          border: #b2becd 1px solid !important;
+          border-radius: 6px !important;
         }
+
+        ion-item.cep-item {
+          --inner-padding-end: 0 !important;
+
+          ion-button {
+            margin: auto !important;
+            margin-right: 5px !important;
+            height: 75% !important;
+            min-width: 50px !important;
+
+            ion-icon {
+              font-size: 200%;
+            }
+          }
+        }
+      }
     }
+  }
 }
 
 ion-footer {
+  ion-item {
+    max-width: 700px !important;
+    width: 100% !important;
+    margin: auto !important;
 
-    ion-item {
-        max-width: 700px !important;
-        width: 100% !important;
-        margin: auto !important;
-
-        ion-text {
-            margin: auto !important;
-            font-size: 110%;
-        }
+    ion-text {
+      margin: auto !important;
+      font-size: 110%;
     }
+  }
 }
