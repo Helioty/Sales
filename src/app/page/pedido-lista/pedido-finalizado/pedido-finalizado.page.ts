@@ -134,7 +134,7 @@ export class PedidoFinalizadoPage implements OnInit {
 
   /**
    * @author helio.souza
-   * @param pedido
+   * @param pedido Dados do Pedido.
    */
   apagarPedido(pedido: PedidoHeader): void {
     const props = {
@@ -149,7 +149,7 @@ export class PedidoFinalizadoPage implements OnInit {
 
   /**
    * @author helio.souza
-   * @param pedido
+   * @param pedido Dados do Pedido.
    */
   alterarPedido(pedido: PedidoHeader): void {
     this.pedidoService.reabrirPedido(pedido);

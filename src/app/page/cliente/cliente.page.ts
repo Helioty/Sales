@@ -287,13 +287,14 @@ export class ClientePage implements OnInit, OnDestroy {
    * @param navParams Parametros de navegação.
    * @param situacao Situação do cadastro.
    */
-  private toCadastroEdicao(navParams: Params, situacao: string): void {
+  private toCadastroEdicao(navParams: Params, situacao: 'edicao' | 'novo'): void {
+    const doc = this.valorDigitado;
     const navigationExtras: NavigationExtras = {
       queryParams: {
         paginaSeguinte: '',
-        paginaAnterior: '',
+        paginaAnterior: 'back',
         situacao: situacao,
-        cliente: this.valorDigitado,
+        cliente: doc,
         dados: '',
       },
     };
@@ -308,10 +309,9 @@ export class ClientePage implements OnInit, OnDestroy {
 
       default:
         navigationExtras.queryParams.paginaSeguinte = navParams.paginaAnterior;
-        navigationExtras.queryParams.paginaAnterior = 'back';
         break;
     }
-    this.navControl.navigateForward('cliente/cadastro-edicao', navigationExtras);
+    this.navControl.navigateForward([`cliente/${situacao}`, doc], navigationExtras);
   }
 
   /**

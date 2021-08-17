@@ -6,19 +6,21 @@ import { ClientePage } from './cliente.page';
 const routes: Routes = [
   {
     path: '',
-    children: [
-      {
-        path: '',
-        component: ClientePage,
-      },
-      {
-        path: 'cadastro-edicao',
-        loadChildren: () =>
-          import('./cliente-cadastro-edicao/cliente-cadastro-edicao.module').then(
-            (m) => m.ClienteCadastroEdicaoPageModule
-          ),
-      },
-    ],
+    component: ClientePage,
+  },
+  {
+    path: 'novo/:doc',
+    loadChildren: () =>
+      import('./cliente-cadastro-edicao/cliente-cadastro-edicao.module').then(
+        (m) => m.ClienteCadastroEdicaoPageModule
+      ),
+  },
+  {
+    path: 'edicao/',
+    loadChildren: () =>
+      import('./cliente-cadastro-edicao/cliente-cadastro-edicao.module').then(
+        (m) => m.ClienteCadastroEdicaoPageModule
+      ),
   },
 ];
 

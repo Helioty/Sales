@@ -1,22 +1,11 @@
 import { Injectable } from '@angular/core';
-import { Observable, BehaviorSubject } from 'rxjs';
-import { map, take, tap } from 'rxjs/operators';
-import { API_URL, ENV } from 'src/app/config/app.config.service';
-import { Pagination } from 'src/app/page/pedido-lista/pedido-lista.interface';
-import { PedidoService } from 'src/app/services/pedido/pedido.service';
-import { CommonService } from './../common/common.service';
-import { BaseService } from './../http/base.service';
 import { PedidoItem } from './pedido.interface';
 
 @Injectable({
   providedIn: 'root',
 })
 export class PedidoItemService {
-  constructor(
-    private readonly common: CommonService,
-    private readonly pedidoService: PedidoService,
-    private readonly http: BaseService
-  ) {}
+  constructor() {}
 
   // edit by Helio 10/03/2020
   public getItemPedido() {

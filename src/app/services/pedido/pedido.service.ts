@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { NavigationExtras } from '@angular/router';
 import { NavController } from '@ionic/angular';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 import { map, take, tap } from 'rxjs/operators';
 import { API_URL, ENV } from 'src/app/config/app.config.service';
 import { Pagination } from 'src/app/page/pedido-lista/pedido-lista.interface';
@@ -132,16 +132,28 @@ export class PedidoService {
    * @param pedido Objeto do Pedido.
    */
   async reabrirPedido(pedido: PedidoHeader): Promise<void> {
+    const toPedidoHome = () => {
+      this.navControl.navigateRoot(['/pedido-atalhos']).then(() => {
+        this.common.loading.dismiss();
+      });
+    };
     await this.common.showLoader();
     this.atualizaPedidoHeader(pedido);
     if (pedido.cgccpf_cliente) {
-      this.clienteService
-        .getCliente(pedido.cgccpf_cliente, false)
-        .subscribe({ next: (clie) => this.cliente.next(clie) });
+      this.clienteService.getCliente(pedido.cgccpf_cliente, false).subscribe({
+        next: (clie) => {
+          this.cliente.next(clie);
+          toPedidoHome();
+        },
+        error: () =>
+          this.common.showAlertError(
+            'Erro!',
+            'Falha ao recuperar os dados do Cliente, Tente novamente!'
+          ),
+      });
+    } else {
+      toPedidoHome();
     }
-    this.navControl.navigateRoot(['/pedido-atalhos']).then(() => {
-      this.common.loading.dismiss();
-    });
   }
 
   /**
