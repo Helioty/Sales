@@ -16,7 +16,7 @@ const routes: Routes = [
       ),
   },
   {
-    path: 'edicao/',
+    path: 'edicao/:doc',
     loadChildren: () =>
       import('./cliente-cadastro-edicao/cliente-cadastro-edicao.module').then(
         (m) => m.ClienteCadastroEdicaoPageModule
