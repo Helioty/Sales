@@ -24,11 +24,7 @@ export class ClienteService {
       take(1),
       tap({ next: (clie) => console.log('Cliente: ', clie) }),
       catchError((err) => {
-        if (
-          !showError &&
-          err.error &&
-          !(err.error.detail as string).includes('foi encontrado na nossa base')
-        ) {
+        if (!showError && err.status !== 404) {
           this.http.showError(err);
         }
         throw err;

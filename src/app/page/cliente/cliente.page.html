@@ -87,14 +87,15 @@
     </ion-row>
 
     <ion-row class="clie-input" *ngIf="colorState === 'isBlue'">
+      <!-- [(ngModel)]="valorDigitado" -->
+      <!-- (ionChange)="dynamicMask()" -->
       <ion-input
-        placeholder="CPF ou CNPJ do cliente"
-        (ionChange)="dynamicMask()"
-        [(ngModel)]="valorDigitado"
-        style="margin-bottom: 1px; font-size: 20px"
+        #pesquisaCliente
         inputmode="numeric"
-        (ionBlur)="checaMinimo(valorDigitado)"
-        (keyup.enter)="blurSearch()"
+        [formControl]="fieldCliente"
+        placeholder="CPF ou CNPJ do cliente"
+        style="margin-bottom: 1px; font-size: 20px"
+        (keyup.enter)="checaMinimo(fieldCliente)"
       >
       </ion-input>
     </ion-row>

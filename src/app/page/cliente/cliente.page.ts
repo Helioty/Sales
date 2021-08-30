@@ -1,7 +1,9 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, NavigationExtras, Params } from '@angular/router';
 import { IonInput, ModalController, NavController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
+import { debounceTime, distinctUntilChanged, map, tap } from 'rxjs/operators';
 import { PesquisaClienteComponent } from 'src/app/components/pesquisa-cliente/pesquisa-cliente.component';
 import { ClienteGet } from 'src/app/services/cliente/cliente.interface';
 import { ClienteService } from 'src/app/services/cliente/cliente.service';
@@ -18,7 +20,11 @@ export class ClientePage implements OnInit, OnDestroy {
   @ViewChild(IonInput, { static: false }) readonly search: IonInput;
 
   // Valor digitado no input de CPF/CNPJ
-  public valorDigitado = '';
+  private fieldSub: Subscription;
+  readonly fieldCliente = new FormControl('', [
+    Validators.required,
+    Validators.minLength(14),
+  ]);
 
   // Controle da animação do skeleton
   public skeletonAni = false;
@@ -59,6 +65,7 @@ export class ClientePage implements OnInit, OnDestroy {
     this.getPedidoAtivo();
     this.getClienteAtivo();
     this.getNavParams();
+    this.setupField();
   }
 
   ionViewWillEnter(): void {
@@ -69,6 +76,7 @@ export class ClientePage implements OnInit, OnDestroy {
     this.common.goToFullScreen();
     if (!this.pedido.cgccpf_cliente) {
       this.setEstado('reset');
+      this.setInputFoco();
     }
   }
 
@@ -79,6 +87,7 @@ export class ClientePage implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.pedidoSub.unsubscribe();
     this.clienteSub.unsubscribe();
+    this.fieldSub.unsubscribe();
   }
 
   /**
@@ -121,12 +130,30 @@ export class ClientePage implements OnInit, OnDestroy {
   /**
    * @author helio.souza
    */
+  private setupField(): void {
+    this.fieldSub = this.fieldCliente.valueChanges
+      .pipe(
+        debounceTime(200),
+        distinctUntilChanged(),
+        map((doc) => this.common.formataCPFNPJ(doc)),
+        tap({
+          next: (doc) => {
+            this.fieldCliente.patchValue(doc);
+          },
+        })
+      )
+      .subscribe();
+  }
+
+  /**
+   * @author helio.souza
+   */
   private getClienteAtivo(): void {
     this.clienteSub = this.pedidoService.getPedidoClienteOBS().subscribe({
       next: (clie) => {
         this.dados = clie;
         if (clie) {
-          this.valorDigitado = this.common.formataCPFNPJ(clie.cgccpf);
+          this.fieldCliente.patchValue(this.common.formataCPFNPJ(clie.cgccpf));
           this.atualizaExibicaoDadosCliente(clie);
         }
       },
@@ -134,13 +161,12 @@ export class ClientePage implements OnInit, OnDestroy {
   }
 
   /**
+   * @deprecated
    * @author helio.souza
    * @description Mascara dinamica para o input.
    */
   dynamicMask(): void {
-    if (this.valorDigitado && this.valorDigitado.length > 2) {
-      this.valorDigitado = this.common.formataCPFNPJ(this.valorDigitado);
-    }
+    this.fieldCliente.patchValue(this.common.formataCPFNPJ(this.fieldCliente.value));
   }
 
   /**
@@ -170,7 +196,6 @@ export class ClientePage implements OnInit, OnDestroy {
 
       case 'reset':
         this.resetOperation();
-        this.setInputFoco();
         break;
     }
   }
@@ -191,11 +216,11 @@ export class ClientePage implements OnInit, OnDestroy {
 
   /**
    * @description Checa o minimo de caracteres necessarios para executar a chamada.
-   * @param doc CPF/CNPJ do cliente.
+   * @param docForm Form com CPF/CNPJ do cliente.
    */
-  checaMinimo(doc: string) {
-    const clieDoc: string = doc.replace(/\D/g, '');
-    if (clieDoc.length > 10) {
+  checaMinimo(docForm: FormControl): void {
+    if (docForm.valid) {
+      const clieDoc: string = docForm.value.replace(/\D/g, '');
       this.getCliente(clieDoc);
     }
   }
@@ -204,7 +229,7 @@ export class ClientePage implements OnInit, OnDestroy {
    * @author helio.souza
    * @param doc CPF/CNPJ do cliente.
    */
-  getCliente(doc: string): void {
+  private getCliente(doc: string): void {
     this.skeletonAni = true;
     this.clienteService.getCliente(doc, false).subscribe({
       next: (response) => {
@@ -214,7 +239,7 @@ export class ClientePage implements OnInit, OnDestroy {
       },
       error: (err) => {
         this.skeletonAni = false;
-        if (err.error && err.error.detail) {
+        if (err.status === 404) {
           this.mensagem = 'Não encontramos o cadastro do cliente!';
           this.setEstado('novo');
         } else {
@@ -264,10 +289,14 @@ export class ClientePage implements OnInit, OnDestroy {
    */
   naoCliente(): void {
     if (this.pedido.cgccpf_cliente) {
-      const action = () => this.setEstado('reset');
+      const action = () => {
+        this.setEstado('reset');
+        this.setInputFoco();
+      };
       this.pedidoService.confirmaRemoveCliente(action);
     } else {
       this.setEstado('reset');
+      this.setInputFoco();
     }
   }
 
@@ -286,7 +315,7 @@ export class ClientePage implements OnInit, OnDestroy {
    * @param situacao Situação do cadastro.
    */
   private toCadastroEdicao(navParams: Params, situacao: 'edicao' | 'novo'): void {
-    const doc = this.valorDigitado;
+    const doc = this.fieldCliente.value;
     const navigationExtras: NavigationExtras = {
       queryParams: {
         paginaSeguinte: '',
@@ -316,7 +345,7 @@ export class ClientePage implements OnInit, OnDestroy {
    * @description Grava o cliente no Pedido.
    */
   async confirmaCliente(): Promise<void> {
-    const doc = this.valorDigitado.replace(/\D/g, '');
+    const doc = this.fieldCliente.value.replace(/\D/g, '');
     await this.common.showLoader();
     if (this.pedido.cgccpf_cliente !== doc) {
       this.pedidoService
@@ -367,7 +396,10 @@ export class ClientePage implements OnInit, OnDestroy {
     }
   }
 
-  async buscaCliente() {
+  /**
+   * @author helio.souza
+   */
+  async buscaCliente(): Promise<void> {
     const modal = await this.modalCtrl.create({
       component: PesquisaClienteComponent,
       componentProps: {
