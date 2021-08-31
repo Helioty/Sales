@@ -167,10 +167,6 @@ export class ProdutoPesquisaPage implements OnInit, OnDestroy {
       .subscribe();
   }
 
-  log(l: any): void {
-    console.log(l);
-  }
-
   /**
    * @author helio.souza
    * @param delay Delay para executar o foco no searchbar.
@@ -222,6 +218,10 @@ export class ProdutoPesquisaPage implements OnInit, OnDestroy {
     this.navControl.navigateForward(['/cliente'], navigationExtras);
   }
 
+  /**
+   * @author helio.souza
+   * @param produto Objeto do Produto.
+   */
   goToProdutoPage(produto: IProduto) {
     const navigationExtras: NavigationExtras = {
       queryParams: {

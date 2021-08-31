@@ -129,7 +129,7 @@ export class PedidoAbertoPage implements OnInit {
       },
       skipLocationChange: true,
     };
-    this.navControl.navigateForward(['/pedido-resumo'], navigationExtras);
+    this.navControl.navigateForward(['pedido-lista/pedido-resumo'], navigationExtras);
   }
 
   /**

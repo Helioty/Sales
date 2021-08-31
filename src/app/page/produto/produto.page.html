@@ -4,7 +4,7 @@
       <ion-back-button></ion-back-button>
     </ion-buttons>
 
-    <ion-title>produto</ion-title>
+    <ion-title> Produto </ion-title>
 
     <ion-buttons slot="end">
       <ion-button (click)="adicionarCartaoPedido()">
@@ -12,9 +12,10 @@
         <ion-badge
           color="success"
           class="badge-position"
-          *ngIf="pedidoService.cardSelected"
-          >✔</ion-badge
+          *ngIf="(pedidoOBS | async)?.cartaoPedido"
         >
+          ✔
+        </ion-badge>
       </ion-button>
 
       <ion-button (click)="openClientePage()">
@@ -22,19 +23,20 @@
         <ion-badge
           color="success"
           class="badge-position"
-          *ngIf="pedidoService.clientSelected"
-          >✔</ion-badge
+          *ngIf="(pedidoOBS | async)?.cgccpf_cliente"
         >
+          ✔
+        </ion-badge>
       </ion-button>
 
       <ion-button
-        *ngIf="pedidoService.qtdItensSacola > 0"
+        *ngIf="totalItensOBS | async as total"
         [routerLink]="['/pedido-sacola']"
         routerDirection="forward"
       >
         <ion-icon name="basket"></ion-icon>
         <ion-badge color="fc-cinza-vermelho" class="badge-position">
-          {{ pedidoService.qtdItensSacola }}
+          {{ total }}
         </ion-badge>
       </ion-button>
     </ion-buttons>
@@ -43,11 +45,10 @@
 
 <ion-content>
   <input
-    id="scanner"
-    appHideKeyboard
     class="scanner"
-    [(ngModel)]="valorScanner"
-    (keyup.enter)="scaneado($event)"
+    appHideKeyboard
+    [(ngModel)]="scanner.valorScanner"
+    (keyup.enter)="scaneado($event.target.value)"
   />
 
   <ion-grid>
@@ -64,22 +65,16 @@
       <ion-col size="12" class="descricaoProduto">
         <ion-row class="fantasiaEsituacao">
           <ion-col size="6" class="fantasia ion-no-padding">
-            <ion-label>
-              {{ produto.fantas }}
-            </ion-label>
+            <ion-label> {{ produto.fantas }} </ion-label>
           </ion-col>
         </ion-row>
 
         <ion-row class="descricao">
-          <ion-label>
-            {{ produto.descricao }}
-          </ion-label>
+          <ion-label> {{ produto.descricao }} </ion-label>
         </ion-row>
 
         <ion-row class="codigodigitoembalagem">
-          <ion-label>
-            {{ produto.codigodigitoembalagem }}
-          </ion-label>
+          <ion-label> {{ produto.codigodigitoembalagem }} </ion-label>
         </ion-row>
       </ion-col>
 

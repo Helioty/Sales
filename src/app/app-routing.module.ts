@@ -61,29 +61,13 @@ const routes: Routes = [
       ),
     canActivate: [AuthGuard],
   },
+  {
+    path: 'produto',
+    loadChildren: () =>
+      import('./page/produto/produto.module').then((m) => m.ProdutoPageModule),
+    canActivate: [AuthGuard],
+  },
 
-  // {
-  //   path: 'produto',
-  //   loadChildren: () =>
-  //     import('./page/produto/produto.module').then((m) => m.ProdutoPageModule),
-  //   canActivate: [AuthGuard],
-  // },
-  // {
-  //   path: 'produto-imagens',
-  //   loadChildren: () =>
-  //     import('./page/produto/produto-imagens/produto-imagens.module').then(
-  //       (m) => m.ProdutoImagensPageModule
-  //     ),
-  //   canActivate: [AuthGuard],
-  // },
-  // {
-  //   path: 'produto-detalhes',
-  //   loadChildren: () =>
-  //     import('./page/produto/produto-detalhes/produto-detalhes.module').then(
-  //       (m) => m.ProdutoDetalhesPageModule
-  //     ),
-  //   canActivate: [AuthGuard],
-  // },
   // {
   //   path: 'produto-adicionar-sacola',
   //   loadChildren: () =>

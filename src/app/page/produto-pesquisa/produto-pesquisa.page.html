@@ -69,7 +69,7 @@
 
   <ion-list lines="none" *ngIf="pagination && pagination.content.length; else noProduct">
     <ion-card *ngFor="let produto of pagination.content">
-      <ion-item (click)="log(produto)">
+      <ion-item (click)="goToProdutoPage(produto)">
         <ion-img
           slot="start"
           src="data:image/jpeg;base64,{{ produto?.imagem }}"

@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import { API_URL, ENV } from 'src/app/config/app.config.service';
 import { Pagination } from 'src/app/page/pedido-lista/pedido-lista.interface';
 import { BaseService } from './../http/base.service';
-import { IProduto } from './produto.interface';
+import { IProduto, IProdutoFamilia, IProdutoImagem } from './produto.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -96,64 +96,43 @@ export class ProdutoService {
     });
   }
 
-  // by Ryuge 18/09/2018
-  // edit by Helio 19/03/2020
-  public getAllListImage(codigo: string): Observable<any> {
-    // const link = ENV.WS_PRODUTO + API_URL + 'listImages/' + codigo;
-    const url = `${ENV.WS_PRODUTO}${API_URL}listImages/${codigo}`;
+  /**
+   * @author helio.souza
+   * @param produtoCodigoDigito Codigo do Produto com Digito.
+   * @returns {Observable<IProdutoImagem[]>}
+   */
+  getAllListImage(produtoCodigoDigito: string): Observable<IProdutoImagem[]> {
+    const url = `${ENV.WS_PRODUTO}${API_URL}listImages/${produtoCodigoDigito}`;
     return this.http.get(url);
   }
 
-  // by Ryuge 18/09/2018
-  // edit by Helio 22/05/2020
-  public getFirstImage(codigo: string) {
-    // const link = ENV.WS_PRODUTO + API_URL + 'listImages/' + codigo + '/1';
-    const url = `${ENV.WS_PRODUTO}${API_URL}listImages/${codigo}/1`;
-    return this.http.get(url);
+  /**
+   * @author helio.souza
+   * @param produtoCodigoDigito Codigo do Produto com Digito.
+   * @returns {Observable<IProdutoImagem>}
+   */
+  getFirstImage(produtoCodigoDigito: string): Observable<IProdutoImagem> {
+    const url = `${ENV.WS_PRODUTO}${API_URL}listImages/${produtoCodigoDigito}/1`;
+    return this.http.get<IProdutoImagem[]>(url).pipe(map((imagens) => imagens[0]));
   }
 
   // edit by Helio 19/03/2020
-  public getProductInfomation(codigoProduto: string) {
-    const link = ENV.WS_PRODUTO + API_URL + 'detalhe/' + codigoProduto;
-
-    return new Promise((resolve, reject) => {
-      this.http
-        .get(link)
-        .toPromise()
-        .then(
-          (result: any) => {
-            resolve(result);
-          },
-          (error) => {
-            reject(error);
-          }
-        );
-    });
+  getProductInfomation(produtoCodigoDigitoEmbalagem: string): Observable<any> {
+    const url = `${ENV.WS_PRODUTO}${API_URL}detalhe/${produtoCodigoDigitoEmbalagem}`;
+    return this.http.get(url).pipe(
+      tap({
+        next: (info) => {
+          console.log('Info: ', info);
+        },
+      })
+    );
   }
 
   // edit by Helio 20/05/2020
-  public getFamilia(codigoProduto: string) {
-    const link =
-      ENV.WS_PRODUTO +
-      API_URL +
-      'familia/' +
-      localStorage.getItem('empresa') +
-      '/' +
-      codigoProduto;
-
-    return new Promise((resolve, reject) => {
-      this.http
-        .get(link)
-        .toPromise()
-        .then(
-          (result: any) => {
-            resolve(result);
-          },
-          (error) => {
-            reject(error);
-          }
-        );
-    });
+  public getFamilia(codigoProduto: string): Observable<IProdutoFamilia[]> {
+    const empresa = localStorage.getItem('empresa') as string;
+    const url = `${ENV.WS_PRODUTO}${API_URL}familia/${empresa}/${codigoProduto}`;
+    return this.http.get(url);
   }
 
   // edit by Helio 29/05/2020

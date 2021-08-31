@@ -82,7 +82,7 @@
             style="padding: 0 !important"
           >
             <ion-row
-              *ngIf="item?.retiradas[0].tipoRetirada != 9997"
+              *ngIf="item?.retiradas[0].tipoRetirada !== 9997"
               style="padding: 5px !important"
             >
               <ion-item lines="none" class="produto">
@@ -169,7 +169,7 @@
             style="padding: 0 !important"
           >
             <ion-row
-              *ngIf="item?.retiradas[0].tipoRetirada == 9997"
+              *ngIf="item?.retiradas[0].tipoRetirada === 9997"
               style="padding: 5px !important"
             >
               <ion-item lines="none" class="produto">

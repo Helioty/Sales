@@ -37,3 +37,34 @@ export interface IProduto {
   unidade: string;
   valorParcela: number;
 }
+
+export interface IProdutoImagem {
+  codigo: string;
+  descricao: string;
+  imageGrande: string;
+  imagePequena: string;
+  sequencial: number;
+}
+
+export interface IProdutoFamilia {
+  id: number;
+  items: IProdutoFamiliaIT[];
+  nome: string;
+  qtdItems: string;
+  sqltypeName: string;
+  valor: string;
+}
+
+export interface IProdutoFamiliaIT {
+  cor: string;
+  descricao: string;
+  embalagemEspecial: string;
+  estoque: number;
+  id_produto: string;
+  imagem: string;
+  preco: number;
+  preco_unitario: number;
+  selected: number;
+  sqltypeName: string;
+  valor_atributo: string;
+}

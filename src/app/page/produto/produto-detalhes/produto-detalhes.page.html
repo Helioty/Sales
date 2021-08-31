@@ -13,21 +13,15 @@
     <ion-row>
       <ion-col size="12" class="descricaoProduto">
         <ion-row class="fantasiaEsituacao">
-          <ion-label>
-            {{ produto.fantas }}
-          </ion-label>
+          <ion-label> {{ produto.fantas }} </ion-label>
         </ion-row>
 
         <ion-row class="descricao">
-          <ion-label>
-            {{ produto.descricao }}
-          </ion-label>
+          <ion-label> {{ produto.descricao }} </ion-label>
         </ion-row>
 
         <ion-row class="codigodigitoembalagem">
-          <ion-label>
-            {{ produto.codigodigitoembalagem }}
-          </ion-label>
+          <ion-label> {{ produto.codigodigitoembalagem }} </ion-label>
         </ion-row>
       </ion-col>
     </ion-row>
@@ -35,22 +29,16 @@
     <ion-row class="secoes">
       <ion-col size="12" *ngFor="let secao of info; let i = index">
         <ion-row class="secaoDescricao">
-          <p>
-            {{ secao.descricaoGrupo }}
-          </p>
+          <p>{{ secao.descricaoGrupo }}</p>
         </ion-row>
 
         <ion-row class="secaoItem" *ngFor="let item of secao?.items; let f = index">
           <ion-col size="4" class="sideItem">
-            <p>
-              {{ item.nome }}
-            </p>
+            <p>{{ item.nome }}</p>
           </ion-col>
 
           <ion-col size="8" class="sideValor">
-            <p>
-              {{ item.valor }}
-            </p>
+            <p>{{ item.valor }}</p>
           </ion-col>
         </ion-row>
       </ion-col>

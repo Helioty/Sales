@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CommonService } from 'src/app/services/common/common.service';
-import { ProdutoService } from 'src/app/services/produto/produto.service';
 import { DataService } from 'src/app/services/data/data.service';
-import { Produto } from 'src/app/class/produto';
+import { IProduto } from 'src/app/services/produto/produto.interface';
 
 @Component({
   selector: 'app-produto-detalhes',
@@ -11,34 +10,29 @@ import { Produto } from 'src/app/class/produto';
   styleUrls: ['./produto-detalhes.page.scss'],
 })
 export class ProdutoDetalhesPage implements OnInit {
-  public produto = new Produto();
-  public info = [];
+  public produto: IProduto;
+  public info: any = [];
 
   constructor(
-    private activatedRoute: ActivatedRoute,
-    private dataService: DataService,
-    public common: CommonService,
-    public produtoService: ProdutoService
+    private readonly common: CommonService,
+    private readonly dataService: DataService,
+    private readonly activatedRoute: ActivatedRoute
   ) {}
 
-  ngOnInit() {}
-
-  ionViewWillEnter() {
-    this.common.goToFullScreen();
-    this.activatedRoute.queryParams.subscribe((params: any) => {
+  ngOnInit(): void {
+    console.log('ProdutoDetalhes OnInit');
+    this.activatedRoute.queryParams.subscribe((params) => {
       console.log(params);
       this.produto = JSON.parse(params.produto);
       this.info = this.dataService.getData(params.info);
     });
   }
 
-  ionViewDidEnter() {
+  ionViewWillEnter(): void {
     this.common.goToFullScreen();
   }
 
-  ionViewWillLeave() {
-    console.clear();
+  ionViewDidEnter(): void {
+    this.common.goToFullScreen();
   }
-
-  ionViewDidLeave() {}
 }

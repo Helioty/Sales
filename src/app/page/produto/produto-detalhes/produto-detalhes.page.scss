@@ -1,59 +1,56 @@
 ion-content {
-    ion-grid {
-
-        ion-row {
-            ion-col.descricaoProduto {
-                ion-row.fantasiaEsituacao {
-                    ion-label {
-                        color: #999999;
-                        font-size: 15px;
-                        font-weight: 500;
-                    }
-                }
-
-                ion-row.descricao {
-                    ion-label {
-                        color: #212121;
-                        font-size: 18px;
-                        font-weight: 500;
-                    }
-                }
-
-                ion-row.codigodigitoembalagem {
-                    ion-label {
-                        color: #999999;
-                        font-size: 13px;
-                        font-weight: 500;
-                    }
-                }
-            }
+  ion-grid {
+    ion-row {
+      ion-col.descricaoProduto {
+        ion-row.fantasiaEsituacao {
+          ion-label {
+            color: #999999;
+            font-size: 15px;
+            font-weight: 500;
+          }
         }
 
-        ion-row.secoes {
-            ion-col {
-                ion-row.secaoDescricao {
-                    p {
-                        margin-top: 12px;
-                        margin-bottom: 6px;
-                    }
-                }
-                
-                ion-row.secaoItem {
-                    p {
-                        font-size: 12px;
-                        margin: 6px 0;
-                    }
-
-                    ion-col.sideItem {
-                        background-color: #F4F4F4;
-
-                    }
-
-                    ion-col.sideValor {
-                        
-                    }
-                }
-            }
+        ion-row.descricao {
+          ion-label {
+            color: #212121;
+            font-size: 18px;
+            font-weight: 500;
+          }
         }
+
+        ion-row.codigodigitoembalagem {
+          ion-label {
+            color: #999999;
+            font-size: 13px;
+            font-weight: 500;
+          }
+        }
+      }
     }
+
+    ion-row.secoes {
+      ion-col {
+        ion-row.secaoDescricao {
+          p {
+            margin-top: 12px;
+            margin-bottom: 6px;
+          }
+        }
+
+        ion-row.secaoItem {
+          p {
+            font-size: 12px;
+            margin: 6px 0;
+          }
+
+          ion-col.sideItem {
+            background-color: #f4f4f4;
+          }
+
+          ion-col.sideValor {
+          }
+        }
+      }
+    }
+  }
 }

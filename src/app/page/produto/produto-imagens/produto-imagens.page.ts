@@ -1,9 +1,9 @@
-import { IonSlides } from '@ionic/angular';
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { IonSlides } from '@ionic/angular';
 import { CommonService } from 'src/app/services/common/common.service';
 import { DataService } from 'src/app/services/data/data.service';
-import { ProdutoService } from 'src/app/services/produto/produto.service';
-import { ActivatedRoute } from '@angular/router';
+import { IProdutoImagem } from 'src/app/services/produto/produto.interface';
 
 @Component({
   selector: 'app-produto-imagens',
@@ -11,41 +11,40 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./produto-imagens.page.scss'],
 })
 export class ProdutoImagensPage implements OnInit {
-  @ViewChild('imgSlides') slides: IonSlides;
+  @ViewChild('imgSlides') readonly slides: IonSlides;
+  public imagens: IProdutoImagem[] = [];
 
-  public imagens = [];
-
-  public slideOpts = {
+  readonly slideOpts = {
     slidesPerView: 5,
   };
 
   constructor(
-    private activatedRoute: ActivatedRoute,
-    private dataService: DataService,
-    public common: CommonService,
-    public produtoService: ProdutoService
+    private readonly activatedRoute: ActivatedRoute,
+    private readonly dataService: DataService,
+    private readonly common: CommonService
   ) {}
 
-  ngOnInit() {}
+  ngOnInit(): void {
+    console.log('Produto Imagens OnInit');
+  }
 
-  ionViewWillEnter() {
+  ionViewWillEnter(): void {
     this.common.goToFullScreen();
-    this.activatedRoute.queryParams.subscribe((params: any) => {
+    this.activatedRoute.queryParams.subscribe((params) => {
       this.imagens = this.dataService.getData(params.dataId);
     });
   }
 
-  ionViewDidEnter() {
+  ionViewDidEnter(): void {
     this.common.goToFullScreen();
   }
 
-  ionViewWillLeave() {
-    console.clear();
-  }
-
-  ionViewDidLeave() {}
-
-  slideTo(slide: number) {
+  /**
+   * @author helio.souza
+   * @description Navega ao slide coorespondente ao index.
+   * @param slide Index do slide destino.
+   */
+  slideTo(slide: number): void {
     this.slides.slideTo(slide);
   }
 }
