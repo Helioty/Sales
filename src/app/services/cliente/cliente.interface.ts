@@ -23,6 +23,7 @@ export class ClienteGet {
   ativo: string;
   atualizaCadastro: boolean;
   bairro: string;
+  bloqueiolgpd: number;
   celulares: Celular[];
   cep: number;
   cgccpf: string;

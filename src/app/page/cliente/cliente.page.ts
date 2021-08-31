@@ -402,13 +402,13 @@ export class ClientePage implements OnInit, OnDestroy {
   async buscaCliente(): Promise<void> {
     const modal = await this.modalCtrl.create({
       component: PesquisaClienteComponent,
-      componentProps: {
-        firstName: 'Douglas',
-        lastName: 'Adams',
-      },
     });
     await modal.present();
     const { data } = await modal.onWillDismiss();
     console.log(data);
+    if (data.existePesquisa) {
+      this.dados = data.retorno;
+      this.atualizaExibicaoDadosCliente(data.retorno);
+    }
   }
 }

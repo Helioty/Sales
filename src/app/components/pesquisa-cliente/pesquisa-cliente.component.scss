@@ -1,0 +1,36 @@
+ion-item {
+  --inner-padding-bottom: 0;
+  --inner-padding-end: 0;
+  --inner-padding-start: 0;
+  --inner-padding-top: 0;
+}
+
+ion-grid.noItens {
+  padding-top: 30px;
+  position: fixed;
+  height: 100%;
+  width: 100%;
+
+  .topHeading {
+    h3 {
+      text-align: center;
+      font-size: 18px;
+      color: #3f3f3f;
+    }
+  }
+  .noImg {
+    text-align: center;
+    img {
+      width: 200px;
+      height: auto;
+    }
+  }
+  .bottomHeading {
+    h3 {
+      text-align: center;
+      font-size: 18px;
+      color: #8f8f8f;
+      font-weight: normal;
+    }
+  }
+}

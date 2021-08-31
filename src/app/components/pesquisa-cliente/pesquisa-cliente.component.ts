@@ -1,8 +1,19 @@
 import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import { IonSearchbar, ModalController } from '@ionic/angular';
-import { Subscription } from 'rxjs';
+import { IonInfiniteScroll, IonSearchbar, ModalController } from '@ionic/angular';
+import { Subscription, Observable } from 'rxjs';
+import {
+  debounceTime,
+  distinctUntilChanged,
+  filter,
+  map,
+  switchMap,
+  take,
+  tap,
+} from 'rxjs/operators';
+import { Pagination } from 'src/app/page/pedido-lista/pedido-lista.interface';
 import { ClienteGet } from 'src/app/services/cliente/cliente.interface';
+import { ClienteService } from 'src/app/services/cliente/cliente.service';
 import { ScannerService } from 'src/app/services/scanner/scanner.service';
 
 @Component({
@@ -11,28 +22,116 @@ import { ScannerService } from 'src/app/services/scanner/scanner.service';
   styleUrls: ['./pesquisa-cliente.component.scss'],
 })
 export class PesquisaClienteComponent implements OnInit, OnDestroy {
-  @ViewChild('pesquisarCliente', { static: true }) readonly searchbar: IonSearchbar;
+  @ViewChild(IonInfiniteScroll) readonly infiniteScroll: IonInfiniteScroll;
+  @ViewChild('pesquisarCliente') readonly searchbar: IonSearchbar;
+
   // Dados da Pesquisa reativa.
   private fieldSub: Subscription;
   readonly fieldPesquisa = new FormControl('', [
     Validators.required,
     Validators.minLength(3),
   ]);
-  // Data passed in by componentProps
-  @Input() firstName: string;
-  @Input() lastName: string;
+
+  // Controle de Loading.
+  public showLoadingSpinner = false;
+
+  // Dados da Pesquisa e Paginação
+  public pagination: Pagination<ClienteGet>;
+  private pesquisado = '';
+  private page = 1;
 
   constructor(
     public readonly scanner: ScannerService,
-    private readonly modalCtrl: ModalController
+    private readonly modalCtrl: ModalController,
+    private readonly clienteService: ClienteService
   ) {}
 
   ngOnInit(): void {
-    this.fieldSub = this.fieldPesquisa.valueChanges.pipe().subscribe();
+    this.fieldSub = this.fieldPesquisa.valueChanges
+      .pipe(
+        map((value: string) => value.trim()),
+        filter((value) => value.length > 1),
+        debounceTime(300),
+        distinctUntilChanged(),
+        tap({ next: () => (this.showLoadingSpinner = true) }),
+        switchMap((value) => this.pesquisar(value)),
+        tap({
+          next: () => (this.showLoadingSpinner = false),
+          error: () => (this.showLoadingSpinner = false),
+        }),
+        map((response) => response.content)
+      )
+      .subscribe();
+  }
+
+  ionViewDidEnter(): void {
+    this.setSearchbarFocus();
   }
 
   ngOnDestroy(): void {
     this.fieldSub.unsubscribe();
+  }
+
+  /**
+   * @author helio.souza
+   * @param value Dado a ser pesquisado.
+   * @returns {Observable<Pagination<ClienteGet>>}
+   */
+  pesquisar(clie: string): Observable<Pagination<ClienteGet>> {
+    return this.clienteService
+      .getClientePesquisa(clie, this.pesquisado === clie ? this.page + 1 : 1)
+      .pipe(
+        map((response) => this.mapPagination(response, clie)),
+        tap({
+          next: (result) => {
+            this.pesquisado = clie;
+            this.pagination = result;
+            console.log(`Valor pesquisado: ${clie}`);
+            console.log('Resultado da pesquisa: ', result);
+          },
+        })
+      );
+  }
+
+  /**
+   * @author helio.souza
+   * @param pagination Dados da paginação da pesquisa.
+   * @param pesquisado Dado pesquisado.
+   * @returns {Pagination<IProduto>}
+   */
+  mapPagination(
+    pagination: Pagination<ClienteGet>,
+    pesquisado: string
+  ): Pagination<ClienteGet> {
+    if (this.pagination && this.pesquisado === pesquisado) {
+      pagination.content = [...this.pagination.content, ...pagination.content];
+      this.page += 1;
+    } else {
+      this.infiniteScroll.disabled = false;
+      this.page = 1;
+    }
+    return pagination;
+  }
+
+  /**
+   * @author helio.souza
+   * @param infinite IonInfinite Element.
+   */
+  doInfinite(infinit: IonInfiniteScroll) {
+    this.pesquisar(this.pesquisado)
+      .pipe(
+        take(1),
+        tap({
+          next: (response) => {
+            infinit.complete();
+            infinit.disabled = response.last;
+          },
+          error: () => {
+            infinit.complete();
+          },
+        })
+      )
+      .subscribe();
   }
 
   /**
@@ -43,8 +142,18 @@ export class PesquisaClienteComponent implements OnInit, OnDestroy {
   close(selected = false, clie: ClienteGet = null): void {
     this.modalCtrl.dismiss({
       existePesquisa: selected,
-      retorna: clie,
+      retorno: clie,
     });
+  }
+
+  /**
+   * @author helio.souza
+   * @param delay Delay para executar o foco no searchbar.
+   */
+  setSearchbarFocus(delay = 500): void {
+    setTimeout(() => {
+      this.searchbar.setFocus();
+    }, delay);
   }
 
   /**

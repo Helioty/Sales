@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { catchError, take, tap } from 'rxjs/operators';
 import { API_URL, ENV } from 'src/app/config/app.config.service';
+import { Pagination } from 'src/app/page/pedido-lista/pedido-lista.interface';
 import { BaseService } from '../http/base.service';
 import { ClienteGet } from './cliente.interface';
 
@@ -9,6 +10,7 @@ import { ClienteGet } from './cliente.interface';
   providedIn: 'root',
 })
 export class ClienteService {
+  readonly clientesPorPagina = 10;
   constructor(private readonly http: BaseService) {}
 
   /**
@@ -30,6 +32,17 @@ export class ClienteService {
         throw err;
       })
     );
+  }
+
+  /**
+   * @author helio.souza
+   * @param clie
+   * @param page
+   * @returns
+   */
+  getClientePesquisa(clie: string, page = 1): Observable<Pagination<ClienteGet>> {
+    const url = `${ENV.WS_CRM}${API_URL}cliente/list?search=${clie}&page=${page}&size=${this.clientesPorPagina}`;
+    return this.http.get(url);
   }
 
   // by Helio 23/03/2020, usado para cadastrar um novo endereco

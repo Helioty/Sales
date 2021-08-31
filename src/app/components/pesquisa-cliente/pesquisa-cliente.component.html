@@ -6,14 +6,14 @@
       </ion-button>
     </ion-buttons>
 
-    <ion-title>Pesquisa de clientes</ion-title>
+    <ion-title>Pesquisa</ion-title>
   </ion-toolbar>
 
   <ion-toolbar color="primary">
     <ion-searchbar
       #pesquisarCliente
       [formControl]="fieldPesquisa"
-      placeholder="Pesquise um produto!"
+      placeholder="Pesquise um cliente!"
       (ionFocus)="scanner.focusPause()"
       (ionBlur)="scanner.focusPlay()"
       (keyup.enter)="blurSearchbar()"
@@ -22,7 +22,71 @@
 </ion-header>
 
 <ion-content>
-  <p>pesquisa-cliente works!</p>
+  <div slot="fixed" class="ion-text-center ion-padding" style="width: 100vw">
+    <ion-spinner [hidden]="!showLoadingSpinner"></ion-spinner>
+  </div>
 
-  <ion-button (click)="close()">Fechar</ion-button>
+  <ion-list lines="none" *ngIf="pagination && pagination.content; else noCliente">
+    <ion-card *ngFor="let cliente of pagination.content">
+      <ion-item class="ion-no-padding" (click)="close(true, cliente)">
+        <ion-card-content [style.width]="'100%'">
+          <ion-row>
+            <ion-col size="3" class="ion-no-padding">
+              <b [hidden]="cliente.cgccpf.length > 11">CPF:</b>
+              <b [hidden]="cliente.cgccpf.length < 12">CNPJ:</b>
+            </ion-col>
+
+            <ion-col class="ion-no-padding">
+              {{ cliente.cgccpf | formatarString: 'CPFCGC' }}
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col size="3" class="ion-no-padding">
+              <b>Nome:</b>
+            </ion-col>
+            <ion-col class="ion-no-padding">
+              {{ cliente.nome }}
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col size="3" class="ion-no-padding">
+              <b>Cidade:</b>
+            </ion-col>
+            <ion-col class="ion-no-padding">
+              {{ cliente.cidade }} - {{ cliente.uf }}
+            </ion-col>
+          </ion-row>
+        </ion-card-content>
+      </ion-item>
+    </ion-card>
+  </ion-list>
+
+  <ng-template #noCliente>
+    <ion-grid class="noItens">
+      <ion-row class="topHeading">
+        <ion-col>
+          <h3>Pesquise um cliente em nossa base</h3>
+        </ion-col>
+      </ion-row>
+
+      <ion-row class="noImg">
+        <ion-col>
+          <img src="assets/images/10-cliente/id-cliente-bw.png" />
+        </ion-col>
+      </ion-row>
+
+      <!-- <ion-row class="bottomHeading">
+        <ion-col>
+          <h3>Sem resultados para exibir...</h3>
+        </ion-col>
+      </ion-row> -->
+    </ion-grid>
+  </ng-template>
+
+  <ion-infinite-scroll (ionInfinite)="doInfinite($event.target)">
+    <ion-infinite-scroll-content loadingSpinner="circles" loadingText="Carregando...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 </ion-content>
