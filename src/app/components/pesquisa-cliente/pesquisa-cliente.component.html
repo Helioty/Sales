@@ -26,7 +26,7 @@
     <ion-spinner [hidden]="!showLoadingSpinner"></ion-spinner>
   </div>
 
-  <ion-list lines="none" *ngIf="pagination && pagination.content; else noCliente">
+  <ion-list lines="none" *ngIf="pagination && pagination.content.length; else noCliente">
     <ion-card *ngFor="let cliente of pagination.content">
       <ion-item class="ion-no-padding" (click)="close(true, cliente)">
         <ion-card-content [style.width]="'100%'">

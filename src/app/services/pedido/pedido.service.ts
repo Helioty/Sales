@@ -327,7 +327,7 @@ export class PedidoService {
    * @author helio.souza
    * @param numPedido Número do Pedido.
    * @param page Pagina a ser retornada.
-   * @returns
+   * @returns {Observable<Pagination<PedidoItem>>}
    */
   getPedidoItens(numPedido: number, page = 1): Observable<Pagination<PedidoItem>> {
     const empresa = localStorage.getItem('empresa') as string;
@@ -338,7 +338,7 @@ export class PedidoService {
   /**
    * @author helio.souza
    * @param numPedido Número do Pedido.
-   * @returns
+   * @returns {Observable<PedidoItem[]>}
    */
   getPedidoAllItens(numPedido: number): Observable<PedidoItem[]> {
     const empresa = localStorage.getItem('empresa') as string;

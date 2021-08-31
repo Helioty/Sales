@@ -32,6 +32,13 @@ const routes: Routes = [
       },
     ],
   },
+  {
+    path: 'pedido-resumo',
+    loadChildren: () =>
+      import('./pedido-resumo/pedido-resumo.module').then(
+        (m) => m.PedidoResumoPageModule
+      ),
+  },
 ];
 
 @NgModule({

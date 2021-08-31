@@ -33,7 +33,7 @@ export class PedidoResumoPage implements OnInit {
 
   ionViewWillEnter(): void {
     this.common.goToFullScreen();
-    this.activatedRoute.queryParams.subscribe((params: any) => {
+    this.activatedRoute.queryParams.subscribe((params) => {
       this.pedido.next(JSON.parse(params.pedido) as PedidoHeader);
     });
     this.separaDadosPedido();

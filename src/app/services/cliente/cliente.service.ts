@@ -36,9 +36,9 @@ export class ClienteService {
 
   /**
    * @author helio.souza
-   * @param clie
-   * @param page
-   * @returns
+   * @param clie Dado a ser pesquisado.
+   * @param page Pagina requerida. Default: 1
+   * @returns {Observable<Pagination<ClienteGet>>}
    */
   getClientePesquisa(clie: string, page = 1): Observable<Pagination<ClienteGet>> {
     const url = `${ENV.WS_CRM}${API_URL}cliente/list?search=${clie}&page=${page}&size=${this.clientesPorPagina}`;
@@ -47,16 +47,7 @@ export class ClienteService {
 
   // by Helio 23/03/2020, usado para cadastrar um novo endereco
   public postClienteAlteracao(cliente: any): Observable<any> {
-    // const link = ENV.WS_CRM + API_URL + 'cliente/save/';
     const url = `${ENV.WS_CRM}${API_URL}cliente/save`;
-
-    // return new Promise((resolve, reject) => {
-    //   this.baseService.post(link, cliente).then(
-    //     (result: any) => {
-    //       resolve(result);
-    //     }
-    //   );
-    // });
     const props = { url, body: cliente };
     return this.http.post(props).pipe(take(1));
   }

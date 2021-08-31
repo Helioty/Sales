@@ -398,6 +398,7 @@ export class ClientePage implements OnInit, OnDestroy {
 
   /**
    * @author helio.souza
+   * @description Abre modal com a tela de Pesquisa de Clientes.
    */
   async buscaCliente(): Promise<void> {
     const modal = await this.modalCtrl.create({

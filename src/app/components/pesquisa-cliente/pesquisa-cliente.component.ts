@@ -1,7 +1,7 @@
-import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { IonInfiniteScroll, IonSearchbar, ModalController } from '@ionic/angular';
-import { Subscription, Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import {
   debounceTime,
   distinctUntilChanged,
@@ -97,7 +97,7 @@ export class PesquisaClienteComponent implements OnInit, OnDestroy {
    * @author helio.souza
    * @param pagination Dados da paginação da pesquisa.
    * @param pesquisado Dado pesquisado.
-   * @returns {Pagination<IProduto>}
+   * @returns {Pagination<ClienteGet>}
    */
   mapPagination(
     pagination: Pagination<ClienteGet>,
@@ -136,8 +136,8 @@ export class PesquisaClienteComponent implements OnInit, OnDestroy {
 
   /**
    * @author helio.souza
-   * @param selected
-   * @param clie
+   * @param selected Flag para informar se existe retorno. Default: false.
+   * @param clie Dados do cliente selecionado.
    */
   close(selected = false, clie: ClienteGet = null): void {
     this.modalCtrl.dismiss({

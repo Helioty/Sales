@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './shared/guards/auth/auth.guard';
-import { ListaEnderecoGuard } from './shared/guards/endereco/lista-endereco.guard';
 
 const routes: Routes = [
   {
@@ -19,14 +18,6 @@ const routes: Routes = [
     loadChildren: () =>
       import('./page/pedido-lista/pedido-lista.module').then(
         (m) => m.PedidoListaPageModule
-      ),
-    canActivate: [AuthGuard],
-  },
-  {
-    path: 'pedido-resumo',
-    loadChildren: () =>
-      import('./page/pedido-lista/pedido-resumo/pedido-resumo.module').then(
-        (m) => m.PedidoResumoPageModule
       ),
     canActivate: [AuthGuard],
   },
@@ -152,7 +143,6 @@ const routes: Routes = [
       import('./page/cliente/cliente.module').then((m) => m.ClientePageModule),
     canActivate: [AuthGuard],
   },
-
 
   // {
   //   path: 'tinta-alterada',
