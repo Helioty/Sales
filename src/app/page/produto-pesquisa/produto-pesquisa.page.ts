@@ -150,7 +150,7 @@ export class ProdutoPesquisaPage implements OnInit, OnDestroy {
    * @author helio.souza
    * @param infinite IonInfinite Element.
    */
-  doInfinite(infinit: IonInfiniteScroll) {
+  doInfinite(infinit: IonInfiniteScroll): void {
     this.pesquisar(this.pesquisado)
       .pipe(
         take(1),
@@ -208,7 +208,10 @@ export class ProdutoPesquisaPage implements OnInit, OnDestroy {
     this.pedidoService.adicionarCartaoPedido();
   }
 
-  openClientePage() {
+  /**
+   * @author helio.souza
+   */
+  openClientePage(): void {
     const navigationExtras: NavigationExtras = {
       queryParams: {
         paginaSeguinte: 'back',
