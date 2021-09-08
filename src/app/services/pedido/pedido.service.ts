@@ -99,7 +99,7 @@ export class PedidoService {
   private atualizaPedidoHeader(pedidoHeader: PedidoHeader): void {
     // Pedido
     this.pedido.next(pedidoHeader);
-    // Produtos
+    // Pedido - Total Produtos
     this.qtdItensSacola.next(pedidoHeader.numitens);
     // Pedido - Tipo Retirada.
     this.tipoRetiradaIndex = this.opcoesRetirada.findIndex(
