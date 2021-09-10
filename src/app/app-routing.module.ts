@@ -127,6 +127,13 @@ const routes: Routes = [
       import('./page/cliente/cliente.module').then((m) => m.ClientePageModule),
     canActivate: [AuthGuard],
   },
+  {
+    path: 'cliente-enderecos/:acao',
+    loadChildren: () =>
+      import('./page/cliente-enderecos/cliente-enderecos.module').then(
+        (m) => m.ClienteEnderecosPageModule
+      ),
+  },
 
   // {
   //   path: 'tinta-alterada',

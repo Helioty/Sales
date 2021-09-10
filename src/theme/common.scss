@@ -9,6 +9,10 @@ ion-header {
   ion-toolbar {
     --min-height: 52px !important;
 
+    ion-title {
+      padding: 0 10px;
+    }
+
     ion-buttons {
       min-height: 40px !important;
 

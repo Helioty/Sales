@@ -4,11 +4,9 @@
       <ion-back-button defaultHref="pedido-atalhos"></ion-back-button>
     </ion-buttons>
 
-    <ion-buttons slot="end">
-      <!-- <ion-button (click)="showPesquisa()">
-        <ion-icon name="search-sharp"></ion-icon>
-      </ion-button> -->
+    <ion-title> Pesquisa </ion-title>
 
+    <ion-buttons slot="end">
       <ion-button (click)="adicionarCartaoPedido()">
         <ion-icon name="card"></ion-icon>
         <ion-badge
@@ -69,7 +67,7 @@
 
   <ion-list lines="none" *ngIf="pagination && pagination.content.length; else noProduct">
     <ion-card *ngFor="let produto of pagination.content">
-      <ion-item (click)="goToProdutoPage(produto)">
+      <ion-item (click)="goToProdutoPage(produto)" style="--inner-padding-end: 0">
         <ion-img
           slot="start"
           src="data:image/jpeg;base64,{{ produto?.imagem }}"
@@ -78,7 +76,11 @@
         <ion-card-content>
           <ion-row class="codigo-produto"> {{ produto.codigodigitoembalagem }} </ion-row>
           <ion-row class="descricao"> {{ produto?.descricao }} </ion-row>
-          <ion-row class="endereco"> </ion-row>
+          <div class="endereco">
+            <ion-button color="fc-button-green" style="float: right; margin-bottom: 0">
+              <ion-icon slot="icon-only" name="cart-outline"></ion-icon>
+            </ion-button>
+          </div>
         </ion-card-content>
       </ion-item>
     </ion-card>

@@ -1,0 +1,15 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>
+      {{ onlyShow ? 'Endereços do Cliente' : 'Selecione o endereço de entrega' }}
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list lines="full" *ngIf="(pedidoClienteOBS | async) as clie">
+    <ion-item *ngFor="let endereco of clie.enderecos"></ion-item>
+  </ion-list>
+
+  <ng-content #empty></ng-content>
+</ion-content>

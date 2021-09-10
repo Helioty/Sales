@@ -19,7 +19,6 @@ export class EnderecoEntregaPage implements OnInit {
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private alertCtrl: AlertController,
     private common: CommonService,
     public pedidoService: PedidoService,
     private clienteService: ClienteService,

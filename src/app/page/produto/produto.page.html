@@ -80,7 +80,7 @@
 
       <ion-col size="12">
         <ion-row *ngFor="let familia of produtoFamilia; let i = index">
-          <ion-label *ngIf="familia.qtdItems == 1">
+          <ion-label *ngIf="familia.qtdItems === 1">
             {{ familia.nome }}:
             <span style="color: #969696; font-size: 15px"> {{ familia.valor }} </span>
           </ion-label>
@@ -105,7 +105,7 @@
                 <span class="span2">{{ familiaIt.preco | formatarString: 'VALOR' }}</span>
               </ion-label>
 
-              <ion-label *ngIf="familiaIt.preco != familiaIt.preco_unitario">
+              <ion-label *ngIf="familiaIt.preco !== familiaIt.preco_unitario">
                 <span class="span3">
                   {{ familiaIt.preco_unitario | formatarString: 'VALOR' }}
                 </span>
@@ -163,7 +163,7 @@
       </ion-col>
     </ion-row>
 
-    <ion-row *ngIf="produto.estoque == 0" style="height: 100% !important">
+    <ion-row *ngIf="!produto.estoque" style="height: 100% !important">
       <ion-col size="12" class="ion-padding" style="margin: auto">
         <ion-row>
           <ion-label> PRODUTO SEM ESTOQUE </ion-label>

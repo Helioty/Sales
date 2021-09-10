@@ -7,7 +7,7 @@ import { API_URL, ENV } from 'src/app/config/app.config.service';
 import { Pagination } from 'src/app/page/pedido-lista/pedido-lista.interface';
 import { ClienteService } from 'src/app/services/cliente/cliente.service';
 import { CommonService } from 'src/app/services/common/common.service';
-import { ClienteGet } from './../cliente/cliente.interface';
+import { ClienteGet, Endereco } from './../cliente/cliente.interface';
 import { BaseService } from './../http/base.service';
 import { AttPedido, PedidoHeader, PedidoItem, PedidoTable } from './pedido.interface';
 
@@ -460,14 +460,17 @@ export class PedidoService {
     );
   }
 
-  // by Helio 15/07/2020
-  selecionaEndereco(endereco: any): Observable<PedidoHeader> {
-    const aResult = this.atualizaPedido(
-      AttPedido.SEQ_ENDERECO_ENTREGA,
-      endereco.id.sequencialId
-    );
+  /**
+   * @author helio.souza
+   * @param endereco
+   * @returns {Observable<PedidoHeader>}
+   */
+  setEnderecoEntrega(endereco: Endereco): Observable<PedidoHeader> {
+    const { sequencialId } = endereco.id;
+    const aResult = this.atualizaPedido(AttPedido.SEQ_ENDERECO_ENTREGA, sequencialId);
+    const numPedido = this.getPedidoNumero();
     const empresa = localStorage.getItem('empresa') as string;
-    const url = `${ENV.WS_VENDAS}${API_URL}PedidoVenda/update/${empresa}/${endereco}`;
+    const url = `${ENV.WS_VENDAS}${API_URL}PedidoVenda/update/${empresa}/${numPedido}`;
     const props = { url, body: aResult };
     return this.http.post<PedidoHeader, PedidoTable[]>(props).pipe(
       take(1),

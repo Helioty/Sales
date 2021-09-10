@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { MenuController, NavController } from '@ionic/angular';
 import { CommonService } from 'src/app/services/common/common.service';
 import { PedidoService } from 'src/app/services/pedido/pedido.service';
@@ -8,15 +8,13 @@ import { PedidoService } from 'src/app/services/pedido/pedido.service';
   templateUrl: './pedido-lista.page.html',
   styleUrls: ['./pedido-lista.page.scss'],
 })
-export class PedidoListaPage implements OnInit {
+export class PedidoListaPage {
   constructor(
     private readonly common: CommonService,
     private readonly menu: MenuController,
     private readonly navControl: NavController,
     private readonly pedidoService: PedidoService
   ) {}
-
-  ngOnInit(): void {}
 
   ionViewWillEnter(): void {
     this.menu.enable(true);
