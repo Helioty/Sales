@@ -1,12 +1,12 @@
-import { TestBed } from '@angular/core/testing';
+// import { TestBed } from '@angular/core/testing';
 
-import { PedidoItemService } from './pedido-item.service';
+// import { PedidoItemService } from './pedido-item.service';
 
-describe('PedidoItemService', () => {
-  beforeEach(() => TestBed.configureTestingModule({}));
+// describe('PedidoItemService', () => {
+//   beforeEach(() => TestBed.configureTestingModule({}));
 
-  it('should be created', () => {
-    const service: PedidoItemService = TestBed.inject(PedidoItemService);
-    expect(service).toBeTruthy();
-  });
-});
+//   it('should be created', () => {
+//     const service: PedidoItemService = TestBed.inject(PedidoItemService);
+//     expect(service).toBeTruthy();
+//   });
+// });

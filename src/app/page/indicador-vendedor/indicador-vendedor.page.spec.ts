@@ -1,28 +1,28 @@
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+// import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+// import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
-import { IndicadorVendedorPage } from './indicador-vendedor.page';
+// import { IndicadorVendedorPage } from './indicador-vendedor.page';
 
-describe('IndicadorVendedorPage', () => {
-  let component: IndicadorVendedorPage;
-  let fixture: ComponentFixture<IndicadorVendedorPage>;
+// describe('IndicadorVendedorPage', () => {
+//   let component: IndicadorVendedorPage;
+//   let fixture: ComponentFixture<IndicadorVendedorPage>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [IndicadorVendedorPage],
-        schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      }).compileComponents();
-    })
-  );
+//   beforeEach(
+//     waitForAsync(() => {
+//       TestBed.configureTestingModule({
+//         declarations: [IndicadorVendedorPage],
+//         schemas: [CUSTOM_ELEMENTS_SCHEMA],
+//       }).compileComponents();
+//     })
+//   );
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(IndicadorVendedorPage);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+//   beforeEach(() => {
+//     fixture = TestBed.createComponent(IndicadorVendedorPage);
+//     component = fixture.componentInstance;
+//     fixture.detectChanges();
+//   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+//   it('should create', () => {
+//     expect(component).toBeTruthy();
+//   });
+// });

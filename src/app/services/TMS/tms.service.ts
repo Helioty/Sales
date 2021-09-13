@@ -1,13 +1,12 @@
 import { Injectable } from '@angular/core';
-import { BaseService } from '../HTTP/base-service.service';
-import { API_URL } from 'src/app/config/app.config.service';
-import { ENV } from 'src/environments/environment';
+import { API_URL, ENV } from 'src/app/config/app.config.service';
+import { BaseService } from '../http/base.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TMSService {
-  constructor(private baseService: BaseService) {}
+  constructor(private readonly http: BaseService) {}
 
   getOpcoesTMS(
     endereco: any,
@@ -51,7 +50,7 @@ export class TMSService {
     }
 
     return new Promise((resolve, reject) => {
-      this.baseService.get(link).then(
+      this.http.get(link).then(
         (result: any) => {
           resolve(result);
         },
@@ -87,7 +86,7 @@ export class TMSService {
     //   this.opcSelecionada.dataPrevista = null;
 
     return new Promise((resolve, reject) => {
-      this.baseService.get(link).then(
+      this.http.get(link).then(
         (result: any) => {
           resolve(result);
         },

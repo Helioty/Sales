@@ -23,6 +23,8 @@ describe('LoginPage', () => {
   });
 
   it('should create', () => {
+    const hero = component.isLoggedIn;
+    expect(hero).toEqual(false);
     expect(component).toBeTruthy();
   });
 });

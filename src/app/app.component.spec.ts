@@ -1,15 +1,14 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { TestBed, waitForAsync } from '@angular/core/testing';
-
-import { Platform } from '@ionic/angular';
+import { RouterTestingModule } from '@angular/router/testing';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
-import { RouterTestingModule } from '@angular/router/testing';
-
+import { Platform } from '@ionic/angular';
+import 'jasmine';
 import { AppComponent } from './app.component';
 
 describe('AppComponent', () => {
-  let statusBarSpy, splashScreenSpy, platformReadySpy, platformSpy;
+  let statusBarSpy: any, splashScreenSpy: any, platformReadySpy: any, platformSpy: any;
 
   beforeEach(
     waitForAsync(() => {
