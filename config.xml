@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="br.com.ferreiracosta.vendas" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="br.com.ferreiracosta.vendas" version="3.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Vendas</name>
     <description>Pedido de Vendas</description>
     <author email="maik.ryuge@ferreiracosta.com.br" href="http://www.ferreiracosta.com.br/">TI Ferreira Costa</author>

@@ -14,26 +14,28 @@
       <ion-grid style="height: 100%">
         <ion-row style="height: 100%">
           <ion-col size="12" style="margin: auto">
-            <ion-row style="margin: auto">
-              <ion-col size="6" *ngFor="let op of opcoesPagamento; let i = index">
-                <ion-grid
-                  button
-                  (click)="goToCondicaoPagamento(op)"
-                  [class.selected]="(pedidoOBS | async).tipodoc === op.codigo"
-                >
-                  <ion-row>
-                    <ion-thumbnail style="width: 60px; height: 60px">
+            <ion-row style="margin: auto" class="ion-align-items-center">
+              <ion-col size="6" *ngFor="let op of opcoesPagamento">
+                <ion-grid button (click)="goToCondicaoPagamento(op)">
+                  <ion-row class="ion-justify-content-center">
+                    <ion-thumbnail
+                      [class.selected]="(pedidoOBS | async).tipodoc === op.codigo"
+                    >
                       <img
                         src="assets/images/06-formas_de_pagamento/{{ op.codigo }}.png"
                       />
                     </ion-thumbnail>
                   </ion-row>
 
-                  <ion-row>
+                  <ion-row class="ion-justify-content-center" style="font-size: 12px">
                     <ion-label class="descricao"> {{ op.descricao }} </ion-label>
                   </ion-row>
 
-                  <ion-row *ngIf="op.parcelas > 0">
+                  <ion-row
+                    class="ion-justify-content-center"
+                    style="font-size: 12px"
+                    *ngIf="op.parcelas"
+                  >
                     <ion-label class="valor-parcela">
                       Até {{ op.parcelas }} x de
                       {{ op.valorParcelas | formatarString: 'VALOR' }}

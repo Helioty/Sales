@@ -55,10 +55,6 @@ export class PedidoSacolaPage implements OnInit {
     this.scanner.focusOff();
   }
 
-  ionViewDidLeave(): void {
-    console.clear();
-  }
-
   /**
    * @author helio.souza
    * @param value Dado scaneado.
@@ -89,9 +85,10 @@ export class PedidoSacolaPage implements OnInit {
    */
   private atualizaRetiradas(produtos: PedidoItem[]): void {
     produtos.forEach((el) => {
-      if (el.retiradas[0].tipoRetirada === 9997) {
+      if (el.retiradas.find((r) => r.tipoRetirada === 9997)) {
         this.existeProdEntrega = true;
-      } else if (el.retiradas[0].tipoRetirada !== 9997) {
+      }
+      if (el.retiradas.find((r) => r.tipoRetirada !== 9997)) {
         this.existeProdRetirada = true;
       }
     });

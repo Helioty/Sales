@@ -17,8 +17,6 @@ export const ENV: IEnvironment = {
   WS_TMS: 'https://tms.',
 };
 
-//   WS_PESQUISA: 'https://pesquisaproduto.'
-
 @Injectable({
   providedIn: 'root',
 })

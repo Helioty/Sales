@@ -313,10 +313,8 @@
         <ion-col size="6" class="direita">
           <ion-row class="orderId">
             <ion-col>
-              {{
-                ped.totpedido - ped.frete.valor + ped.descontoBrinde
-                  | formatarString: 'VALOR'
-              }}
+              {{ ped.totpedido - ped.frete.valor + ped.descontoBrinde | formatarString:
+              'VALOR' }}
             </ion-col>
           </ion-row>
 
@@ -340,7 +338,14 @@
     </ion-grid>
   </ion-toolbar>
 
-  <ion-item button lines="none" color="fc-button-green" (click)="finalizarPedido()">
+  <!-- <ion-item button lines="none" color="fc-button-green" (click)="finalizarPedido()"> -->
+  <ion-item
+    button
+    lines="none"
+    color="fc-button-green"
+    [routerLink]="['/pedido-finalizacao']"
+    [routerDirection]="'root'"
+  >
     <ion-text>FINALIZAR PEDIDO</ion-text>
   </ion-item>
 </ion-footer>

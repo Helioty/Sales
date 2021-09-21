@@ -24,9 +24,6 @@ export class PedidoService {
   public exibeBotaoComprar = false;
   public alteracaoItemPedido = false;
 
-  // public noCard = false;
-  public valorFrete = 0;
-
   public condicao: any;
 
   public statusPedido: string; // controla pedido; 'I' INCLUSÃO , 'M' MANUTENCAO
@@ -84,8 +81,6 @@ export class PedidoService {
   private limpaDadosPedido(): void {
     // Limpando endereco de entrega
     this.enderecoSelected = false;
-
-    this.valorFrete = 0;
 
     this.alteracaoItemPedido = false;
 

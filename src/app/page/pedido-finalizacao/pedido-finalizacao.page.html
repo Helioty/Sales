@@ -183,7 +183,14 @@
 
     <ion-row class="alteraBtn">
       <ion-col size="12">
-        <ion-button fill="clear" color="fc-blue">Alterar produtos</ion-button>
+        <ion-button
+          fill="clear"
+          color="fc-blue"
+          [routerLink]="['/pedido-sacola']"
+          [routerDirection]="'forward'"
+        >
+          Alterar produtos
+        </ion-button>
       </ion-col>
     </ion-row>
   </ion-grid>

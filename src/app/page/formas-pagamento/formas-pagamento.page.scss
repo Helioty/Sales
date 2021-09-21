@@ -9,45 +9,34 @@ ion-content {
         max-width: 500px;
         margin: auto;
 
-        ion-card {
-          margin: 0 !important;
+        ion-thumbnail {
+          width: 75px;
+          height: 75px;
           border: 3px solid transparent;
-          height: 100%;
-
-          ion-card-header {
-            padding: 5px !important;
-
-            ion-thumbnail {
-              margin: auto;
-            }
-          }
-
-          ion-card-content {
-            padding: 0 0 13px 0;
-
-            ion-grid {
-              padding: 0 !important;
-
-              ion-row {
-                width: fit-content;
-                margin: auto;
-
-                ion-label.descricao {
-                  color: #000;
-                  font-weight: bold;
-                }
-
-                ion-label.valor-parcela {
-                  color: var(--ion-color-primary);
-                  font-size: 13px;
-                }
-              }
-            }
-          }
+          border-radius: 50%;
         }
 
-        ion-card.selected {
+        .selected {
           border: 3px solid #fc6f58;
+        }
+
+        ion-grid {
+          padding: 0 !important;
+
+          ion-row {
+            width: fit-content;
+            margin: auto;
+
+            ion-label.descricao {
+              color: #000;
+              font-weight: bold;
+            }
+
+            ion-label.valor-parcela {
+              color: var(--ion-color-primary);
+              font-size: 13px;
+            }
+          }
         }
       }
     }

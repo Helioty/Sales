@@ -106,6 +106,8 @@ ion-content {
 }
 
 ion-footer {
+  background: #fafafa;
+
   ion-toolbar {
     --min-height: 0;
 
@@ -150,8 +152,8 @@ ion-footer {
   }
 
   ion-item {
-    width: 100% !important;
-    margin: auto !important;
+    margin: 8px !important;
+    border-radius: 6px;
 
     ion-text {
       margin: auto !important;
