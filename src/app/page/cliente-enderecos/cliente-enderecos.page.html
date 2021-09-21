@@ -1,14 +1,58 @@
 <ion-header>
   <ion-toolbar color="primary">
-    <ion-title>
-      {{ onlyShow ? 'Endereços do Cliente' : 'Selecione o endereço de entrega' }}
-    </ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+
+    <ion-title> Endereços do Cliente </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <ion-list lines="full" *ngIf="(pedidoClienteOBS | async) as clie">
-    <ion-item *ngFor="let endereco of clie.enderecos"></ion-item>
+  <div class="ion-padding" [hidden]="onlyShow">
+    <ion-label>
+      <h4>Selecione o endereço de entrega</h4>
+      <p>Para retirar em loja ou receber, selecione um endereço abaixo.</p>
+    </ion-label>
+  </div>
+
+  <ion-list
+    lines="full"
+    class="ion-margin ion-no-padding"
+    *ngIf="pedidoClienteOBS | async as clie"
+  >
+    <ion-item class="ion-no-padding" *ngFor="let endereco of clie.enderecos">
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <p class="rua ion-no-margin">
+              {{ endereco.ds_ende }}, {{ endereco.nu_ende }}
+            </p>
+            <p class="local ion-no-margin">
+              {{ endereco.ds_bairro }}
+              {{ endereco.cidade ? ' - ' + endereco.cidade : '' }}
+              {{ endereco.ds_uf ? ' - ' + endereco.ds_uf : '' }}
+            </p>
+          </ion-col>
+        </ion-row>
+
+        <ion-row [hidden]="onlyShow">
+          <ion-col>
+            <ion-button
+              expand="block"
+              color="fc-button-green"
+              (click)="setEnderecoEntrega(endereco)"
+            >
+              Selecionar
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-item>
+
+    <ion-item button class="ion-text-center">
+      <ion-label> Cadastrar novo endereço </ion-label>
+    </ion-item>
   </ion-list>
 
   <ng-content #empty></ng-content>

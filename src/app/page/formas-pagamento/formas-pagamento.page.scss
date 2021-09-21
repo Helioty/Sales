@@ -1,81 +1,76 @@
 ion-content {
+  ion-slides {
+    height: 100%;
 
-    ion-slides {
-        height: 100%;
+    ion-slide {
+      background: #f4f4f4;
 
-        ion-slide {
-            background: #f4f4f4;
-        
+      ion-grid {
+        max-width: 500px;
+        margin: auto;
+
+        ion-card {
+          margin: 0 !important;
+          border: 3px solid transparent;
+          height: 100%;
+
+          ion-card-header {
+            padding: 5px !important;
+
+            ion-thumbnail {
+              margin: auto;
+            }
+          }
+
+          ion-card-content {
+            padding: 0 0 13px 0;
+
             ion-grid {
-                max-width: 500px;
+              padding: 0 !important;
+
+              ion-row {
+                width: fit-content;
                 margin: auto;
 
-                ion-card {
-                    margin: 0 !important;
-                    border: 3px solid transparent;
-                    height: 100%;
-
-                    ion-card-header {
-                        padding: 5px !important;
-
-                        ion-thumbnail {
-                            margin: auto;
-                        }
-                    }
-
-                    ion-card-content {
-                        padding: 0 0 13px 0;
-
-                        ion-grid {
-                            padding: 0 !important;
-
-                            ion-row {
-                                width: fit-content;
-                                margin: auto;
-
-                                ion-label.descricao {
-                                    color: #000;
-                                    font-weight: bold;
-                                }
-
-                                ion-label.valor-parcela {
-                                    color: var(--ion-color-primary);
-                                    font-size: 13px;
-                                }
-                            }
-                        }
-                    }
+                ion-label.descricao {
+                  color: #000;
+                  font-weight: bold;
                 }
 
-                ion-card.selected {
-                    border: 3px solid #FC6F58;
+                ion-label.valor-parcela {
+                  color: var(--ion-color-primary);
+                  font-size: 13px;
                 }
+              }
             }
+          }
         }
+
+        ion-card.selected {
+          border: 3px solid #fc6f58;
+        }
+      }
     }
+  }
 }
 
 ion-footer {
-
-    ion-grid {
-
-        ion-row {
-
-            ion-col {
-
-                ion-label {
-                    font-size: 18px;
-                }
-
-                ion-label.title {
-                    color: #A9A9A9;
-                }
-
-                ion-label.valor {
-                    color: #3D3D3D;
-                    font-weight: bold;
-                }
-            }
+  ion-grid {
+    ion-row {
+      ion-col {
+        ion-label {
+          font-size: 18px;
         }
+
+        ion-label.title {
+          color: #a9a9a9;
+        }
+
+        ion-label.valor {
+          color: #3d3d3d;
+          font-weight: bold;
+        }
+      }
     }
+  }
 }

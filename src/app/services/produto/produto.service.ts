@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { map, take, tap } from 'rxjs/operators';
 import { API_URL, ENV } from 'src/app/config/app.config.service';
 import { Pagination } from 'src/app/page/pedido-lista/pedido-lista.interface';
 import { BaseService } from './../http/base.service';
@@ -132,14 +132,14 @@ export class ProdutoService {
   public getFamilia(codigoProduto: string): Observable<IProdutoFamilia[]> {
     const empresa = localStorage.getItem('empresa') as string;
     const url = `${ENV.WS_PRODUTO}${API_URL}familia/${empresa}/${codigoProduto}`;
-    return this.http.get(url);
+    return this.http.get<IProdutoFamilia[]>(url).pipe(take(1));
   }
 
   // edit by Helio 29/05/2020
-  public getDeposito(codigoProduto: string, codigoPedido: string) {
+  getDeposito(codigoProduto: string, codigoPedido: string): Observable<any> {
     const empresa = localStorage.getItem('empresa') as string;
     const url = `${ENV.WS_PRODUTO}${API_URL}estoque/${empresa}/${codigoProduto}?pedido=${codigoPedido}`;
-    return this.http.get(url);
+    return this.http.get(url).pipe(take(1));
   }
 
   // edit by Helio 29/05/2020

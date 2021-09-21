@@ -1,8 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { CondicaoPagamentoService } from 'src/app/services/pagamento/condicao-pagamento.service';
-import { PedidoService } from 'src/app/services/pedido/pedido.service';
+import { IonSlides, NavController } from '@ionic/angular';
+import { Observable } from 'rxjs';
 import { CommonService } from 'src/app/services/common/common.service';
-import { NavController, IonSlides } from '@ionic/angular';
+import { CondicaoPagamentoService } from 'src/app/services/pagamento/condicao-pagamento.service';
+import { PedidoHeader } from 'src/app/services/pedido/pedido.interface';
+import { PedidoService } from 'src/app/services/pedido/pedido.service';
 
 @Component({
   selector: 'app-formas-pagamento',
@@ -10,55 +12,58 @@ import { NavController, IonSlides } from '@ionic/angular';
   styleUrls: ['./formas-pagamento.page.scss'],
 })
 export class FormasPagamentoPage implements OnInit {
-  @ViewChild(IonSlides, { static: true }) slides: IonSlides;
+  @ViewChild(IonSlides, { static: true }) readonly slides: IonSlides;
+
+  // Dados do Pedido.
+  public pedidoOBS: Observable<PedidoHeader>;
 
   public opcoesPagamento: any[] = [];
 
   constructor(
-    public common: CommonService,
-    public pedidoS: PedidoService,
-    private pagamento: CondicaoPagamentoService,
-    private navControl: NavController
+    private readonly common: CommonService,
+    private readonly pedidoService: PedidoService,
+    private readonly pagamento: CondicaoPagamentoService,
+    private readonly navControl: NavController
   ) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.slides.lockSwipes(true);
+    this.pedidoOBS = this.pedidoService.getPedidoAtivo();
   }
 
-  ionViewWillEnter() {
+  ionViewWillEnter(): void {
     this.common.goToFullScreen();
-    this.pagamento.getFormaPagamento(this.pedidoS.numPedido).then((result: any) => {
-      this.opcoesPagamento = result;
-      console.log(result);
+  }
+
+  ionViewDidEnter(): void {
+    this.common.goToFullScreen();
+    const numPedido = this.pedidoService.getPedidoNumero();
+    this.pagamento.getFormaPagamento(numPedido).subscribe({
+      next: (result) => {
+        this.opcoesPagamento = result;
+        console.log(result);
+      },
     });
   }
 
-  ionViewDidEnter() {
-    this.common.goToFullScreen();
-  }
-
-  ionViewWillLeave() {}
-
-  ionViewDidLeave() {}
-
-  async goToCondicaoPagamento(opcaoPagamento: any) {
+  async goToCondicaoPagamento(opcaoPagamento: any): Promise<void> {
     await this.common.showLoader();
-    this.pagamento.setTipoPagamento(opcaoPagamento.codigo).then(
-      (result: any) => {
+    this.pedidoService.setTipoPagamento(opcaoPagamento.codigo).subscribe({
+      next: (result) => {
         this.prosseguir(opcaoPagamento);
         this.common.loading.dismiss();
         console.log(result);
       },
-      (error) => {
+      error: () => {
         this.common.loading.dismiss();
-      }
-    );
+      },
+    });
   }
 
-  prosseguir(opcao: any) {
+  prosseguir(opcao: any): void {
     // by Ryuge 29/11/2018
     // edit by Helio 27/03/2020
-    if (opcao.parcelas !== 0) {
+    if (opcao.parcelas) {
       this.navControl.navigateForward(['/parcelamento']);
     } else {
       this.navControl.navigateRoot(['/pedido-finalizacao']);

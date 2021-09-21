@@ -1,14 +1,19 @@
-import { Component, OnInit, ViewChild, ViewChildren, QueryList } from '@angular/core';
+import { Component, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { ActivatedRoute, Params } from '@angular/router';
+import { IonInput, IonSlides, NavController } from '@ionic/angular';
+import { Observable } from 'rxjs';
+import { Produto, ProdutoDepositoRetirada } from 'src/app/class/produto';
+import { Endereco } from 'src/app/services/cliente/cliente.interface';
 import { CommonService } from 'src/app/services/common/common.service';
+import { DataService } from 'src/app/services/data/data.service';
+import {
+  PedidoHeader,
+  PedidoItem,
+  Retiradas,
+} from 'src/app/services/pedido/pedido.interface';
 import { PedidoService } from 'src/app/services/pedido/pedido.service';
 import { ProdutoService } from 'src/app/services/produto/produto.service';
-import { PedidoItemService } from 'src/app/services/pedido/pedido-item.service';
 import { TMSService } from 'src/app/services/TMS/tms.service';
-import { Produto, ProdutoDepositoRetirada } from 'src/app/class/produto';
-import { ActivatedRoute } from '@angular/router';
-import { IonSlides, IonInput, NavController } from '@ionic/angular';
-import { Retiradas, PedidoItens } from 'src/app/class/pedido';
-import { DataService } from 'src/app/services/data/data.service';
 
 @Component({
   selector: 'app-produto-adicionar-sacola',
@@ -16,15 +21,14 @@ import { DataService } from 'src/app/services/data/data.service';
   styleUrls: ['./produto-adicionar-sacola.page.scss'],
 })
 export class ProdutoAdicionarSacolaPage implements OnInit {
-  // Slide da pagina
-  @ViewChild(IonSlides, { static: true }) slides: IonSlides;
-
+  @ViewChild(IonSlides, { static: true }) readonly slides: IonSlides;
   // Lista de inputs dos depositos
   @ViewChildren('input') input: QueryList<IonInput>;
-
   // Input do TMS
   @ViewChild('inputTMS', { static: true }) inputTMS: IonInput;
   public inputTMSvalue = 0;
+
+  public pedidoOBS: Observable<PedidoHeader>;
 
   // Produto e depositos de retirada
   public produto = new Produto();
@@ -41,88 +45,82 @@ export class ProdutoAdicionarSacolaPage implements OnInit {
   private entregaTMSselecionada = false;
 
   // Controle dos itens do pedido
-  private pedidoItens: PedidoItens;
+  private pedidoItem = new PedidoItem();
 
   // Retiradas
   private retiradas: Retiradas[] = [];
 
   // Controle de navegacao
-  private navParams: any;
+  private navParams: Params;
 
   // Controla a gravação da opção de TMS para poder prosseguir
   private statusGravacao = false;
 
   constructor(
-    private activatedRoute: ActivatedRoute,
+    private readonly route: ActivatedRoute,
     private navControl: NavController,
     private dataService: DataService,
-    public common: CommonService,
-    public pedidoS: PedidoService,
-    private pedidoIt: PedidoItemService,
-    private produtoS: ProdutoService,
-    private tms: TMSService
+    private readonly common: CommonService,
+    private readonly pedidoService: PedidoService,
+    private readonly produtoService: ProdutoService,
+    private readonly tmsService: TMSService
   ) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.slides.lockSwipes(true);
+    this.pedidoOBS = this.pedidoService.getPedidoAtivo();
     this.produto = this.dataService.getData('produto-adicionar-sacola');
-    this.activatedRoute.queryParams.subscribe((params: any) => {
-      this.navParams = params;
+    this.route.queryParams.subscribe({
+      next: (params) => (this.navParams = params),
     });
   }
 
-  ionViewWillEnter() {
+  ionViewWillEnter(): void {
     this.common.goToFullScreen();
-    this.pedidoItens = new PedidoItens(
-      localStorage.getItem('empresa'),
-      this.pedidoS.pedidoHeader.numpedido
-    );
-    this.pedidoItens.idEmpresa = parseInt(localStorage.getItem('empresa'));
-    this.pedidoItens.numPedido = this.pedidoS.pedidoHeader.numpedido;
-    this.pedidoItens.idProduto = this.produto.codigodigitoembalagem;
-    this.pedidoItens.embalagem = 0;
-    this.pedidoItens.qtdTotal = 0;
-    this.pedidoItens.prcUnitario = 0;
-    this.pedidoItens.prcTotal = 0;
+    this.pedidoItem = new PedidoItem();
+    this.pedidoItem.idEmpresa = parseInt(localStorage.getItem('empresa'));
+    this.pedidoItem.numPedido = this.pedidoService.getPedidoNumero();
+    this.pedidoItem.idProduto = this.produto.codigodigitoembalagem;
+    this.pedidoItem.embalagem = 0;
+    this.pedidoItem.qtdTotal = 0;
+    this.pedidoItem.prcUnitario = 0;
+    this.pedidoItem.prcTotal = 0;
   }
 
-  ionViewDidEnter() {
+  ionViewDidEnter(): void {
     this.common.goToFullScreen();
-    this.produtoS
+    this.produtoService
       .getDeposito(
         this.produto.codigodigitoembalagem,
-        String(this.pedidoS.pedidoHeader.numpedido)
+        String(this.pedidoService.getPedidoNumero())
       )
-      .then(
-        (result: any) => {
+      .subscribe({
+        next: (result: any) => {
           this.depositos = result;
           this.showDepositos = true;
           console.log('depositos');
           console.log(result);
         },
-        () => {
+        error: () => {
           this.showDepositos = true;
-        }
-      );
+        },
+      });
   }
 
-  ionViewWillLeave() {}
+  ionViewWillLeave(): void {}
 
-  ionViewDidLeave() {}
+  ionViewDidLeave(): void {}
 
-  goToSlide(slide: number) {
+  goToSlide(slide: number): void {
     this.slides.lockSwipes(false);
     this.slides.slideTo(slide);
     this.slides.lockSwipes(true);
     this.atualizaBySlide();
   }
 
-  atualizaBySlide() {
-    this.slides.getActiveIndex().then((result: number) => {
+  atualizaBySlide(): void {
+    this.slides.getActiveIndex().then((result) => {
       switch (result) {
-        case 0:
-          break;
-
         case 1:
           setTimeout(() => {
             this.inputTMS.setFocus();
@@ -137,7 +135,7 @@ export class ProdutoAdicionarSacolaPage implements OnInit {
 
   // edit by Helio 09/07/2020
   validateField(): boolean {
-    if (this.entregaTMSselecionada && this.inputTMSvalue > 0) {
+    if (this.entregaTMSselecionada && this.inputTMSvalue) {
       return true;
     } else {
       return this.validaQtdRetiradaLoja();
@@ -152,13 +150,13 @@ export class ProdutoAdicionarSacolaPage implements OnInit {
     }
   }
 
-  zeroQtd() {
+  zeroQtd(): void {
     this.common.showAlert('Atenção!', 'Informar quantidade retirada.');
   }
 
   async adicionar() {
     // Chama a gravação do TMS
-    if (this.entregaTMSselecionada && this.inputTMSvalue > 0) {
+    if (this.entregaTMSselecionada && this.inputTMSvalue) {
       await this.adicionarComTMS(this.inputTMSvalue, this.produto);
     }
     //  Chama a gracação da retirada em Loja
@@ -204,18 +202,18 @@ export class ProdutoAdicionarSacolaPage implements OnInit {
         this.retiradas.push(retirada);
       }
     }
-    this.pedidoItens.retiradas = this.retiradas;
-    await this.pedidoIt.addItemPedido(this.pedidoItens).then((result) => {
-      console.log('Resultado');
-      console.log(result);
-      this.prosseguir();
-    });
+    // this.pedidoItens.retiradas = this.retiradas;
+    // await this.pedidoIt.addItemPedido(this.pedidoItens).then((result) => {
+    //   console.log('Resultado');
+    //   console.log(result);
+    //   this.prosseguir();
+    // });
   }
 
   async adicionarComTMS(qtd: number, prod: any) {
-    await this.tms
+    await this.tmsService
       .gravaOpcoesTMS(
-        String(this.pedidoS.pedidoHeader.numpedido),
+        String(this.pedidoService.getPedidoNumero()),
         String(qtd),
         this.produto.codigodigitoembalagem,
         prod.conversao
@@ -231,39 +229,35 @@ export class ProdutoAdicionarSacolaPage implements OnInit {
       );
   }
 
-  async ende(seq: any, enderecos: any[]) {
-    for (const el in enderecos) {
-      if (enderecos[el].id.sequencialId === seq) {
-        return enderecos[el];
-      }
-    }
+  private searchEnderecoOnList(seq: number, enderecos: Endereco[]): Endereco {
+    return enderecos.find((ende) => ende.id.sequencialId === seq);
   }
 
-  async getOpcoes(qtd: number) {
-    let precolocal: string;
+  getOpcoes(qtd: number): void {
+    let precolocal: 'S' | 'N';
     if (this.validaQtdRetiradaLoja()) {
       precolocal = 'S';
     } else {
       precolocal = 'N';
     }
 
-    let enderecos: any;
-    await this.pedidoS.retornaDadosCliente().then(
-      () => {
-        enderecos = this.pedidoS.dadosCliente.enderecos;
-      },
-      () => {
-        return this.getOpcoes(qtd);
-      }
-    );
-    const sequen = this.pedidoS.pedidoHeader.seqEnderecoEntrega;
-    const ende = await this.ende(sequen, enderecos);
+    // await this.pedidoService.retornaDadosCliente().then(
+    //   () => {
+    //     enderecos = this.pedidoS.dadosCliente.enderecos;
+    //   },
+    //   () => {
+    //     return this.getOpcoes(qtd);
+    //   }
+    // );
+    const enderecos = this.pedidoService.getClienteEnderecos();
+    const sequen = this.pedidoService.getPedidoEnderecoEntrega();
+    const endereco = this.searchEnderecoOnList(sequen, enderecos);
 
     this.loadingTMS = true;
-    this.tms
-      .getOpcoesTMS(ende, String(qtd), this.produto.codigodigitoembalagem, precolocal)
-      .then(
-        (result: any) => {
+    this.tmsService
+      .getOpcoesTMS(endereco, String(qtd), this.produto.codigodigitoembalagem, precolocal)
+      .subscribe({
+        next: (result) => {
           this.dadosRetornoTMS = result;
           this.loadingTMS = false;
           console.log('opcoes entrega');
@@ -279,10 +273,9 @@ export class ProdutoAdicionarSacolaPage implements OnInit {
             }
           }
         },
-        (error) => {
+        error: () => {
           this.loadingTMS = false;
-          console.log(error);
-        }
-      );
+        },
+      });
   }
 }

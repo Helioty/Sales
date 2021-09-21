@@ -1,17 +1,22 @@
-import { Component, OnInit, ViewChild, Renderer2 } from '@angular/core';
-import { CondicaoPagamentoService } from 'src/app/services/pagamento/condicao-pagamento.service';
-import { PedidoService } from 'src/app/services/pedido/pedido.service';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { IonInput, NavController } from '@ionic/angular';
+import { Subscription } from 'rxjs';
 import { CommonService } from 'src/app/services/common/common.service';
-import { NavController, AlertController, IonInput } from '@ionic/angular';
-import { OpcaoParcela } from 'src/app/class/pedido';
+import { CondicaoPagamentoService } from 'src/app/services/pagamento/condicao-pagamento.service';
+import { OpcaoParcela, PedidoHeader } from 'src/app/services/pedido/pedido.interface';
+import { PedidoService } from 'src/app/services/pedido/pedido.service';
 
 @Component({
   selector: 'app-parcelamento',
   templateUrl: './parcelamento.page.html',
   styleUrls: ['./parcelamento.page.scss'],
 })
-export class ParcelamentoPage implements OnInit {
-  @ViewChild(IonInput) input: IonInput;
+export class ParcelamentoPage implements OnInit, OnDestroy {
+  @ViewChild(IonInput) readonly input: IonInput;
+
+  // Dados do Pedido.
+  private pedidoSub: Subscription;
+  public pedido: PedidoHeader;
 
   public opcoesList: any[] = [];
 
@@ -24,44 +29,47 @@ export class ParcelamentoPage implements OnInit {
   public buttonDisable = true;
 
   constructor(
-    public common: CommonService,
-    public pedido: PedidoService,
-    private pagamento: CondicaoPagamentoService,
-    private alertCtrl: AlertController,
-    private navControl: NavController,
-    private renderer: Renderer2
-  ) {
+    private readonly common: CommonService,
+    private readonly pedidoService: PedidoService,
+    private readonly pagamento: CondicaoPagamentoService,
+    private navControl: NavController
+  ) {}
+
+  ngOnInit(): void {
+    const pedidoOBS = this.pedidoService.getPedidoAtivo();
+    this.pedidoSub = pedidoOBS.subscribe({ next: (pedido) => (this.pedido = pedido) });
     this.opcaoSelect = new OpcaoParcela();
+    this.common.showLoader();
   }
 
-  async ngOnInit() {
-    await this.common.showLoader();
-  }
-
-  ionViewWillEnter() {
+  ionViewWillEnter(): void {
     this.common.goToFullScreen();
+  }
+
+  ionViewDidEnter(): void {
+    this.common.goToFullScreen();
+    this.getCondicoes();
+  }
+
+  ngOnDestroy(): void {
+    this.pedidoSub.unsubscribe();
+  }
+
+  getCondicoes(): void {
     this.pagamento
-      .getCondicaoPagamento(this.pedido.pedidoHeader.tipodoc, this.pedido.numPedido)
-      .then(
-        (result: any) => {
+      .getCondicaoPagamento(this.pedido.tipodoc, this.pedido.numpedido)
+      .subscribe({
+        next: (result) => {
           console.log(result);
           this.opcoesList = result;
           this.common.loading.dismiss();
         },
-        (error) => {
+        error: (error) => {
           console.log(error);
           this.common.loading.dismiss();
-        }
-      );
+        },
+      });
   }
-
-  ionViewDidEnter() {
-    this.common.goToFullScreen();
-  }
-
-  ionViewWillLeave() {}
-
-  ionViewDidLeave() {}
 
   changeEntrada() {
     this.hasEntrada = !this.hasEntrada;
@@ -75,25 +83,7 @@ export class ParcelamentoPage implements OnInit {
   }
 
   keyupEvent() {
-    this.input.value = this.common.currency(this.input.value);
-  }
-
-  async showAlert(titulo: string, msg: string) {
-    if (msg != null) {
-      const alert = await this.alertCtrl.create({
-        header: titulo,
-        message: msg,
-        buttons: [
-          {
-            text: 'OK',
-            handler: () => {
-              this.input.setFocus();
-            },
-          },
-        ],
-      });
-      await alert.present();
-    }
+    // this.input.value = this.common.currency(this.input.value);
   }
 
   verificaEntrada(evento: any) {
@@ -103,49 +93,49 @@ export class ParcelamentoPage implements OnInit {
     }
   }
 
-  async getCondicaoPagamentoComEntrada(valor: number) {
-    if (valor > this.pedido.pedidoHeader.totpedido) {
-      this.showAlert(
-        'Valor inválido',
-        'O valor da entrada não pode ser maior que o valor do pedido!'
-      );
-      return;
-    }
-    await this.common.showLoader();
-    this.pagamento
-      .getCondicaoPagamentoComEntrada(
-        this.pedido.pedidoHeader.tipodoc,
-        this.pedido.numPedido,
-        valor
-      )
-      .then(
-        (result: any) => {
-          console.log(result);
-          this.opcoesList = result;
-          this.common.loading.dismiss();
-          this.opcaoSelect = new OpcaoParcela();
+  async getCondicaoPagamentoComEntrada(valor: number): Promise<void> {
+    if (valor > this.pedido.totpedido) {
+      this.common.showAlertAction({
+        titulo: 'Valor inválido',
+        message: 'O valor da entrada não pode ser maior que o valor do pedido!',
+        handler: () => {
+          this.input.setFocus();
         },
-        (error) => {
-          console.log(error);
-          this.common.loading.dismiss();
-        }
-      );
+      });
+    } else {
+      await this.common.showLoader();
+      this.pagamento
+        .getCondicaoPagamento(this.pedido.tipodoc, this.pedido.numpedido, valor)
+        .subscribe({
+          next: (result) => {
+            console.log(result);
+            this.opcoesList = result;
+            this.common.loading.dismiss();
+            this.opcaoSelect = new OpcaoParcela();
+          },
+          error: (error) => {
+            console.log(error);
+            this.common.loading.dismiss();
+          },
+        });
+    }
   }
 
   // by Ryuge 18/12/2018
   // edit by Helio 30/03/2020
-  async continuar() {
+  async continuar(): Promise<void> {
     await this.common.showLoader();
-    this.pagamento.setCondicaoPagamento(this.opcaoSelect, this.input.value).then(
-      (result: any) => {
-        this.pedido.atualizaPedidoHeader(result);
-        this.navControl.navigateRoot(['pedido-finalizacao']);
-        this.common.loading.dismiss();
-      },
-      (error) => {
-        console.log(error);
-        this.common.loading.dismiss();
-      }
-    );
+    this.pedidoService
+      .setCondicaoPagamento(this.opcaoSelect, this.input.value)
+      .subscribe({
+        next: (result) => {
+          this.navControl.navigateRoot(['pedido-finalizacao']);
+          this.common.loading.dismiss();
+        },
+        error: (error) => {
+          console.log(error);
+          this.common.loading.dismiss();
+        },
+      });
   }
 }

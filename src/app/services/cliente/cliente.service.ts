@@ -19,7 +19,7 @@ export class ClienteService {
    * @param doc CPF/CNPJ do cliente.
    * @param showError Controla o alert de erro da requisição.
    */
-  public getCliente(doc: string, showError = true): Observable<ClienteGet> {
+  getCliente(doc: string, showError = true): Observable<ClienteGet> {
     const url = `${ENV.WS_CRM}${API_URL}cliente/${doc}`;
     const options = { token: true, showError };
     return this.http.get<ClienteGet>(url, options).pipe(

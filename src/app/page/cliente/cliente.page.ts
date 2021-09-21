@@ -383,7 +383,7 @@ export class ClientePage implements OnInit, OnDestroy {
             paginaAnterior: 'cliente',
           },
         };
-        this.navControl.navigateForward(['/' + paginaSeguinte], navigationExtras);
+        this.navControl.navigateForward(['/cliente-enderecos/false'], navigationExtras);
         break;
 
       case 'finalizaService':

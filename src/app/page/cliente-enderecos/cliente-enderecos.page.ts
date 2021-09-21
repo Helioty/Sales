@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
+import { NavController } from '@ionic/angular';
 import { Observable } from 'rxjs';
 import { ClienteGet, Endereco } from 'src/app/services/cliente/cliente.interface';
 import { CommonService } from 'src/app/services/common/common.service';
@@ -22,6 +23,7 @@ export class ClienteEnderecosPage implements OnInit {
   constructor(
     private readonly common: CommonService,
     private readonly pedidoService: PedidoService,
+    private readonly navControl: NavController,
     private readonly route: ActivatedRoute
   ) {}
 
@@ -37,7 +39,7 @@ export class ClienteEnderecosPage implements OnInit {
   private getRouteParams(): void {
     this.route.params.subscribe({
       next: (params) => {
-        this.onlyShow = params.acao !== 'entrega';
+        this.onlyShow = params.onlyShow === 'true';
       },
     });
   }
@@ -56,15 +58,36 @@ export class ClienteEnderecosPage implements OnInit {
    * @param selected Endereço Selecionado.
    */
   async setEnderecoEntrega(selected: Endereco): Promise<void> {
-    console.log('Endereço Selecionado: ', selected);
     await this.common.showLoader();
     this.pedidoService.setEnderecoEntrega(selected).subscribe({
       next: () => {
         this.common.loading.dismiss();
+        this.prosseguir();
       },
       error: () => {
         this.common.loading.dismiss();
       },
     });
+  }
+
+  /**
+   * @author helio.souza
+   * @description Navegação seguinte da pagina.
+   */
+  private prosseguir(): void {
+    const paginaSeguinte = this.navParams.paginaSeguinte;
+    switch (paginaSeguinte) {
+      case 'back':
+        this.navControl.pop();
+        break;
+
+      case 'pedido-atalhos':
+        this.navControl.navigateRoot(['/pedido-atalhos']);
+        break;
+
+      default:
+        this.navControl.navigateForward(['/' + paginaSeguinte]);
+        break;
+    }
   }
 }

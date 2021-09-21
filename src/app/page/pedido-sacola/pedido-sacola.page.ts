@@ -30,7 +30,7 @@ export class PedidoSacolaPage implements OnInit {
     public readonly scanner: ScannerService,
     private readonly dataService: DataService,
     private readonly common: CommonService,
-    public readonly pedidoService: PedidoService,
+    private readonly pedidoService: PedidoService,
     private readonly produtoService: ProdutoService,
     private readonly navControl: NavController
   ) {}
@@ -95,6 +95,13 @@ export class PedidoSacolaPage implements OnInit {
         this.existeProdRetirada = true;
       }
     });
+  }
+
+  /**
+   * @author helio.souza
+   */
+  sairDoPedido(): void {
+    this.pedidoService.sairPedido();
   }
 
   /**

@@ -1,183 +1,175 @@
 .header-md:after {
-    height: 0 !important;
-    background-image: none !important;
-}
-
-.scanner {
-    position: fixed;
-    top: -50px !important;
-    height: 1px !important;
+  height: 0 !important;
+  background-image: none !important;
 }
 
 ion-content {
-    ion-grid.grid1 {
-        background: var(--ion-color-primary);
-        color: white;
+  ion-grid.grid1 {
+    background: var(--ion-color-primary);
+    color: white;
 
-        ion-row.row1 {
-            width: fit-content;
-            margin: auto;
+    ion-row.row1 {
+      width: fit-content;
+      margin: auto;
 
-            ion-col {
-                ion-label {
-                    font-size: 20px !important;
+      ion-col {
+        ion-label {
+          font-size: 20px !important;
+          font-weight: bold;
+        }
+      }
+    }
+
+    ion-row {
+      ion-col.ESQ {
+        text-align: end;
+
+        ion-label {
+          font-size: 14px;
+        }
+      }
+
+      ion-col.DIR {
+        text-align: end;
+
+        ion-label {
+          font-size: 14px;
+        }
+      }
+    }
+
+    ion-row.total {
+      ion-col {
+        text-align: end;
+
+        ion-label {
+          font-size: 20px;
+        }
+      }
+    }
+  }
+
+  ion-grid.grid2 {
+    border-bottom: 1px solid #dadada;
+
+    ion-row {
+      ion-col {
+        ion-list.listaProdutos {
+          width: 100%;
+          max-width: 600px;
+          margin: 0 auto;
+
+          ion-item.produto {
+            width: 100%;
+            border-radius: 6px;
+            border: 1px solid rgba(0, 0, 0, 0.2);
+            box-shadow: 1px 2px 5px 0 rgba(0, 0, 0, 0.4);
+            --inner-padding-end: none !important;
+            --padding-start: none !important;
+            margin-bottom: 10px;
+
+            ion-thumbnail {
+              margin-right: 0;
+              height: auto;
+              width: 46px;
+            }
+
+            ion-grid {
+              padding: 0 !important;
+
+              ion-row.produtoRow {
+                min-height: 100px !important;
+                height: 100% !important;
+
+                ion-col.produtoInformacao {
+                  margin: auto 0;
+
+                  .produtoDescri {
+                    color: #808080;
+                    font-size: 14px;
+                    font-weight: 400;
+                    white-space: normal;
+                  }
+                  .produtoPreco {
+                    font-size: 15px;
+                    color: #c40318;
                     font-weight: bold;
-                }
-            }
-        }
-
-        ion-row {
-            ion-col.ESQ {
-                text-align: end;
-
-                ion-label {
+                    padding: 0;
+                  }
+                  .produtoPrecoUnidade {
+                    color: #4d4d4d;
                     font-size: 14px;
+                    font-weight: bold;
+                  }
                 }
-            }
 
-            ion-col.DIR {
-                text-align: end;
-
-                ion-label {
-                    font-size: 14px;
+                ion-col.produtoQuantidade {
+                  background-color: #f4f4f4;
+                  border-left: 2px solid rgba(0, 0, 0, 0.1);
+                  ion-row {
+                    background-color: #f4f4f4;
+                  }
+                  ion-button {
+                    width: 100% !important;
+                    --background: transparent !important;
+                    --border-color: transparent !important;
+                    --border-width: 0 !important;
+                  }
+                  .quantidadeTop {
+                    min-height: 40px !important;
+                    height: 33% !important;
+                  }
+                  .quantidadeCenter {
+                    border-bottom: none;
+                    border-top: none;
+                    font-size: 18px;
+                    font-weight: bold;
+                    padding: 5px 0;
+                    height: 34% !important;
+                  }
+                  .quantidadeBottom {
+                    min-height: 40px !important;
+                    height: 33% !important;
+                  }
                 }
+              }
             }
+          }
         }
-
-        ion-row.total {
-            ion-col {
-                text-align: end;
-
-                ion-label {
-                    font-size: 20px;
-                }
-            }
-        }
+      }
     }
 
-    ion-grid.grid2 {
-        border-bottom: 1px solid #DADADA;
-
-        ion-row {
-            ion-col {
-
-                ion-list.listaProdutos {
-                    width: 100%;
-                    max-width: 600px;
-                    margin: 0 auto;
-            
-                    ion-item.produto {
-                        width: 100%;
-                        border-radius: 6px;
-                        border: 1px solid rgba(0, 0, 0, 0.2);
-                        box-shadow: 1px 2px 5px 0 rgba(0, 0, 0, 0.4);
-                        --inner-padding-end: none !important;
-                        --padding-start: none !important;
-                        margin-bottom: 10px;
-            
-                        ion-thumbnail {
-                            margin-right: 0;
-                            height: auto;
-                            width: 46px;
-                        }
-            
-                        ion-grid {
-                            padding: 0 !important;
-                            
-                            ion-row.produtoRow {
-                                min-height: 100px !important;
-                                height: 100% !important;
-            
-                                ion-col.produtoInformacao {
-                                    margin: auto 0;
-            
-                                    .produtoDescri {
-                                        color: #808080;
-                                        font-size: 14px;
-                                        font-weight: 400;
-                                        white-space: normal;
-                                    }
-                                    .produtoPreco {
-                                        font-size: 15px;
-                                        color: #C40318;
-                                        font-weight: bold;
-                                        padding: 0;
-                                    }
-                                    .produtoPrecoUnidade {
-                                        color: #4d4d4d;
-                                        font-size: 14px;
-                                        font-weight: bold;
-                                    }
-                                }
-            
-                                ion-col.produtoQuantidade {
-                                    background-color: #f4f4f4;
-                                    border-left: 2px solid rgba(0, 0, 0, 0.1);
-                                    ion-row {
-                                        background-color: #f4f4f4;
-                                    }
-                                    ion-button {
-                                        width: 100% !important;
-                                        --background: transparent !important;
-                                        --border-color: transparent !important;
-                                        --border-width: 0 !important;
-                                    }
-                                    .quantidadeTop {
-                                        min-height: 40px !important;
-                                        height: 33% !important;
-                                    }
-                                    .quantidadeCenter {
-                                        border-bottom: none;
-                                        border-top: none;
-                                        font-size: 18px;
-                                        font-weight: bold;
-                                        padding: 5px 0;
-                                        height: 34% !important;
-                                    }
-                                    .quantidadeBottom {
-                                        min-height: 40px !important;
-                                        height: 33% !important;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
+    ion-row.alteraBtn {
+      ion-col {
+        ion-button {
+          width: 100%;
         }
-
-        ion-row.alteraBtn {
-            ion-col {
-                ion-button {
-                    width: 100%;
-                }
-            }
-        }
+      }
     }
+  }
 
-    ion-grid.grid3 {
-        border-bottom: 1px solid #DADADA;
+  ion-grid.grid3 {
+    border-bottom: 1px solid #dadada;
 
-        ion-row {
-            ion-col {
-                ion-card {
-                    ion-card-header {
-                        ion-thumbnail {
-                            width: 70px; 
-                            height: 70px; 
-                            margin: auto;
-                        }
-                    }
-                }
+    ion-row {
+      ion-col {
+        ion-card {
+          ion-card-header {
+            ion-thumbnail {
+              width: 70px;
+              height: 70px;
+              margin: auto;
             }
+          }
         }
+      }
     }
+  }
 
-    ion-item.finalizarItem {
-        ion-text {
-            margin: auto !important;
-            font-size: 110%;
-        }
+  ion-item.finalizarItem {
+    ion-text {
+      margin: auto !important;
+      font-size: 110%;
     }
-
+  }
 }

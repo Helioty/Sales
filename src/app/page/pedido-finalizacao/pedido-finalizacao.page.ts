@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { PedidoItemService } from 'src/app/services/pedido/pedido-item.service';
-import { PedidoService } from 'src/app/services/pedido/pedido.service';
-import { CommonService } from 'src/app/services/common/common.service';
-import { NavController, Platform } from '@ionic/angular';
 import { NavigationExtras } from '@angular/router';
+import { NavController } from '@ionic/angular';
+import { Observable } from 'rxjs';
+import { CommonService } from 'src/app/services/common/common.service';
+import { PedidoHeader, PedidoItem } from 'src/app/services/pedido/pedido.interface';
+import { PedidoService } from 'src/app/services/pedido/pedido.service';
+import { ScannerService } from 'src/app/services/scanner/scanner.service';
 
 @Component({
   selector: 'app-pedido-finalizacao',
@@ -11,172 +13,69 @@ import { NavigationExtras } from '@angular/router';
   styleUrls: ['./pedido-finalizacao.page.scss'],
 })
 export class PedidoFinalizacaoPage implements OnInit {
-  public taskScanner: any;
-  public valorScanner: string;
-  public focusStatus = true;
-
-  // Exibição
-  public numeroPedido: string;
-  public totalProdutos: any;
-  public existeFrete = false;
-  public frete: any;
-  public icmsRetido: any;
-  public descontoBrinde: any;
-  public desconto: any;
-  public existeParcela = false;
-  public qtdParcelas: any;
-  public parcela: any;
-  public entrada = 0;
-  public pesoPedido: any;
-  public totalPedido: any;
-
-  // Produtos
-  public itens: any[] = [];
+  public pedidoOBS: Observable<PedidoHeader>;
+  public pedidoItemOBS: Observable<PedidoItem[]>;
 
   constructor(
-    public common: CommonService,
-    public pedido: PedidoService,
-    public pedidoIt: PedidoItemService,
-    private navControl: NavController,
-    private platform: Platform
+    public readonly scanner: ScannerService,
+    private readonly common: CommonService,
+    private readonly pedidoService: PedidoService,
+    private readonly navControl: NavController
   ) {}
 
-  ngOnInit() {}
-
-  adicionarCartaoPedido() {}
-
-  ionViewWillEnter() {
-    console.log('ionViewWillEnter');
-    this.focusOn();
-    this.common.goToFullScreen();
-    this.numeroPedido =
-      this.pedido.pedidoHeader.numpedido +
-      '-' +
-      this.pedido.pedidoHeader.digito.toString();
-
-    // by Ryuge 12/12/2018
-    this.totalProdutos =
-      this.pedido.pedidoHeader.totpedido -
-      this.pedido.pedidoHeader.frete.valor +
-      this.pedido.pedidoHeader.descontoBrinde +
-      this.pedido.pedidoHeader.valorDesconto;
-
-    this.pesoPedido = this.pedido.pedidoHeader.pesoTotal;
-    this.totalPedido = this.pedido.pedidoHeader.valorTotalPedido;
-
-    if (this.pedido.pedidoHeader.tipoEntrega === 'ENTREGA') {
-      this.frete = this.pedido.pedidoHeader.frete.valor;
-      this.existeFrete = true;
-    }
-
-    if (this.pedido.pedidoHeader.qtdParcelas > 0) {
-      this.qtdParcelas = this.pedido.pedidoHeader.qtdParcelas;
-      this.parcela = this.pedido.pedidoHeader.valorParcela;
-      this.entrada = this.pedido.pedidoHeader.valorEntrada;
-      this.existeParcela = true;
-    } else {
-      this.qtdParcelas = 0;
-      this.parcela = 0;
-      this.existeParcela = false;
-    }
-
-    // by Ryuge 11/12/2018
-    if (this.pedido.pedidoHeader.descontoBrinde > 0) {
-      this.descontoBrinde = this.pedido.pedidoHeader.descontoBrinde;
-    } else {
-      this.descontoBrinde = 0;
-    }
-
-    // by Ryuge 11/12/2018
-    if (this.pedido.pedidoHeader.valorDesconto > 0) {
-      this.desconto = this.pedido.pedidoHeader.valorDesconto;
-    } else {
-      this.desconto = 0;
-    }
-
-    if (this.pedido.pedidoHeader.icmsRetido > 0) {
-      this.icmsRetido = this.pedido.pedidoHeader.icmsRetido;
-    } else {
-      this.icmsRetido = 0;
-    }
-
-    this.getItemPedido();
+  ngOnInit(): void {
+    this.pedidoOBS = this.pedidoService.getPedidoAtivo();
+    this.pedidoItemOBS = this.pedidoService.getPedidoItensOBS();
   }
 
-  ionViewDidEnter() {
+  ionViewWillEnter(): void {
+    this.common.goToFullScreen();
+    this.scanner.focusOn();
+    // this.totalProdutos =
+    //   this.pedido.pedidoHeader.totpedido -
+    //   this.pedido.pedidoHeader.frete.valor +
+    //   this.pedido.pedidoHeader.descontoBrinde +
+    //   this.pedido.pedidoHeader.valorDesconto;
+  }
+
+  ionViewDidEnter(): void {
     this.common.goToFullScreen();
   }
 
-  ionViewWillLeave() {
-    this.focusOff();
+  ionViewWillLeave(): void {
+    this.scanner.focusOff();
   }
 
-  ionViewDidLeave() {
+  ionViewDidLeave(): void {
     console.clear();
   }
 
-  // Cria o loop que da foco no input
-  focusOn() {
-    this.taskScanner = setInterval(() => {
-      try {
-        this.valorScanner = '';
-        if (this.focusStatus) {
-          const scanners = document.body.getElementsByClassName('scanner');
-          for (const i in scanners) {
-            if (Number(i) === scanners.length - 1) {
-              (scanners[i] as HTMLInputElement).focus();
-            }
-          }
-        }
-      } catch (error) {}
-    }, 350);
-  }
+  /**
+   * @author helio.souza
+   * @param value Dado scaneado.
+   */
+  scaneado(value: string): void {
+    const codigo = value;
 
-  focusPlay() {
-    this.focusStatus = true;
-  }
-
-  focusPause() {
-    this.focusStatus = false;
-    const scanners = document.body.getElementsByClassName('scanner');
-    for (const i in scanners) {
-      if (Number(i) === scanners.length - 1) {
-        (scanners[i] as HTMLInputElement).blur();
-      }
+    if (codigo.substring(0, 1) === 'P') {
+      const numPedido = this.pedidoService.getPedidoNumero();
+      this.pedidoService.setCardPedido(numPedido, codigo).subscribe();
     }
   }
 
-  // Encerra o loop de foco no input
-  focusOff() {
-    clearInterval(this.taskScanner);
+  /**
+   * @author helio.souza
+   * @description Atualiza o cartão pedido.
+   */
+  adicionarCartaoPedido(): void {
+    this.pedidoService.adicionarCartaoPedido();
   }
 
-  scaneado(evento: any) {
-    try {
-      if (evento.target && evento.target.value.length >= 2) {
-        this.focusPause();
-        const codigo: string = evento.target.value;
-
-        if (codigo.substring(0, 1) === 'P') {
-          this.pedido.setCardPedido(codigo);
-          this.focusPlay();
-        } else {
-          this.focusPlay();
-        }
-      }
-    } catch (error) {
-      this.focusPlay();
-    }
-  }
-
-  async getItemPedido() {
-    await this.pedidoIt.getItemPedido().then((result: any) => {
-      this.itens = result.content;
-      console.log(result);
-    });
-  }
-
-  openClientePage() {
+  /**
+   * @author helio.souza
+   * @description Abre a pagina de cliente.
+   */
+  openClientePage(): void {
     const navigationExtras: NavigationExtras = {
       queryParams: {
         paginaSeguinte: 'back',
@@ -186,7 +85,7 @@ export class PedidoFinalizacaoPage implements OnInit {
     this.navControl.navigateForward(['/cliente'], navigationExtras);
   }
 
-  openFormasPagamentoPage() {
+  openFormasPagamentoPage(): void {
     this.navControl.navigateForward(['/formas-pagamento']);
     const navigationExtras: NavigationExtras = {
       queryParams: {

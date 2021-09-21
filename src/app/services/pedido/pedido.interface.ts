@@ -50,6 +50,9 @@ export enum AttPedido {
   CARTAO_PEDIDO = 'cartao_pedido',
   TIPO_ENTREGA = 'entrega',
   SEQ_ENDERECO_ENTREGA = 'seq_endereco_entrega',
+  TIPO_PAGAMENTO = 'tipo_pagamento',
+  CONDICAO_PAGAMENTO = 'condicao_pagto',
+  VALOR_ENTRADA = 'valorentrada',
 }
 
 export class PedidoItem {

@@ -105,14 +105,14 @@ const routes: Routes = [
   //       (m) => m.EnderecoEntregaOldPageModule
   //     ),
   // },
-  // {
-  //   path: 'pedido-finalizacao',
-  //   loadChildren: () =>
-  //     import('./page/pedido-finalizacao/pedido-finalizacao.module').then(
-  //       (m) => m.PedidoFinalizacaoPageModule
-  //     ),
-  //   canActivate: [AuthGuard],
-  // },
+  {
+    path: 'pedido-finalizacao',
+    loadChildren: () =>
+      import('./page/pedido-finalizacao/pedido-finalizacao.module').then(
+        (m) => m.PedidoFinalizacaoPageModule
+      ),
+    canActivate: [AuthGuard],
+  },
   // {
   //   path: 'consulta-cep/:mode',
   //   loadChildren: () =>
@@ -128,13 +128,13 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
-    path: 'cliente-enderecos/:acao',
+    path: 'cliente-enderecos/:onlyShow',
     loadChildren: () =>
       import('./page/cliente-enderecos/cliente-enderecos.module').then(
         (m) => m.ClienteEnderecosPageModule
       ),
+    canActivate: [AuthGuard],
   },
-
   // {
   //   path: 'tinta-alterada',
   //   loadChildren: () =>
@@ -149,23 +149,22 @@ const routes: Routes = [
   //       (m) => m.ListaTintasPageModule
   //     ),
   // },
-
-  // {
-  //   path: 'formas-pagamento',
-  //   loadChildren: () =>
-  //     import('./page/formas-pagamento/formas-pagamento.module').then(
-  //       (m) => m.FormasPagamentoPageModule
-  //     ),
-  //   canActivate: [AuthGuard],
-  // },
-  // {
-  //   path: 'parcelamento',
-  //   loadChildren: () =>
-  //     import('./page/formas-pagamento/parcelamento/parcelamento.module').then(
-  //       (m) => m.ParcelamentoPageModule
-  //     ),
-  //   canActivate: [AuthGuard],
-  // },
+  {
+    path: 'formas-pagamento',
+    loadChildren: () =>
+      import('./page/formas-pagamento/formas-pagamento.module').then(
+        (m) => m.FormasPagamentoPageModule
+      ),
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'parcelamento',
+    loadChildren: () =>
+      import('./page/formas-pagamento/parcelamento/parcelamento.module').then(
+        (m) => m.ParcelamentoPageModule
+      ),
+    canActivate: [AuthGuard],
+  },
 ];
 
 @NgModule({

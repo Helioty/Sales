@@ -34,7 +34,6 @@ export class PedidoRetiradaPage implements OnInit {
    * @param tipoRetiradaIndex Index dos tipos de Entrega.
    */
   async openPesquisaProduto(tipoRetiradaIndex: number): Promise<void> {
-    // this.pedidoService.sistuacaoPedido = 'A';
     await this.common.showLoader();
     this.pedidoService
       .alterarTipoRetirada(this.pedidoService.getPedidoNumero(), tipoRetiradaIndex)
@@ -56,7 +55,7 @@ export class PedidoRetiradaPage implements OnInit {
   navegar(tipoRetiradaIndex: number): void {
     // by Ryuge 14/11/2019
     // edit by Helio 14/02/2020
-    if (tipoRetiradaIndex === 3) {
+    if (tipoRetiradaIndex === 2) {
       const navigationExtras: NavigationExtras = {
         queryParams: {
           paginaSeguinte: 'endereco-entrega',

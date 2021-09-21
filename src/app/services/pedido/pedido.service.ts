@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { NavigationExtras } from '@angular/router';
 import { NavController } from '@ionic/angular';
-import { BehaviorSubject, Observable, of } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { map, take, tap } from 'rxjs/operators';
 import { API_URL, ENV } from 'src/app/config/app.config.service';
 import { Pagination } from 'src/app/page/pedido-lista/pedido-lista.interface';
@@ -9,7 +9,13 @@ import { ClienteService } from 'src/app/services/cliente/cliente.service';
 import { CommonService } from 'src/app/services/common/common.service';
 import { ClienteGet, Endereco } from './../cliente/cliente.interface';
 import { BaseService } from './../http/base.service';
-import { AttPedido, PedidoHeader, PedidoItem, PedidoTable } from './pedido.interface';
+import {
+  AttPedido,
+  OpcaoParcela,
+  PedidoHeader,
+  PedidoItem,
+  PedidoTable,
+} from './pedido.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -26,12 +32,8 @@ export class PedidoService {
   public statusPedido: string; // controla pedido; 'I' INCLUSÃO , 'M' MANUTENCAO
   // public sistuacaoPedido: string; // controla pedido, A = ABERTO , F = FINALIZADO
 
-  // PEDIDO EM MANUTENÇÃO
-  public tipoDocumento: any;
-
   // Verdadeiro se o pedido em manutenção tiver um endereco selecionado.
   public enderecoSelected = false;
-  public sequencialEndereco: any = null;
 
   // REMAKE
   // Dados do Pedido.
@@ -44,7 +46,7 @@ export class PedidoService {
   private readonly pedidoItens = new BehaviorSubject<PedidoItem[]>([]);
   private readonly produtoPorPagina = 10;
   // Cliente
-  readonly cliente = new BehaviorSubject<ClienteGet>(null);
+  private readonly cliente = new BehaviorSubject<ClienteGet>(null);
 
   constructor(
     private readonly http: BaseService,
@@ -54,7 +56,13 @@ export class PedidoService {
   ) {}
 
   getPedidoNumero(): number {
-    return this.pedido.getValue().numpedido;
+    const pedido = this.pedido.getValue();
+    return pedido.numpedido;
+  }
+
+  getPedidoSequencialEnderecoEntrega(): number {
+    const pedido = this.pedido.getValue();
+    return pedido.seqEnderecoEntrega;
   }
 
   getPedidoAtivo(): Observable<PedidoHeader> {
@@ -76,14 +84,10 @@ export class PedidoService {
   private limpaDadosPedido(): void {
     // Limpando endereco de entrega
     this.enderecoSelected = false;
-    this.sequencialEndereco = null;
 
     this.valorFrete = 0;
 
     this.alteracaoItemPedido = false;
-    // this.sistuacaoPedido = 'N';
-    this.tipoDocumento = '';
-    this.statusPedido = '';
 
     // REMAKE
     this.pedido.next(null);
@@ -306,7 +310,8 @@ export class PedidoService {
   confirmaRemoveCliente(action = () => {}): void {
     const handler = async () => {
       await this.common.showLoader();
-      this.removerCliente(this.getPedidoNumero()).subscribe({
+      const pedido = this.getPedidoNumero();
+      this.removerCliente(pedido).subscribe({
         next: () => {
           this.common.loading.dismiss();
           this.cliente.next(null);
@@ -361,7 +366,6 @@ export class PedidoService {
   /**
    * @author helio.souza
    * @param pedidoItem
-   * @returns
    */
   adicionarItemPedidoRapido(pedidoItem: PedidoItem): Observable<PedidoItem[]> {
     const empresa = localStorage.getItem('empresa');
@@ -397,7 +401,6 @@ export class PedidoService {
   /**
    * @author helio.souza
    * @param codigoProduto Codigo do produto a ser removido do pedido.
-   * @returns
    */
   removeItemPedido(codigoProduto: string): Observable<any> {
     const empresa = localStorage.getItem('empresa');
@@ -481,10 +484,64 @@ export class PedidoService {
         },
       })
     );
-    // await this.baseService.post(link, aResult).then(
-    //     this.atualizaPedidoHeader(result);
-    //     this.enderecoSelected = true;
-    //     this.sequencialEndereco = this.pedidoHeader.seqEnderecoEntrega;
+    // this.enderecoSelected = true;
+  }
+
+  /**
+   * @author helio.souza
+   * @returns
+   */
+  getEnderecoEntrega(): Endereco {
+    const sequencial = this.getPedidoSequencialEnderecoEntrega();
+    const cliente = this.cliente.getValue();
+    const enderecos = cliente.enderecos;
+    return enderecos.find((endereco) => endereco.id.sequencialId === sequencial);
+  }
+
+  /**
+   * @author helio.souza
+   * @param tipoPagamento
+   * @returns
+   */
+  setTipoPagamento(tipoPagamento: string): Observable<any> {
+    const aResult = this.atualizaPedido(AttPedido.TIPO_PAGAMENTO, tipoPagamento);
+    const empresa = localStorage.getItem('empresa');
+    const numPedido = this.getPedidoNumero();
+    const url = `${ENV.WS_VENDAS}${API_URL}PedidoVenda/update/${empresa}/${numPedido}`;
+    return this.http.post({ url, body: aResult }).pipe(
+      take(1),
+      tap({
+        next: (pedido) => {
+          console.log('Tipo Pagamento Atualizado: ', pedido);
+          this.atualizaPedidoHeader(pedido);
+        },
+      })
+    );
+  }
+
+  /**
+   * @author helio.souza
+   * @param selected
+   * @param valor
+   * @returns
+   */
+  setCondicaoPagamento(selected: OpcaoParcela, valor: any): Observable<any> {
+    const pedido = this.pedido.getValue();
+    const aResult = this.atualizaPedido(AttPedido.TIPO_PAGAMENTO, pedido.tipodoc);
+    if (selected.id) {
+      const table1 = this.atualizaPedido(AttPedido.CONDICAO_PAGAMENTO, selected.id);
+      aResult.push(table1[0]);
+    }
+    if (valor) {
+      const table2 = this.atualizaPedido(AttPedido.VALOR_ENTRADA, valor.toString());
+      aResult.push(table2[0]);
+    }
+    const empresa = localStorage.getItem('empresa');
+    const numPedido = pedido.numpedido;
+    const url = `${ENV.WS_VENDAS}${API_URL}PedidoVenda/update/${empresa}/${numPedido}`;
+    console.log('aResult');
+    console.log(aResult);
+    return this.http.post({ url, body: aResult });
   }
 
   // abrindo pagina customizada utilizando parametros

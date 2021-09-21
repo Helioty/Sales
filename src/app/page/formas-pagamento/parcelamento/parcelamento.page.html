@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar color="primary">
-    <ion-title>{{ pedido.pedidoHeader.descricao_tipodoc }}</ion-title>
+    <ion-title>{{ pedido.descricao_tipodoc }}</ion-title>
   </ion-toolbar>
 
   <ion-toolbar color="primary">
@@ -8,14 +8,11 @@
       <ion-row style="width: fit-content; margin: auto">
         <ion-col size="12" style="margin: auto">
           <ion-thumbnail style="width: 80px; height: 80px">
-            <img
-              src="assets/images/06-formas_de_pagamento/{{
-                pedido.pedidoHeader.tipodoc
-              }}.png"
-            />
+            <img src="assets/images/06-formas_de_pagamento/{{ pedido.tipodoc }}.png" />
           </ion-thumbnail>
         </ion-col>
       </ion-row>
+
       <ion-row style="width: fit-content; margin: auto">
         <ion-col size="12" style="margin: auto">
           <ion-label>Parcelas</ion-label>
@@ -38,9 +35,7 @@
                 </ion-col>
 
                 <ion-col size="6" class="right">
-                  <ion-label>
-                    {{ labelEntrada }}
-                  </ion-label>
+                  <ion-label> {{ labelEntrada }} </ion-label>
                 </ion-col>
               </ion-row>
             </ion-grid>
@@ -82,7 +77,7 @@
           >
             <ion-row
               id="{{ op.status ? 'selectedPaymentValue' : '' }}"
-              [class.selected]="opcaoSelect.id == op.id"
+              [class.selected]="opcaoSelect.id === op.id"
               (click)="opcaoSelect = op; buttonDisable = false"
             >
               <ion-col size="2" class="serial" *ngIf="op.isEntrada === 'N'"
@@ -112,7 +107,7 @@
 
       <ion-col size="6" style="text-align: end">
         <ion-label class="valor">
-          {{ pedido.pedidoHeader.totpedido | formatarString: 'VALOR' }}
+          {{ pedido.totpedido | formatarString: 'VALOR' }}
         </ion-label>
       </ion-col>
     </ion-row>

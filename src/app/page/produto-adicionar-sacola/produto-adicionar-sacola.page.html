@@ -15,20 +15,19 @@
         <ion-row>
           <ion-col size="12" class="descricaoProduto">
             <ion-row class="descricao">
-              <ion-label>
-                {{ produto.descricao }}
-              </ion-label>
+              <ion-label> {{ produto.descricao }} </ion-label>
             </ion-row>
 
             <ion-row class="codigodigitoembalagem">
-              <ion-label>
-                {{ produto.codigodigitoembalagem }}
-              </ion-label>
+              <ion-label> {{ produto.codigodigitoembalagem }} </ion-label>
             </ion-row>
           </ion-col>
         </ion-row>
 
-        <ion-row class="opcao-entrega" *ngIf="pedidoS.tipoRetirada === 'ENTREGA'">
+        <ion-row
+          class="opcao-entrega"
+          *ngIf="(pedidoOBS | async).tipoEntrega === 'ENTREGA'"
+        >
           <ion-col size="12">
             <ion-item button detail (click)="goToSlide(1)" lines="none">
               <p>VER OPÇÕES DE ENTREGA</p>
@@ -36,7 +35,7 @@
           </ion-col>
         </ion-row>
 
-        <ion-row *ngIf="depositos.length == 0 && !showDepositos">
+        <ion-row *ngIf="!depositos.length && !showDepositos">
           <ion-col size="12">
             <ion-spinner></ion-spinner>
           </ion-col>
@@ -60,9 +59,7 @@
                   </ion-col>
 
                   <ion-col size="10" class="colunaInformacao">
-                    <ion-row class="produtoDescri">
-                      {{ item.encarregado }}
-                    </ion-row>
+                    <ion-row class="produtoDescri"> {{ item.encarregado }} </ion-row>
 
                     <ion-row class="estoque linhaCima">
                       Estoque: {{ item.estoque }}
@@ -114,15 +111,11 @@
         <ion-row>
           <ion-col size="12" class="descricaoProduto">
             <ion-row class="descricao">
-              <ion-label>
-                {{ produto.descricao }}
-              </ion-label>
+              <ion-label> {{ produto.descricao }} </ion-label>
             </ion-row>
 
             <ion-row class="codigodigitoembalagem">
-              <ion-label>
-                {{ produto.codigodigitoembalagem }}
-              </ion-label>
+              <ion-label> {{ produto.codigodigitoembalagem }} </ion-label>
             </ion-row>
           </ion-col>
         </ion-row>
@@ -130,7 +123,7 @@
         <ion-row class="opcao-entrega">
           <ion-col size="12">
             <ion-item lines="none">
-              <ion-label position="stacked">Quantidade</ion-label>
+              <ion-label position="stacked"> Quantidade </ion-label>
               <ion-input
                 #inputTMS
                 type="number"
@@ -155,9 +148,7 @@
                 <ion-list lines="none">
                   <ion-radio-group [(ngModel)]="vendedorSelecionado">
                     <ion-item class="item-vendedor">
-                      <ion-note slot="start">
-                        {{ vendedor.fantasia }}
-                      </ion-note>
+                      <ion-note slot="start"> {{ vendedor.fantasia }} </ion-note>
 
                       <ion-label>{{
                         vendedor.preco | formatarString: 'VALOR'
@@ -173,7 +164,7 @@
                 size="12"
                 *ngIf="
                   vendedorSelecionado.fantasia &&
-                  vendedorSelecionado.fantasia == vendedor.fantasia
+                  vendedorSelecionado.fantasia === vendedor.fantasia
                 "
               >
                 <ion-row *ngFor="let opcao of vendedor.opcoes; let i = index">
@@ -187,19 +178,12 @@
 
                           <ion-label>
                             <span
-                              *ngIf="
-                                opcao.valorFreteCalculado == 0.0 ||
-                                opcao.valorFreteCalculado == 0
-                              "
+                              *ngIf="!opcao.valorFreteCalculado"
                               class="precoEntregaFree"
-                              >GRÁTIS</span
                             >
-                            <span
-                              *ngIf="
-                                opcao.valorFreteCalculado != 0.0 &&
-                                opcao.valorFreteCalculado != 0
-                              "
-                            >
+                              GRÁTIS
+                            </span>
+                            <span *ngIf="opcao.valorFreteCalculado">
                               {{
                                 opcao.valorTotalFreteCalculado | formatarString: 'VALOR'
                               }}

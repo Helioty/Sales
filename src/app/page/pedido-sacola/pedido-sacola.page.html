@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="pedido-atalhos"></ion-back-button>
 
-      <ion-button (click)="pedidoService.sairPedido()">
+      <ion-button (click)="sairDoPedido()">
         <ion-icon name="log-out-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
@@ -38,9 +38,8 @@
 
 <ion-content (click)="showInfo = false">
   <input
-    id="scanner"
-    appHideKeyboard
     class="scanner"
+    appHideKeyboard
     [(ngModel)]="scanner.valorScanner"
     (keyup.enter)="scaneado($event.target.value)"
   />

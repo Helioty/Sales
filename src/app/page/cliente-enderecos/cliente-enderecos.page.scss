@@ -1,0 +1,36 @@
+div {
+  h4 {
+    font-size: 16px;
+    font-weight: bold;
+  }
+}
+
+ion-list {
+  border: 1px solid lightgray;
+  border-radius: 4px;
+
+  ion-item {
+    --inner-padding-end: 0;
+
+    .rua {
+      font-weight: bold;
+      color: black;
+      white-space: normal;
+      word-break: normal;
+    }
+    .local {
+      margin-top: 10px;
+      color: grey;
+      white-space: normal;
+      word-break: normal;
+    }
+
+    ion-button {
+      font-size: 18px;
+    }
+  }
+
+  ion-item:last-child {
+    --border-width: 0;
+  }
+}
