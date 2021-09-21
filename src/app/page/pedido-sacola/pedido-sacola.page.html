@@ -297,11 +297,11 @@
             <ion-col>Peso total:</ion-col>
           </ion-row>
 
-          <ion-row *ngIf="ped.frete.valor > 0">
+          <ion-row *ngIf="ped.frete.valor">
             <ion-col>Frete: </ion-col>
           </ion-row>
 
-          <ion-row *ngIf="ped.descontoBrinde > 0">
+          <ion-row *ngIf="ped.descontoBrinde">
             <ion-col>Brinde: </ion-col>
           </ion-row>
 
@@ -313,8 +313,10 @@
         <ion-col size="6" class="direita">
           <ion-row class="orderId">
             <ion-col>
-              {{ ped.totpedido - ped.frete.valor + ped.descontoBrinde | formatarString:
-              'VALOR' }}
+              {{
+                ped.totpedido - ped.frete.valor + ped.descontoBrinde
+                  | formatarString: 'VALOR'
+              }}
             </ion-col>
           </ion-row>
 
@@ -322,11 +324,11 @@
             <ion-col> {{ ped.pesoTotal }} kg </ion-col>
           </ion-row>
 
-          <ion-row *ngIf="ped.frete.valor > 0">
+          <ion-row *ngIf="ped.frete.valor">
             <ion-col> {{ ped.frete.valor | formatarString: 'VALOR' }} </ion-col>
           </ion-row>
 
-          <ion-row *ngIf="ped.descontoBrinde > 0">
+          <ion-row *ngIf="ped.descontoBrinde">
             <ion-col> {{ ped.descontoBrinde | formatarString: 'VALOR' }} </ion-col>
           </ion-row>
 

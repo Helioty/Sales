@@ -24,13 +24,8 @@ export class PedidoService {
   public exibeBotaoComprar = false;
   public alteracaoItemPedido = false;
 
-  public condicao: any;
-
   public statusPedido: string; // controla pedido; 'I' INCLUSÃO , 'M' MANUTENCAO
   // public sistuacaoPedido: string; // controla pedido, A = ABERTO , F = FINALIZADO
-
-  // Verdadeiro se o pedido em manutenção tiver um endereco selecionado.
-  public enderecoSelected = false;
 
   // REMAKE
   // Dados do Pedido.
@@ -79,11 +74,6 @@ export class PedidoService {
   }
 
   private limpaDadosPedido(): void {
-    // Limpando endereco de entrega
-    this.enderecoSelected = false;
-
-    this.alteracaoItemPedido = false;
-
     // REMAKE
     this.pedido.next(null);
     this.qtdItensSacola.next(0);
@@ -432,7 +422,6 @@ export class PedidoService {
         this.limpaDadosPedido();
         this.navControl.navigateRoot('/pedido-lista');
       }
-      console.clear();
     };
     const props = {
       titulo: 'Deseja realmente sair do pedido?',
@@ -479,12 +468,11 @@ export class PedidoService {
         },
       })
     );
-    // this.enderecoSelected = true;
   }
 
   /**
    * @author helio.souza
-   * @returns
+   * @returns Endereço selecionado para entrega.
    */
   getEnderecoEntrega(): Endereco {
     const sequencial = this.getPedidoSequencialEnderecoEntrega();
@@ -496,7 +484,6 @@ export class PedidoService {
   /**
    * @author helio.souza
    * @param tipoPagamento
-   * @returns
    */
   setTipoPagamento(tipoPagamento: string): Observable<any> {
     const aResult = this.atualizaPedido(AttPedido.TIPO_PAGAMENTO, tipoPagamento);
@@ -518,7 +505,6 @@ export class PedidoService {
    * @author helio.souza
    * @param selected
    * @param valor
-   * @returns
    */
   setCondicaoPagamento(selected: OpcaoParcela, valor: any): Observable<any> {
     const pedido = this.pedido.getValue();
