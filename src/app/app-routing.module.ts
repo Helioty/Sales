@@ -128,7 +128,7 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
-    path: 'cliente-enderecos/:onlyShow',
+    path: 'cliente-enderecos/:showOnly',
     loadChildren: () =>
       import('./page/cliente-enderecos/cliente-enderecos.module').then(
         (m) => m.ClienteEnderecosPageModule

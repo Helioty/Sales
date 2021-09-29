@@ -12,7 +12,7 @@ import { PedidoService } from 'src/app/services/pedido/pedido.service';
   styleUrls: ['./cliente-enderecos.page.scss'],
 })
 export class ClienteEnderecosPage implements OnInit {
-  onlyShow = true;
+  showOnly = true;
 
   // Dados do Pedido.
   public pedidoClienteOBS: Observable<ClienteGet>;
@@ -39,7 +39,7 @@ export class ClienteEnderecosPage implements OnInit {
   private getRouteParams(): void {
     this.route.params.subscribe({
       next: (params) => {
-        this.onlyShow = params.onlyShow === 'true';
+        this.showOnly = params.showOnly === 'true';
       },
     });
   }

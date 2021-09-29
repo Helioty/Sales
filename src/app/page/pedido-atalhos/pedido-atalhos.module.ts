@@ -5,6 +5,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { PedidoAtalhosPage } from './pedido-atalhos.page';
+import { SwiperModule } from 'swiper/angular';
 
 const routes: Routes = [
   {
@@ -18,6 +19,7 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     IonicModule,
+    SwiperModule,
     SharedModule,
     RouterModule.forChild(routes),
   ],

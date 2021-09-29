@@ -9,7 +9,7 @@
 </ion-header>
 
 <ion-content>
-  <div class="ion-padding" [hidden]="onlyShow">
+  <div class="ion-padding" [hidden]="showOnly">
     <ion-label>
       <h4>Selecione o endereço de entrega</h4>
       <p>Para retirar em loja ou receber, selecione um endereço abaixo.</p>
@@ -36,7 +36,7 @@
           </ion-col>
         </ion-row>
 
-        <ion-row [hidden]="onlyShow">
+        <ion-row [hidden]="showOnly">
           <ion-col>
             <ion-button
               expand="block"
