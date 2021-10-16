@@ -501,7 +501,7 @@ export class PedidoService {
 
   /**
    * @author helio.souza
-   * @param selected
+   * @param selected Parcelamento selecionado.
    * @param valor
    */
   setCondicaoPagamento(selected: OpcaoParcela, valor: any): Observable<any> {
@@ -512,7 +512,7 @@ export class PedidoService {
       aResult.push(table1[0]);
     }
     if (valor) {
-      const table2 = this.atualizaPedido(AttPedido.VALOR_ENTRADA, valor.toString());
+      const table2 = this.atualizaPedido(AttPedido.VALOR_ENTRADA, String(valor));
       aResult.push(table2[0]);
     }
     const empresa = localStorage.getItem('empresa');
@@ -526,15 +526,15 @@ export class PedidoService {
   }
 
   // abrindo pagina customizada utilizando parametros
-  openCustomPage(P: string, PS: string, PA: string) {
-    const navigationExtras: NavigationExtras = {
-      queryParams: {
-        paginaSeguinte: PS,
-        paginaAnterior: PA,
-      },
-    };
-    this.navControl.navigateForward(['/' + P], navigationExtras);
-  }
+  // openCustomPage(P: string, PS: string, PA: string) {
+  //   const navigationExtras: NavigationExtras = {
+  //     queryParams: {
+  //       paginaSeguinte: PS,
+  //       paginaAnterior: PA,
+  //     },
+  //   };
+  //   this.navControl.navigateForward(['/' + P], navigationExtras);
+  // }
 
   goToFinalizacao(paginaAtual: string) {
     // checa se é necessario informar o cliente

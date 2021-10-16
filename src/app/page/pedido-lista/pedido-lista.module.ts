@@ -39,6 +39,13 @@ const routes: Routes = [
         (m) => m.PedidoResumoPageModule
       ),
   },
+  {
+    path: 'pedido-desconto',
+    loadChildren: () =>
+      import('./pedido-desconto/pedido-desconto.module').then(
+        (m) => m.PedidoDescontoPageModule
+      ),
+  },
 ];
 
 @NgModule({

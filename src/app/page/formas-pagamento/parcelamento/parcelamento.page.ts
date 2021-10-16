@@ -21,7 +21,7 @@ export class ParcelamentoPage implements OnInit, OnDestroy {
 
   public opcoesList: any[] = [];
 
-  public opcaoSelect = new OpcaoParcela();;
+  public opcaoSelect = new OpcaoParcela();
 
   public labelEntrada = 'Sem entrada';
   public hasEntrada = false;

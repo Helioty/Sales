@@ -11,6 +11,11 @@ const routes: Routes = [
     path: '',
     component: FormasPagamentoPage,
   },
+  {
+    path: 'parcelamento',
+    loadChildren: () =>
+      import('./parcelamento/parcelamento.module').then((m) => m.ParcelamentoPageModule),
+  },
 ];
 
 @NgModule({

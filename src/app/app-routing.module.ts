@@ -157,14 +157,6 @@ const routes: Routes = [
       ),
     canActivate: [AuthGuard],
   },
-  {
-    path: 'parcelamento',
-    loadChildren: () =>
-      import('./page/formas-pagamento/parcelamento/parcelamento.module').then(
-        (m) => m.ParcelamentoPageModule
-      ),
-    canActivate: [AuthGuard],
-  },
 ];
 
 @NgModule({

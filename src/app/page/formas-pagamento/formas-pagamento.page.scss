@@ -1,42 +1,46 @@
 ion-content {
-  ion-slides {
+  .custom-grid {
     height: 100%;
+    max-width: 320px;
+    margin: auto;
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+  }
 
-    ion-slide {
-      background: #f4f4f4;
+  .custom-item {
+    width: 150px;
 
-      ion-grid {
-        max-width: 500px;
+    ion-grid {
+      max-width: 500px;
+      margin: auto;
+
+      ion-thumbnail {
+        width: 85px;
+        height: 85px;
+        border: 3px solid transparent;
+        border-radius: 50%;
+      }
+
+      .selected {
+        border: 3px solid #fc6f58;
+      }
+
+      ion-row {
+        width: fit-content;
         margin: auto;
 
-        ion-thumbnail {
-          width: 75px;
-          height: 75px;
-          border: 3px solid transparent;
-          border-radius: 50%;
+        ion-label.descricao {
+          color: #000;
+          font-weight: bold;
         }
 
-        .selected {
-          border: 3px solid #fc6f58;
-        }
-
-        ion-grid {
-          padding: 0 !important;
-
-          ion-row {
-            width: fit-content;
-            margin: auto;
-
-            ion-label.descricao {
-              color: #000;
-              font-weight: bold;
-            }
-
-            ion-label.valor-parcela {
-              color: var(--ion-color-primary);
-              font-size: 13px;
-            }
-          }
+        ion-label.valor-parcela {
+          color: var(--ion-color-primary);
+          font-size: 13px;
         }
       }
     }

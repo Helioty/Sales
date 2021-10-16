@@ -1,5 +1,5 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { IonSlides, NavController } from '@ionic/angular';
+import { Component, OnInit } from '@angular/core';
+import { NavController } from '@ionic/angular';
 import { Observable } from 'rxjs';
 import { CommonService } from 'src/app/services/common/common.service';
 import { FormaPagamento } from 'src/app/services/pagamento/condicao-pagamento.interface';
@@ -13,12 +13,14 @@ import { PedidoService } from 'src/app/services/pedido/pedido.service';
   styleUrls: ['./formas-pagamento.page.scss'],
 })
 export class FormasPagamentoPage implements OnInit {
-  @ViewChild(IonSlides, { static: true }) readonly slides: IonSlides;
-
   // Dados do Pedido.
   public pedidoOBS: Observable<PedidoHeader>;
 
+  // opções de pagamento do pedido.
   public opcoesPagamento: FormaPagamento[] = [];
+
+  // controler de loading.
+  isLoading = true;
 
   constructor(
     private readonly common: CommonService,
@@ -28,7 +30,6 @@ export class FormasPagamentoPage implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.slides.lockSwipes(true);
     this.pedidoOBS = this.pedidoService.getPedidoAtivo();
   }
 
@@ -38,18 +39,28 @@ export class FormasPagamentoPage implements OnInit {
 
   ionViewDidEnter(): void {
     this.common.goToFullScreen();
+    this.getFormasPagamento();
+  }
+
+  /**
+   * @author helio.souza
+   */
+  getFormasPagamento(): void {
+    this.isLoading = true;
     const numPedido = this.pedidoService.getPedidoNumero();
     this.pagamento.getFormaPagamento(numPedido).subscribe({
       next: (result) => {
+        this.isLoading = false;
         this.opcoesPagamento = result;
         console.log('Opcões de Pagamento: ', result);
       },
+      error: () => (this.isLoading = false),
     });
   }
 
   /**
    * @author helio.souza
-   * @param opcaoPagamento
+   * @param opcaoPagamento Opção de pagamento selecionada.
    */
   async goToCondicaoPagamento(opcaoPagamento: FormaPagamento): Promise<void> {
     await this.common.showLoader();
@@ -66,13 +77,13 @@ export class FormasPagamentoPage implements OnInit {
 
   /**
    * @author helio.souza
-   * @param opcao
+   * @param opcao Opção de pagamento selecionada.
    */
   prosseguir(opcao: FormaPagamento): void {
     // by Ryuge 29/11/2018
     // edit by Helio 27/03/2020
     if (opcao.parcelas) {
-      this.navControl.navigateForward(['/parcelamento']);
+      this.navControl.navigateForward(['/formas-pagamento/parcelamento']);
     } else {
       this.navControl.navigateRoot(['/pedido-finalizacao']);
     }
