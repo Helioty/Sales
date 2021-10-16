@@ -5,11 +5,11 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { map, take, tap } from 'rxjs/operators';
 import { API_URL, ENV } from 'src/app/config/app.config.service';
 import { Pagination } from 'src/app/page/pedido-lista/pedido-lista.interface';
+import { ClienteGet, Endereco } from 'src/app/services/cliente/cliente.interface';
 import { ClienteService } from 'src/app/services/cliente/cliente.service';
 import { CommonService } from 'src/app/services/common/common.service';
-import { OpcaoParcela } from '../pagamento/condicao-pagamento.interface';
-import { ClienteGet, Endereco } from './../cliente/cliente.interface';
-import { BaseService } from './../http/base.service';
+import { BaseService } from 'src/app/services/http/base.service';
+import { OpcaoParcela } from 'src/app/services/pagamento/condicao-pagamento.interface';
 import { AttPedido, PedidoHeader, PedidoItem, PedidoTable } from './pedido.interface';
 
 @Injectable({
