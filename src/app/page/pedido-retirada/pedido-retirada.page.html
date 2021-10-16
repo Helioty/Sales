@@ -21,52 +21,44 @@
 </ion-header>
 
 <ion-content color="cinza">
-  <ion-grid>
-    <ion-row>
-      <ion-col size="12" class="ion-align-self-center">
-        <ion-row>
-          <ion-col size="12">
-            <ion-item lines="none" button (click)="openPesquisaProduto(0)">
-              <ion-thumbnail slot="start">
-                <ion-img src="assets\images\07-formas_de_retirada\imediata.png"></ion-img>
-              </ion-thumbnail>
+  <div class="custom-grid">
+    <div class="custom-row">
+      <ion-item lines="none" button (click)="openPesquisaProduto(0)">
+        <ion-thumbnail slot="start">
+          <ion-img src="assets\images\07-formas_de_retirada\imediata.png"></ion-img>
+        </ion-thumbnail>
 
-              <ion-label>
-                <span>Imediata</span>
-                <p>Retirada imediata dos produtos pelo cliente.</p>
-              </ion-label>
-            </ion-item>
-          </ion-col>
+        <ion-label>
+          <span>Imediata</span>
+          <p>Retirada imediata dos produtos pelo cliente.</p>
+        </ion-label>
+      </ion-item>
+    </div>
 
-          <ion-col size="12">
-            <ion-item lines="none" button (click)="openPesquisaProduto(1)">
-              <ion-thumbnail slot="start">
-                <ion-img
-                  src="assets\images\07-formas_de_retirada\posterior.png"
-                ></ion-img>
-              </ion-thumbnail>
+    <div class="custom-row">
+      <ion-item lines="none" button (click)="openPesquisaProduto(1)">
+        <ion-thumbnail slot="start">
+          <ion-img src="assets\images\07-formas_de_retirada\posterior.png"></ion-img>
+        </ion-thumbnail>
 
-              <ion-label>
-                <span>Posterior</span>
-                <p>Retirada posterior dos produtos pelo cliente.</p>
-              </ion-label>
-            </ion-item>
-          </ion-col>
+        <ion-label>
+          <span>Posterior</span>
+          <p>Retirada posterior dos produtos pelo cliente.</p>
+        </ion-label>
+      </ion-item>
+    </div>
 
-          <ion-col size="12">
-            <ion-item lines="none" button (click)="openPesquisaProduto(2)">
-              <ion-thumbnail slot="start">
-                <ion-img src="assets\images\07-formas_de_retirada\entrega.png"></ion-img>
-              </ion-thumbnail>
+    <div class="custom-row">
+      <ion-item lines="none" button (click)="openPesquisaProduto(2)">
+        <ion-thumbnail slot="start">
+          <ion-img src="assets\images\07-formas_de_retirada\entrega.png"></ion-img>
+        </ion-thumbnail>
 
-              <ion-label>
-                <span>Entrega</span>
-                <p>Entrega dos produtos no endereço do cliente.</p>
-              </ion-label>
-            </ion-item>
-          </ion-col>
-        </ion-row>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+        <ion-label>
+          <span>Entrega</span>
+          <p>Entrega dos produtos no endereço do cliente.</p>
+        </ion-label>
+      </ion-item>
+    </div>
+  </div>
 </ion-content>

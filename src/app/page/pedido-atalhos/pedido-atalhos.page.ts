@@ -1,9 +1,9 @@
-import { PedidoHeader } from 'src/app/services/pedido/pedido.interface';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NavigationExtras } from '@angular/router';
-import { IonSlides, NavController } from '@ionic/angular';
+import { NavController } from '@ionic/angular';
 import { Observable } from 'rxjs';
 import { CommonService } from 'src/app/services/common/common.service';
+import { PedidoHeader } from 'src/app/services/pedido/pedido.interface';
 import { PedidoService } from 'src/app/services/pedido/pedido.service';
 import { ScannerService } from 'src/app/services/scanner/scanner.service';
 
@@ -13,7 +13,6 @@ import { ScannerService } from 'src/app/services/scanner/scanner.service';
   styleUrls: ['./pedido-atalhos.page.scss'],
 })
 export class PedidoAtalhosPage implements OnInit {
-  @ViewChild(IonSlides, { static: true }) readonly slides: IonSlides;
   public pedidoOBS: Observable<PedidoHeader>;
   public totalItensOBS: Observable<number>;
 
@@ -31,7 +30,6 @@ export class PedidoAtalhosPage implements OnInit {
   ionViewWillEnter(): void {
     this.scanner.focusOn();
     this.common.goToFullScreen();
-    this.slides.lockSwipes(true);
     this.pedidoOBS = this.pedidoService.getPedidoAtivo();
     this.totalItensOBS = this.pedidoService.getTotalItensOBS();
   }
