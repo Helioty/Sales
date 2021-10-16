@@ -4,19 +4,19 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class DataService {
-  private data: any[] = [];
+  private data = new Map<string, any>();
 
   constructor() {}
 
-  setData(id: any, data: any) {
-    this.data[id] = data;
+  setData(id: string, data: any): void {
+    this.data.set(id, data);
   }
 
-  getData(id: any) {
-    return this.data[id];
+  getData<T>(id: string): T {
+    return this.data.get(id);
   }
 
-  resetData() {
-    this.data = [];
+  resetData(): void {
+    this.data.clear();
   }
 }

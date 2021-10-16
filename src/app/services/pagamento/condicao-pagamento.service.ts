@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { API_URL, ENV } from 'src/app/config/app.config.service';
 import { BaseService } from '../http/base.service';
+import { FormaPagamento, OpcaoParcela } from './condicao-pagamento.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -10,42 +11,35 @@ import { BaseService } from '../http/base.service';
 export class CondicaoPagamentoService {
   constructor(private readonly http: BaseService) {}
 
-  // edit by Helio 27/03/2020, usado para pegar as formas de pagamento
   /**
    * @author helio.souza
-   * @param numPedido
-   * @returns
+   * @description Retorna as formas de pagamento disponiveis para o pedido.
+   * @param numPedido Número do Pedido.
    */
-  getFormaPagamento(numPedido: number): Observable<any> {
+  getFormaPagamento(numPedido: number): Observable<FormaPagamento[]> {
     const empresa = localStorage.getItem('empresa');
     const url = `${ENV.WS_VENDAS}${API_URL}condicaoPagto/list/${empresa}?pedido=${numPedido}`;
-    return this.http.get(url).pipe(take(1));
+    return this.http.get<FormaPagamento[]>(url).pipe(take(1));
   }
 
-  // edit by Helio 27/03/2020, usado para pegar as parcelas
   /**
    * @author helio.souza
-   * @param codigoCondicao
-   * @param numPedido
-   * @param entrada
+   * @description Retorna as parcelas disponiveis para a condição de pagamento.
+   * @param codigoCondicao Codigo da condição de pagamento.
+   * @param numPedido Número do Pedido.
+   * @param entrada Valor da Entrada se existente.
    */
   getCondicaoPagamento(
     codigoCondicao: string,
     numPedido: number,
     entrada?: number
-  ): Observable<any> {
+  ): Observable<OpcaoParcela[]> {
     const empresa = localStorage.getItem('empresa');
     const baseUrl = `${ENV.WS_VENDAS}${API_URL}condicaoPagto/list/${empresa}/${codigoCondicao}?pedido=${numPedido}`;
     const url = entrada ? baseUrl + '&valorentrada=' + entrada : baseUrl;
-    return this.http.get(url).pipe(take(1));
+    return this.http.get<OpcaoParcela[]>(url).pipe(take(1));
   }
 
-  // edit by Helio 27/03/2020, usado para pegar as parcelas
-  // getCondicaoPagamentoComEntrada(
-  //   codigoCondicao: string,
-  //   nuPedido: string,
-  //   entrada: number
-  // ) {
   //   const url =
   //     ENV.WS_VENDAS +
   //     API_URL +
@@ -57,15 +51,4 @@ export class CondicaoPagamentoService {
   //     nuPedido +
   //     '&valorentrada=' +
   //     entrada;
-  //   return new Promise((resolve, reject) => {
-  //     this.baseService.get(url).then(
-  //       (result: any) => {
-  //         resolve(result);
-  //       },
-  //       (error) => {
-  //         reject(error);
-  //       }
-  //     );
-  //   });
-  // }
 }

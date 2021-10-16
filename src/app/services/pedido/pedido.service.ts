@@ -7,25 +7,20 @@ import { API_URL, ENV } from 'src/app/config/app.config.service';
 import { Pagination } from 'src/app/page/pedido-lista/pedido-lista.interface';
 import { ClienteService } from 'src/app/services/cliente/cliente.service';
 import { CommonService } from 'src/app/services/common/common.service';
+import { OpcaoParcela } from '../pagamento/condicao-pagamento.interface';
 import { ClienteGet, Endereco } from './../cliente/cliente.interface';
 import { BaseService } from './../http/base.service';
-import {
-  AttPedido,
-  OpcaoParcela,
-  PedidoHeader,
-  PedidoItem,
-  PedidoTable,
-} from './pedido.interface';
+import { AttPedido, PedidoHeader, PedidoItem, PedidoTable } from './pedido.interface';
 
 @Injectable({
   providedIn: 'root',
 })
 export class PedidoService {
-  public exibeBotaoComprar = false;
-  public alteracaoItemPedido = false;
+  // public exibeBotaoComprar = false;
+  // public alteracaoItemPedido = false;
 
-  public statusPedido: string; // controla pedido; 'I' INCLUSÃO , 'M' MANUTENCAO
-  // public sistuacaoPedido: string; // controla pedido, A = ABERTO , F = FINALIZADO
+  // public statusPedido: string; // controla pedido; 'I' INCLUSÃO , 'M' MANUTENCAO
+  // // public sistuacaoPedido: string; // controla pedido, A = ABERTO , F = FINALIZADO
 
   // REMAKE
   // Dados do Pedido.
@@ -397,6 +392,8 @@ export class PedidoService {
         next: (a) => {
           this.common.showToast(a.msg);
           console.log('Remove Produto Response: ', a.msg);
+          const qtd = this.qtdItensSacola.getValue() - 1;
+          this.qtdItensSacola.next(qtd);
         },
       })
     );
@@ -452,7 +449,7 @@ export class PedidoService {
    * @param endereco
    * @returns {Observable<PedidoHeader>}
    */
-  setEnderecoEntrega(endereco: Endereco): Observable<PedidoHeader> {
+  setEnderecoEntrega(endereco: Endereco): Observable<Endereco> {
     const { sequencialId } = endereco.id;
     const aResult = this.atualizaPedido(AttPedido.SEQ_ENDERECO_ENTREGA, sequencialId);
     const numPedido = this.getPedidoNumero();
@@ -466,7 +463,8 @@ export class PedidoService {
           console.log('Endereço atualizado: ', pedido);
           this.atualizaPedidoHeader(pedido);
         },
-      })
+      }),
+      map(() => this.getEnderecoEntrega())
     );
   }
 
@@ -490,7 +488,7 @@ export class PedidoService {
     const empresa = localStorage.getItem('empresa');
     const numPedido = this.getPedidoNumero();
     const url = `${ENV.WS_VENDAS}${API_URL}PedidoVenda/update/${empresa}/${numPedido}`;
-    return this.http.post({ url, body: aResult }).pipe(
+    return this.http.post<PedidoHeader, PedidoTable[]>({ url, body: aResult }).pipe(
       take(1),
       tap({
         next: (pedido) => {
@@ -522,7 +520,9 @@ export class PedidoService {
     const url = `${ENV.WS_VENDAS}${API_URL}PedidoVenda/update/${empresa}/${numPedido}`;
     console.log('aResult');
     console.log(aResult);
-    return this.http.post({ url, body: aResult });
+    return this.http
+      .post<PedidoHeader, PedidoTable[]>({ url, body: aResult })
+      .pipe(take(1));
   }
 
   // abrindo pagina customizada utilizando parametros

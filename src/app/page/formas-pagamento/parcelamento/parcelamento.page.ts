@@ -2,8 +2,9 @@ import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { IonInput, NavController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { CommonService } from 'src/app/services/common/common.service';
+import { OpcaoParcela } from 'src/app/services/pagamento/condicao-pagamento.interface';
 import { CondicaoPagamentoService } from 'src/app/services/pagamento/condicao-pagamento.service';
-import { OpcaoParcela, PedidoHeader } from 'src/app/services/pedido/pedido.interface';
+import { PedidoHeader } from 'src/app/services/pedido/pedido.interface';
 import { PedidoService } from 'src/app/services/pedido/pedido.service';
 
 @Component({
@@ -20,7 +21,7 @@ export class ParcelamentoPage implements OnInit, OnDestroy {
 
   public opcoesList: any[] = [];
 
-  public opcaoSelect: OpcaoParcela;
+  public opcaoSelect = new OpcaoParcela();;
 
   public labelEntrada = 'Sem entrada';
   public hasEntrada = false;
@@ -32,14 +33,12 @@ export class ParcelamentoPage implements OnInit, OnDestroy {
     private readonly common: CommonService,
     private readonly pedidoService: PedidoService,
     private readonly pagamento: CondicaoPagamentoService,
-    private navControl: NavController
+    private readonly navControl: NavController
   ) {}
 
   ngOnInit(): void {
     const pedidoOBS = this.pedidoService.getPedidoAtivo();
     this.pedidoSub = pedidoOBS.subscribe({ next: (pedido) => (this.pedido = pedido) });
-    this.opcaoSelect = new OpcaoParcela();
-    this.common.showLoader();
   }
 
   ionViewWillEnter(): void {
@@ -55,7 +54,8 @@ export class ParcelamentoPage implements OnInit, OnDestroy {
     this.pedidoSub.unsubscribe();
   }
 
-  getCondicoes(): void {
+  async getCondicoes(): Promise<void> {
+    await this.common.showLoader();
     this.pagamento
       .getCondicaoPagamento(this.pedido.tipodoc, this.pedido.numpedido)
       .subscribe({

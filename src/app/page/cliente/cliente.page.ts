@@ -80,10 +80,6 @@ export class ClientePage implements OnInit, OnDestroy {
     }
   }
 
-  ionViewWillLeave(): void {}
-
-  ionViewDidLeave(): void {}
-
   ngOnDestroy(): void {
     this.pedidoSub.unsubscribe();
     this.clienteSub.unsubscribe();
@@ -133,7 +129,7 @@ export class ClientePage implements OnInit, OnDestroy {
   private setupField(): void {
     this.fieldSub = this.fieldCliente.valueChanges
       .pipe(
-        debounceTime(200),
+        debounceTime(100),
         distinctUntilChanged(),
         map((doc) => this.common.formataCPFNPJ(doc)),
         tap({
@@ -158,15 +154,6 @@ export class ClientePage implements OnInit, OnDestroy {
         }
       },
     });
-  }
-
-  /**
-   * @deprecated
-   * @author helio.souza
-   * @description Mascara dinamica para o input.
-   */
-  dynamicMask(): void {
-    this.fieldCliente.patchValue(this.common.formataCPFNPJ(this.fieldCliente.value));
   }
 
   /**
