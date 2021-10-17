@@ -68,3 +68,20 @@ export interface IProdutoFamiliaIT {
   sqltypeName: string;
   valor_atributo: string;
 }
+
+export interface IProdutoEstoqueDeposito {
+  cdIndLoja: string;
+  deposito: string;
+  descricao: string;
+  empresa: string;
+  encarregado: string;
+  estoque: number;
+  impressora: string;
+  opcaoRetirada: null;
+  ordem: string;
+  qtdMovimentada: number;
+  qtdPedido: number;
+  siglafilial: string;
+  tipoEntrega: string;
+  transfereAutomatico: string;
+}

@@ -80,30 +80,37 @@ ion-content {
           ion-col.produtoQuantidade {
             background-color: #f4f4f4;
             border-left: 2px solid rgba(0, 0, 0, 0.1);
-            ion-row {
-              background-color: #f4f4f4;
-            }
-            ion-button {
-              width: 100% !important;
-              --background: transparent !important;
-              --border-color: transparent !important;
-              --border-width: 0 !important;
-            }
-            .quantidadeTop {
-              min-height: 40px !important;
-              height: 33% !important;
-            }
-            .quantidadeCenter {
-              border-bottom: none;
-              border-top: none;
-              font-size: 18px;
-              font-weight: bold;
-              padding: 5px 0;
-              height: 34% !important;
-            }
-            .quantidadeBottom {
-              min-height: 40px !important;
-              height: 33% !important;
+
+            div.container {
+              height: 100%;
+              display: flex;
+              flex-direction: column;
+              flex-wrap: nowrap;
+              align-content: center;
+              justify-content: space-around;
+              align-items: center;
+
+              .quantidade {
+                font-size: 18px;
+                font-weight: bold;
+                margin: 10px 0;
+              }
+
+              .add {
+                width: 100%;
+
+                ion-button {
+                  height: 35px !important;
+                }
+              }
+
+              .rm {
+                width: 100%;
+
+                ion-button {
+                  height: 35px !important;
+                }
+              }
             }
           }
         }

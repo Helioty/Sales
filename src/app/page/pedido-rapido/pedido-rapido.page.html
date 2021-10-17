@@ -63,7 +63,37 @@
             </ion-col>
 
             <ion-col size="4" class="produtoQuantidade">
-              <ion-row
+              <div class="container">
+                <div class="add">
+                  <ion-button
+                    expand="block"
+                    fill="clear"
+                    color="dark"
+                    class="ion-no-margin"
+                  >
+                    <ion-icon slot="icon-only" size="large" name="arrow-up"></ion-icon>
+                  </ion-button>
+                </div>
+
+                <div class="quantidade">{{ item.qtdTotal }}</div>
+
+                <div class="rm">
+                  <ion-button
+                    expand="block"
+                    fill="clear"
+                    color="dark"
+                    class="ion-no-margin"
+                    (click)="removerProduto(item)"
+                  >
+                    <ion-icon
+                      slot="icon-only"
+                      size="large"
+                      name="trash-bin-outline"
+                    ></ion-icon>
+                  </ion-button>
+                </div>
+              </div>
+              <!-- <ion-row
                 class="quantidadeTop ion-justify-content-center ion-align-items-center"
               >
                 <ion-button expand="full" fill="clear" color="dark" class="ion-no-margin">
@@ -93,7 +123,7 @@
                     name="trash-bin-outline"
                   ></ion-icon>
                 </ion-button>
-              </ion-row>
+              </ion-row> -->
             </ion-col>
           </ion-row>
         </ion-grid>

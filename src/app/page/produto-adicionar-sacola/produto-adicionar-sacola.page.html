@@ -6,6 +6,24 @@
 
     <ion-title>Depositos</ion-title>
   </ion-toolbar>
+
+  <ion-toolbar color="primary">
+    <ion-segment value="0" (ionChange)="slideTo($event.target.value)">
+      <ion-segment-button
+        value="0"
+        [disabled]="(pedidoOBS | async).tipoEntrega === 'ENTREGA'"
+      >
+        Retirada
+      </ion-segment-button>
+
+      <ion-segment-button
+        value="1"
+        [disabled]="(pedidoOBS | async).tipoEntrega !== 'ENTREGA'"
+      >
+        Entrega
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content>
@@ -24,7 +42,7 @@
           </ion-col>
         </ion-row>
 
-        <ion-row
+        <!-- <ion-row
           class="opcao-entrega"
           *ngIf="(pedidoOBS | async).tipoEntrega === 'ENTREGA'"
         >
@@ -33,7 +51,7 @@
               <p>VER OPÇÕES DE ENTREGA</p>
             </ion-item>
           </ion-col>
-        </ion-row>
+        </ion-row> -->
 
         <ion-row *ngIf="!depositos.length && !showDepositos">
           <ion-col size="12">
@@ -80,7 +98,7 @@
                           <ion-col size="5" class="ion-no-padding">
                             <ion-input
                               id="{{ i }}"
-                              #input
+                              #inputDeposito
                               type="number"
                               [(ngModel)]="depositos[i].qtdPedido"
                             ></ion-input>
@@ -150,9 +168,9 @@
                     <ion-item class="item-vendedor">
                       <ion-note slot="start"> {{ vendedor.fantasia }} </ion-note>
 
-                      <ion-label>{{
-                        vendedor.preco | formatarString: 'VALOR'
-                      }}</ion-label>
+                      <ion-label>
+                        {{ vendedor.preco | formatarString: 'VALOR' }}
+                      </ion-label>
 
                       <ion-radio slot="end" [value]="vendedor"></ion-radio>
                     </ion-item>
@@ -184,8 +202,7 @@
                               GRÁTIS
                             </span>
                             <span *ngIf="opcao.valorFreteCalculado">
-                              {{
-                                opcao.valorTotalFreteCalculado | formatarString: 'VALOR'
+                              {{ opcao.valorTotalFreteCalculado | formatarString: 'VALOR'
                               }}
                             </span>
                           </ion-label>

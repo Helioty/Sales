@@ -67,15 +67,14 @@ const routes: Routes = [
       import('./page/produto/produto.module').then((m) => m.ProdutoPageModule),
     canActivate: [AuthGuard],
   },
-
-  // {
-  //   path: 'produto-adicionar-sacola',
-  //   loadChildren: () =>
-  //     import('./page/produto-adicionar-sacola/produto-adicionar-sacola.module').then(
-  //       (m) => m.ProdutoAdicionarSacolaPageModule
-  //     ),
-  //   canActivate: [AuthGuard],
-  // },
+  {
+    path: 'produto-adicionar-sacola',
+    loadChildren: () =>
+      import('./page/produto-adicionar-sacola/produto-adicionar-sacola.module').then(
+        (m) => m.ProdutoAdicionarSacolaPageModule
+      ),
+    canActivate: [AuthGuard],
+  },
 
   // {
   //   path: 'new-tms',

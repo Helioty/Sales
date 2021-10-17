@@ -224,12 +224,14 @@ export class ProdutoPage implements OnInit {
 
   goToAddSacola(prod: IProduto): void {
     const navigationExtras: NavigationExtras = {
+      skipLocationChange: true,
       queryParams: {
+        produto: JSON.stringify(this.produto),
         paginaSeguinte: 'pedido-sacola',
         paginaAnterior: 'produto',
       },
     };
-    this.dataService.setData('produto-adicionar-sacola', prod);
+    // this.dataService.setData('produto-adicionar-sacola', prod);
     this.navControl.navigateForward(['/produto-adicionar-sacola'], navigationExtras);
   }
 }

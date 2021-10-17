@@ -8,6 +8,7 @@ import {
   distinctUntilChanged,
   filter,
   map,
+  onErrorResumeNext,
   switchMap,
   take,
   tap,
@@ -96,10 +97,6 @@ export class ProdutoPesquisaPage implements OnInit, OnDestroy {
         distinctUntilChanged(),
         tap({ next: () => (this.showLoadingSpinner = true) }),
         switchMap((value) => this.pesquisar(value)),
-        tap({
-          next: () => (this.showLoadingSpinner = false),
-          error: () => (this.showLoadingSpinner = false),
-        }),
         map((response) => response.content)
       )
       .subscribe();
@@ -114,13 +111,16 @@ export class ProdutoPesquisaPage implements OnInit, OnDestroy {
     return this.produtoService
       .getProdutoPagination(value, this.pesquisado === value ? this.page + 1 : 1)
       .pipe(
+        tap({
+          next: () => (this.showLoadingSpinner = false),
+          error: () => (this.showLoadingSpinner = false),
+        }),
+        onErrorResumeNext(),
         map((response) => this.mapPagination(response, value)),
         tap({
           next: (result) => {
             this.pesquisado = value;
             this.pagination = result;
-            console.log(`Valor pesquisado: ${value}`);
-            console.log('Resultado da pesquisa: ', result);
           },
         })
       );

@@ -4,7 +4,12 @@ import { map, take, tap } from 'rxjs/operators';
 import { API_URL, ENV } from 'src/app/config/app.config.service';
 import { Pagination } from 'src/app/page/pedido-lista/pedido-lista.interface';
 import { BaseService } from './../http/base.service';
-import { IProduto, IProdutoFamilia, IProdutoImagem } from './produto.interface';
+import {
+  IProduto,
+  IProdutoEstoqueDeposito,
+  IProdutoFamilia,
+  IProdutoImagem,
+} from './produto.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -136,10 +141,13 @@ export class ProdutoService {
   }
 
   // edit by Helio 29/05/2020
-  getDeposito(codigoProduto: string, codigoPedido: string): Observable<any> {
+  getDeposito(
+    produtoCodigoDigitoEmbalagem: string,
+    numPedido: number
+  ): Observable<IProdutoEstoqueDeposito[]> {
     const empresa = localStorage.getItem('empresa') as string;
-    const url = `${ENV.WS_PRODUTO}${API_URL}estoque/${empresa}/${codigoProduto}?pedido=${codigoPedido}`;
-    return this.http.get(url).pipe(take(1));
+    const url = `${ENV.WS_PRODUTO}${API_URL}estoque/${empresa}/${produtoCodigoDigitoEmbalagem}?pedido=${numPedido}`;
+    return this.http.get<IProdutoEstoqueDeposito[]>(url).pipe(take(1));
   }
 
   // edit by Helio 29/05/2020

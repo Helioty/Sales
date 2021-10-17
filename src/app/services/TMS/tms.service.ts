@@ -51,7 +51,7 @@ export class TMSService {
     //   this.opcSelecionada.dataPrevista = null;
 
     return new Promise((resolve, reject) => {
-      this.http.get(link).then(
+      this.http.get(link).subscribe(
         (result: any) => {
           resolve(result);
         },

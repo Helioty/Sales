@@ -1,16 +1,18 @@
 import { Component, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
-import { IonInput, IonSlides, NavController } from '@ionic/angular';
+import { ActivatedRoute } from '@angular/router';
+import { IonInput, IonSegment, IonSlides, NavController } from '@ionic/angular';
 import { Observable } from 'rxjs';
-import { Produto, ProdutoDepositoRetirada } from 'src/app/class/produto';
 import { CommonService } from 'src/app/services/common/common.service';
-import { DataService } from 'src/app/services/data/data.service';
 import {
   PedidoHeader,
   PedidoItem,
   Retiradas,
 } from 'src/app/services/pedido/pedido.interface';
 import { PedidoService } from 'src/app/services/pedido/pedido.service';
+import {
+  IProduto,
+  IProdutoEstoqueDeposito,
+} from 'src/app/services/produto/produto.interface';
 import { ProdutoService } from 'src/app/services/produto/produto.service';
 import { TMSService } from 'src/app/services/TMS/tms.service';
 
@@ -20,9 +22,10 @@ import { TMSService } from 'src/app/services/TMS/tms.service';
   styleUrls: ['./produto-adicionar-sacola.page.scss'],
 })
 export class ProdutoAdicionarSacolaPage implements OnInit {
+  @ViewChild(IonSegment, { static: true }) readonly segment: IonSegment;
   @ViewChild(IonSlides, { static: true }) readonly slides: IonSlides;
   // Lista de inputs dos depositos
-  @ViewChildren('input') input: QueryList<IonInput>;
+  @ViewChildren('inputDeposito') input: QueryList<IonInput>;
   // Input do TMS
   @ViewChild('inputTMS', { static: true }) inputTMS: IonInput;
   public inputTMSvalue = 0;
@@ -30,8 +33,9 @@ export class ProdutoAdicionarSacolaPage implements OnInit {
   public pedidoOBS: Observable<PedidoHeader>;
 
   // Produto e depositos de retirada
-  public produto = new Produto();
-  public depositos: ProdutoDepositoRetirada[] = [];
+  public produto: IProduto;
+  public depCalled = false;
+  public depositos: IProdutoEstoqueDeposito[] = [];
   public showDepositos = false;
 
   // Dados do TMS
@@ -50,16 +54,15 @@ export class ProdutoAdicionarSacolaPage implements OnInit {
   private retiradas: Retiradas[] = [];
 
   // Controle de navegacao
-  private navParams: Params;
+  private navParams: { paginaAnterior: string; paginaSeguinte: string };
 
   // Controla a gravação da opção de TMS para poder prosseguir
   private statusGravacao = false;
 
   constructor(
     private readonly route: ActivatedRoute,
-    private navControl: NavController,
-    private dataService: DataService,
     private readonly common: CommonService,
+    private readonly navControl: NavController,
     private readonly pedidoService: PedidoService,
     private readonly produtoService: ProdutoService,
     private readonly tmsService: TMSService
@@ -68,9 +71,14 @@ export class ProdutoAdicionarSacolaPage implements OnInit {
   ngOnInit(): void {
     this.slides.lockSwipes(true);
     this.pedidoOBS = this.pedidoService.getPedidoAtivo();
-    this.produto = this.dataService.getData('produto-adicionar-sacola');
     this.route.queryParams.subscribe({
-      next: (params) => (this.navParams = params),
+      next: (params) => {
+        this.produto = JSON.parse(params.produto);
+        this.navParams = {
+          paginaAnterior: params.paginaAnterior,
+          paginaSeguinte: params.paginaSeguinte,
+        };
+      },
     });
   }
 
@@ -88,22 +96,11 @@ export class ProdutoAdicionarSacolaPage implements OnInit {
 
   ionViewDidEnter(): void {
     this.common.goToFullScreen();
-    this.produtoService
-      .getDeposito(
-        this.produto.codigodigitoembalagem,
-        String(this.pedidoService.getPedidoNumero())
-      )
-      .subscribe({
-        next: (result: any) => {
-          this.depositos = result;
-          this.showDepositos = true;
-          console.log('depositos');
-          console.log(result);
-        },
-        error: () => {
-          this.showDepositos = true;
-        },
-      });
+    if (this.pedidoService.tipoRetiradaIndex === 2) {
+      this.segment.value = '1';
+    } else {
+      this.getProdutoDepositos();
+    }
   }
 
   ionViewWillLeave(): void {}
@@ -115,6 +112,28 @@ export class ProdutoAdicionarSacolaPage implements OnInit {
     this.slides.slideTo(slide);
     this.slides.lockSwipes(true);
     this.atualizaBySlide();
+  }
+
+  /**
+   * @author helio.souza
+   */
+  getProdutoDepositos(): void {
+    this.depCalled = true;
+    this.produtoService
+      .getDeposito(
+        this.produto.codigodigitoembalagem,
+        this.pedidoService.getPedidoNumero()
+      )
+      .subscribe({
+        next: (result) => {
+          this.depositos = result;
+          this.showDepositos = true;
+          console.log('Depositos: ', result);
+        },
+        error: () => {
+          this.showDepositos = true;
+        },
+      });
   }
 
   atualizaBySlide(): void {
@@ -184,7 +203,7 @@ export class ProdutoAdicionarSacolaPage implements OnInit {
     }
   }
 
-  async adicionarLocal(depositos: ProdutoDepositoRetirada[]) {
+  async adicionarLocal(depositos: IProdutoEstoqueDeposito[]) {
     for (const el in depositos) {
       if (depositos[el].qtdPedido > depositos[el].estoque) {
         this.common.showToast('Estoque insuficiente');

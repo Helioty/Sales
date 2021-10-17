@@ -1,11 +1,12 @@
+import { take } from 'rxjs/operators';
 import { Component, OnInit } from '@angular/core';
 import { NavigationExtras } from '@angular/router';
 import { NavController } from '@ionic/angular';
 import { Observable } from 'rxjs';
 import { CommonService } from 'src/app/services/common/common.service';
-import { DataService } from 'src/app/services/data/data.service';
 import { PedidoHeader, PedidoItem } from 'src/app/services/pedido/pedido.interface';
 import { PedidoService } from 'src/app/services/pedido/pedido.service';
+import { IProduto } from 'src/app/services/produto/produto.interface';
 import { ProdutoService } from 'src/app/services/produto/produto.service';
 import { ScannerService } from 'src/app/services/scanner/scanner.service';
 
@@ -28,7 +29,6 @@ export class PedidoSacolaPage implements OnInit {
 
   constructor(
     public readonly scanner: ScannerService,
-    private readonly dataService: DataService,
     private readonly common: CommonService,
     private readonly pedidoService: PedidoService,
     private readonly produtoService: ProdutoService,
@@ -135,21 +135,38 @@ export class PedidoSacolaPage implements OnInit {
     this.navControl.navigateForward(['/cliente'], navigationExtras);
   }
 
-  openProdutoAddSacolaPage(prod: any): void {
+  /**
+   * @author helio.souza
+   * @param produto Produto
+   */
+  openProdutoAddSacolaPage(produto: IProduto): void {
     const navigationExtras: NavigationExtras = {
+      skipLocationChange: true,
       queryParams: {
+        produto: JSON.stringify(produto),
         paginaSeguinte: 'back',
         paginaAnterior: 'pedido-sacola',
       },
     };
-    this.dataService.setData('produto-adicionar-sacola', prod);
     this.navControl.navigateForward(['/produto-adicionar-sacola'], navigationExtras);
   }
 
-  getProduto(codigo: string) {
-    this.produtoService.getProduto(codigo).then((result: any) => {
-      this.openProdutoAddSacolaPage(result.content[0]);
-    });
+  /**
+   * @author helio.souza
+   * @param codigo codigo do produto.
+   */
+  async getProduto(codigo: string): Promise<void> {
+    await this.common.showLoaderCustom('Carregando Produto...');
+    this.produtoService
+      .getProdutoByCodigo(codigo)
+      .pipe(take(1))
+      .subscribe({
+        next: (result) => {
+          this.common.loading.dismiss();
+          this.openProdutoAddSacolaPage(result[0]);
+        },
+        error: () => this.common.loading.dismiss(),
+      });
   }
 
   // finalização do pedido
