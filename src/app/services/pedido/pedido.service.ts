@@ -10,7 +10,13 @@ import { ClienteService } from 'src/app/services/cliente/cliente.service';
 import { CommonService } from 'src/app/services/common/common.service';
 import { BaseService } from 'src/app/services/http/base.service';
 import { OpcaoParcela } from 'src/app/services/pagamento/condicao-pagamento.interface';
-import { AttPedido, PedidoHeader, PedidoItem, PedidoTable } from './pedido.interface';
+import {
+  AttPedido,
+  PedidoDesconto,
+  PedidoHeader,
+  PedidoItem,
+  PedidoTable,
+} from './pedido.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -142,11 +148,11 @@ export class PedidoService {
 
   /**
    * @author helio.souza
-   * @param idPedido Número do Pedido.
+   * @param numPedido Número do Pedido.
    */
-  getPedido(idPedido: string): Observable<PedidoHeader> {
+  getPedido(numPedido: string): Observable<PedidoHeader> {
     const empresa = localStorage.getItem('empresa') as string;
-    const url = `${ENV.WS_VENDAS}${API_URL}PedidoVenda/${empresa}/${idPedido}`;
+    const url = `${ENV.WS_VENDAS}${API_URL}PedidoVenda/${empresa}/${numPedido}`;
     return this.http.get<PedidoHeader>(url).pipe(take(1));
   }
 
@@ -523,6 +529,41 @@ export class PedidoService {
     return this.http
       .post<PedidoHeader, PedidoTable[]>({ url, body: aResult })
       .pipe(take(1));
+  }
+
+  /**
+   * @author helio.souza
+   * @param numPedido Número do Pedido.
+   */
+  getDescontoPedido(numPedido: number): Observable<PedidoDesconto[]> {
+    const empresa = localStorage.getItem('empresa');
+    const url = `${ENV.WS_VENDAS}${API_URL}PedidoVenda/descontoInfo/${empresa}/${numPedido}`;
+    return this.http.get<PedidoDesconto[]>(url).pipe(take(1));
+  }
+
+  /**
+   * @author helio.souza
+   * @param usuario Usuário que deseja dar o desconto.
+   */
+  getDescontoMargin(usuario: number): Observable<any> {
+    const url = `${ENV.WS_VENDAS}${API_URL}PedidoVenda/showMargens?login=${usuario}`;
+    return this.http.get(url).pipe(take(1));
+  }
+
+  /**
+   * @author helio.souza
+   * @param numPedido Número do Pedido.
+   * @param usuario Usuário que deu o desconto.
+   * @param desconto Valor do desconto.
+   */
+  setDescontoPedido(
+    numPedido: number,
+    usuario: string,
+    desconto: number
+  ): Observable<any> {
+    const empresa = localStorage.getItem('empresa');
+    const url = `${ENV.WS_VENDAS}${API_URL}PedidoVenda/aplicarDesconto/${empresa}/${numPedido}?login=${usuario}&desconto=${desconto}`;
+    return this.http.post<any, any>({ url, body: {} }).pipe(take(1));
   }
 
   // abrindo pagina customizada utilizando parametros

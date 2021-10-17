@@ -1,11 +1,60 @@
 <ion-header>
-  <ion-toolbar color="primary">
+  <ion-toolbar color="medium">
     <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
+      <ion-back-button icon="close"></ion-back-button>
     </ion-buttons>
 
-    <ion-title>pedido-desconto</ion-title>
+    <ion-title> Desconto </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content> </ion-content>
+<ion-content>
+  <ion-grid>
+    <ion-row class="ion-align-items-center">
+      <ion-col size="4">
+        <label> Valor </label>
+      </ion-col>
+
+      <ion-col size="8">
+        <ion-row class="inputField">
+          <ion-input
+            type="text"
+            inputmode="tel"
+            [ngModel]="desconto.valor | formatarString: 'VALOR'"
+            (ngModelChange)="desconto.valor=$event"
+            (ionChange)="formatarValor()"
+          ></ion-input>
+        </ion-row>
+      </ion-col>
+
+      <ion-col size="4">
+        <label> Percentual </label>
+      </ion-col>
+
+      <ion-col size="8">
+        <ion-row class="inputField">
+          <ion-input
+            type="text"
+            inputmode="tel"
+            [(ngModel)]="desconto.porcentagem"
+          ></ion-input>
+          <!-- (ionChange)="formatarPorcentagem()" -->
+        </ion-row>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+        <ion-button expand="block" (click)="isValidated ? '' : openLoginModal()">
+          Exibir informações
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
+
+<ion-footer>
+  <ion-item button lines="none" color="fc-button-green">
+    <ion-text>INSERIR DESCONTO</ion-text>
+  </ion-item>
+</ion-footer>

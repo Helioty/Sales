@@ -122,7 +122,11 @@ export class PedidoFinalizadoPage implements OnInit {
     itemSlide.close();
   }
 
-  verProdutosPedido(pedido: any) {
+  /**
+   * @author helio.souza
+   * @param pedido Dados do Pedido.
+   */
+  verProdutosPedido(pedido: PedidoHeader): void {
     const navigationExtras: NavigationExtras = {
       queryParams: {
         pedido: JSON.stringify(pedido),
@@ -134,14 +138,20 @@ export class PedidoFinalizadoPage implements OnInit {
 
   /**
    * @author helio.souza
-   * @param pedido Dados do Pedido.
+   * @param pedido Pedido.
+   * @param index Index do Pedido na Lista.
    */
-  apagarPedido(pedido: PedidoHeader): void {
+  apagarPedido(pedido: PedidoHeader, index: number): void {
     const props = {
       titulo: 'ATENÇÃO!',
       message: `Tem certeza? Apagando um pedido, os dados inseridos não poderão ser recuperados.`,
       handler: () => {
-        this.pedidoService.apagarPedido(pedido.numpedido);
+        this.pedidoService.apagarPedido(pedido.numpedido).subscribe({
+          next: () => {
+            this.data.content.splice(index, 1);
+            this.common.showToast('Pedido excluido!');
+          },
+        });
       },
     };
     this.common.showAlertAction(props);
@@ -153,5 +163,19 @@ export class PedidoFinalizadoPage implements OnInit {
    */
   alterarPedido(pedido: PedidoHeader): void {
     this.pedidoService.reabrirPedido(pedido);
+  }
+
+  /**
+   * @author helio.souza
+   * @param pedido Dados do Pedido.
+   */
+  ajustarPedido(pedido: PedidoHeader): void {
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        pedido: JSON.stringify(pedido),
+      },
+      skipLocationChange: true,
+    };
+    this.navControl.navigateForward(['pedido-lista/pedido-desconto'], navigationExtras);
   }
 }

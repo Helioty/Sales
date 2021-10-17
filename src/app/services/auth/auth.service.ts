@@ -2,9 +2,10 @@ import { HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { take } from 'rxjs/operators';
 import { API_URL, ENV } from 'src/app/config/app.config.service';
-import { AuthGuard } from 'src/app/shared/guards/auth/auth.guard';
 import { BaseService } from 'src/app/services/http/base.service';
+import { AuthGuard } from 'src/app/shared/guards/auth/auth.guard';
 import { environment } from 'src/environments/environment';
 import { CommonService } from '../common/common.service';
 import { IAuth } from './auth.interface';
@@ -27,8 +28,8 @@ export class AuthService {
   /**
    * @author helio.souza
    * @description Executa o serviço de login em JAVA.
-   * @param login login do úsuario
-   * @param senha senha do úsuario
+   * @param login login do usuário
+   * @param senha senha do usuário
    * @returns Retorna uma Promise com o retorno do serviço.
    */
   login(login: string, senha: string, url?: string): Promise<IAuth> {
@@ -54,6 +55,19 @@ export class AuthService {
         },
       });
     });
+  }
+
+  /**
+   * @author helio.souza
+   * @description Executa o serviço de login em JAVA.
+   * @param login login do usuário
+   * @param senha senha do usuário
+   */
+  loginAPI(login: string, senha: string): Observable<IAuth> {
+    const link = ENV.WS_AUTH + API_URL + 'loginMobile';
+    const options = { token: false, showError: true };
+    const headers = new HttpHeaders().set('login', login).set('senha', senha);
+    return this.http.get<IAuth>(link, options, headers).pipe(take(1));
   }
 
   /**

@@ -5,6 +5,7 @@ import { RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { PipesModule } from '../shared/pipes/pipes.module';
 import { FormErrorComponent } from './form-error/form-error.component';
+import { LoginValidateComponent } from './login-validate/login-validate.component';
 import { MenuComponent } from './menu/menu.component';
 import { PedidoResumoComponent } from './pedido-resumo/pedido-resumo.component';
 import { PesquisaClienteComponent } from './pesquisa-cliente/pesquisa-cliente.component';
@@ -14,6 +15,7 @@ import { PesquisaClienteComponent } from './pesquisa-cliente/pesquisa-cliente.co
     MenuComponent,
     FormErrorComponent,
     PedidoResumoComponent,
+    LoginValidateComponent,
     PesquisaClienteComponent,
   ],
   imports: [
@@ -28,6 +30,7 @@ import { PesquisaClienteComponent } from './pesquisa-cliente/pesquisa-cliente.co
     MenuComponent,
     FormErrorComponent,
     PedidoResumoComponent,
+    LoginValidateComponent,
     PesquisaClienteComponent,
   ],
 })

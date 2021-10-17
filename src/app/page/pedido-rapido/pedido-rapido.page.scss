@@ -118,6 +118,8 @@ ion-footer {
   ion-grid {
     ion-row {
       ion-col.colunaPreco {
+        padding: 5px;
+
         ion-row.titulo {
           font-size: 14px;
           font-weight: bold;
@@ -130,15 +132,16 @@ ion-footer {
           color: #4d4d4d;
         }
       }
+    }
+  }
 
-      ion-col.colunaBtn {
-        ion-button {
-          margin: 3px 0;
-          height: 42px;
-          font-size: 17px;
-          font-weight: bold;
-        }
-      }
+  ion-item {
+    margin: 8px !important;
+    border-radius: 6px;
+
+    ion-text {
+      margin: auto !important;
+      font-size: 110%;
     }
   }
 }

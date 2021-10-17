@@ -1,0 +1,23 @@
+ion-content {
+  ion-grid {
+    max-width: 400px;
+    margin: auto;
+  }
+
+  .inputField {
+    border: 0.2rem solid var(--ion-color-medium);
+    border-radius: 5px;
+  }
+}
+
+ion-footer {
+  ion-item {
+    margin: 8px !important;
+    border-radius: 6px;
+
+    ion-text {
+      margin: auto !important;
+      font-size: 110%;
+    }
+  }
+}

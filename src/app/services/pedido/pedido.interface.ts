@@ -82,3 +82,12 @@ export class PedidoTable {
   name: string; // Atributo do objeto AtualizaPedido
   value: string; // Valor do atributo
 }
+
+export class PedidoDesconto {
+  descontoMaximo: number;
+  margem1: number;
+  mesesVenda: number;
+  prazoCondicaoDinamico: number;
+  prazoPonderado: number;
+  rentabilidade: number;
+}

@@ -122,6 +122,10 @@ export class PedidoAbertoPage implements OnInit {
     itemSlide.close();
   }
 
+  /**
+   * @author helio.souza
+   * @param pedido Dados do Pedido.
+   */
   verProdutosPedido(pedido: PedidoHeader): void {
     const navigationExtras: NavigationExtras = {
       queryParams: {

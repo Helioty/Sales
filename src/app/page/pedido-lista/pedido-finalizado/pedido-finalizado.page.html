@@ -64,7 +64,7 @@
       class="pedido"
     >
       <ion-item-options side="start" (click)="closeSlide(slidingItem)">
-        <ion-item-option color="medium">
+        <ion-item-option color="medium" (click)="ajustarPedido(pedido)">
           <ion-icon slot="top" name="build-outline" size="large"></ion-icon>
           <span>AJUSTES</span>
         </ion-item-option>
@@ -129,7 +129,7 @@
           <span>VER</span>
         </ion-item-option>
 
-        <ion-item-option (click)="apagarPedido(pedido)" color="danger">
+        <ion-item-option (click)="apagarPedido(pedido, i)" color="danger">
           <ion-icon slot="top" name="trash" size="large"></ion-icon>
           <span>APAGAR</span>
         </ion-item-option>
