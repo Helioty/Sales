@@ -339,8 +339,29 @@ export class PedidoService {
     );
   }
 
-  adicionarItemPedido(): Observable<any> {
-    return this.http.post({} as any).pipe(take(1));
+  /**
+   * @author helio.souza
+   * @param pedidoItem
+   */
+  adicionarItemPedido(pedidoItem: PedidoItem): Observable<any> {
+    const pedido = this.getPedidoNumero();
+    const empresa = localStorage.getItem('empresa');
+    const url = `${ENV.WS_VENDAS}${API_URL}PedidoVendaItem/${empresa}/${pedido}?update=S`;
+    return this.http
+      .post<{ items: Pagination<PedidoItem>; pedido: PedidoHeader }, PedidoItem>({
+        url,
+        body: pedidoItem,
+      })
+      .pipe(
+        take(1),
+        tap({
+          next: (response) => {
+            this.atualizaPedidoItems(response.items);
+            this.atualizaPedidoHeader(response.pedido);
+          },
+        }),
+        map((response) => response.items.content)
+      );
   }
 
   /**

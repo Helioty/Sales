@@ -178,22 +178,32 @@ export class ProdutoAdicionarSacolaPage implements OnInit {
     this.common.showAlert('Atenção!', 'Informar quantidade retirada.');
   }
 
-  async adicionar() {
-    // Chama a gravação do TMS
-    if (this.entregaTMSselecionada && this.inputTMSvalue) {
-      await this.adicionarComTMS(this.inputTMSvalue, this.produto);
-    }
-    //  Chama a gracação da retirada em Loja
-    if (this.validaQtdRetiradaLoja()) {
-      await this.adicionarLocal(this.depositos);
+  /**
+   * @author helio.souza
+   * @description Adicionar produto ao pedido.
+   */
+  adicionarAoPedido(): void {
+    if (this.segment.value === '0') {
+      this.adicionarLocal(this.depositos);
     } else {
-      if (this.statusGravacao) {
-        this.prosseguir();
-      }
+      this.adicionarComTMS(this.inputTMSvalue, this.produto);
     }
+
+    // // Chama a gravação do TMS
+    // if (this.entregaTMSselecionada && this.inputTMSvalue) {
+    //   this.adicionarComTMS(this.inputTMSvalue, this.produto);
+    // }
+    // //  Chama a gracação da retirada em Loja
+    // if (this.validaQtdRetiradaLoja()) {
+    //   this.adicionarLocal(this.depositos);
+    // } else {
+    //   if (this.statusGravacao) {
+    //     this.prosseguir();
+    //   }
+    // }
   }
 
-  prosseguir() {
+  prosseguir(): void {
     if (this.navParams.paginaAnterior) {
       switch (this.navParams.paginaAnterior) {
         case 'pedido-sacola':
@@ -234,23 +244,26 @@ export class ProdutoAdicionarSacolaPage implements OnInit {
     // });
   }
 
-  async adicionarComTMS(qtd: number, prod: any) {
-    await this.tmsService
-      .gravaOpcoesTMS(
-        String(this.pedidoService.getPedidoNumero()),
-        String(qtd),
-        this.produto.codigodigitoembalagem,
-        prod.conversao
-      )
-      .then(
-        () => {
-          this.statusGravacao = true;
-        },
-        (error) => {
-          this.statusGravacao = false;
-          console.log(error);
-        }
-      );
+  adicionarComTMS(qtd: number, prod: any): void {
+    if (
+      this.selectedTmsOptionIndex[this.indexSeller] === null &&
+      this.selectedTmsOptionIndex[this.indexOption] === null
+    ) {
+      this.common.showToast('Selecione uma opção de entrega!');
+    } else {
+      this.tmsService
+        .gravaOpcoesTMS(
+          String(this.pedidoService.getPedidoNumero()),
+          String(qtd),
+          this.produto.codigodigitoembalagem,
+          prod.conversao
+        )
+        .subscribe({
+          next: () => {
+            this.prosseguir();
+          },
+        });
+    }
   }
 
   getOpcoes(qtd: number): void {

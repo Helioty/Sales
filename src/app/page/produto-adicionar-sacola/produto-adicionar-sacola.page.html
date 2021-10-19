@@ -202,8 +202,7 @@
                               GRÁTIS
                             </span>
                             <span *ngIf="opcao.valorFreteCalculado">
-                              {{
-                                opcao.valorTotalFreteCalculado | formatarString: 'VALOR'
+                              {{ opcao.valorTotalFreteCalculado | formatarString: 'VALOR'
                               }}
                             </span>
                           </ion-label>
@@ -240,7 +239,7 @@
     button
     lines="none"
     color="fc-button-green"
-    (click)="validateField() ? adicionar() : zeroQtd()"
+    (click)="validateField() ? adicionarAoPedido() : zeroQtd()"
   >
     <ion-icon slot="start" name="basket"></ion-icon>
     <ion-text>ADICIONAR AO PEDIDO</ion-text>

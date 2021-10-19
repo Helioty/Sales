@@ -31,34 +31,13 @@ export class TMSService {
     qtd: string,
     codigodigitoembalagem: string,
     conversao: string
-  ) {
-    const link =
-      ENV.WS_VENDAS +
-      API_URL +
-      'PedidoVendaItem/' +
-      localStorage.getItem('empresa') +
-      '/' +
-      numPedido +
-      '/' +
-      codigodigitoembalagem +
-      '/gravaopcaofrete?qtd=' +
-      qtd +
-      '&fator=' +
-      conversao;
-
+  ): Observable<any> {
+    const empresa = localStorage.getItem('empresa');
+    const url = `${ENV.WS_VENDAS}${API_URL}PedidoVendaItem/${empresa}/${numPedido}/${codigodigitoembalagem}/gravaopcaofrete?qtd=${qtd}&fator=${conversao}`;
+    // ENV.WS_VENDAS + API_URL + 'PedidoVendaItem/' + localStorage.getItem('empresa') + '/' + numPedido + '/' + codigodigitoembalagem + '/gravaopcaofrete?qtd=' + qtd + '&fator=' + conversao;
     //   // atualizando pedido para o tipo entrega // 31/01/2020
     //   await this.atualizarPedidoHearder();
     //   this.opcSelecionada.dataPrevista = null;
-
-    return new Promise((resolve, reject) => {
-      this.http.get(link).subscribe(
-        (result: any) => {
-          resolve(result);
-        },
-        (error) => {
-          reject(error);
-        }
-      );
-    });
+    return this.http.get<any>(url).pipe(take(1));
   }
 }
