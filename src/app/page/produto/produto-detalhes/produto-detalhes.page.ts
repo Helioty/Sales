@@ -13,6 +13,8 @@ export class ProdutoDetalhesPage implements OnInit {
   public produto: IProduto;
   public info: any = [];
 
+  readonly dataId = 'produtoInformacao';
+
   constructor(
     private readonly common: CommonService,
     private readonly dataService: DataService,
@@ -24,7 +26,7 @@ export class ProdutoDetalhesPage implements OnInit {
     this.activatedRoute.queryParams.subscribe((params) => {
       console.log(params);
       this.produto = JSON.parse(params.produto);
-      this.info = this.dataService.getData(params.info);
+      this.info = this.dataService.getData(this.dataId);
     });
   }
 
@@ -34,5 +36,9 @@ export class ProdutoDetalhesPage implements OnInit {
 
   ionViewDidEnter(): void {
     this.common.goToFullScreen();
+  }
+
+  ionViewWillLeave(): void {
+    this.dataService.removeData(this.dataId);
   }
 }

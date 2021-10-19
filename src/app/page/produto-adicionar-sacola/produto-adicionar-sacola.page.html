@@ -53,7 +53,7 @@
           </ion-col>
         </ion-row> -->
 
-        <ion-row *ngIf="!depositos.length && !showDepositos">
+        <ion-row *ngIf="depCalled &&!depositos.length && !showDepositos">
           <ion-col size="12">
             <ion-spinner></ion-spinner>
           </ion-col>

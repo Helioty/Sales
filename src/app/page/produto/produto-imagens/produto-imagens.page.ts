@@ -1,5 +1,4 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { IonSlides } from '@ionic/angular';
 import { CommonService } from 'src/app/services/common/common.service';
 import { DataService } from 'src/app/services/data/data.service';
@@ -18,8 +17,9 @@ export class ProdutoImagensPage implements OnInit {
     slidesPerView: 5,
   };
 
+  readonly dataId = 'produtoListImage';
+
   constructor(
-    private readonly activatedRoute: ActivatedRoute,
     private readonly dataService: DataService,
     private readonly common: CommonService
   ) {}
@@ -30,13 +30,15 @@ export class ProdutoImagensPage implements OnInit {
 
   ionViewWillEnter(): void {
     this.common.goToFullScreen();
-    this.activatedRoute.queryParams.subscribe((params) => {
-      this.imagens = this.dataService.getData(params.dataId);
-    });
+    this.imagens = this.dataService.getData<IProdutoImagem[]>(this.dataId);
   }
 
   ionViewDidEnter(): void {
     this.common.goToFullScreen();
+  }
+
+  ionViewWillLeave(): void {
+    this.dataService.removeData(this.dataId);
   }
 
   /**

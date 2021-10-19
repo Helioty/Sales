@@ -6,6 +6,7 @@ import { LoginValidateComponent } from 'src/app/components/login-validate/login-
 import { IAuth } from 'src/app/services/auth/auth.interface';
 import { PedidoService } from 'src/app/services/pedido/pedido.service';
 import { CommonService } from 'src/app/services/common/common.service';
+import { DescontoService } from 'src/app/services/desconto/desconto.service';
 
 @Component({
   selector: 'app-pedido-desconto',
@@ -24,7 +25,8 @@ export class PedidoDescontoPage implements OnInit {
     private readonly route: ActivatedRoute,
     private readonly common: CommonService,
     private readonly modal: ModalController,
-    private readonly pedidoService: PedidoService
+    private readonly pedidoService: PedidoService,
+    private readonly descontoService: DescontoService
   ) {}
 
   ngOnInit(): void {
@@ -38,7 +40,7 @@ export class PedidoDescontoPage implements OnInit {
   }
 
   getDesconto(): void {
-    this.pedidoService.getDescontoPedido(this.pedido.numpedido).subscribe({
+    this.descontoService.getDescontoPedido(this.pedido.numpedido).subscribe({
       next: (desconto) => {
         console.log('Desconto: ', desconto);
       },
@@ -51,7 +53,7 @@ export class PedidoDescontoPage implements OnInit {
    */
   async setDesconto(desconto: number): Promise<void> {
     await this.common.showLoader();
-    this.pedidoService
+    this.descontoService
       .setDescontoPedido(this.pedido.numpedido, this.user.login, desconto)
       .subscribe({
         next: () => {

@@ -16,8 +16,8 @@
     (keyup.enter)="scaneado($event.target.value)"
   />
 
-  <input #teste (focus)="scanner.focusPause()" (blur)="scanner.focusPlay()" />
-  <ion-button (click)="addItem(teste.value)">teste de pedido rapido</ion-button>
+  <!-- <input #teste (focus)="scanner.focusPause()" (blur)="scanner.focusPlay()" />
+  <ion-button (click)="addItem(teste.value)">teste de pedido rapido</ion-button> -->
 
   <ion-grid *ngIf="!(itensOBS | async)?.length; else list" class="noItens">
     <ion-row class="topHeading">
@@ -108,7 +108,7 @@
         <ion-row class="titulo"> Total Pedido: </ion-row>
 
         <ion-row class="valor">
-          <!-- {{ pedido.pedidoHeader.totpedido | formatarString: 'VALOR' }} -->
+          {{ (pedidoOBS | async)?.totpedido ?? '' | formatarString: 'VALOR' }}
         </ion-row>
       </ion-col>
 

@@ -36,7 +36,7 @@ export class ProdutoPage implements OnInit {
     private readonly pedidoService: PedidoService,
     private readonly dataService: DataService,
     private readonly produtoService: ProdutoService,
-    private navControl: NavController
+    private readonly navControl: NavController
   ) {}
 
   ngOnInit(): void {
@@ -106,7 +106,6 @@ export class ProdutoPage implements OnInit {
   /**
    * @author helio.souza
    * @param produtoCodigoDigitoEmbalagem Codigo do Produto com Digito e Embalagem.
-   * @returns
    */
   getProdutoInformacao(produtoCodigoDigitoEmbalagem: string): Observable<any> {
     return this.produtoService.getProductInfomation(produtoCodigoDigitoEmbalagem).pipe(
@@ -121,8 +120,7 @@ export class ProdutoPage implements OnInit {
 
   /**
    * @author helio.souza
-   * @param produtoCodigoDigitoEmbalagem
-   * @returns {Observable<IProdutoFamilia[]>}
+   * @param produtoCodigoDigitoEmbalagem Codigo do Produto com Digito e Embalagem.
    */
   getFamilia(produtoCodigoDigitoEmbalagem: string): Observable<IProdutoFamilia[]> {
     return this.produtoService.getFamilia(produtoCodigoDigitoEmbalagem).pipe(
@@ -174,7 +172,6 @@ export class ProdutoPage implements OnInit {
     const navigationExtras: NavigationExtras = {
       queryParams: {
         produto: JSON.stringify(produto),
-        info: 'produtoInformacao',
       },
     };
     this.dataService.setData('produtoInformacao', this.maisInfo);
@@ -187,11 +184,6 @@ export class ProdutoPage implements OnInit {
    */
   async openProdutoImagens(produtoCodigoDigito: string): Promise<void> {
     await this.common.showLoader();
-    const navigationExtras: NavigationExtras = {
-      queryParams: {
-        dataId: 'produtoListImage',
-      },
-    };
     this.produtoService
       .getAllListImage(produtoCodigoDigito)
       .pipe(take(1))
@@ -199,7 +191,7 @@ export class ProdutoPage implements OnInit {
         next: (response) => {
           console.log('Imagens: ', response);
           this.dataService.setData('produtoListImage', response);
-          this.navControl.navigateForward(['produto/imagens'], navigationExtras);
+          this.navControl.navigateForward(['produto/imagens']);
           this.common.loading.dismiss();
         },
         error: () => {

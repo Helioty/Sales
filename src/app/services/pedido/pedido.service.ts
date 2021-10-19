@@ -533,49 +533,20 @@ export class PedidoService {
 
   /**
    * @author helio.souza
-   * @param numPedido Número do Pedido.
+   * @description Navega entre paginas utilizando parametros.
+   * @param PD Pagina destino.
+   * @param PS Pagina seguinte.
+   * @param PA Pagina anterior.
    */
-  getDescontoPedido(numPedido: number): Observable<PedidoDesconto[]> {
-    const empresa = localStorage.getItem('empresa');
-    const url = `${ENV.WS_VENDAS}${API_URL}PedidoVenda/descontoInfo/${empresa}/${numPedido}`;
-    return this.http.get<PedidoDesconto[]>(url).pipe(take(1));
+  openCustomPage(PD: string, PS: string, PA: string): void {
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        paginaSeguinte: PS,
+        paginaAnterior: PA,
+      },
+    };
+    this.navControl.navigateForward(['/' + PD], navigationExtras);
   }
-
-  /**
-   * @author helio.souza
-   * @param usuario Usuário que deseja dar o desconto.
-   */
-  getDescontoMargin(usuario: number): Observable<any> {
-    const url = `${ENV.WS_VENDAS}${API_URL}PedidoVenda/showMargens?login=${usuario}`;
-    return this.http.get(url).pipe(take(1));
-  }
-
-  /**
-   * @author helio.souza
-   * @param numPedido Número do Pedido.
-   * @param usuario Usuário que deu o desconto.
-   * @param desconto Valor do desconto.
-   */
-  setDescontoPedido(
-    numPedido: number,
-    usuario: string,
-    desconto: number
-  ): Observable<any> {
-    const empresa = localStorage.getItem('empresa');
-    const url = `${ENV.WS_VENDAS}${API_URL}PedidoVenda/aplicarDesconto/${empresa}/${numPedido}?login=${usuario}&desconto=${desconto}`;
-    return this.http.post<any, any>({ url, body: {} }).pipe(take(1));
-  }
-
-  // abrindo pagina customizada utilizando parametros
-  // openCustomPage(P: string, PS: string, PA: string) {
-  //   const navigationExtras: NavigationExtras = {
-  //     queryParams: {
-  //       paginaSeguinte: PS,
-  //       paginaAnterior: PA,
-  //     },
-  //   };
-  //   this.navControl.navigateForward(['/' + P], navigationExtras);
-  // }
 
   goToFinalizacao(paginaAtual: string) {
     // checa se é necessario informar o cliente

@@ -3,7 +3,7 @@ import { FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, NavigationExtras, Params } from '@angular/router';
 import { IonInput, ModalController, NavController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
-import { debounceTime, distinctUntilChanged, map, tap } from 'rxjs/operators';
+import { distinctUntilChanged, map, tap } from 'rxjs/operators';
 import { PesquisaClienteComponent } from 'src/app/components/pesquisa-cliente/pesquisa-cliente.component';
 import { ClienteGet } from 'src/app/services/cliente/cliente.interface';
 import { ClienteService } from 'src/app/services/cliente/cliente.service';
@@ -129,7 +129,6 @@ export class ClientePage implements OnInit, OnDestroy {
   private setupField(): void {
     this.fieldSub = this.fieldCliente.valueChanges
       .pipe(
-        debounceTime(100),
         distinctUntilChanged(),
         map((doc) => this.common.formataCPFNPJ(doc)),
         tap({
