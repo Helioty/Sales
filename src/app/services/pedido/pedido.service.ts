@@ -10,13 +10,7 @@ import { ClienteService } from 'src/app/services/cliente/cliente.service';
 import { CommonService } from 'src/app/services/common/common.service';
 import { BaseService } from 'src/app/services/http/base.service';
 import { OpcaoParcela } from 'src/app/services/pagamento/condicao-pagamento.interface';
-import {
-  AttPedido,
-  PedidoDesconto,
-  PedidoHeader,
-  PedidoItem,
-  PedidoTable,
-} from './pedido.interface';
+import { AttPedido, PedidoHeader, PedidoItem, PedidoTable } from './pedido.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -26,7 +20,7 @@ export class PedidoService {
   // public alteracaoItemPedido = false;
 
   // public statusPedido: string; // controla pedido; 'I' INCLUSÃO , 'M' MANUTENCAO
-  // // public sistuacaoPedido: string; // controla pedido, A = ABERTO , F = FINALIZADO
+  // public sistuacaoPedido: string; // controla pedido, A = ABERTO , F = FINALIZADO
 
   // REMAKE
   // Dados do Pedido.
@@ -58,7 +52,7 @@ export class PedidoService {
     return pedido.seqEnderecoEntrega;
   }
 
-  getPedidoAtivo(): Observable<PedidoHeader> {
+  getPedidoAtivoOBS(): Observable<PedidoHeader> {
     return this.pedido.asObservable();
   }
 
@@ -548,20 +542,27 @@ export class PedidoService {
     this.navControl.navigateForward(['/' + PD], navigationExtras);
   }
 
-  goToFinalizacao(paginaAtual: string) {
-    // checa se é necessario informar o cliente
-    // if (this.pedidoHeader.informarCliente === 'S') {
-    //   if (
-    //     !this.clientSelected &&
-    //     (this.pedidoHeader.cgccpf_cliente === '' ||
-    //       this.pedidoHeader.cgccpf_cliente === null)
-    //   ) {
-    //     console.log('Cliente obrigatorio!');
-    //     this.openCustomPage('cliente', 'finalizaService', paginaAtual);
-    //     return;
-    //   }
-    // }
-    // // checa o tipo de entrega do pedido
+  /**
+   * @author helio.souza
+   * @param paginaAtual Route-path da pagina em que foi executada a ação de finalizar.
+   */
+  goToFinalizacao(paginaAtual: string): void {
+    const pedido = this.pedido.getValue();
+    // checa se é necessario informar o cliente.
+    if (pedido.informarCliente === 'S' && !pedido.cgccpf_cliente) {
+      this.common.showToast('É necessario informar o cliente!');
+      this.openCustomPage('cliente', 'finalizaService', paginaAtual);
+      return;
+    }
+
+    // checa o tipo de entrega do pedido.
+    if (pedido.tipoEntrega === 'ENTREGA') {
+      this.openCustomPage('endereco-entrega', 'finalizaService', paginaAtual);
+      return;
+    }
+
+    this.openCustomPage('formas-pagamento', 'finalizaService', paginaAtual);
+
     // if (this.pedidoHeader.tipoEntrega === 'ENTREGA') {
     //   console.log('Pedido do tipo ENTREGA!');
     //   const tms = localStorage.getItem('tms');
@@ -575,9 +576,6 @@ export class PedidoService {
     //     this.openCustomPage('endereco-entrega-old', 'finalizaService', paginaAtual);
     //     return;
     //   }
-    // } else {
-    //   this.openCustomPage('formas-pagamento', 'finalizaService', paginaAtual);
-    //   return;
     // }
   }
 }

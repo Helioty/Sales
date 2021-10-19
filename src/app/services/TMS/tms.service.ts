@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { API_URL, ENV } from 'src/app/config/app.config.service';
-import { Endereco } from '../cliente/cliente.interface';
-import { BaseService } from '../http/base.service';
+import { Endereco } from 'src/app/services/cliente/cliente.interface';
+import { BaseService } from 'src/app/services/http/base.service';
 
 @Injectable({
   providedIn: 'root',
@@ -23,7 +23,7 @@ export class TMSService {
       endereco.latitude && endereco.longitude
         ? `${baseUrl}&latitude=${endereco.latitude}&longitude=${endereco.longitude}`
         : `${baseUrl}`;
-    return this.http.get(url).pipe(take(1));
+    return this.http.get<any>(url).pipe(take(1));
   }
 
   gravaOpcoesTMS(

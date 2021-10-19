@@ -37,7 +37,7 @@ export class ParcelamentoPage implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    const pedidoOBS = this.pedidoService.getPedidoAtivo();
+    const pedidoOBS = this.pedidoService.getPedidoAtivoOBS();
     this.pedidoSub = pedidoOBS.subscribe({ next: (pedido) => (this.pedido = pedido) });
   }
 

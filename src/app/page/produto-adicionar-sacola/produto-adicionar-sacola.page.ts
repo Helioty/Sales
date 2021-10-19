@@ -25,7 +25,7 @@ export class ProdutoAdicionarSacolaPage implements OnInit {
   @ViewChild(IonSegment, { static: true }) readonly segment: IonSegment;
   @ViewChild(IonSlides, { static: true }) readonly slides: IonSlides;
   // Lista de inputs dos depositos
-  @ViewChildren('inputDeposito') input: QueryList<IonInput>;
+  @ViewChildren('inputDeposito') inputs: QueryList<IonInput>;
   // Input do TMS
   @ViewChild('inputTMS', { static: true }) inputTMS: IonInput;
   public inputTMSvalue = 0;
@@ -43,6 +43,12 @@ export class ProdutoAdicionarSacolaPage implements OnInit {
   public vendedorSelecionado: any;
   public opcaoSelecionada: any;
   public loadingTMS = false;
+
+  // Remake TMS
+  public opcoesDeEntregaTMS: any[] = [];
+  public selectedTmsOptionIndex: [number, number] = [null, null];
+  private readonly indexSeller = 0;
+  private readonly indexOption = 1;
 
   // Controle de adicionar a sacola
   private entregaTMSselecionada = false;
@@ -70,7 +76,7 @@ export class ProdutoAdicionarSacolaPage implements OnInit {
 
   ngOnInit(): void {
     this.slides.lockSwipes(true);
-    this.pedidoOBS = this.pedidoService.getPedidoAtivo();
+    this.pedidoOBS = this.pedidoService.getPedidoAtivoOBS();
     this.route.queryParams.subscribe({
       next: (params) => {
         this.produto = JSON.parse(params.produto);
@@ -207,7 +213,7 @@ export class ProdutoAdicionarSacolaPage implements OnInit {
     for (const el in depositos) {
       if (depositos[el].qtdPedido > depositos[el].estoque) {
         this.common.showToast('Estoque insuficiente');
-        this.input.toArray()[el].setFocus();
+        this.inputs.toArray()[el].setFocus();
         return;
       } else if (depositos[el].qtdPedido > 0) {
         const retirada = new Retiradas();
@@ -248,21 +254,9 @@ export class ProdutoAdicionarSacolaPage implements OnInit {
   }
 
   getOpcoes(qtd: number): void {
-    let precolocal: 'S' | 'N';
-    if (this.validaQtdRetiradaLoja()) {
-      precolocal = 'S';
-    } else {
-      precolocal = 'N';
-    }
-
-    // await this.pedidoService.retornaDadosCliente().then(
-    //   () => {
-    //     enderecos = this.pedidoS.dadosCliente.enderecos;
-    //   },
-    //   () => {
-    //     return this.getOpcoes(qtd);
-    //   }
-    // );
+    this.selectedTmsOptionIndex = [null, null];
+    let precolocal: 'S' | 'N' = 'N';
+    this.validaQtdRetiradaLoja() ? (precolocal = 'S') : (precolocal = 'N');
     const endereco = this.pedidoService.getEnderecoEntrega();
 
     if (endereco && qtd) {
@@ -275,17 +269,19 @@ export class ProdutoAdicionarSacolaPage implements OnInit {
           precolocal
         )
         .subscribe({
-          next: (result) => {
-            this.dadosRetornoTMS = result;
+          next: (response: any[]) => {
+            this.dadosRetornoTMS = response;
             this.loadingTMS = false;
             console.log('opcoes entrega');
-            console.log(result);
+            console.log(response);
 
             // by Helio 09/01/2020
             // Seleciona automaticamente caso exista apenas uma opção de entrega
-            if (result.length === 1) {
+            if (response.length === 1) {
               this.vendedorSelecionado = this.dadosRetornoTMS[0];
+              this.selectedTmsOptionIndex[this.indexSeller] = 0;
               if (this.vendedorSelecionado.opcoes.length === 1) {
+                this.selectedTmsOptionIndex[this.indexOption] = 1;
                 this.opcaoSelecionada = this.vendedorSelecionado.opcoes[0];
                 this.entregaTMSselecionada = true;
               }

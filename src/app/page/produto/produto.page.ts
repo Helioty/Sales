@@ -40,7 +40,7 @@ export class ProdutoPage implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.pedidoOBS = this.pedidoService.getPedidoAtivo();
+    this.pedidoOBS = this.pedidoService.getPedidoAtivoOBS();
     this.totalItensOBS = this.pedidoService.getTotalItensOBS();
     this.activatedRoute.queryParams
       .pipe(

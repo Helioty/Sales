@@ -30,7 +30,7 @@ export class FormasPagamentoPage implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.pedidoOBS = this.pedidoService.getPedidoAtivo();
+    this.pedidoOBS = this.pedidoService.getPedidoAtivoOBS();
   }
 
   ionViewWillEnter(): void {

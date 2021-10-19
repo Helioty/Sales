@@ -60,7 +60,7 @@ export class ProdutoPesquisaPage implements OnInit, OnDestroy {
   ngOnInit(): void {
     console.log('Produto Pesquisa OnInit');
     this.setPesquisa();
-    this.pedidoOBS = this.pedidoService.getPedidoAtivo();
+    this.pedidoOBS = this.pedidoService.getPedidoAtivoOBS();
     this.totalItensOBS = this.pedidoService.getTotalItensOBS();
   }
 

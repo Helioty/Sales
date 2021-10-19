@@ -109,7 +109,7 @@ export class ClientePage implements OnInit, OnDestroy {
    * @author helio.souza
    */
   private getPedidoAtivo(): void {
-    this.pedidoSub = this.pedidoService.getPedidoAtivo().subscribe({
+    this.pedidoSub = this.pedidoService.getPedidoAtivoOBS().subscribe({
       next: (pedido) => (this.pedido = pedido),
     });
   }

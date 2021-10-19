@@ -36,7 +36,7 @@ export class PedidoRapidoPage implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.pedidoOBS = this.pedidoService.getPedidoAtivo();
+    this.pedidoOBS = this.pedidoService.getPedidoAtivoOBS();
     this.itensOBS = this.pedidoService.getPedidoItensOBS();
   }
 
@@ -200,5 +200,12 @@ export class PedidoRapidoPage implements OnInit {
       handler,
     };
     this.common.showAlertAction(props);
+  }
+
+  /**
+   * @author helio.souza
+   */
+  finalizarPedido(): void {
+    this.pedidoService.goToFinalizacao('pedido-rapido');
   }
 }

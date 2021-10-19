@@ -36,7 +36,7 @@ export class PedidoSacolaPage implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.pedidoOBS = this.pedidoService.getPedidoAtivo();
+    this.pedidoOBS = this.pedidoService.getPedidoAtivoOBS();
     this.itensOBS = this.pedidoService.getPedidoItensOBS();
     this.totalItensOBS = this.pedidoService.getTotalItensOBS();
   }
@@ -169,7 +169,9 @@ export class PedidoSacolaPage implements OnInit {
       });
   }
 
-  // finalização do pedido
+  /**
+   * @author helio.souza
+   */
   finalizarPedido() {
     this.pedidoService.goToFinalizacao('pedido-sacola');
   }
