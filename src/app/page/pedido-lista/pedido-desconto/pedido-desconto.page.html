@@ -21,7 +21,7 @@
             type="text"
             inputmode="tel"
             [ngModel]="desconto.valor | formatarString: 'VALOR'"
-            (ngModelChange)="desconto.valor=$event"
+            (ngModelChange)="desconto.valor = $event"
             (ionChange)="formatarValor()"
           ></ion-input>
         </ion-row>

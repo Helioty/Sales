@@ -53,7 +53,7 @@
           </ion-col>
         </ion-row> -->
 
-        <ion-row *ngIf="depCalled &&!depositos.length && !showDepositos">
+        <ion-row *ngIf="depCalled && !depositos.length && !showDepositos">
           <ion-col size="12">
             <ion-spinner></ion-spinner>
           </ion-col>
@@ -202,7 +202,8 @@
                               GRÁTIS
                             </span>
                             <span *ngIf="opcao.valorFreteCalculado">
-                              {{ opcao.valorTotalFreteCalculado | formatarString: 'VALOR'
+                              {{
+                                opcao.valorTotalFreteCalculado | formatarString: 'VALOR'
                               }}
                             </span>
                           </ion-label>

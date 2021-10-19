@@ -70,7 +70,9 @@
       <ion-card
         [routerLink]="['/pedido-rapido']"
         routerDirection="forward"
-        [disabled]="pedidoService.opcoesRetirada[pedidoService.tipoRetiradaIndex] !== 'IMEDIATA'"
+        [disabled]="
+          pedidoService.opcoesRetirada[pedidoService.tipoRetiradaIndex] !== 'IMEDIATA'
+        "
       >
         <ion-card-header class="ion-text-center">
           <ion-button disabled fill="clear" style="opacity: 1 !important">
