@@ -343,7 +343,7 @@ export class PedidoService {
    * @author helio.souza
    * @param pedidoItem
    */
-  adicionarItemPedido(pedidoItem: PedidoItem): Observable<any> {
+  adicionarItemPedido(pedidoItem: PedidoItem): Observable<PedidoItem[]> {
     const pedido = this.getPedidoNumero();
     const empresa = localStorage.getItem('empresa');
     const url = `${ENV.WS_VENDAS}${API_URL}PedidoVendaItem/${empresa}/${pedido}?update=S`;
