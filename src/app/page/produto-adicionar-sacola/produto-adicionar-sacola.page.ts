@@ -237,13 +237,17 @@ export class ProdutoAdicionarSacolaPage implements OnInit {
       }
     }
     this.pedidoItem.retiradas = this.retiradas;
-    this.pedidoService.adicionarItemPedido(this.pedidoItem).subscribe({
-      next: (response) => {
-        console.log('Resultado');
-        console.log(response);
-        this.prosseguir();
-      },
-    });
+    if (!this.pedidoItem?.retiradas.length) {
+      this.common.showToast('Selecione a quantidade de retirada!');
+    } else {
+      this.pedidoService.adicionarItemPedido(this.pedidoItem).subscribe({
+        next: (response) => {
+          console.log('Resultado');
+          console.log(response);
+          this.prosseguir();
+        },
+      });
+    }
   }
 
   adicionarComTMS(qtd: number, prod: any): void {
