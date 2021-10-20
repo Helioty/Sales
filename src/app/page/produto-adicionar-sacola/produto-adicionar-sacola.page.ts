@@ -219,7 +219,7 @@ export class ProdutoAdicionarSacolaPage implements OnInit {
     }
   }
 
-  async adicionarLocal(depositos: IProdutoEstoqueDeposito[]) {
+  adicionarLocal(depositos: IProdutoEstoqueDeposito[]): void {
     for (const el in depositos) {
       if (depositos[el].qtdPedido > depositos[el].estoque) {
         this.common.showToast('Estoque insuficiente');
@@ -236,12 +236,14 @@ export class ProdutoAdicionarSacolaPage implements OnInit {
         this.retiradas.push(retirada);
       }
     }
-    // this.pedidoItens.retiradas = this.retiradas;
-    // await this.pedidoIt.addItemPedido(this.pedidoItens).then((result) => {
-    //   console.log('Resultado');
-    //   console.log(result);
-    //   this.prosseguir();
-    // });
+    this.pedidoItem.retiradas = this.retiradas;
+    this.pedidoService.adicionarItemPedido(this.pedidoItem).subscribe({
+      next: (response) => {
+        console.log('Resultado');
+        console.log(response);
+        this.prosseguir();
+      },
+    });
   }
 
   adicionarComTMS(qtd: number, prod: any): void {
