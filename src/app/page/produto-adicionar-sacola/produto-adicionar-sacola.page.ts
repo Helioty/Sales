@@ -314,7 +314,7 @@ export class ProdutoAdicionarSacolaPage implements OnInit {
               this.vendedorSelecionado = this.dadosRetornoTMS[0];
               this.selectedTmsOptionIndex[this.indexSeller] = 0;
               if (this.vendedorSelecionado.opcoes.length === 1) {
-                this.selectedTmsOptionIndex[this.indexOption] = 1;
+                this.selectedTmsOptionIndex[this.indexOption] = 0;
                 this.opcaoSelecionada = this.vendedorSelecionado.opcoes[0];
                 this.entregaTMSselecionada = true;
               }
