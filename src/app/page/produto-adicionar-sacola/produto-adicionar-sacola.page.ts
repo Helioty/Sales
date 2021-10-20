@@ -222,7 +222,6 @@ export class ProdutoAdicionarSacolaPage implements OnInit {
   /**
    * @author helio.souza
    * @param depositos
-   * @returns
    */
   async adicionarLocal(depositos: IProdutoEstoqueDeposito[]): Promise<void> {
     for (const el in depositos) {
@@ -257,7 +256,12 @@ export class ProdutoAdicionarSacolaPage implements OnInit {
     }
   }
 
-  async adicionarComTMS(qtd: number, prod: any): Promise<void> {
+  /**
+   * @author helio.souza
+   * @param qtd
+   * @param produto
+   */
+  async adicionarComTMS(qtd: number, produto: any): Promise<void> {
     if (
       this.selectedTmsOptionIndex[this.indexSeller] === null &&
       this.selectedTmsOptionIndex[this.indexOption] === null
@@ -270,7 +274,7 @@ export class ProdutoAdicionarSacolaPage implements OnInit {
           String(this.pedidoService.getPedidoNumero()),
           String(qtd),
           this.produto.codigodigitoembalagem,
-          prod.conversao
+          produto.conversao
         )
         .subscribe({
           next: () => {
