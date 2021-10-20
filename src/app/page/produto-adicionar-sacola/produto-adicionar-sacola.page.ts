@@ -81,8 +81,8 @@ export class ProdutoAdicionarSacolaPage implements OnInit {
       next: (params) => {
         this.produto = JSON.parse(params.produto);
         this.navParams = {
-          paginaAnterior: params.paginaAnterior,
-          paginaSeguinte: params.paginaSeguinte,
+          paginaAnterior: params?.paginaAnterior ?? '',
+          paginaSeguinte: params?.paginaSeguinte ?? '',
         };
       },
     });
