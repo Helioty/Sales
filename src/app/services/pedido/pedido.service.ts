@@ -129,11 +129,13 @@ export class PedidoService {
           this.cliente.next(clie);
           toPedidoHome();
         },
-        error: () =>
+        error: () => {
+          this.limpaDadosPedido();
           this.common.showAlertError(
             'Erro!',
             'Falha ao recuperar os dados do Cliente, Tente novamente!'
-          ),
+          );
+        },
       });
     } else {
       toPedidoHome();
