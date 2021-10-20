@@ -219,7 +219,12 @@ export class ProdutoAdicionarSacolaPage implements OnInit {
     }
   }
 
-  adicionarLocal(depositos: IProdutoEstoqueDeposito[]): void {
+  /**
+   * @author helio.souza
+   * @param depositos
+   * @returns
+   */
+  async adicionarLocal(depositos: IProdutoEstoqueDeposito[]): Promise<void> {
     for (const el in depositos) {
       if (depositos[el].qtdPedido > depositos[el].estoque) {
         this.common.showToast('Estoque insuficiente');
@@ -232,7 +237,6 @@ export class ProdutoAdicionarSacolaPage implements OnInit {
         retirada.tipoRetirada = parseInt(depositos[el].tipoEntrega);
         retirada.qtd = depositos[el].qtdPedido;
         retirada.precoUnitario = this.produto.prvd1;
-
         this.retiradas.push(retirada);
       }
     }
@@ -240,23 +244,27 @@ export class ProdutoAdicionarSacolaPage implements OnInit {
     if (!this.pedidoItem?.retiradas.length) {
       this.common.showToast('Selecione a quantidade de retirada!');
     } else {
+      await this.common.showLoaderCustom('Adicionando produto...');
       this.pedidoService.adicionarItemPedido(this.pedidoItem).subscribe({
         next: (response) => {
           console.log('Resultado');
           console.log(response);
+          this.common.loading.dismiss();
           this.prosseguir();
         },
+        error: () => this.common.loading.dismiss(),
       });
     }
   }
 
-  adicionarComTMS(qtd: number, prod: any): void {
+  async adicionarComTMS(qtd: number, prod: any): Promise<void> {
     if (
       this.selectedTmsOptionIndex[this.indexSeller] === null &&
       this.selectedTmsOptionIndex[this.indexOption] === null
     ) {
       this.common.showToast('Selecione uma opção de entrega!');
     } else {
+      await this.common.showLoader();
       this.tmsService
         .gravaOpcoesTMS(
           String(this.pedidoService.getPedidoNumero()),
@@ -266,8 +274,10 @@ export class ProdutoAdicionarSacolaPage implements OnInit {
         )
         .subscribe({
           next: () => {
+            this.common.loading.dismiss();
             this.prosseguir();
           },
+          error: () => this.common.loading.dismiss(),
         });
     }
   }
