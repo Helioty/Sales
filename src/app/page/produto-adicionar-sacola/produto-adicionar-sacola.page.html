@@ -202,7 +202,8 @@
                               GRÁTIS
                             </span>
                             <span *ngIf="opcao.valorFreteCalculado">
-                              {{ opcao.valorTotalFreteCalculado | formatarString: 'VALOR'
+                              {{
+                                opcao.valorTotalFreteCalculado | formatarString: 'VALOR'
                               }}
                             </span>
                           </ion-label>
