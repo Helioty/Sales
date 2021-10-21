@@ -181,8 +181,8 @@
               <ion-col
                 size="12"
                 *ngIf="
-                  vendedorSelecionado.fantasia &&
-                  vendedorSelecionado.fantasia === vendedor.fantasia
+                  vendedorSelecionado?.fantasia &&
+                  vendedorSelecionado?.fantasia === vendedor?.fantasia
                 "
               >
                 <ion-row *ngFor="let opcao of vendedor.opcoes; let i = index">
@@ -202,8 +202,7 @@
                               GRÁTIS
                             </span>
                             <span *ngIf="opcao.valorFreteCalculado">
-                              {{
-                                opcao.valorTotalFreteCalculado | formatarString: 'VALOR'
+                              {{ opcao.valorTotalFreteCalculado | formatarString: 'VALOR'
                               }}
                             </span>
                           </ion-label>
