@@ -2,7 +2,7 @@
 <widget id="br.com.ferreiracosta.vendas" version="3.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Vendas</name>
     <description>Pedido de Vendas</description>
-    <author email="maik.ryuge@ferreiracosta.com.br" href="http://www.ferreiracosta.com.br/">TI Ferreira Costa</author>
+    <author email="dev.helio@outlook.com" href="https://www.github.com/Helioty">Helio Souza</author>
     <content src="index.html" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
