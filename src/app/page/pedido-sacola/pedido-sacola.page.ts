@@ -125,6 +125,9 @@ export class PedidoSacolaPage implements OnInit {
     this.common.showAlertAction(props);
   }
 
+  /**
+   * @author helio.souza
+   */
   openClientePage(): void {
     this.pedidoService.openCustomPage('cliente', 'back', 'pedido-sacola');
   }
