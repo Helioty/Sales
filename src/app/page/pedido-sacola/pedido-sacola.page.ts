@@ -126,13 +126,7 @@ export class PedidoSacolaPage implements OnInit {
   }
 
   openClientePage(): void {
-    const navigationExtras: NavigationExtras = {
-      queryParams: {
-        paginaSeguinte: 'back',
-        paginaAnterior: 'pedido-sacola',
-      },
-    };
-    this.navControl.navigateForward(['/cliente'], navigationExtras);
+    this.pedidoService.openCustomPage('cliente', 'back', 'pedido-sacola');
   }
 
   /**
