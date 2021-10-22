@@ -17,7 +17,7 @@ export class PedidoAtalhosPage implements OnInit {
   constructor(
     private readonly common: CommonService,
     public readonly scanner: ScannerService,
-    public readonly pedidoService: PedidoService
+    private readonly pedidoService: PedidoService
   ) {}
 
   ngOnInit(): void {
