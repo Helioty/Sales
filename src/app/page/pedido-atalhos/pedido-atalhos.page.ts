@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { NavigationExtras } from '@angular/router';
-import { NavController } from '@ionic/angular';
 import { Observable } from 'rxjs';
 import { CommonService } from 'src/app/services/common/common.service';
 import { PedidoHeader } from 'src/app/services/pedido/pedido.interface';
@@ -19,8 +17,7 @@ export class PedidoAtalhosPage implements OnInit {
   constructor(
     private readonly common: CommonService,
     public readonly scanner: ScannerService,
-    public readonly pedidoService: PedidoService,
-    private readonly navControl: NavController
+    public readonly pedidoService: PedidoService
   ) {}
 
   ngOnInit(): void {
@@ -66,13 +63,10 @@ export class PedidoAtalhosPage implements OnInit {
     this.pedidoService.adicionarCartaoPedido();
   }
 
-  openClientePage() {
-    const navigationExtras: NavigationExtras = {
-      queryParams: {
-        paginaSeguinte: 'back',
-        paginaAnterior: 'produto-atalhos',
-      },
-    };
-    this.navControl.navigateForward(['/cliente'], navigationExtras);
+  /**
+   * @author helio.souza
+   */
+  openClientePage(): void {
+    this.pedidoService.openCustomPage('cliente', 'back', 'pedido-atalhos');
   }
 }
