@@ -69,4 +69,11 @@ export class PedidoAtalhosPage implements OnInit {
   openClientePage(): void {
     this.pedidoService.openCustomPage('cliente', 'back', 'pedido-atalhos');
   }
+
+  /**
+   * @author helio.souza
+   */
+  sairPedido(): void {
+    this.pedidoService.sairPedido();
+  }
 }
