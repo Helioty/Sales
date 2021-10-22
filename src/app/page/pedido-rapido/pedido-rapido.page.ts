@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController } from '@ionic/angular';
 import { Observable } from 'rxjs';
 import { CommonService } from 'src/app/services/common/common.service';
 import {
@@ -31,8 +30,7 @@ export class PedidoRapidoPage implements OnInit {
   constructor(
     public readonly scanner: ScannerService,
     private readonly common: CommonService,
-    private readonly pedidoService: PedidoService,
-    private readonly navControl: NavController
+    private readonly pedidoService: PedidoService
   ) {}
 
   ngOnInit(): void {
