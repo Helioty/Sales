@@ -52,9 +52,7 @@ export class PedidoRapidoPage implements OnInit {
     this.scanner.focusOff();
   }
 
-  ionViewDidLeave(): void {
-    console.clear();
-  }
+  ionViewDidLeave(): void {}
 
   /**
    * @author helio.souza
