@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
 
-      <ion-button (click)="pedidoService.sairPedido()">
+      <ion-button (click)="sairPedido()">
         <ion-icon name="log-out-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
@@ -70,10 +70,9 @@
       <ion-card
         [routerLink]="['/pedido-rapido']"
         routerDirection="forward"
-        [disabled]="
-          pedidoService.opcoesRetirada[pedidoService.tipoRetiradaIndex] !== 'IMEDIATA'
-        "
+        [disabled]="(pedidoOBS | async).tipoEntrega !== 'IMEDIATA'"
       >
+        <!-- pedidoService.opcoesRetirada[pedidoService.tipoRetiradaIndex] !== 'IMEDIATA' -->
         <ion-card-header class="ion-text-center">
           <ion-button disabled fill="clear" style="opacity: 1 !important">
             <ion-icon slot="icon-only" name="speedometer-outline"></ion-icon>
