@@ -93,14 +93,11 @@ export class ProdutoPage implements OnInit {
     this.pedidoService.adicionarCartaoPedido();
   }
 
-  openClientePage() {
-    const navigationExtras: NavigationExtras = {
-      queryParams: {
-        paginaSeguinte: 'back',
-        paginaAnterior: 'produto',
-      },
-    };
-    this.navControl.navigateForward(['/cliente'], navigationExtras);
+  /**
+   * @author helio.souza
+   */
+  openClientePage(): void {
+    this.pedidoService.openCustomPage('cliente', 'back', 'produto');
   }
 
   /**
@@ -168,8 +165,9 @@ export class ProdutoPage implements OnInit {
    * @author helio.souza
    * @param produto
    */
-  openProdutoDetalhe(produto: IProduto) {
+  openProdutoDetalhe(produto: IProduto): void {
     const navigationExtras: NavigationExtras = {
+      skipLocationChange: true,
       queryParams: {
         produto: JSON.stringify(produto),
       },
