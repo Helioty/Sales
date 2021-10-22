@@ -22,13 +22,13 @@ export class PedidoAtalhosPage implements OnInit {
 
   ngOnInit(): void {
     console.log('Atalhos OnInit');
+    this.pedidoOBS = this.pedidoService.getPedidoAtivoOBS();
+    this.totalItensOBS = this.pedidoService.getTotalItensOBS();
   }
 
   ionViewWillEnter(): void {
     this.scanner.focusOn();
     this.common.goToFullScreen();
-    this.pedidoOBS = this.pedidoService.getPedidoAtivoOBS();
-    this.totalItensOBS = this.pedidoService.getTotalItensOBS();
   }
 
   ionViewDidEnter(): void {
