@@ -246,8 +246,7 @@ export class ProdutoAdicionarSacolaPage implements OnInit {
       await this.common.showLoaderCustom('Adicionando produto...');
       this.pedidoService.adicionarItemPedido(this.pedidoItem).subscribe({
         next: (response) => {
-          console.log('Resultado');
-          console.log(response);
+          console.log('Resultado: ', response);
           this.common.loading.dismiss();
           this.prosseguir();
         },
