@@ -345,12 +345,12 @@ export class PedidoService {
    * @author helio.souza
    * @param pedidoItem
    */
-  adicionarItemPedido(pedidoItem: PedidoItem): Observable<PedidoItem[]> {
+  adicionarItemPedido(pedidoItem: PedidoItem): Observable<PedidoHeader> {
     const pedido = this.getPedidoNumero();
     const empresa = localStorage.getItem('empresa');
     const url = `${ENV.WS_VENDAS}${API_URL}PedidoVendaItem/${empresa}/${pedido}?update=S`;
     return this.http
-      .post<{ items: Pagination<PedidoItem>; pedido: PedidoHeader }, PedidoItem>({
+      .post<PedidoHeader, PedidoItem>({
         url,
         body: pedidoItem,
       })
@@ -358,11 +358,10 @@ export class PedidoService {
         take(1),
         tap({
           next: (response) => {
-            this.atualizaPedidoItems(response.items);
-            this.atualizaPedidoHeader(response.pedido);
+            console.log('Response addItemPedido: ', response);
+            this.atualizaPedidoHeader(response);
           },
-        }),
-        map((response) => response.items.content)
+        })
       );
   }
 
