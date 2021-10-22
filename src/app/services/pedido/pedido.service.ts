@@ -358,7 +358,6 @@ export class PedidoService {
         take(1),
         tap({
           next: (response) => {
-            console.log('Response addItemPedido: ', response);
             this.atualizaPedidoHeader(response);
           },
         })
