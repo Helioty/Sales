@@ -212,13 +212,7 @@ export class ProdutoPesquisaPage implements OnInit, OnDestroy {
    * @author helio.souza
    */
   openClientePage(): void {
-    const navigationExtras: NavigationExtras = {
-      queryParams: {
-        paginaSeguinte: 'back',
-        paginaAnterior: 'produto-pesquisa',
-      },
-    };
-    this.navControl.navigateForward(['/cliente'], navigationExtras);
+    this.pedidoService.openCustomPage('cliente', 'back', 'produto-pesquisa');
   }
 
   /**
