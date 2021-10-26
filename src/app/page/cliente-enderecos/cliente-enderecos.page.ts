@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
-import { NavController } from '@ionic/angular';
+import { ModalController, NavController } from '@ionic/angular';
 import { Observable } from 'rxjs';
+import { AdicionarEnderecoComponent } from 'src/app/components/adicionar-endereco/adicionar-endereco.component';
 import { ClienteGet, Endereco } from 'src/app/services/cliente/cliente.interface';
 import { CommonService } from 'src/app/services/common/common.service';
 import { PedidoService } from 'src/app/services/pedido/pedido.service';
@@ -23,6 +24,7 @@ export class ClienteEnderecosPage implements OnInit {
   constructor(
     private readonly common: CommonService,
     private readonly pedidoService: PedidoService,
+    private readonly modalControl: ModalController,
     private readonly navControl: NavController,
     private readonly route: ActivatedRoute
   ) {}
@@ -88,6 +90,23 @@ export class ClienteEnderecosPage implements OnInit {
       default:
         this.navControl.navigateForward(['/' + paginaSeguinte]);
         break;
+    }
+  }
+
+  /**
+   * @author helio.souza
+   * @param cliente
+   */
+  async adicionarEndereco(cliente: ClienteGet): Promise<void> {
+    const modal = await this.modalControl.create({
+      component: AdicionarEnderecoComponent,
+      componentProps: { cliente },
+    });
+    await modal.present();
+    const { data } = await modal.onWillDismiss();
+    console.log(data);
+    if (data.hasRetorno) {
+      data.retorno;
     }
   }
 }
