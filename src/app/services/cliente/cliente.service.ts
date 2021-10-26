@@ -46,7 +46,7 @@ export class ClienteService {
   }
 
   // by Helio 23/03/2020, usado para cadastrar um novo endereco
-  public postClienteAlteracao(cliente: any): Observable<any> {
+  public postClienteAlteracao(cliente: ClienteGet): Observable<any> {
     const url = `${ENV.WS_CRM}${API_URL}cliente/save`;
     const props = { url, body: cliente };
     return this.http.post(props).pipe(take(1));
