@@ -1,11 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { Observable } from 'rxjs';
-import { switchMap, tap } from 'rxjs/operators';
+import { tap } from 'rxjs/operators';
 import { ClienteGet } from 'src/app/services/cliente/cliente.interface';
 import { ClienteService } from 'src/app/services/cliente/cliente.service';
 import { CommonService } from 'src/app/services/common/common.service';
-import { PedidoHeader } from 'src/app/services/pedido/pedido.interface';
 import { PedidoService } from 'src/app/services/pedido/pedido.service';
 
 @Component({
@@ -15,8 +14,6 @@ import { PedidoService } from 'src/app/services/pedido/pedido.service';
 })
 export class AdicionarEnderecoComponent implements OnInit {
   @Input() cliente: ClienteGet;
-
-  hasCadastrado = false;
 
   constructor(
     private readonly modalCtrl: ModalController,
@@ -45,50 +42,32 @@ export class AdicionarEnderecoComponent implements OnInit {
    */
   async cadastrar(data: any): Promise<void> {
     await this.common.showLoader();
-    if (this.hasCadastrado) {
-      this.setPedidoCliente(this.cliente.cgccpf, this.cliente).subscribe({
-        next: () => {
-          this.common.loading.dismiss();
-          this.close(true, null);
-        },
-        error: () => this.common.loading.dismiss(),
-      });
-    } else {
-      this.atualizaCadastroCliente(this.cliente)
-        .pipe(
-          tap({
-            next: () => {
-              this.hasCadastrado = true;
-            },
-            error: () => {
-              this.common.loading.dismiss();
-            },
-          }),
-          switchMap(() => this.setPedidoCliente(this.cliente.cgccpf, this.cliente))
-        )
-        .subscribe({
+    this.atualizaCadastroCliente(this.cliente)
+      .pipe(
+        tap({
           next: () => {
             this.common.loading.dismiss();
             this.close(true, null);
           },
-          error: () => this.common.loading.dismiss(),
-        });
-    }
+          error: () => {
+            this.common.loading.dismiss();
+          },
+        })
+      )
+      .subscribe();
   }
 
   /**
    * @author helio.souza
-   * @param clienteDoc CPF/CNPJ do cliente.
    * @param cliente Dados do Cliente.
    */
-  setPedidoCliente(clienteDoc: string, cliente: ClienteGet): Observable<PedidoHeader> {
-    const numPedido = this.pedidoService.getPedidoNumero();
-    return this.pedidoService.adicionarCliente(numPedido, clienteDoc, cliente);
+  setPedidoCliente(cliente: ClienteGet): void {
+    this.pedidoService.atualizarPedidoCliente(cliente);
   }
 
   /**
    * @author helio.souza
-   * @param cliente
+   * @param cliente Dados do Cliente.
    */
   atualizaCadastroCliente(cliente: ClienteGet): Observable<any> {
     return this.clienteService.postClienteAlteracao(cliente);
