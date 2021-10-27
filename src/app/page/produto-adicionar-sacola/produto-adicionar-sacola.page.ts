@@ -113,6 +113,10 @@ export class ProdutoAdicionarSacolaPage implements OnInit {
 
   ionViewDidLeave(): void {}
 
+  /**
+   * @author helio.souza
+   * @param slide Index do slide destino.
+   */
   slideTo(slide: number): void {
     this.slides.lockSwipes(false);
     this.slides.slideTo(slide);
