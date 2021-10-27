@@ -11,21 +11,29 @@
 </ion-header>
 
 <ion-content>
-  <form #f="ngForm" (ngSubmit)="cadastrar(f.value)">
-    <h1 class="ion-no-margin">I'm Here</h1>
+  <form [formGroup]="form" (ngSubmit)="cadastrar(form.value)">
+    <h4 class="ion-text-center">Cadastre um novo endereço.</h4>
 
     <ion-grid class="ion-no-margin">
       <ion-row>
         <ion-col size="8">
-          <ion-item>
-            <ion-label>CEP</ion-label>
-            <ion-input></ion-input>
+          <ion-item class="address-item" style="--inner-padding-end: 10px">
+            <ion-label position="stacked">CEP</ion-label>
+            <ion-input inputmode="tel"></ion-input>
+            <ion-button
+              slot="end"
+              fill="clear"
+              color="fc-blue"
+              style="font-size: 100%; height: 75%; margin: auto"
+            >
+              <ion-icon slot="icon-only" name="search-outline"></ion-icon>
+            </ion-button>
           </ion-item>
         </ion-col>
 
         <ion-col size="4">
-          <ion-item>
-            <ion-label>UF</ion-label>
+          <ion-item class="address-item">
+            <ion-label position="stacked">UF</ion-label>
             <ion-input></ion-input>
           </ion-item>
         </ion-col>
@@ -33,8 +41,8 @@
 
       <ion-row>
         <ion-col size="12">
-          <ion-item>
-            <ion-label>Cidade</ion-label>
+          <ion-item class="address-item">
+            <ion-label position="stacked">Cidade</ion-label>
             <ion-input></ion-input>
           </ion-item>
         </ion-col>
@@ -42,8 +50,8 @@
 
       <ion-row>
         <ion-col size="12">
-          <ion-item>
-            <ion-label>Bairro</ion-label>
+          <ion-item class="address-item">
+            <ion-label position="stacked">Bairro</ion-label>
             <ion-input></ion-input>
           </ion-item>
         </ion-col>
@@ -51,8 +59,8 @@
 
       <ion-row>
         <ion-col size="12">
-          <ion-item>
-            <ion-label>Rua ou avenida</ion-label>
+          <ion-item class="address-item">
+            <ion-label position="stacked">Rua ou avenida</ion-label>
             <ion-input></ion-input>
           </ion-item>
         </ion-col>
@@ -60,8 +68,8 @@
 
       <ion-row>
         <ion-col size="12">
-          <ion-item>
-            <ion-label>Número</ion-label>
+          <ion-item class="address-item">
+            <ion-label position="stacked">Número</ion-label>
             <ion-input></ion-input>
           </ion-item>
         </ion-col>
@@ -69,8 +77,8 @@
 
       <ion-row>
         <ion-col size="12">
-          <ion-item>
-            <ion-label>Complemento</ion-label>
+          <ion-item class="address-item">
+            <ion-label position="stacked">Complemento</ion-label>
             <ion-input></ion-input>
           </ion-item>
         </ion-col>
@@ -81,7 +89,7 @@
       color="fc-button-green"
       class="ion-no-border item-submit"
       type="submit"
-      [disabled]="!f.valid"
+      [disabled]="!form.valid"
     >
       <ion-text>SALVAR</ion-text>
     </ion-button>
