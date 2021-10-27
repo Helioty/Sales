@@ -266,7 +266,7 @@ export class ProdutoAdicionarSacolaPage implements OnInit {
    */
   async adicionarComTMS(qtd: number, produto: any): Promise<void> {
     if (
-      this.selectedTmsOptionIndex[this.indexSeller] === null &&
+      this.selectedTmsOptionIndex[this.indexSeller] === null ||
       this.selectedTmsOptionIndex[this.indexOption] === null
     ) {
       this.common.showToast('Selecione uma opção de entrega!');
