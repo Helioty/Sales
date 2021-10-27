@@ -78,8 +78,8 @@ export class AdicionarEnderecoComponent implements OnInit {
 
   /**
    * @author helio.souza
-   * @param clienteDoc
-   * @param cliente
+   * @param clienteDoc CPF/CNPJ do cliente
+   * @param cliente Dados do Cliente
    */
   setPedidoCliente(clienteDoc: string, cliente: ClienteGet): Observable<PedidoHeader> {
     const numPedido = this.pedidoService.getPedidoNumero();
