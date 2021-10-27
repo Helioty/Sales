@@ -41,11 +41,13 @@ export class AdicionarEnderecoComponent implements OnInit {
    * @param data
    */
   async cadastrar(data: any): Promise<void> {
-    await this.common.showLoader();
-    this.atualizaCadastroCliente(this.cliente)
+    await this.common.showLoaderCustom('Salvando...');
+    const newCliente = { ...this.cliente, enderecos: [data, ...this.cliente.enderecos] };
+    this.atualizaCadastroCliente(newCliente)
       .pipe(
         tap({
           next: () => {
+            this.setPedidoCliente(newCliente);
             this.common.loading.dismiss();
             this.close(true, null);
           },

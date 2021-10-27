@@ -1,6 +1,5 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-
 import { AdicionarEnderecoComponent } from './adicionar-endereco.component';
 
 describe('AdicionarEnderecoComponent', () => {

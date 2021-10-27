@@ -29,9 +29,8 @@
               {{ endereco.ds_ende }}, {{ endereco.nu_ende }}
             </p>
             <p class="local ion-no-margin">
-              {{ endereco.ds_bairro }}
-              {{ endereco.cidade ? ' - ' + endereco.cidade : '' }}
-              {{ endereco.ds_uf ? ' - ' + endereco.ds_uf : '' }}
+              {{ endereco.ds_bairro }} {{ endereco.cidade ? ' - ' + endereco.cidade : ''
+              }} {{ endereco.ds_uf ? ' - ' + endereco.ds_uf : '' }}
             </p>
           </ion-col>
         </ion-row>
@@ -50,7 +49,7 @@
       </ion-grid>
     </ion-item>
 
-    <ion-item button class="ion-text-center">
+    <ion-item button class="ion-text-center" (click)="adicionarEndereco(clie)">
       <ion-label> Cadastrar novo endereço </ion-label>
     </ion-item>
   </ion-list>

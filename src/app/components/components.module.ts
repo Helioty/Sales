@@ -4,7 +4,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { PipesModule } from '../shared/pipes/pipes.module';
-import { AdicionarEnderecoComponent } from './adicionar-endereco/adicionar-endereco.component';
 import { FormErrorComponent } from './form-error/form-error.component';
 import { LoginValidateComponent } from './login-validate/login-validate.component';
 import { MenuComponent } from './menu/menu.component';
@@ -18,7 +17,6 @@ import { PesquisaClienteComponent } from './pesquisa-cliente/pesquisa-cliente.co
     PedidoResumoComponent,
     LoginValidateComponent,
     PesquisaClienteComponent,
-    AdicionarEnderecoComponent,
   ],
   imports: [
     CommonModule,
@@ -34,7 +32,6 @@ import { PesquisaClienteComponent } from './pesquisa-cliente/pesquisa-cliente.co
     PedidoResumoComponent,
     LoginValidateComponent,
     PesquisaClienteComponent,
-    AdicionarEnderecoComponent,
   ],
 })
 export class ComponentsModule {}

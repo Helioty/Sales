@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { ModalController, NavController } from '@ionic/angular';
 import { Observable } from 'rxjs';
-import { AdicionarEnderecoComponent } from 'src/app/components/adicionar-endereco/adicionar-endereco.component';
+import { AdicionarEnderecoComponent } from 'src/app/page/cliente-enderecos/adicionar-endereco/adicionar-endereco.component';
 import { ClienteGet, Endereco } from 'src/app/services/cliente/cliente.interface';
 import { CommonService } from 'src/app/services/common/common.service';
 import { PedidoService } from 'src/app/services/pedido/pedido.service';

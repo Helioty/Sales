@@ -1,0 +1,19 @@
+form {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-content: center;
+}
+
+.item-submit {
+  margin: 8px !important;
+  --box-shadow: none !important;
+  border-radius: 6px;
+  min-height: 48px;
+
+  ion-text {
+    margin: auto !important;
+    font-size: 125%;
+  }
+}
