@@ -309,8 +309,7 @@ export class ProdutoAdicionarSacolaPage implements OnInit {
           next: (response: any[]) => {
             this.dadosRetornoTMS = response;
             this.loadingTMS = false;
-            console.log('opcoes entrega');
-            console.log(response);
+            console.log('opcoes entrega: ', response);
 
             // by Helio 09/01/2020
             // Seleciona automaticamente caso exista apenas uma opção de entrega
@@ -324,9 +323,7 @@ export class ProdutoAdicionarSacolaPage implements OnInit {
               }
             }
           },
-          error: () => {
-            this.loadingTMS = false;
-          },
+          error: () => (this.loadingTMS = false),
         });
     } else {
     }
