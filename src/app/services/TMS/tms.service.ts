@@ -27,7 +27,7 @@ export class TMSService {
   }
 
   gravaOpcoesTMS(
-    numPedido: string,
+    numPedido: number,
     qtd: string,
     codigodigitoembalagem: string,
     conversao: string

@@ -272,9 +272,10 @@ export class ProdutoAdicionarSacolaPage implements OnInit {
       this.common.showToast('Selecione uma opção de entrega!');
     } else {
       await this.common.showLoader();
+      const numPedido = this.pedidoService.getPedidoNumero();
       this.tmsService
         .gravaOpcoesTMS(
-          String(this.pedidoService.getPedidoNumero()),
+          numPedido,
           String(qtd),
           this.produto.codigodigitoembalagem,
           produto.conversao
