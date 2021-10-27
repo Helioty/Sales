@@ -126,7 +126,7 @@ export class PedidoService {
     if (pedido.cgccpf_cliente) {
       this.clienteService.getCliente(pedido.cgccpf_cliente, false).subscribe({
         next: (clie) => {
-          this.cliente.next(clie);
+          this.atualizarPedidoCliente(clie);
           toPedidoHome();
         },
         error: () => {
@@ -259,10 +259,19 @@ export class PedidoService {
         next: (pedido) => {
           console.log('Cliente Adicionado!');
           this.atualizaPedidoHeader(pedido);
-          this.cliente.next(clie);
+          this.atualizarPedidoCliente(clie);
         },
       })
     );
+  }
+
+  /**
+   * @author helio.souza
+   * @description Salva o estado dos dados do cliente.
+   * @param cliente Dados do cliente.
+   */
+  atualizarPedidoCliente(cliente: ClienteGet): void {
+    this.cliente.next(cliente);
   }
 
   /**
@@ -296,7 +305,7 @@ export class PedidoService {
       this.removerCliente(pedido).subscribe({
         next: () => {
           this.common.loading.dismiss();
-          this.cliente.next(null);
+          this.atualizarPedidoCliente(null);
           action();
         },
         error: () => this.common.loading.dismiss(),
