@@ -1,43 +1,43 @@
-export class PedidoHeader {
-  recnum: number;
-  cod_empresa: number;
-  numpedido: number;
-  nome_cliente: string;
-  codvend: number;
-  condpag: string;
-  descricao_condpag: string;
-  qtdParcelas: number;
-  msgJuros: string;
-  tipodoc: string;
-  descricao_tipodoc: string;
-  totpedido: number;
-  numitens: number;
-  cgccpf_cliente: string;
-  qtdpages: number;
-  totalElements: number;
-  dataEmissao: string;
-  tipoEntrega: string;
-  status: string;
-  hora: string;
-  seqEnderecoEntrega: number;
-  frete: any;
-  icmsRetido: number;
-  valorTotalPedido: number;
-  digito: number;
-  cartaoPedido: number;
-  barCodecartaoPedido: string;
-  informarCliente: string;
-  pesoTotal: number;
-  descontoBrinde: number;
-  user_allow_desconto: number;
-  valorDesconto: number;
-  percDesconto: number;
-  valorEntrada: number;
-  valorParcela: number;
-  totalProdutos: number;
-  canalVenda: number;
-  sqltypeName: any;
-}
+// export class PedidoHeader {
+//   recnum: number;
+//   cod_empresa: number;
+//   numpedido: number;
+//   nome_cliente: string;
+//   codvend: number;
+//   condpag: string;
+//   descricao_condpag: string;
+//   qtdParcelas: number;
+//   msgJuros: string;
+//   tipodoc: string;
+//   descricao_tipodoc: string;
+//   totpedido: number;
+//   numitens: number;
+//   cgccpf_cliente: string;
+//   qtdpages: number;
+//   totalElements: number;
+//   dataEmissao: string;
+//   tipoEntrega: string;
+//   status: string;
+//   hora: string;
+//   seqEnderecoEntrega: number;
+//   frete: any;
+//   icmsRetido: number;
+//   valorTotalPedido: number;
+//   digito: number;
+//   cartaoPedido: number;
+//   barCodecartaoPedido: string;
+//   informarCliente: string;
+//   pesoTotal: number;
+//   descontoBrinde: number;
+//   user_allow_desconto: number;
+//   valorDesconto: number;
+//   percDesconto: number;
+//   valorEntrada: number;
+//   valorParcela: number;
+//   totalProdutos: number;
+//   canalVenda: number;
+//   sqltypeName: any;
+// }
 
 export class PedidoCab {
   id: number;
@@ -72,23 +72,23 @@ export class PedidoCab {
 //   constructor(idEmpresa: string, numPedido: number) {}
 // }
 
-export class Retiradas {
-  empresaRetirada: number;
-  idDeposito: number;
-  tipoRetirada: number;
-  qtd: number;
-  precoUnitario: number;
+// export class Retiradas {
+//   empresaRetirada: number;
+//   idDeposito: number;
+//   tipoRetirada: number;
+//   qtd: number;
+//   precoUnitario: number;
 
-  constructor() {}
-}
+//   constructor() {}
+// }
 
-export class AtualizaPedido {
-  cliente: string; // CPF do cliente
-  vendedor: string; // Código do vendedor
-  entrega: string;
-  tipo_pagamento: string;
-  condicao_pagto: string;
-  seq_endereco_entrega: string; // Sequencial do Endereço de Entrega
-  valor_entrada: number;
-  basket: number;
-}
+// export class AtualizaPedido {
+//   cliente: string; // CPF do cliente
+//   vendedor: string; // Código do vendedor
+//   entrega: string;
+//   tipo_pagamento: string;
+//   condicao_pagto: string;
+//   seq_endereco_entrega: string; // Sequencial do Endereço de Entrega
+//   valor_entrada: number;
+//   basket: number;
+// }
