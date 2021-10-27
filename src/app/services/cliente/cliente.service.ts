@@ -38,15 +38,17 @@ export class ClienteService {
    * @author helio.souza
    * @param clie Dado a ser pesquisado.
    * @param page Pagina requerida. Default: 1
-   * @returns {Observable<Pagination<ClienteGet>>}
    */
   getClientePesquisa(clie: string, page = 1): Observable<Pagination<ClienteGet>> {
     const url = `${ENV.WS_CRM}${API_URL}cliente/list?search=${clie}&page=${page}&size=${this.clientesPorPagina}`;
     return this.http.get(url);
   }
 
-  // by Helio 23/03/2020, usado para cadastrar um novo endereco
-  public postClienteAlteracao(cliente: ClienteGet): Observable<any> {
+  /**
+   * @author helio.souza
+   * @param cliente Dados do cliente.
+   */
+  postClienteAlteracao(cliente: ClienteGet): Observable<any> {
     const url = `${ENV.WS_CRM}${API_URL}cliente/save`;
     const props = { url, body: cliente };
     return this.http.post(props).pipe(take(1));
