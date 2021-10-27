@@ -126,6 +126,7 @@ export class ProdutoAdicionarSacolaPage implements OnInit {
 
   /**
    * @author helio.souza
+   * @description Pega os depositos contendo o produto.
    */
   getProdutoDepositos(): void {
     this.depCalled = true;
@@ -207,6 +208,9 @@ export class ProdutoAdicionarSacolaPage implements OnInit {
     // }
   }
 
+  /**
+   * @author helio.souza
+   */
   prosseguir(): void {
     if (this.navParams.paginaAnterior) {
       switch (this.navParams.paginaAnterior) {
