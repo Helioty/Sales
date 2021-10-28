@@ -61,6 +61,7 @@ export class ClienteEnderecosPage implements OnInit {
    */
   async setEnderecoEntrega(selected: Endereco): Promise<void> {
     await this.common.showLoader();
+    console.log('Endereco selecionado: ', selected);
     this.pedidoService.setEnderecoEntrega(selected).subscribe({
       next: () => {
         this.common.loading.dismiss();

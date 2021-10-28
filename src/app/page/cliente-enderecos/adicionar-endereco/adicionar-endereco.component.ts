@@ -6,6 +6,7 @@ import { tap } from 'rxjs/operators';
 import { ClienteGet, Endereco } from 'src/app/services/cliente/cliente.interface';
 import { ClienteService } from 'src/app/services/cliente/cliente.service';
 import { CommonService } from 'src/app/services/common/common.service';
+import { ConsultaEnderecoService } from 'src/app/services/entrega/consulta-endereco.service';
 import { PedidoService } from 'src/app/services/pedido/pedido.service';
 
 @Component({
@@ -22,6 +23,7 @@ export class AdicionarEnderecoComponent implements OnInit {
     private readonly modalCtrl: ModalController,
     private readonly pedidoService: PedidoService,
     private readonly clienteService: ClienteService,
+    private readonly consultaEnderecoService: ConsultaEnderecoService,
     private readonly formBuilder: FormBuilder,
     private readonly common: CommonService
   ) {}
@@ -76,8 +78,8 @@ export class AdicionarEnderecoComponent implements OnInit {
     this.atualizaCadastroCliente(newCliente)
       .pipe(
         tap({
-          next: () => {
-            this.setPedidoCliente(newCliente);
+          next: (cliente) => {
+            this.setPedidoCliente(cliente);
             this.common.loading.dismiss();
             this.close(true, null);
           },
@@ -101,7 +103,32 @@ export class AdicionarEnderecoComponent implements OnInit {
    * @author helio.souza
    * @param cliente Dados do Cliente.
    */
-  atualizaCadastroCliente(cliente: ClienteGet): Observable<any> {
+  atualizaCadastroCliente(cliente: ClienteGet): Observable<ClienteGet> {
     return this.clienteService.postClienteAlteracao(cliente);
+  }
+
+  /**
+   * @author helio.souza
+   * @description Consulta dados do CEP informado.
+   * @param cep CEP.
+   */
+  getCepInfo(cep: string): void {
+    this.consultaEnderecoService
+      .getEnderecoByCep(cep)
+      .pipe(
+        tap({
+          next: (response) => {
+            console.log('Response GetCep: ', response);
+            this.patchForm({
+              ds_cep: response.cep,
+              ds_uf: response.estado,
+              cidade: response.cidade,
+              ds_bairro: response.bairro,
+              ds_ende: response.logradouro,
+            });
+          },
+        })
+      )
+      .subscribe();
   }
 }

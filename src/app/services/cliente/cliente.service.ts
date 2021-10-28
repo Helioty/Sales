@@ -48,9 +48,9 @@ export class ClienteService {
    * @author helio.souza
    * @param cliente Dados do cliente.
    */
-  postClienteAlteracao(cliente: ClienteGet): Observable<any> {
+  postClienteAlteracao(cliente: ClienteGet): Observable<ClienteGet> {
     const url = `${ENV.WS_CRM}${API_URL}cliente/save`;
     const props = { url, body: cliente };
-    return this.http.post(props).pipe(take(1));
+    return this.http.post<ClienteGet, ClienteGet>(props).pipe(take(1));
   }
 }
