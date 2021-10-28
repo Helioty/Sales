@@ -1,0 +1,17 @@
+.conteiner {
+  display: flex;
+  height: 68%;
+  flex-direction: column;
+  align-content: center;
+  justify-content: space-between;
+  align-items: stretch;
+}
+
+ion-item {
+  border-radius: 6px;
+
+  ion-text {
+    margin: auto !important;
+    font-size: 110%;
+  }
+}

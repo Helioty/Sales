@@ -91,7 +91,7 @@
             scrollable
             [value]="familiaSelecionada"
             *ngIf="familia.qtdItems > 1"
-            (ionChange)="changeFamilia($event.target.value, i)"
+            (ionChange)="changeFamilia($event.target, i)"
           >
             <ion-segment-button
               *ngFor="let familiaIt of familia?.items"
@@ -146,8 +146,8 @@
 
         <ion-row class="precoParcelas">
           <ion-col size="12" class="ion-no-padding">
-            {{ produto.qtdMaxParcelas }} x de
-            {{ produto.valorParcela | formatarString: 'VALOR' }}
+            {{ produto.qtdMaxParcelas }} x de {{ produto.valorParcela | formatarString:
+            'VALOR' }}
           </ion-col>
         </ion-row>
       </ion-col>

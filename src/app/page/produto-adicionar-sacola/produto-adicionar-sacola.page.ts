@@ -14,6 +14,7 @@ import {
   IProdutoEstoqueDeposito,
 } from 'src/app/services/produto/produto.interface';
 import { ProdutoService } from 'src/app/services/produto/produto.service';
+import { ScannerService } from 'src/app/services/scanner/scanner.service';
 import { TMSService } from 'src/app/services/TMS/tms.service';
 
 @Component({
@@ -66,6 +67,7 @@ export class ProdutoAdicionarSacolaPage implements OnInit {
   private statusGravacao = false;
 
   constructor(
+    public readonly scanner: ScannerService,
     private readonly route: ActivatedRoute,
     private readonly common: CommonService,
     private readonly navControl: NavController,
@@ -122,6 +124,14 @@ export class ProdutoAdicionarSacolaPage implements OnInit {
     this.slides.slideTo(slide);
     this.slides.lockSwipes(true);
     this.atualizaBySlide();
+  }
+
+  /**
+   * @author helio.souza
+   */
+  segmentChange(target: any) {
+    const value = target.value;
+    this.slideTo(value);
   }
 
   /**

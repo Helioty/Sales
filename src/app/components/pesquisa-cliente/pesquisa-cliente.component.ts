@@ -117,7 +117,8 @@ export class PesquisaClienteComponent implements OnInit, OnDestroy {
    * @author helio.souza
    * @param infinite IonInfinite Element.
    */
-  doInfinite(infinit: IonInfiniteScroll) {
+  doInfinite(infinite: any) {
+    const infinit = infinite as IonInfiniteScroll;
     this.pesquisar(this.pesquisado)
       .pipe(
         take(1),

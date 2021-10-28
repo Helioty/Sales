@@ -147,7 +147,8 @@ export class ProdutoPage implements OnInit {
     //         }
   }
 
-  changeFamilia(valor: string, index: number) {
+  changeFamilia(ref: any, index: number) {
+    const valor: string = ref.value;
     this.produtoFamilia[index].items.forEach((element: any) => {
       if (element.valor_atributo === valor) {
         this.produtoService.getProduto(element.id_produto).then((result: any) => {

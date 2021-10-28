@@ -1,1 +1,15 @@
-<p>pedido-resumo works!</p>
+<ion-content class="ion-padding">
+  <div class="conteiner" *ngIf="pedido | async as ped">
+    <div>
+      <h2>Nº Pedido: {{ ped.numpedido }}</h2>
+
+      <h3 *ngIf="totalItens | async as total">Nº Total de Produtos: {{ total }}</h3>
+
+      <h3 *ngIf="ped.cgccpf_cliente">Cliente: {{ ped.cgccpf_cliente }}</h3>
+    </div>
+
+    <ion-item button lines="none" color="fc-button-green" (click)="close()">
+      <ion-text>FINALIZAR PEDIDO</ion-text>
+    </ion-item>
+  </div>
+</ion-content>

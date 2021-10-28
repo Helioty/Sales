@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { IonRouterOutlet, ModalController } from '@ionic/angular';
 import { Observable } from 'rxjs';
+import { PedidoResumoComponent } from 'src/app/components/pedido-resumo/pedido-resumo.component';
 import { CommonService } from 'src/app/services/common/common.service';
 import { PedidoHeader } from 'src/app/services/pedido/pedido.interface';
 import { PedidoService } from 'src/app/services/pedido/pedido.service';
@@ -17,7 +19,9 @@ export class PedidoAtalhosPage implements OnInit {
   constructor(
     private readonly common: CommonService,
     public readonly scanner: ScannerService,
-    private readonly pedidoService: PedidoService
+    private readonly pedidoService: PedidoService,
+    private readonly modalController: ModalController,
+    private readonly routerOutlet: IonRouterOutlet
   ) {}
 
   ngOnInit(): void {
@@ -75,5 +79,20 @@ export class PedidoAtalhosPage implements OnInit {
    */
   sairPedido(): void {
     this.pedidoService.sairPedido();
+  }
+
+  /**
+   * @author helio.souza
+   * @description Exibe o modal de resumo do pedido.
+   */
+  async showResumo(): Promise<void> {
+    this.scanner.focusPause();
+    const modal = await this.modalController.create({
+      component: PedidoResumoComponent,
+      initialBreakpoint: 0.7,
+      breakpoints: [0, 0.7],
+    });
+    await modal.present();
+    modal.onDidDismiss().then(() => this.scanner.focusOn());
   }
 }

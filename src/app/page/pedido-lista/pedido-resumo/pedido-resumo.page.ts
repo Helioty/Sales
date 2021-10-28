@@ -68,7 +68,8 @@ export class PedidoResumoPage implements OnInit {
    * @author helio.souza
    * @param infinite IonInfinite Element.
    */
-  doInfinite(infinite: IonInfiniteScroll): void {
+  doInfinite(infinit: any): void {
+    const infinite = infinit as IonInfiniteScroll;
     const event = (data: Pagination<PedidoItem> | null) => {
       if (data) {
         this.paginaAtual = this.paginaAtual + 1;

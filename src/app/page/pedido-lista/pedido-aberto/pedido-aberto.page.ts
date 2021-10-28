@@ -62,7 +62,8 @@ export class PedidoAbertoPage implements OnInit {
    * @author helio.souza
    * @param refresher IonRefresher Element.
    */
-  doRefresh(refresher: IonRefresher): void {
+  doRefresh(target: any): void {
+    const refresher = target as IonRefresher;
     const event = (data: Pagination<PedidoHeader> | null) => {
       if (data) {
         this.paginaAtual = 1;
@@ -80,7 +81,8 @@ export class PedidoAbertoPage implements OnInit {
    * @author helio.souza
    * @param infinite IonInfinite Element.
    */
-  doInfinite(infinite: IonInfiniteScroll): void {
+  doInfinite(infinit: any): void {
+    const infinite = infinit as IonInfiniteScroll;
     const event = (data: Pagination<PedidoHeader> | null) => {
       if (data) {
         this.paginaAtual = this.paginaAtual + 1;

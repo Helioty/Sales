@@ -35,6 +35,15 @@ ion-content {
   }
 }
 
-ion-footer {
-  background-color: #f4f4f4;
+.resume-modal-handle {
+  left: 0px;
+  right: 0px;
+  bottom: 10px;
+  border-radius: 8px;
+  margin-left: auto;
+  margin-right: auto;
+  position: absolute;
+  width: 50%;
+  height: 7px;
+  background: var(--ion-color-step-350, #c0c0be);
 }

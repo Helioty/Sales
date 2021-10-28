@@ -150,7 +150,8 @@ export class ProdutoPesquisaPage implements OnInit, OnDestroy {
    * @author helio.souza
    * @param infinite IonInfinite Element.
    */
-  doInfinite(infinit: IonInfiniteScroll): void {
+  doInfinite(infinite: any): void {
+    const infinit = infinite as IonInfiniteScroll;
     this.pesquisar(this.pesquisado)
       .pipe(
         take(1),
