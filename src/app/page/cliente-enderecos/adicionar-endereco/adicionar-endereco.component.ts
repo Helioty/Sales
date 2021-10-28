@@ -54,15 +54,15 @@ export class AdicionarEnderecoComponent implements OnInit {
    * @author helio.souza
    * @param patch
    */
-  patchForm(patch?: any): void {
+  patchForm(patch?: Partial<Endereco>): void {
     this.form.patchValue({
-      cidade: patch ? '' : '',
-      ds_ende: '',
-      nu_ende: '',
-      ds_bairro: '',
-      ds_cep: '',
-      ds_uf: '',
-      ds_compl: '',
+      cidade: patch && patch.cidade ? patch.cidade : '',
+      ds_ende: patch && patch.ds_ende ? patch.ds_ende : '',
+      nu_ende: patch && patch.nu_ende ? patch.nu_ende : '',
+      ds_bairro: patch && patch.ds_bairro ? patch.ds_bairro : '',
+      ds_cep: patch && patch.ds_cep ? patch.ds_cep : '',
+      ds_uf: patch && patch.ds_uf ? patch.ds_uf : '',
+      ds_compl: patch && patch.ds_compl ? patch.ds_compl : '',
     });
   }
 
