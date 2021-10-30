@@ -6,9 +6,7 @@ import { BaseService } from 'src/app/services/http/base.service';
 import { PedidoHeader } from 'src/app/services/pedido/pedido.interface';
 import { Pagination } from './pedido-lista.interface';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class PedidoListaService {
   readonly pedidosPorPagina = 5;
   constructor(private readonly http: BaseService) {}
