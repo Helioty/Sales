@@ -91,6 +91,7 @@ export class PedidoAtalhosPage implements OnInit {
       component: PedidoResumoComponent,
       initialBreakpoint: 0.7,
       breakpoints: [0, 0.7],
+      cssClass: ['custom-modal-sheet'],
     });
     await modal.present();
     modal.onDidDismiss().then(() => this.scanner.focusOn());
