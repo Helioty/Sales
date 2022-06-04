@@ -62,11 +62,11 @@ export class ClienteCadastroEdicaoPage implements OnInit {
     this.activatedRoute.params
       .pipe(
         tap({
-          next: (params) => (this.cliente = params.doc),
+          next: (params: Params) => (this.cliente = params.doc),
         }),
         switchMap(() => this.activatedRoute.queryParams),
         tap({
-          next: (params) => {
+          next: (params: { [x: string]: any; situacao?: any; dados?: any }) => {
             this.navParams = params;
             console.log('queryParams: ', params);
             this.situacao = params.situacao;

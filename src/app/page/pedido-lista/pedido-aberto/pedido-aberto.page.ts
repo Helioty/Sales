@@ -106,7 +106,7 @@ export class PedidoAbertoPage implements OnInit {
     event = (data: Pagination<PedidoHeader> | null) => {}
   ): void {
     this.pedidoListaService.getPedidos('abertos', page).subscribe({
-      next: (result) => {
+      next: (result: Pagination<PedidoHeader>) => {
         console.log(result);
         event(result);
       },

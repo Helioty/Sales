@@ -106,7 +106,7 @@ export class PedidoFinalizadoPage implements OnInit {
     event = (data: Pagination<PedidoHeader> | null) => {}
   ): void {
     this.pedidoListaService.getPedidos('faturados', page).subscribe({
-      next: (result) => {
+      next: (result: Pagination<PedidoHeader>) => {
         console.log(result);
         event(result);
       },

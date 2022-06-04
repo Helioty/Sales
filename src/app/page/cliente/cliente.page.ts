@@ -110,7 +110,7 @@ export class ClientePage implements OnInit, OnDestroy {
    */
   private getPedidoAtivo(): void {
     this.pedidoSub = this.pedidoService.getPedidoAtivoOBS().subscribe({
-      next: (pedido) => (this.pedido = pedido),
+      next: (pedido: PedidoHeader) => (this.pedido = pedido),
     });
   }
 
@@ -119,7 +119,7 @@ export class ClientePage implements OnInit, OnDestroy {
    */
   private getNavParams(): void {
     this.activatedRoute.queryParams.subscribe({
-      next: (params) => (this.navParams = params),
+      next: (params: Params) => (this.navParams = params),
     });
   }
 
@@ -130,9 +130,9 @@ export class ClientePage implements OnInit, OnDestroy {
     this.fieldSub = this.fieldCliente.valueChanges
       .pipe(
         distinctUntilChanged(),
-        map((doc) => this.common.formataCPFNPJ(doc)),
+        map((doc: string) => this.common.formataCPFNPJ(doc)),
         tap({
-          next: (doc) => {
+          next: (doc: any) => {
             this.fieldCliente.patchValue(doc);
           },
         })
@@ -145,7 +145,7 @@ export class ClientePage implements OnInit, OnDestroy {
    */
   private getClienteAtivo(): void {
     this.clienteSub = this.pedidoService.getPedidoClienteOBS().subscribe({
-      next: (clie) => {
+      next: (clie: ClienteGet) => {
         this.dados = clie;
         if (clie) {
           this.fieldCliente.patchValue(this.common.formataCPFNPJ(clie.cgccpf));
@@ -218,12 +218,12 @@ export class ClientePage implements OnInit, OnDestroy {
   private getCliente(doc: string): void {
     this.skeletonAni = true;
     this.clienteService.getCliente(doc, false).subscribe({
-      next: (response) => {
+      next: (response: ClienteGet) => {
         this.dados = response;
         this.atualizaExibicaoDadosCliente(response);
         this.skeletonAni = false;
       },
-      error: (err) => {
+      error: (err: { status: number }) => {
         this.skeletonAni = false;
         if (err.status === 404) {
           this.mensagem = 'Não encontramos o cadastro do cliente!';

@@ -40,7 +40,7 @@ export class ClienteEnderecosPage implements OnInit {
    */
   private getRouteParams(): void {
     this.route.params.subscribe({
-      next: (params) => {
+      next: (params: Params) => {
         this.showOnly = params.showOnly === 'true';
       },
     });
@@ -51,7 +51,7 @@ export class ClienteEnderecosPage implements OnInit {
    */
   private getNavParams(): void {
     this.route.queryParams.subscribe({
-      next: (params) => (this.navParams = params),
+      next: (params: Params) => (this.navParams = params),
     });
   }
 

@@ -26,7 +26,7 @@ export class LoginValidateComponent implements OnInit {
   async entrar(data: { login: string; senha: string }): Promise<void> {
     await this.common.showLoader();
     this.auth.loginAPI(data.login.toUpperCase(), data.senha).subscribe({
-      next: (user) => {
+      next: (user: IAuth) => {
         this.common.loading.dismiss();
         this.close(true, user);
       },

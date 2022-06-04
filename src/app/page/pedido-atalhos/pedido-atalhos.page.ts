@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { IonRouterOutlet, ModalController } from '@ionic/angular';
+import { ModalController } from '@ionic/angular';
 import { Observable } from 'rxjs';
 import { PedidoResumoComponent } from 'src/app/components/pedido-resumo/pedido-resumo.component';
 import { CommonService } from 'src/app/services/common/common.service';
@@ -20,8 +20,7 @@ export class PedidoAtalhosPage implements OnInit {
     private readonly common: CommonService,
     public readonly scanner: ScannerService,
     private readonly pedidoService: PedidoService,
-    private readonly modalController: ModalController,
-    private readonly routerOutlet: IonRouterOutlet
+    private readonly modalController: ModalController
   ) {}
 
   ngOnInit(): void {

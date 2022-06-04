@@ -1,5 +1,5 @@
 import { Component, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Params } from '@angular/router';
 import { IonInput, IonSegment, IonSlides, NavController } from '@ionic/angular';
 import { Observable } from 'rxjs';
 import { CommonService } from 'src/app/services/common/common.service';
@@ -80,7 +80,7 @@ export class ProdutoAdicionarSacolaPage implements OnInit {
     this.slides.lockSwipes(true);
     this.pedidoOBS = this.pedidoService.getPedidoAtivoOBS();
     this.route.queryParams.subscribe({
-      next: (params) => {
+      next: (params: Params) => {
         this.produto = JSON.parse(params.produto);
         this.navParams = {
           paginaAnterior: params?.paginaAnterior ?? '',
@@ -146,7 +146,7 @@ export class ProdutoAdicionarSacolaPage implements OnInit {
         this.pedidoService.getPedidoNumero()
       )
       .subscribe({
-        next: (result) => {
+        next: (result: IProdutoEstoqueDeposito[]) => {
           this.depositos = result;
           this.showDepositos = true;
           console.log('Depositos: ', result);
@@ -263,7 +263,7 @@ export class ProdutoAdicionarSacolaPage implements OnInit {
     } else {
       await this.common.showLoaderCustom('Adicionando produto...');
       this.pedidoService.adicionarItemPedido(this.pedidoItem).subscribe({
-        next: (response) => {
+        next: (response: any) => {
           console.log('Resultado: ', response);
           this.common.loading.dismiss();
           this.prosseguir();

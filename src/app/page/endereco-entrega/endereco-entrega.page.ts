@@ -3,9 +3,14 @@ import { AlertController, NavController, IonSlides } from '@ionic/angular';
 import { CommonService } from 'src/app/services/common/common.service';
 import { PedidoService } from 'src/app/services/pedido/pedido.service';
 import { ActivatedRoute, NavigationExtras } from '@angular/router';
-import { Endereco, Sequence, CamposParaNovoEndereco } from 'src/app/class/cliente';
 import { ClienteService } from 'src/app/services/cliente/cliente.service';
 import { ConsultaEnderecoService } from 'src/app/services/entrega/consulta-endereco.service';
+import {
+  CamposParaNovoEndereco,
+  Endereco,
+  Sequence,
+} from 'src/app/services/cliente/cliente.interface';
+import { tap, take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-endereco-entrega',
@@ -51,21 +56,25 @@ export class EnderecoEntregaPage implements OnInit {
   }
 
   getEnderecoByCEP(cep: string) {
-    this.consultaEnderecoService.getEnderecoByCep(cep).then((result: any) => {
-      this.novoEndereco.cep = this.common.formataCEP(cep);
-      this.novoEndereco.endereco = result.logradouro;
-      this.novoEndereco.bairro = result.bairro;
-      this.novoEndereco.uf = result.estado;
-      this.novoEndereco.cidade = result.cidade;
-      console.log(result);
-    });
+    this.consultaEnderecoService.getEnderecoByCep(cep).pipe(
+      tap({
+        next: (result: any) => {
+          this.novoEndereco.cep = this.common.formataCEP(cep);
+          this.novoEndereco.endereco = result.logradouro;
+          this.novoEndereco.bairro = result.bairro;
+          this.novoEndereco.uf = result.estado;
+          this.novoEndereco.cidade = result.cidade;
+          console.log(result);
+        },
+      })
+    );
   }
 
   async saveEndereco() {
     const cep = this.novoEndereco.cep.replace(/\D/g, '');
     let seq = new Sequence();
     seq.sequencialId = 0;
-    seq.clienteId = this.pedidoService.docCliente;
+    seq.clienteId = this.pedidoService.getdocCliente;
     let novoEndereco: Endereco = new Endereco();
     novoEndereco = {
       id: seq,
@@ -128,16 +137,19 @@ export class EnderecoEntregaPage implements OnInit {
   // by Helio 15/07/2020
   async selecionaEndereco(end: any) {
     await this.common.showLoader();
-    this.pedidoService.selecionaEndereco(end).then(
-      () => {
-        console.log('ENDEREÇO SELECIONADO');
-        this.common.loading.dismiss();
-        this.prosseguir();
-      },
-      (error) => {
-        this.common.loading.dismiss();
-        console.log(error);
-      }
+    this.pedidoService.setEnderecoEntrega(end).pipe(
+      take(1),
+      tap({
+        next: () => {
+          console.log('ENDEREÇO SELECIONADO');
+          this.common.loading.dismiss();
+          this.prosseguir();
+        },
+        error: (error: any) => {
+          this.common.loading.dismiss();
+          console.log(error);
+        },
+      })
     );
   }
 

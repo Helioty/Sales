@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Params } from '@angular/router';
 import { IonInfiniteScroll } from '@ionic/angular';
 import { BehaviorSubject } from 'rxjs';
 import { CommonService } from 'src/app/services/common/common.service';
@@ -33,7 +33,7 @@ export class PedidoResumoPage implements OnInit {
 
   ionViewWillEnter(): void {
     this.common.goToFullScreen();
-    this.activatedRoute.queryParams.subscribe((params) => {
+    this.activatedRoute.queryParams.subscribe((params: Params) => {
       this.pedido.next(JSON.parse(params.pedido) as PedidoHeader);
     });
     this.separaDadosPedido();
@@ -91,7 +91,7 @@ export class PedidoResumoPage implements OnInit {
    */
   getItens(page: number, event = (data: Pagination<PedidoItem> | null) => {}): void {
     this.pedidoService.getPedidoItens(this.pedido.value.numpedido, page).subscribe({
-      next: (it) => {
+      next: (it: Pagination<PedidoItem>) => {
         event(it);
       },
       error: () => {

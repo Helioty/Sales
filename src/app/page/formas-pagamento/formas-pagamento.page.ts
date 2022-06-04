@@ -49,7 +49,7 @@ export class FormasPagamentoPage implements OnInit {
     this.isLoading = true;
     const numPedido = this.pedidoService.getPedidoNumero();
     this.pagamento.getFormaPagamento(numPedido).subscribe({
-      next: (result) => {
+      next: (result: FormaPagamento[]) => {
         this.isLoading = false;
         this.opcoesPagamento = result;
         console.log('Opcões de Pagamento: ', result);

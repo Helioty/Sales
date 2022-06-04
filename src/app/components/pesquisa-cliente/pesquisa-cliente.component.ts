@@ -50,16 +50,16 @@ export class PesquisaClienteComponent implements OnInit, OnDestroy {
     this.fieldSub = this.fieldPesquisa.valueChanges
       .pipe(
         map((value: string) => value.trim()),
-        filter((value) => value.length > 1),
+        filter((value: string) => value.length > 1),
         debounceTime(300),
         distinctUntilChanged(),
         tap({ next: () => (this.showLoadingSpinner = true) }),
-        switchMap((value) => this.pesquisar(value)),
+        switchMap((value: string) => this.pesquisar(value)),
         tap({
           next: () => (this.showLoadingSpinner = false),
           error: () => (this.showLoadingSpinner = false),
         }),
-        map((response) => response.content)
+        map((response: Pagination<ClienteGet>) => response.content)
       )
       .subscribe();
   }
@@ -81,9 +81,9 @@ export class PesquisaClienteComponent implements OnInit, OnDestroy {
     return this.clienteService
       .getClientePesquisa(clie, this.pesquisado === clie ? this.page + 1 : 1)
       .pipe(
-        map((response) => this.mapPagination(response, clie)),
+        map((response: Pagination<ClienteGet>) => this.mapPagination(response, clie)),
         tap({
-          next: (result) => {
+          next: (result: Pagination<ClienteGet>) => {
             this.pesquisado = clie;
             this.pagination = result;
             console.log(`Valor pesquisado: ${clie}`);
@@ -123,7 +123,7 @@ export class PesquisaClienteComponent implements OnInit, OnDestroy {
       .pipe(
         take(1),
         tap({
-          next: (response) => {
+          next: (response: Pagination<ClienteGet>) => {
             infinit.complete();
             infinit.disabled = response.last;
           },

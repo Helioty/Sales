@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, NavigationExtras } from '@angular/router';
+import { ActivatedRoute, NavigationExtras, Params } from '@angular/router';
 import { NavController } from '@ionic/angular';
 import { Observable } from 'rxjs';
 import { switchMap, take, tap } from 'rxjs/operators';
@@ -45,7 +45,7 @@ export class ProdutoPage implements OnInit {
     this.activatedRoute.queryParams
       .pipe(
         tap({
-          next: (params) => {
+          next: (params: Params) => {
             this.produto = JSON.parse(params.produto) as IProduto;
           },
         }),
@@ -107,7 +107,7 @@ export class ProdutoPage implements OnInit {
   getProdutoInformacao(produtoCodigoDigitoEmbalagem: string): Observable<any> {
     return this.produtoService.getProductInfomation(produtoCodigoDigitoEmbalagem).pipe(
       tap({
-        next: (response) => {
+        next: (response: any) => {
           this.showMaisInfo = response.items.length > 0;
           this.maisInfo = response.items;
         },
@@ -122,7 +122,7 @@ export class ProdutoPage implements OnInit {
   getFamilia(produtoCodigoDigitoEmbalagem: string): Observable<IProdutoFamilia[]> {
     return this.produtoService.getFamilia(produtoCodigoDigitoEmbalagem).pipe(
       tap({
-        next: (response) => {
+        next: (response: any) => {
           console.log('Familia do produto', response);
         },
       })
@@ -187,7 +187,7 @@ export class ProdutoPage implements OnInit {
       .getAllListImage(produtoCodigoDigito)
       .pipe(take(1))
       .subscribe({
-        next: (response) => {
+        next: (response: any) => {
           console.log('Imagens: ', response);
           this.dataService.setData('produtoListImage', response);
           this.navControl.navigateForward(['produto/imagens']);
@@ -206,7 +206,7 @@ export class ProdutoPage implements OnInit {
   getImage(produtoCodigoDigito: string) {
     return this.produtoService.getFirstImage(produtoCodigoDigito).pipe(
       tap({
-        next: (result) => {
+        next: (result: any) => {
           this.produto.imagem = result.imageGrande;
         },
       })

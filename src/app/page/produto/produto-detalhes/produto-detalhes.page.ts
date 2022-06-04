@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Params } from '@angular/router';
 import { CommonService } from 'src/app/services/common/common.service';
 import { DataService } from 'src/app/services/data/data.service';
 import { IProduto } from 'src/app/services/produto/produto.interface';
@@ -23,7 +23,7 @@ export class ProdutoDetalhesPage implements OnInit {
 
   ngOnInit(): void {
     console.log('ProdutoDetalhes OnInit');
-    this.activatedRoute.queryParams.subscribe((params) => {
+    this.activatedRoute.queryParams.subscribe((params: Params) => {
       console.log(params);
       this.produto = JSON.parse(params.produto);
       this.info = this.dataService.getData(this.dataId);

@@ -24,7 +24,7 @@ export class ClienteService {
     const options = { token: true, showError };
     return this.http.get<ClienteGet>(url, options).pipe(
       take(1),
-      tap({ next: (clie) => console.log('Cliente: ', clie) }),
+      tap({ next: (clie: ClienteGet) => console.log('Cliente: ', clie) }),
       catchError((err) => {
         if (!showError && err.status !== 404) {
           this.http.showError(err);

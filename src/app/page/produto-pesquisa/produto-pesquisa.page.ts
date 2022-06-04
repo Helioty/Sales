@@ -92,12 +92,12 @@ export class ProdutoPesquisaPage implements OnInit, OnDestroy {
     this.fieldSub = this.fieldPesquisa.valueChanges
       .pipe(
         map((value: string) => value.trim()),
-        filter((value) => value.length > 1),
+        filter((value: string) => value.length > 1),
         debounceTime(300),
         distinctUntilChanged(),
         tap({ next: () => (this.showLoadingSpinner = true) }),
-        switchMap((value) => this.pesquisar(value)),
-        map((response) => response.content)
+        switchMap((value: string) => this.pesquisar(value)),
+        map((response: Pagination<IProduto>) => response.content)
       )
       .subscribe();
   }
@@ -116,9 +116,9 @@ export class ProdutoPesquisaPage implements OnInit, OnDestroy {
           error: () => (this.showLoadingSpinner = false),
         }),
         onErrorResumeNext(),
-        map((response) => this.mapPagination(response, value)),
+        map((response: Pagination<IProduto>) => this.mapPagination(response, value)),
         tap({
-          next: (result) => {
+          next: (result: Pagination<IProduto>) => {
             this.pesquisado = value;
             this.pagination = result;
           },
@@ -156,7 +156,7 @@ export class ProdutoPesquisaPage implements OnInit, OnDestroy {
       .pipe(
         take(1),
         tap({
-          next: (response) => {
+          next: (response: Pagination<IProduto>) => {
             infinit.complete();
             infinit.disabled = response.last;
           },

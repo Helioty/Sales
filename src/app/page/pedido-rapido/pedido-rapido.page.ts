@@ -163,7 +163,7 @@ export class PedidoRapidoPage implements OnInit {
   addItemPedido(body: PedidoItem): void {
     console.log('AddItemPedido Rapido!');
     this.pedidoService.adicionarItemPedidoRapido(body).subscribe({
-      next: (item) => {
+      next: (item: any) => {
         console.log('Itens: ', item);
         this.decreaseRequestNum();
       },

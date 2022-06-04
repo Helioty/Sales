@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { IonSearchbar, IonSlides, MenuController, NavController } from '@ionic/angular';
-import { CamposParaNovoEndereco } from 'src/app/class/cliente';
+import { CamposParaNovoEndereco } from 'src/app/services/cliente/cliente.interface';
 import { CommonService } from 'src/app/services/common/common.service';
 import { DataService } from 'src/app/services/data/data.service';
 
@@ -124,7 +124,7 @@ export class ConsultaCepPage implements OnInit {
         input: this.searchbar.value,
         componentRestrictions: { country: ['br'] },
       },
-      (predictions: any, status) => {
+      (predictions: any) => {
         this.autoCompleteList = [];
         if (predictions) {
           predictions.forEach((prediction: any) => {
@@ -141,15 +141,18 @@ export class ConsultaCepPage implements OnInit {
     console.log('ENTREI x AQUI!');
 
     this.autoCompleteList = [];
-    this.geocoder.geocode({ placeId: item.place_id }, (results, status) => {
-      if (status === 'OK' && results[0]) {
-        this.progressBar = false;
-        this.insereMarker(results[0].geometry.location);
-        this.searchbar.value = item.description;
-      } else {
-        this.progressBar = false;
+    this.geocoder.geocode(
+      { placeId: item.place_id },
+      (results: { geometry: { location: any } }[], status: string) => {
+        if (status === 'OK' && results[0]) {
+          this.progressBar = false;
+          this.insereMarker(results[0].geometry.location);
+          this.searchbar.value = item.description;
+        } else {
+          this.progressBar = false;
+        }
       }
-    });
+    );
   }
 
   insereMarker(latlng: any) {
@@ -185,8 +188,8 @@ export class ConsultaCepPage implements OnInit {
 
   // by Helio 07/04/2020
   retornaEndereco() {
-    this.data['exiteEnderecoSelecionado'] = true;
-    this.data['enderecoSelecionado'] = this.enderecoSelecionado;
+    // this.data['exiteEnderecoSelecionado'] = true;
+    // this.data['enderecoSelecionado'] = this.enderecoSelecionado;
     this.navControl.pop();
   }
 

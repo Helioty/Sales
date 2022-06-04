@@ -103,7 +103,7 @@ export class PedidoService {
     return this.http.post<PedidoHeader, any>({ url, body: {} }).pipe(
       take(1),
       tap({
-        next: (pedido) => {
+        next: (pedido: PedidoHeader) => {
           console.log('Pedido criado!');
           this.atualizaPedidoHeader(pedido);
         },
@@ -125,7 +125,7 @@ export class PedidoService {
     this.atualizaPedidoHeader(pedido);
     if (pedido.cgccpf_cliente) {
       this.clienteService.getCliente(pedido.cgccpf_cliente, false).subscribe({
-        next: (clie) => {
+        next: (clie: ClienteGet) => {
           this.atualizarPedidoCliente(clie);
           toPedidoHome();
         },
@@ -182,7 +182,7 @@ export class PedidoService {
     return this.http.post<PedidoHeader, PedidoTable[]>(props).pipe(
       take(1),
       tap({
-        next: (pedido) => {
+        next: (pedido: PedidoHeader) => {
           console.log(`Tipo Entraga Atualizado: ${this.opcoesRetirada[retiradaIdx]}`);
           this.atualizaPedidoHeader(pedido);
           this.tipoRetiradaIndex = retiradaIdx;
@@ -204,7 +204,7 @@ export class PedidoService {
     return this.http.post<PedidoHeader, PedidoTable[]>(props).pipe(
       take(1),
       tap({
-        next: (pedido) => {
+        next: (pedido: PedidoHeader) => {
           console.log('Set Catão: ', codCard);
           this.atualizaPedidoHeader(pedido);
           this.common.showToast('Cartão Pedido Adicionado!');
@@ -256,7 +256,7 @@ export class PedidoService {
     return this.http.post<PedidoHeader, PedidoTable[]>(props).pipe(
       take(1),
       tap({
-        next: (pedido) => {
+        next: (pedido: PedidoHeader) => {
           console.log('Cliente Adicionado!');
           this.atualizaPedidoHeader(pedido);
           this.atualizarPedidoCliente(clie);
@@ -286,7 +286,7 @@ export class PedidoService {
     return this.http.post<PedidoHeader, PedidoTable[]>(props).pipe(
       take(1),
       tap({
-        next: (pedido) => {
+        next: (pedido: PedidoHeader) => {
           console.log('Cliente Removido! ', pedido);
           this.atualizaPedidoHeader(pedido);
         },
@@ -342,11 +342,11 @@ export class PedidoService {
     return this.http.get<Pagination<PedidoItem>>(url).pipe(
       take(1),
       tap({
-        next: (paginationIt) => {
+        next: (paginationIt: Pagination<PedidoItem>) => {
           this.atualizaPedidoItems(paginationIt);
         },
       }),
-      map((it) => it.content)
+      map((it: Pagination<PedidoItem>) => it.content)
     );
   }
 
@@ -366,7 +366,7 @@ export class PedidoService {
       .pipe(
         take(1),
         tap({
-          next: (response) => {
+          next: (response: PedidoHeader) => {
             this.atualizaPedidoHeader(response);
           },
         })
@@ -389,12 +389,15 @@ export class PedidoService {
       .pipe(
         take(1),
         tap({
-          next: (response) => {
+          next: (response: { items: Pagination<PedidoItem>; pedido: PedidoHeader }) => {
             this.atualizaPedidoItems(response.items);
             this.atualizaPedidoHeader(response.pedido);
           },
         }),
-        map((response) => response.items.content)
+        map(
+          (response: { items: Pagination<PedidoItem>; pedido: PedidoHeader }) =>
+            response.items.content
+        )
       );
   }
 
@@ -419,7 +422,7 @@ export class PedidoService {
     return this.http.post<any, any>({ url, body: {} }).pipe(
       take(1),
       tap({
-        next: (a) => {
+        next: (a: { msg: string }) => {
           this.common.showToast(a.msg);
           console.log('Remove Produto Response: ', a.msg);
           const qtd = this.qtdItensSacola.getValue() - 1;
@@ -489,7 +492,7 @@ export class PedidoService {
     return this.http.post<PedidoHeader, PedidoTable[]>(props).pipe(
       take(1),
       tap({
-        next: (pedido) => {
+        next: (pedido: PedidoHeader) => {
           console.log('Endereço atualizado: ', pedido);
           this.atualizaPedidoHeader(pedido);
         },
@@ -521,7 +524,7 @@ export class PedidoService {
     return this.http.post<PedidoHeader, PedidoTable[]>({ url, body: aResult }).pipe(
       take(1),
       tap({
-        next: (pedido) => {
+        next: (pedido: PedidoHeader) => {
           console.log('Tipo Pagamento Atualizado: ', pedido);
           this.atualizaPedidoHeader(pedido);
         },

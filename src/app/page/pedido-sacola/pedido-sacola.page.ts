@@ -75,7 +75,7 @@ export class PedidoSacolaPage implements OnInit {
    */
   atualizaItens(): void {
     this.pedidoService.getPedidoAllItens(this.pedidoService.getPedidoNumero()).subscribe({
-      next: (produtos) => this.atualizaRetiradas(produtos),
+      next: (produtos: PedidoItem[]) => this.atualizaRetiradas(produtos),
     });
   }
 
@@ -158,7 +158,7 @@ export class PedidoSacolaPage implements OnInit {
       .getProdutoByCodigo(codigo)
       .pipe(take(1))
       .subscribe({
-        next: (result) => {
+        next: (result: IProduto[]) => {
           this.common.loading.dismiss();
           this.openProdutoAddSacolaPage(result[0]);
         },

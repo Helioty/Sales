@@ -78,7 +78,7 @@ export class AdicionarEnderecoComponent implements OnInit {
     this.atualizaCadastroCliente(newCliente)
       .pipe(
         tap({
-          next: (cliente) => {
+          next: (cliente: ClienteGet) => {
             this.setPedidoCliente(cliente);
             this.common.loading.dismiss();
             this.close(true, null);
@@ -117,7 +117,13 @@ export class AdicionarEnderecoComponent implements OnInit {
       .getEnderecoByCep(cep)
       .pipe(
         tap({
-          next: (response) => {
+          next: (response: {
+            cep: any;
+            estado: any;
+            cidade: any;
+            bairro: any;
+            logradouro: any;
+          }) => {
             console.log('Response GetCep: ', response);
             this.patchForm({
               ds_cep: response.cep,

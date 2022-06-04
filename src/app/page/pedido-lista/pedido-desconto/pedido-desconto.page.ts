@@ -1,5 +1,5 @@
 import { ModalController } from '@ionic/angular';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Params } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { PedidoHeader } from 'src/app/services/pedido/pedido.interface';
 import { LoginValidateComponent } from 'src/app/components/login-validate/login-validate.component';
@@ -31,7 +31,7 @@ export class PedidoDescontoPage implements OnInit {
 
   ngOnInit(): void {
     this.route.queryParams.subscribe({
-      next: (params) => (this.pedido = JSON.parse(params.pedido)),
+      next: (params: Params) => (this.pedido = JSON.parse(params.pedido)),
     });
   }
 
@@ -41,7 +41,7 @@ export class PedidoDescontoPage implements OnInit {
 
   getDesconto(): void {
     this.descontoService.getDescontoPedido(this.pedido.numpedido).subscribe({
-      next: (desconto) => {
+      next: (desconto: any) => {
         console.log('Desconto: ', desconto);
       },
     });

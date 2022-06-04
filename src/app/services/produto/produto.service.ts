@@ -29,7 +29,7 @@ export class ProdutoService {
     const link = `${ENV.WS_PRODUTO}${API_URL}list/${empresa}?filter=${codigo}`;
     return this.http
       .get<any>(link)
-      .pipe(map((result) => this.formataProdutos(result.content)));
+      .pipe(map((result: any) => this.formataProdutos(result.content)));
   }
 
   /**
@@ -44,7 +44,7 @@ export class ProdutoService {
     const filter = Number(codigo) ? '' : 'descricao:';
     const link = `${ENV.WS_PRODUTO}${API_URL}list/${empresa}?filter=${filter}${codigo}&page=${page}&size=${this.produtosPorPagina}`;
     return this.http.get<Pagination<any>>(link).pipe(
-      map((result) => {
+      map((result: Pagination<any>) => {
         result.content = this.formataProdutos(result.content);
         return result as Pagination<IProduto>;
       })
@@ -118,7 +118,9 @@ export class ProdutoService {
    */
   getFirstImage(produtoCodigoDigito: string): Observable<IProdutoImagem> {
     const url = `${ENV.WS_PRODUTO}${API_URL}listImages/${produtoCodigoDigito}/1`;
-    return this.http.get<IProdutoImagem[]>(url).pipe(map((imagens) => imagens[0]));
+    return this.http
+      .get<IProdutoImagem[]>(url)
+      .pipe(map((imagens: IProdutoImagem[]) => imagens[0]));
   }
 
   // edit by Helio 19/03/2020
@@ -126,7 +128,7 @@ export class ProdutoService {
     const url = `${ENV.WS_PRODUTO}${API_URL}detalhe/${produtoCodigoDigitoEmbalagem}`;
     return this.http.get(url).pipe(
       tap({
-        next: (info) => {
+        next: (info: any) => {
           console.log('Info: ', info);
         },
       })
