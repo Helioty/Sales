@@ -28,7 +28,7 @@
     "@ionic/angular": "^6.1.8",
     "@ionic/cli": "^6.18.0",
     "chart.js": "^3.6.0",
-    "cordova": "^10.0.0",
+    "cordova": "^11.0.0",
     "core-js": "^2.5.4",
     "rxjs": "~6.6.7",
     "swiper": "^7.0.7",
