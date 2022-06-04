@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, NavigationExtras, Params } from '@angular/router';
 import { IonContent, IonSlides, NavController } from '@ionic/angular';
 import { switchMap, tap } from 'rxjs/operators';
@@ -16,8 +16,8 @@ export class ClienteCadastroEdicaoPage implements OnInit {
   @ViewChild(IonSlides, { static: true }) readonly slides: IonSlides;
 
   // Controle do formulario
-  public formCliente: FormGroup;
-  public formEndereco: FormGroup;
+  public formCliente: UntypedFormGroup;
+  public formEndereco: UntypedFormGroup;
 
   // Controle do Loading
   public loading = false;
@@ -35,7 +35,7 @@ export class ClienteCadastroEdicaoPage implements OnInit {
   constructor(
     private readonly common: CommonService,
     private readonly activatedRoute: ActivatedRoute,
-    private readonly formBuilder: FormBuilder,
+    private readonly formBuilder: UntypedFormBuilder,
     private readonly navControl: NavController
   ) {}
 

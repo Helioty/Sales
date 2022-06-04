@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { UntypedFormControl, Validators } from '@angular/forms';
 import { NavigationExtras } from '@angular/router';
 import { IonInfiniteScroll, IonSearchbar, NavController } from '@ionic/angular';
 import { Observable, Subscription } from 'rxjs';
@@ -39,7 +39,7 @@ export class ProdutoPesquisaPage implements OnInit, OnDestroy {
 
   // Dados da Pesquisa reativa.
   private fieldSub: Subscription;
-  readonly fieldPesquisa = new FormControl('', [
+  readonly fieldPesquisa = new UntypedFormControl('', [
     Validators.required,
     Validators.minLength(3),
   ]);

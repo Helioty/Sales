@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
@@ -17,14 +17,14 @@ import { PedidoService } from 'src/app/services/pedido/pedido.service';
 export class AdicionarEnderecoComponent implements OnInit {
   @Input() cliente: ClienteGet;
 
-  form: FormGroup;
+  form: UntypedFormGroup;
 
   constructor(
     private readonly modalCtrl: ModalController,
     private readonly pedidoService: PedidoService,
     private readonly clienteService: ClienteService,
     private readonly consultaEnderecoService: ConsultaEnderecoService,
-    private readonly formBuilder: FormBuilder,
+    private readonly formBuilder: UntypedFormBuilder,
     private readonly common: CommonService
   ) {}
 

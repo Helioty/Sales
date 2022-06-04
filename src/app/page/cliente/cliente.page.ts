@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { UntypedFormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, NavigationExtras, Params } from '@angular/router';
 import { IonInput, ModalController, NavController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
@@ -21,7 +21,7 @@ export class ClientePage implements OnInit, OnDestroy {
 
   // Valor digitado no input de CPF/CNPJ
   private fieldSub: Subscription;
-  readonly fieldCliente = new FormControl('', [
+  readonly fieldCliente = new UntypedFormControl('', [
     Validators.required,
     Validators.minLength(14),
   ]);
@@ -204,7 +204,7 @@ export class ClientePage implements OnInit, OnDestroy {
    * @description Checa o minimo de caracteres necessarios para executar a chamada.
    * @param docForm Form com CPF/CNPJ do cliente.
    */
-  checaMinimo(docForm: FormControl): void {
+  checaMinimo(docForm: UntypedFormControl): void {
     if (docForm.valid) {
       const clieDoc: string = docForm.value.replace(/\D/g, '');
       this.getCliente(clieDoc);
