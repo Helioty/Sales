@@ -32,25 +32,25 @@ export class AuthService {
    * @param senha senha do usuário
    * @returns Retorna uma Promise com o retorno do serviço.
    */
-  login(login: string, senha: string, url?: string): Promise<IAuth> {
-    const api = url
+  login(login: string, senha: string, filial?: string): Promise<IAuth> {
+    const api = filial
       ? environment.production
-        ? `api.${url}/`
-        : `staging.${url}/`
+        ? `api.${filial}/`
+        : `staging.${filial}/`
       : API_URL;
-    const link = ENV.WS_AUTH + api + 'loginMobile';
+    const link = new URL(`${ENV.WS_AUTH}${api}loginMobile`);
     const options = { token: false, showError: true };
     const headers = new HttpHeaders().set('login', login).set('senha', senha);
 
     return new Promise((resolve, reject) => {
-      this.http.get<IAuth>(link, options, headers).subscribe({
-        next: (response) => {
+      this.http.get<IAuth>(link.href, options, headers).subscribe({
+        next: (response: IAuth) => {
           this.setStorage(response, login);
           this.authGuard.setStatus = true;
           console.log(response);
           resolve(response);
         },
-        error: (err) => {
+        error: (err: any) => {
           reject(err);
         },
       });

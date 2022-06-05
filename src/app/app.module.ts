@@ -4,10 +4,10 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 import { ServiceWorkerModule } from '@angular/service-worker';
-import { AndroidFullScreen } from '@ionic-native/android-full-screen/ngx';
-import { AppVersion } from '@ionic-native/app-version/ngx';
-import { SplashScreen } from '@ionic-native/splash-screen/ngx';
-import { StatusBar } from '@ionic-native/status-bar/ngx';
+// import { AndroidFullScreen } from '@ionic-native/android-full-screen/ngx';
+// import { AppVersion } from '@ionic-native/app-version/ngx';
+// import { SplashScreen } from '@ionic-native/splash-screen/ngx';
+// import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { AppConfigService } from 'src/app/config/app.config.service';
 import { environment } from '../environments/environment';
@@ -32,11 +32,11 @@ console.log(environment.production ? 'Production' : 'Development');
     SharedModule,
   ],
   providers: [
-    AndroidFullScreen,
+    // AndroidFullScreen,
     AppConfigService,
-    SplashScreen,
-    AppVersion,
-    StatusBar,
+    // SplashScreen,
+    // AppVersion,
+    // StatusBar,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
   ],
   bootstrap: [AppComponent],

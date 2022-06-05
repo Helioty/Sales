@@ -1,7 +1,9 @@
 {
   "name": "frame",
   "integrations": {
-    "cordova": {}
+    "cordova": {
+      "enabled": false
+    },
   },
   "type": "angular"
 }

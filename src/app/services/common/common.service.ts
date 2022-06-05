@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { AndroidFullScreen } from '@ionic-native/android-full-screen/ngx';
-import { AppVersion } from '@ionic-native/app-version/ngx';
+// import { AndroidFullScreen } from '@ionic-native/android-full-screen/ngx';
+// import { AppVersion } from '@ionic-native/app-version/ngx';
 import {
   AlertController,
   LoadingController,
@@ -19,8 +19,8 @@ export class CommonService {
 
   constructor(
     private readonly scanner: ScannerService,
-    private readonly androidFullScreen: AndroidFullScreen,
-    private readonly appVersion: AppVersion,
+    // private readonly androidFullScreen: AndroidFullScreen,
+    // private readonly appVersion: AppVersion,
     private readonly toastCtrl: ToastController,
     private readonly loadingCtrl: LoadingController,
     private readonly alertCtrl: AlertController,
@@ -37,10 +37,10 @@ export class CommonService {
    */
   public goToFullScreen(): void {
     if (this.platform.is('android')) {
-      this.androidFullScreen
-        .isImmersiveModeSupported()
-        .then(() => this.androidFullScreen.immersiveMode())
-        .catch((err) => console.log(err));
+      // this.androidFullScreen
+      //   .isImmersiveModeSupported()
+      //   .then(() => this.androidFullScreen.immersiveMode())
+      //   .catch((err) => console.log(err));
     }
   }
 
@@ -50,8 +50,8 @@ export class CommonService {
    */
   async getAppInfo(): Promise<void> {
     if (this.platform.is('cordova')) {
-      this.appName = await this.appVersion.getAppName();
-      this.version = await this.appVersion.getVersionNumber();
+      // this.appName = await this.appVersion.getAppName();
+      // this.version = await this.appVersion.getVersionNumber();
     }
   }
 

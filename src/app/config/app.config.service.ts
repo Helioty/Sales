@@ -37,13 +37,13 @@ export class AppConfigService {
         .get<{ server: string }>(apiUrl, options)
         .pipe(take(1), retry(1))
         .subscribe({
-          next: (response) => {
+          next: (response: { server: string }) => {
             localStorage.setItem('API_URL', response.server + '/');
             console.log('Conected to', response.server);
             API_URL = response.server + '/';
             resolve(API_URL);
           },
-          error: (err) => {
+          error: (err: any) => {
             if (hasUrl) {
               API_URL = localStorage.getItem('API_URL');
               resolve(API_URL);
