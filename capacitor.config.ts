@@ -1,8 +1,8 @@
 import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'io.ionic.starter',
-  appName: 'frame',
+  appId: 'br.com.ferreiracosta.vendas',
+  appName: 'Vendas',
   webDir: 'www',
   bundledWebRuntime: false,
   cordova: {
@@ -16,9 +16,9 @@ const config: CapacitorConfig = {
       SplashScreen: 'screen',
       SplashScreenDelay: '3000',
       resizeOnFullScreen: 'true',
-      orientation: 'portrait'
-    }
-  }
+      orientation: 'portrait',
+    },
+  },
 };
 
 export default config;
