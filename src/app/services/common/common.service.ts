@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 // import { AndroidFullScreen } from '@ionic-native/android-full-screen/ngx';
 // import { AppVersion } from '@ionic-native/app-version/ngx';
+import { App } from '@capacitor/app';
 import {
   AlertController,
   LoadingController,
@@ -20,7 +21,6 @@ export class CommonService {
   constructor(
     private readonly scanner: ScannerService,
     // private readonly androidFullScreen: AndroidFullScreen,
-    // private readonly appVersion: AppVersion,
     private readonly toastCtrl: ToastController,
     private readonly loadingCtrl: LoadingController,
     private readonly alertCtrl: AlertController,
@@ -49,9 +49,10 @@ export class CommonService {
    * @description Pega as informações basicas da aplicação.
    */
   async getAppInfo(): Promise<void> {
-    if (this.platform.is('cordova')) {
-      // this.appName = await this.appVersion.getAppName();
-      // this.version = await this.appVersion.getVersionNumber();
+    if (this.platform.is('capacitor')) {
+      const { name, version } = await App.getInfo();
+      this.appName = name;
+      this.version = version;
     }
   }
 
