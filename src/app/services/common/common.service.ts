@@ -61,7 +61,7 @@ export class CommonService {
    * @description Exibe um IonAlert com a versão instalada.
    */
   async showVersion(): Promise<void> {
-    if (this.platform.is('cordova')) {
+    if (this.platform.is('capacitor')) {
       const versionToShow = 'Versão instalada: ' + this.version;
       this.showAlert(this.appName, versionToShow);
     }
