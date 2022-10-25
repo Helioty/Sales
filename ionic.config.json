@@ -1,9 +1,6 @@
 {
   "name": "frame",
   "integrations": {
-    "cordova": {
-      "enabled": false
-    },
     "capacitor": {}
   },
   "type": "angular"
