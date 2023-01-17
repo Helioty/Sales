@@ -1,7 +1,13 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { UntypedFormControl, Validators } from '@angular/forms';
-import { IonInfiniteScroll, IonSearchbar, ModalController } from '@ionic/angular';
-import { Observable, Subscription } from 'rxjs';
+import { CommonModule } from '@angular/common';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { ReactiveFormsModule, UntypedFormControl, Validators } from '@angular/forms';
+import {
+  IonicModule,
+  IonInfiniteScroll,
+  IonSearchbar,
+  ModalController,
+} from '@ionic/angular';
+import { Observable } from 'rxjs';
 import {
   debounceTime,
   distinctUntilChanged,
@@ -15,18 +21,20 @@ import { Pagination } from 'src/app/page/pedido-lista/pedido-lista.interface';
 import { ClienteGet } from 'src/app/services/cliente/cliente.interface';
 import { ClienteService } from 'src/app/services/cliente/cliente.service';
 import { ScannerService } from 'src/app/services/scanner/scanner.service';
+import { PipesModule } from 'src/app/shared/pipes/pipes.module';
 
 @Component({
+  standalone: true,
   selector: 'app-pesquisa-cliente',
   templateUrl: './pesquisa-cliente.component.html',
   styleUrls: ['./pesquisa-cliente.component.scss'],
+  imports: [CommonModule, IonicModule, PipesModule, ReactiveFormsModule],
 })
-export class PesquisaClienteComponent implements OnInit, OnDestroy {
+export class PesquisaClienteComponent implements OnInit {
   @ViewChild(IonInfiniteScroll) readonly infiniteScroll: IonInfiniteScroll;
   @ViewChild('pesquisarCliente') readonly searchbar: IonSearchbar;
 
   // Dados da Pesquisa reativa.
-  private fieldSub: Subscription;
   readonly fieldPesquisa = new UntypedFormControl('', [
     Validators.required,
     Validators.minLength(3),
@@ -47,7 +55,7 @@ export class PesquisaClienteComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.fieldSub = this.fieldPesquisa.valueChanges
+    this.fieldPesquisa.valueChanges
       .pipe(
         map((value: string) => value.trim()),
         filter((value: string) => value.length > 1),
@@ -66,10 +74,6 @@ export class PesquisaClienteComponent implements OnInit, OnDestroy {
 
   ionViewDidEnter(): void {
     this.setSearchbarFocus();
-  }
-
-  ngOnDestroy(): void {
-    this.fieldSub.unsubscribe();
   }
 
   /**
@@ -117,18 +121,17 @@ export class PesquisaClienteComponent implements OnInit, OnDestroy {
    * @author helio.souza
    * @param infinite IonInfinite Element.
    */
-  doInfinite(infinite: any) {
-    const infinit = infinite as IonInfiniteScroll;
+  doInfinite(infinite: IonInfiniteScroll) {
     this.pesquisar(this.pesquisado)
       .pipe(
         take(1),
         tap({
           next: (response: Pagination<ClienteGet>) => {
-            infinit.complete();
-            infinit.disabled = response.last;
+            infinite.complete();
+            infinite.disabled = response.last;
           },
           error: () => {
-            infinit.complete();
+            infinite.complete();
           },
         })
       )
