@@ -8,7 +8,6 @@ import { PedidoService } from './pedido/pedido.service';
 import { ScannerService } from './scanner/scanner.service';
 
 @NgModule({
-  declarations: [],
   imports: [CommonModule],
   providers: [
     AuthService,
