@@ -1,34 +1,26 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { TestBed, waitForAsync } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { SplashScreen } from '@ionic-native/splash-screen/ngx';
-import { StatusBar } from '@ionic-native/status-bar/ngx';
+import { AppComponent } from './app.component';
 import { Platform } from '@ionic/angular';
 import 'jasmine';
-import { AppComponent } from './app.component';
 
 describe('AppComponent', () => {
   let statusBarSpy: any, splashScreenSpy: any, platformReadySpy: any, platformSpy: any;
 
-  beforeEach(
-    waitForAsync(() => {
-      statusBarSpy = jasmine.createSpyObj('StatusBar', ['styleDefault']);
-      splashScreenSpy = jasmine.createSpyObj('SplashScreen', ['hide']);
-      platformReadySpy = Promise.resolve();
-      platformSpy = jasmine.createSpyObj('Platform', { ready: platformReadySpy });
+  beforeEach(waitForAsync(() => {
+    statusBarSpy = jasmine.createSpyObj('StatusBar', ['styleDefault']);
+    splashScreenSpy = jasmine.createSpyObj('SplashScreen', ['hide']);
+    platformReadySpy = Promise.resolve();
+    platformSpy = jasmine.createSpyObj('Platform', { ready: platformReadySpy });
 
-      TestBed.configureTestingModule({
-        declarations: [AppComponent],
-        schemas: [CUSTOM_ELEMENTS_SCHEMA],
-        providers: [
-          { provide: StatusBar, useValue: statusBarSpy },
-          { provide: SplashScreen, useValue: splashScreenSpy },
-          { provide: Platform, useValue: platformSpy },
-        ],
-        imports: [RouterTestingModule.withRoutes([])],
-      }).compileComponents();
-    })
-  );
+    TestBed.configureTestingModule({
+      declarations: [AppComponent],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+      providers: [{ provide: Platform, useValue: platformSpy }],
+      imports: [RouterTestingModule.withRoutes([])],
+    }).compileComponents();
+  }));
 
   it('should create the app', async () => {
     const fixture = TestBed.createComponent(AppComponent);
