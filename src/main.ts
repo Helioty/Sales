@@ -6,6 +6,7 @@ import { IonicModule } from '@ionic/angular';
 import { routes } from './app/app.routing';
 import { AppComponent } from './app/app.component';
 import { environment } from './environments/environment';
+import { ServiceWorkerModule } from '@angular/service-worker';
 console.log(environment.production ? 'Production' : 'Development');
 
 if (environment.production) {
@@ -14,7 +15,10 @@ if (environment.production) {
 
 bootstrapApplication(AppComponent, {
   providers: [
-    importProvidersFrom([IonicModule.forRoot()]),
+    importProvidersFrom([
+      IonicModule.forRoot(),
+      ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
+    ]),
     provideRouter(routes),
     provideHttpClient(),
   ],
