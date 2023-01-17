@@ -31,7 +31,7 @@ export class AppConfigService {
   public getURL(): Promise<string> {
     const apiUrl = environment.urlService;
     const hasUrl = localStorage.getItem('API_URL') ? true : false;
-    const options = { token: false, showError: !hasUrl };
+    const options = { token: false, showError: !hasUrl, retry: hasUrl ? 3 : 0 };
     return new Promise((resolve, reject) => {
       this.http
         .get<{ server: string }>(apiUrl, options)
