@@ -21,7 +21,7 @@ export class ClienteService {
    */
   getCliente(doc: string, showError = true): Observable<ClienteGet> {
     const url = `${ENV.WS_CRM}${API_URL}cliente/${doc}`;
-    const options = { token: true, showError };
+    const options = { token: true, showError, retry: 0 };
     return this.http.get<ClienteGet>(url, options).pipe(
       take(1),
       tap({ next: (clie: ClienteGet) => console.log('Cliente: ', clie) }),
