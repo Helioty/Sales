@@ -1,11 +1,16 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { RouterModule } from '@angular/router';
+import { IonicModule } from '@ionic/angular';
 import { IAuth } from 'src/app/services/auth/auth.interface';
 import { AuthService } from 'src/app/services/auth/auth.service';
 
 @Component({
+  standalone: true,
   selector: 'app-menu',
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.scss'],
+  imports: [CommonModule, IonicModule, RouterModule],
 })
 export class MenuComponent implements OnInit {
   public readonly appPages = [
