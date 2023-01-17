@@ -1,20 +1,39 @@
-import { Component } from '@angular/core';
-// import { SplashScreen } from '@ionic-native/splash-screen/ngx';
-// import { StatusBar } from '@ionic-native/status-bar/ngx';
-import { MenuController, Platform } from '@ionic/angular';
+import { CommonModule } from '@angular/common';
+import { Component, EnvironmentInjector } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
+import { RouteReuseStrategy } from '@angular/router';
+import {
+  IonicModule,
+  IonicRouteStrategy,
+  MenuController,
+  Platform,
+} from '@ionic/angular';
+import { MenuComponent } from './components/menu/menu.component';
+import { AppConfigService } from './config/app.config.service';
 
 @Component({
+  standalone: true,
   selector: 'app-root',
   templateUrl: 'app.component.html',
-  styleUrls: ['app.component.scss'],
+  styles: [
+    `
+      app-menu {
+        height: 100%;
+      }
+    `,
+  ],
+  imports: [CommonModule, IonicModule, MenuComponent, ReactiveFormsModule],
+  providers: [
+    AppConfigService,
+    { provide: RouteReuseStrategy, useValue: IonicRouteStrategy },
+  ],
 })
 export class AppComponent {
   constructor(
+    public environmentInjector: EnvironmentInjector,
     private readonly platform: Platform,
     private readonly menu: MenuController
-  ) // private readonly splashScreen: SplashScreen,
-  // private readonly statusBar: StatusBar
-  {
+  ) {
     this.initializeApp();
   }
 
@@ -23,9 +42,6 @@ export class AppComponent {
    */
   private initializeApp(): void {
     this.platform.ready().then(() => {
-      // this.splashScreen.hide();
-      // this.statusBar.backgroundColorByHexString('#C40318');
-      // this.statusBar.hide();
       this.menu.enable(false);
     });
   }
