@@ -1,8 +1,16 @@
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, retry } from 'rxjs/operators';
 import { CommonService } from './../common/common.service';
+
+export interface HttpOptions {
+  token: boolean;
+  showError: boolean;
+  retry: number;
+}
+
+export const DefaultOptions: HttpOptions = { token: true, showError: true, retry: 0 };
 
 @Injectable({
   providedIn: 'root',
@@ -21,11 +29,7 @@ export class BaseService {
    * @param headers Headers da requisição.
    * @returns Observable T type.
    */
-  get<T>(
-    url: string,
-    options = { token: true, showError: true },
-    headers?: HttpHeaders
-  ): Observable<T> {
+  get<T>(url: string, options = DefaultOptions, headers?: HttpHeaders): Observable<T> {
     if (options.token && headers) {
       headers.set('x-auth-token', localStorage.getItem('token') as string);
     } else if (options.token) {
@@ -35,6 +39,7 @@ export class BaseService {
       );
     }
     return this.http.get<T>(url, { headers }).pipe(
+      retry(options.retry),
       catchError((err) => {
         if (options.showError) {
           this.showError(err);
@@ -55,7 +60,7 @@ export class BaseService {
    */
   post<T, B>(
     prop: { url: string; body: B },
-    options = { token: true, showError: true },
+    options = DefaultOptions,
     headers?: HttpHeaders
   ): Observable<T> {
     if (options.token && headers) {
@@ -67,6 +72,7 @@ export class BaseService {
       );
     }
     return this.http.post<T>(prop.url, prop.body, { headers }).pipe(
+      retry(options.retry),
       catchError((err) => {
         if (options.showError) {
           this.showError(err);
@@ -87,7 +93,7 @@ export class BaseService {
    */
   put<T, B>(
     prop: { url: string; body: B },
-    options = { token: true, showError: true },
+    options = DefaultOptions,
     headers?: HttpHeaders
   ): Observable<T> {
     if (options.token && headers) {
@@ -99,6 +105,7 @@ export class BaseService {
       );
     }
     return this.http.put<T>(prop.url, prop.body, { headers }).pipe(
+      retry(options.retry),
       catchError((err) => {
         if (options.showError) {
           this.showError(err);
@@ -116,11 +123,7 @@ export class BaseService {
    * @param headers Headers da requisição.
    * @returns Observable T type.
    */
-  delete<T>(
-    url: string,
-    options = { token: true, showError: true },
-    headers?: HttpHeaders
-  ): Observable<T> {
+  delete<T>(url: string, options = DefaultOptions, headers?: HttpHeaders): Observable<T> {
     if (options.token && headers) {
       headers.set('x-auth-token', localStorage.getItem('token') as string);
     } else if (options.token) {
@@ -130,6 +133,7 @@ export class BaseService {
       );
     }
     return this.http.delete<T>(url, { headers }).pipe(
+      retry(options.retry),
       catchError((err) => {
         if (options.showError) {
           this.showError(err);
