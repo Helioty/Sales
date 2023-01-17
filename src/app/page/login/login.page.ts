@@ -1,15 +1,20 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { isPlatform, MenuController, NavController } from '@ionic/angular';
+import { FormsModule } from '@angular/forms';
+import { IonicModule, isPlatform, MenuController, NavController } from '@ionic/angular';
 import { AppConfigService } from 'src/app/config/app.config.service';
 import { IAuth } from 'src/app/services/auth/auth.interface';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { CommonService } from 'src/app/services/common/common.service';
 import { environment } from 'src/environments/environment';
+import { FormErrorComponent } from '../../components/form-error/form-error.component';
 
 @Component({
+  standalone: true,
   selector: 'app-login',
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
+  imports: [CommonModule, IonicModule, FormsModule, FormErrorComponent],
 })
 export class LoginPage implements OnInit {
   readonly homePage = 'pedido-lista';
