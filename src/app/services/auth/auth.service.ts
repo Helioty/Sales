@@ -33,17 +33,8 @@ export class AuthService {
    * @returns Retorna uma Promise com o retorno do serviço.
    */
   login(login: string, senha: string, filial?: string): Promise<IAuth> {
-    const api = filial
-      ? environment.production
-        ? `api.${filial}/`
-        : `staging.${filial}/`
-      : API_URL;
-    const link = new URL(`${ENV.WS_AUTH}${api}loginMobile`);
-    const options = { token: false, showError: true };
-    const headers = new HttpHeaders().set('login', login).set('senha', senha);
-
     return new Promise((resolve, reject) => {
-      this.http.get<IAuth>(link.href, options, headers).subscribe({
+      this.loginAPI(login, senha, filial).subscribe({
         next: (response: IAuth) => {
           this.setStorage(response, login);
           this.authGuard.setStatus = true;
@@ -63,11 +54,16 @@ export class AuthService {
    * @param login login do usuário
    * @param senha senha do usuário
    */
-  loginAPI(login: string, senha: string): Observable<IAuth> {
-    const link = ENV.WS_AUTH + API_URL + 'loginMobile';
-    const options = { token: false, showError: true };
+  loginAPI(login: string, senha: string, filial?: string): Observable<IAuth> {
+    const api = filial
+      ? environment.production
+        ? `api.${filial}/`
+        : `staging.${filial}/`
+      : API_URL;
+    const link = new URL(`${ENV.WS_AUTH}${api}loginMobile`);
+    const options = { token: false, showError: true, retry: 0 };
     const headers = new HttpHeaders().set('login', login).set('senha', senha);
-    return this.http.get<IAuth>(link, options, headers).pipe(take(1));
+    return this.http.get<IAuth>(link.href, options, headers).pipe(take(1));
   }
 
   /**
