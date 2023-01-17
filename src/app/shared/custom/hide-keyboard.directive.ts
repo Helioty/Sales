@@ -1,11 +1,12 @@
-import { Directive, ElementRef, HostListener } from '@angular/core';
+import { Directive, ElementRef, HostListener, Inject } from '@angular/core';
 
 @Directive({
+  standalone: true,
   selector: '[appHideKeyboard]',
 })
 export class HideKeyboardDirective {
   private readonly: boolean;
-  constructor(private el: ElementRef) {
+  constructor(@Inject('') private el: ElementRef) {
     this.readonly = true;
     this.setReadOnly(this.readonly);
 
