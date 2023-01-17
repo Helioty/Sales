@@ -1,13 +1,18 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { FormsModule } from '@angular/forms';
+import { IonicModule, ModalController } from '@ionic/angular';
 import { IAuth } from 'src/app/services/auth/auth.interface';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { CommonService } from 'src/app/services/common/common.service';
+import { FormErrorComponent } from '../form-error/form-error.component';
 
 @Component({
+  standalone: true,
   selector: 'app-login-validate',
   templateUrl: './login-validate.component.html',
   styleUrls: ['./login-validate.component.scss'],
+  imports: [CommonModule, IonicModule, FormsModule, FormErrorComponent],
 })
 export class LoginValidateComponent implements OnInit {
   public loginData = { login: '', senha: '' };
