@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
 import { AuthGuard } from './shared/guards/auth/auth.guard';
 
-export const routes: Routes = [
+export const ROUTES: Routes = [
   {
     path: '',
     redirectTo: '/login',
@@ -14,9 +14,7 @@ export const routes: Routes = [
   {
     path: 'pedido-lista',
     loadChildren: () =>
-      import('./page/pedido-lista/pedido-lista.module').then(
-        (m) => m.PedidoListaPageModule
-      ),
+      import('./page/pedido-lista/pedido-lista.routing').then((m) => m.ROUTES),
     canActivate: [AuthGuard],
   },
   {

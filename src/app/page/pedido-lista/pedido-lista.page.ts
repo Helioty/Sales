@@ -1,19 +1,26 @@
-import { Component } from '@angular/core';
-import { MenuController, NavController } from '@ionic/angular';
+import { CommonModule } from '@angular/common';
+import { Component, EnvironmentInjector } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { IonicModule, MenuController, NavController } from '@ionic/angular';
 import { CommonService } from 'src/app/services/common/common.service';
 import { PedidoService } from 'src/app/services/pedido/pedido.service';
+import { PedidoListaService } from './pedido-lista.service';
 
 @Component({
+  standalone: true,
   selector: 'app-pedido-lista',
   templateUrl: './pedido-lista.page.html',
   styleUrls: ['./pedido-lista.page.scss'],
+  imports: [CommonModule, FormsModule, IonicModule],
+  providers: [PedidoListaService],
 })
 export class PedidoListaPage {
   constructor(
     private readonly common: CommonService,
     private readonly menu: MenuController,
     private readonly navControl: NavController,
-    private readonly pedidoService: PedidoService
+    private readonly pedidoService: PedidoService,
+    public environmentInjector: EnvironmentInjector
   ) {}
 
   ionViewWillEnter(): void {
@@ -27,7 +34,6 @@ export class PedidoListaPage {
 
   ionViewWillLeave(): void {
     this.menu.enable(false);
-    // console.clear();
   }
 
   ionViewDidLeave() {}

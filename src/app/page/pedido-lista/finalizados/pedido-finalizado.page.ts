@@ -1,6 +1,9 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { NavigationExtras } from '@angular/router';
 import {
+  IonicModule,
   IonInfiniteScroll,
   IonItemSliding,
   IonRefresher,
@@ -9,13 +12,16 @@ import {
 import { CommonService } from 'src/app/services/common/common.service';
 import { PedidoHeader } from 'src/app/services/pedido/pedido.interface';
 import { PedidoService } from 'src/app/services/pedido/pedido.service';
-import { Pagination } from './../pedido-lista.interface';
-import { PedidoListaService } from './../pedido-lista.service';
+import { PipesModule } from 'src/app/shared/pipes/pipes.module';
+import { Pagination } from '../pedido-lista.interface';
+import { PedidoListaService } from '../pedido-lista.service';
 
 @Component({
+  standalone: true,
   selector: 'app-pedido-finalizado',
   templateUrl: './pedido-finalizado.page.html',
   styleUrls: ['./pedido-finalizado.page.scss'],
+  imports: [CommonModule, FormsModule, IonicModule, PipesModule],
 })
 export class PedidoFinalizadoPage implements OnInit {
   @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
