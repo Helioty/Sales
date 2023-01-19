@@ -1,17 +1,21 @@
-import { ModalController } from '@ionic/angular';
+import { IonicModule, ModalController } from '@ionic/angular';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { PedidoHeader } from 'src/app/services/pedido/pedido.interface';
 import { LoginValidateComponent } from 'src/app/components/login-validate/login-validate.component';
 import { IAuth } from 'src/app/services/auth/auth.interface';
-import { PedidoService } from 'src/app/services/pedido/pedido.service';
 import { CommonService } from 'src/app/services/common/common.service';
 import { DescontoService } from 'src/app/services/desconto/desconto.service';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { PipesModule } from 'src/app/shared/pipes/pipes.module';
 
 @Component({
+  standalone: true,
   selector: 'app-pedido-desconto',
   templateUrl: './pedido-desconto.page.html',
   styleUrls: ['./pedido-desconto.page.scss'],
+  imports: [CommonModule, FormsModule, IonicModule, PipesModule],
 })
 export class PedidoDescontoPage implements OnInit {
   pedido: PedidoHeader;
@@ -25,7 +29,6 @@ export class PedidoDescontoPage implements OnInit {
     private readonly route: ActivatedRoute,
     private readonly common: CommonService,
     private readonly modal: ModalController,
-    private readonly pedidoService: PedidoService,
     private readonly descontoService: DescontoService
   ) {}
 

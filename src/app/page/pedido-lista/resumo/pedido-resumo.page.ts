@@ -1,16 +1,21 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Params } from '@angular/router';
-import { IonInfiniteScroll } from '@ionic/angular';
+import { IonicModule, IonInfiniteScroll } from '@ionic/angular';
 import { BehaviorSubject } from 'rxjs';
 import { CommonService } from 'src/app/services/common/common.service';
 import { PedidoHeader, PedidoItem } from 'src/app/services/pedido/pedido.interface';
 import { PedidoService } from 'src/app/services/pedido/pedido.service';
+import { PipesModule } from 'src/app/shared/pipes/pipes.module';
 import { Pagination } from '../pedido-lista.interface';
 
 @Component({
+  standalone: true,
   selector: 'app-pedido-resumo',
   templateUrl: './pedido-resumo.page.html',
   styleUrls: ['./pedido-resumo.page.scss'],
+  imports: [CommonModule, FormsModule, IonicModule, PipesModule],
 })
 export class PedidoResumoPage implements OnInit {
   @ViewChild(IonInfiniteScroll) readonly infiniteScroll: IonInfiniteScroll;

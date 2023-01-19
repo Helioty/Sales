@@ -27,16 +27,12 @@ export const ROUTES: Routes = [
   },
   {
     path: 'pedido-resumo',
-    loadChildren: () =>
-      import('./pedido-resumo/pedido-resumo.module').then(
-        (m) => m.PedidoResumoPageModule
-      ),
+    loadComponent: () =>
+      import('./resumo/pedido-resumo.page').then((m) => m.PedidoResumoPage),
   },
   {
     path: 'pedido-desconto',
-    loadChildren: () =>
-      import('./pedido-desconto/pedido-desconto.module').then(
-        (m) => m.PedidoDescontoPageModule
-      ),
+    loadComponent: () =>
+      import('./desconto/pedido-desconto.page').then((m) => m.PedidoDescontoPage),
   },
 ];
