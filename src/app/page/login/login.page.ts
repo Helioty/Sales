@@ -75,22 +75,23 @@ export class LoginPage implements OnInit {
    * @description Executa o serviço de Login.
    */
   async entrar(data: { login: string; senha: string }): Promise<void> {
-    await this.common.showLoader();
-    await this.auth
-      .login(data.login.toUpperCase(), data.senha)
-      .finally(async () => {
-        await this.common.loading.dismiss();
-      })
-      .then(
-        () => {
-          console.log('Logado!');
-          this.navControl.navigateRoot([this.homePage]);
-        },
-        () => {
-          this.isLoggedIn = false;
-          this.loginData.senha = '';
-        }
-      );
+    this.navControl.navigateRoot([this.homePage]);
+    // await this.common.showLoader();
+    // await this.auth
+    //   .login(data.login.toUpperCase(), data.senha)
+    //   .finally(async () => {
+    //     await this.common.loading.dismiss();
+    //   })
+    //   .then(
+    //     () => {
+    //       console.log('Logado!');
+    //       this.navControl.navigateRoot([this.homePage]);
+    //     },
+    //     () => {
+    //       this.isLoggedIn = false;
+    //       this.loginData.senha = '';
+    //     }
+    //   );
   }
 
   /**

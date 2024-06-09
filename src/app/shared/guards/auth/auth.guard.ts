@@ -1,14 +1,17 @@
 import { Injectable } from '@angular/core';
 import { CanActivate } from '@angular/router';
+
 import { NavController } from '@ionic/angular';
+
 import { BehaviorSubject } from 'rxjs';
+
 import { CommonService } from 'src/app/services/common/common.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthGuard implements CanActivate {
-  private logSubject = new BehaviorSubject<boolean>(false);
+  private logSubject = new BehaviorSubject<boolean>(true);
 
   constructor(
     private readonly nav: NavController,
