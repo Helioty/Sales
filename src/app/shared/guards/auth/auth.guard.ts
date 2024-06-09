@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { CanActivate } from '@angular/router';
 
 import { NavController } from '@ionic/angular';
 
@@ -10,7 +9,7 @@ import { CommonService } from 'src/app/services/common/common.service';
 @Injectable({
   providedIn: 'root',
 })
-export class AuthGuard implements CanActivate {
+export class AuthGuard {
   private logSubject = new BehaviorSubject<boolean>(true);
 
   constructor(

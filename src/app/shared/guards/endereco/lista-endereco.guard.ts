@@ -1,10 +1,5 @@
 import { Injectable } from '@angular/core';
-import {
-  CanActivate,
-  ActivatedRouteSnapshot,
-  RouterStateSnapshot,
-  UrlTree,
-} from '@angular/router';
+import { ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { PedidoService } from 'src/app/services/pedido/pedido.service';
 import { CommonService } from 'src/app/services/common/common.service';
 import { Observable } from 'rxjs';
@@ -12,7 +7,7 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
-export class ListaEnderecoGuard implements CanActivate {
+export class ListaEnderecoGuard {
   constructor(private common: CommonService, private pedidoService: PedidoService) {}
 
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
