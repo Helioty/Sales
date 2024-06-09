@@ -3,7 +3,7 @@ import { CapacitorConfig } from '@capacitor/cli';
 const config: CapacitorConfig = {
   appId: 'br.com.ferreiracosta.vendas',
   appName: 'Vendas',
-  webDir: 'www',
+  webDir: 'www/browser',
   bundledWebRuntime: false,
   cordova: {
     preferences: {
