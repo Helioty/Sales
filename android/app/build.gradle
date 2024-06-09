@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     namespace "br.com.ferreiracosta.vendas"
-    compileSdkVersion rootProject.ext.compileSdkVersion
+    compileSdk rootProject.ext.compileSdkVersion
     defaultConfig {
         applicationId "br.com.ferreiracosta.vendas"
         minSdkVersion rootProject.ext.minSdkVersion
