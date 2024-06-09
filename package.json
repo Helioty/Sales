@@ -54,7 +54,7 @@
     "@angular/compiler-cli": "^15.1.0",
     "@angular/language-service": "^15.1.0",
     "@capacitor/cli": "4.6.1",
-    "@ionic/angular-toolkit": "7.0.0",
+    "@ionic/angular-toolkit": "11.0.1",
     "@types/cordova": "11.0.0",
     "@types/jasmine": "4.3.1",
     "@types/jasminewd2": "2.0.10",
