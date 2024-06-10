@@ -1,8 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { IonSlides } from '@ionic/angular';
+import { IonicSlides } from '@ionic/angular';
 import { CommonService } from 'src/app/services/common/common.service';
 import { DataService } from 'src/app/services/data/data.service';
 import { IProdutoImagem } from 'src/app/services/produto/produto.interface';
+import { register } from 'swiper/element/bundle';
+import Swiper from 'swiper';
+
+register();
 
 @Component({
   selector: 'app-produto-imagens',
@@ -10,7 +14,7 @@ import { IProdutoImagem } from 'src/app/services/produto/produto.interface';
   styleUrls: ['./produto-imagens.page.scss'],
 })
 export class ProdutoImagensPage implements OnInit {
-  @ViewChild('imgSlides') readonly slides: IonSlides;
+  @ViewChild('imgSlides') readonly slides: Swiper;
   public imagens: IProdutoImagem[] = [];
 
   readonly slideOpts = {

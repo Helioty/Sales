@@ -9,19 +9,19 @@
 </ion-header>
 
 <ion-content>
-  <ion-slides #imgSlides>
-    <ion-slide *ngFor="let imagem of imagens">
+  <swiper-container #imgSlides>
+    <swiper-slide *ngFor="let imagem of imagens">
       <img src="data:image/jpeg;base64,{{ imagem.imageGrande }}" />
-    </ion-slide>
-  </ion-slides>
+    </swiper-slide>
+  </swiper-container>
 </ion-content>
 
 <ion-footer>
-  <ion-slides [options]="slideOpts">
-    <ion-slide *ngFor="let imagem of imagens; let i = index">
+  <swiper-container [options]="slideOpts">
+    <swiper-slide *ngFor="let imagem of imagens; let i = index">
       <ion-thumbnail (click)="slideTo(i)">
         <ion-img src="data:image/jpeg;base64,{{ imagem.imageGrande }}"></ion-img>
       </ion-thumbnail>
-    </ion-slide>
-  </ion-slides>
+    </swiper-slide>
+  </swiper-container>
 </ion-footer>

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EnvironmentInjector } from '@angular/core';
+import { Component } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouteReuseStrategy } from '@angular/router';
 import {
@@ -30,7 +30,6 @@ import { AppConfigService } from './config/app.config.service';
 })
 export class AppComponent {
   constructor(
-    public environmentInjector: EnvironmentInjector,
     private readonly platform: Platform,
     private readonly menu: MenuController
   ) {

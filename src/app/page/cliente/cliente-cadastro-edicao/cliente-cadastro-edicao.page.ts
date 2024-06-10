@@ -1,10 +1,15 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, NavigationExtras, Params } from '@angular/router';
-import { IonContent, IonSlides, NavController } from '@ionic/angular';
+import { IonContent, NavController } from '@ionic/angular';
 import { switchMap, tap } from 'rxjs/operators';
 import { ClienteGet } from 'src/app/services/cliente/cliente.interface';
 import { CommonService } from 'src/app/services/common/common.service';
+
+import { register } from 'swiper/element/bundle';
+import Swiper from 'swiper';
+
+register();
 
 @Component({
   selector: 'app-cliente-cadastro-edicao',
@@ -13,7 +18,7 @@ import { CommonService } from 'src/app/services/common/common.service';
 })
 export class ClienteCadastroEdicaoPage implements OnInit {
   @ViewChild(IonContent, { static: true }) readonly content: IonContent;
-  @ViewChild(IonSlides, { static: true }) readonly slides: IonSlides;
+  @ViewChild(Swiper, { static: true }) readonly slides: Swiper;
 
   // Controle do formulario
   public formCliente: UntypedFormGroup;
@@ -43,7 +48,7 @@ export class ClienteCadastroEdicaoPage implements OnInit {
     this.setFormCliente();
     this.setFormEndereco();
     this.getNavParams();
-    this.slides.lockSwipes(true);
+    this.slides.allowTouchMove = false;
   }
 
   ionViewWillEnter(): void {
@@ -122,9 +127,9 @@ export class ClienteCadastroEdicaoPage implements OnInit {
    * @param slide
    */
   slideTo(slide: number): void {
-    this.slides.lockSwipes(false);
+    this.slides.allowTouchMove = true;
     this.slides.slideTo(slide);
-    this.slides.lockSwipes(true);
+    this.slides.allowTouchMove = false;
   }
 
   pesquisaCep() {

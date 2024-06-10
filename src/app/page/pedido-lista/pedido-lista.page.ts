@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EnvironmentInjector } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonicModule, MenuController, NavController } from '@ionic/angular';
 import { CommonService } from 'src/app/services/common/common.service';
@@ -20,7 +20,6 @@ export class PedidoListaPage {
     private readonly menu: MenuController,
     private readonly navControl: NavController,
     private readonly pedidoService: PedidoService,
-    public environmentInjector: EnvironmentInjector
   ) {}
 
   ionViewWillEnter(): void {

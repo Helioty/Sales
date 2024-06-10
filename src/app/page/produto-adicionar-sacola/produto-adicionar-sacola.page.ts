@@ -1,6 +1,6 @@
 import { Component, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
-import { IonInput, IonSegment, IonSlides, NavController } from '@ionic/angular';
+import { IonInput, IonSegment, NavController } from '@ionic/angular';
 import { Observable } from 'rxjs';
 import { CommonService } from 'src/app/services/common/common.service';
 import {
@@ -17,6 +17,11 @@ import { ProdutoService } from 'src/app/services/produto/produto.service';
 import { ScannerService } from 'src/app/services/scanner/scanner.service';
 import { TMSService } from 'src/app/services/TMS/tms.service';
 
+import { register } from 'swiper/element/bundle';
+import Swiper from 'swiper';
+
+register();
+
 @Component({
   selector: 'app-produto-adicionar-sacola',
   templateUrl: './produto-adicionar-sacola.page.html',
@@ -24,7 +29,7 @@ import { TMSService } from 'src/app/services/TMS/tms.service';
 })
 export class ProdutoAdicionarSacolaPage implements OnInit {
   @ViewChild(IonSegment, { static: true }) readonly segment: IonSegment;
-  @ViewChild(IonSlides, { static: true }) readonly slides: IonSlides;
+  @ViewChild(Swiper, { static: true }) readonly slides: Swiper;
   // Lista de inputs dos depositos
   @ViewChildren('inputDeposito') inputs: QueryList<IonInput>;
   // Input do TMS
@@ -77,7 +82,7 @@ export class ProdutoAdicionarSacolaPage implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.slides.lockSwipes(true);
+    this.slides.allowTouchMove = false;
     this.pedidoOBS = this.pedidoService.getPedidoAtivoOBS();
     this.route.queryParams.subscribe({
       next: (params: Params) => {
@@ -120,9 +125,9 @@ export class ProdutoAdicionarSacolaPage implements OnInit {
    * @param slide Index do slide destino.
    */
   slideTo(slide: number): void {
-    this.slides.lockSwipes(false);
+    this.slides.allowTouchMove = true;
     this.slides.slideTo(slide);
-    this.slides.lockSwipes(true);
+    this.slides.allowTouchMove = false;
     this.atualizaBySlide();
   }
 
@@ -158,18 +163,16 @@ export class ProdutoAdicionarSacolaPage implements OnInit {
   }
 
   atualizaBySlide(): void {
-    this.slides.getActiveIndex().then((result) => {
-      switch (result) {
-        case 1:
-          setTimeout(() => {
-            this.inputTMS.setFocus();
-          }, 200);
-          break;
+    switch (this.slides.activeIndex) {
+      case 1:
+        setTimeout(() => {
+          this.inputTMS.setFocus();
+        }, 200);
+        break;
 
-        default:
-          break;
-      }
-    });
+      default:
+        break;
+    }
   }
 
   // edit by Helio 09/07/2020
